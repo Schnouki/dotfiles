@@ -1,0 +1,42 @@
+# -*- mode: sh; -*-
+
+# Many keys for xterm, screen, rxvt, ...
+# Before I used $TERM to decide what was needed. But it's much easier that way.
+
+# Tip for (u)rxvt users: if $TERM is set to rxvt-unicode or something like this,
+# you will need many stupid keys for arrows, home, end, delete, backspace, etc.
+# Just set it to xterm to solve everything. The easiest way to do this is to add
+# something similar to "URxvt.termName: xterm" in your ~/.Xdefaults.
+
+bindkey 'OH'  beginning-of-line
+bindkey '[H'  beginning-of-line
+bindkey '[1~' beginning-of-line
+bindkey '[7~' beginning-of-line
+
+bindkey 'OF'  end-of-line
+bindkey '[F'  end-of-line
+bindkey '[4~' end-of-line
+bindkey '[8~' end-of-line
+
+bindkey '[A'  up-line-or-history
+bindkey '[B'  down-line-or-history
+
+bindkey '[D'  backward-char
+bindkey '[C'  forward-char 
+
+#bindkey ''    backward-delete-char
+bindkey '[3~' delete-char
+
+bindkey '0d'  backward-word
+bindkey '0c'  forward-word
+
+bindkey ''    backward-kill-word
+
+#bindkey '[2~' overwrite-mode
+
+# Ctrl+arrow to search in history
+bindkey '[1;5A' history-search-backward
+bindkey '[1;5B' history-search-forward
+
+# Completion in the middle of a word
+bindkey '	' expand-or-complete-prefix

@@ -1,0 +1,125 @@
+# -*- mode: sh; -*-
+
+function reload_local_completion() {
+    local f
+    f=(~/.config/zsh/completion/*(.))
+    unfunction $f:t 2> /dev/null
+    autoload -U $f:t
+}
+
+function upload_zsh_config() {
+    local dest=$1
+    [[ -z "$dest" ]] && echo "Usage: $0 remote_ssh_host" && return 1
+    
+    pushd $HOME &>/dev/null
+    tar cj .config/zsh | ssh -axo "ClearAllForwardings yes" "$dest" "cat | tar xj && rm .zshrc && ln .config/zsh/zshrc .zshrc && echo \"zsh config updated on \$(hostname)\""
+    popd &>/dev/null
+}
+
+# Wrappers for /etc/{rc,init}.d scripts -- from http://bbs.archlinux.org/viewtopic.php?id=84525
+function svstart() {
+    until [ -z $1 ]; do
+        if [ -f "/etc/rc.d/$1" ]; then
+            sudo /etc/rc.d/$1 start
+        elif [ -f "/etc/init.d/$1" ]; then
+            sudo /etc/init.d/$1 start
+        else
+            echo "No such daemon:  $1"
+        fi
+        shift
+    done
+}
+function svstop() {
+    until [ -z $1 ]; do
+        if [ -f "/etc/rc.d/$1" ]; then
+            sudo /etc/rc.d/$1 stop
+        elif [ -f "/etc/init.d/$1" ]; then
+            sudo /etc/init.d/$1 stop
+        else
+            echo "No such daemon:  $1"
+        fi
+        shift
+    done
+}
+function svrestart() {
+    until [ -z $1 ]; do
+        if [ -f "/etc/rc.d/$1" ]; then
+            sudo /etc/rc.d/$1 restart
+        elif [ -f "/etc/init.d/$1" ]; then
+            sudo /etc/init.d/$1 restart
+        else
+            echo "No such daemon:  $1"
+        fi
+        shift
+    done
+}
+
+function svreload() {
+    until [ -z $1 ]; do
+        if [ -f "/etc/rc.d/$1" ]; then
+            daemon="/etc/rc.d/$1"
+        elif [ -f "/etc/init.d/$1" ]; then
+            daemon="/etc/init.d/$1"
+        else
+            echo "No such daemon:  $1"
+            exit 1
+        fi
+        grep -q 'reload)' $1 && $1 reload || $1 restart
+        shift
+    done
+}
+
+function pacQ {
+    local tab align
+    tab=()
+    pacman -Q $@ | while read p v; do
+        desc=$(pacman -Qi "$p" | grep '^Description' | cut -c 25-)
+        tab=($tab "$p:$desc")
+    done
+    zformat -a align " " $tab
+    print -lr -- $align
+}
+
+
+function graphite_build_module() {
+    local autopushd=$(setopt | grep autopushd)
+    unsetopt autopushd
+
+    local mode="Debug"
+    local type="incr"
+    for arg ($@); do
+        case "$arg" in
+            Debug|Release) mode="$arg" ;;
+            incr|full) type="$arg" ;;
+            *) echo "Argument invalide: $arg"; return 1
+        esac
+    done
+
+    local orig_dir=$(pwd)
+    if [[ "$orig_dir" =~ "^/home/schnouki/Recherche/ALICE/(graphite|svn-git)/" ]]; then
+        # Trouver la racine...
+        while [[ ! -e "configure.sh" ]]; do cd ..; done
+
+        # Message d'avertissement
+        echo "=============================="
+        echo "== Compilation: $(pwd)"
+        echo "== Mode: $mode"
+        echo "== Type: $type"
+        echo "=============================="
+        sleep 1
+        
+        # Nettoyage et préparation
+        [[ "$type" == "full" ]] && ([[ -e "build" ]] && rm -rf build)
+        [[ ! -e "build" ]] && sh ./configure.sh
+        
+        # Compilation
+        cd build/Linux-$mode && make
+
+        # Retour à l'envoyeur
+        cd "$orig_dir"
+    else
+        echo "Pas dans un sous-dossier de Graphite"
+    fi
+
+    [[ ! -z "$autopushd" ]] && setopt autopushd
+}

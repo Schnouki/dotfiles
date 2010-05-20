@@ -1,0 +1,51 @@
+#!/bin/zsh
+
+MAILDIR=/home/schnouki/mail
+BACKUPDIR=/home/schnouki/.config/notmuch
+
+NMSYNC=/home/schnouki/dev/notmuch/notmuchsync/notmuchsync
+MDSYNC="python -W ignore $(which offlineimap)"
+TAGSCRIPT="$BACKUPDIR/autotag"
+
+# Déjà lancé ?
+PIDFILE="/tmp/mailsync.$UID"
+if [ -e "$PIDFILE" ]; then
+    pid=$(cat "$PIDFILE")
+    echo "Processus déjà en cours d'exécution (PID $pid)."
+    exit 1
+fi
+echo "$$" > "$PIDFILE"
+
+TRAPEXIT() {
+    rm "$PIDFILE"
+}
+TRAPINT() {
+    return $(( 128 + $1 ))
+}
+
+# Mode muet ?
+quiet=
+if [ "$1" = "-q" ]; then quiet=1; fi
+
+# Preload la base de données de notmuch
+cat $MAILDIR/.notmuch/xapian/* >/dev/null &
+
+# Est-ce qu'on a une sauvegarde fraîche ?
+BACKUPFILE="$BACKUPDIR/db-$(date +"%Y%m%d").xz"
+
+# Est-ce qu'on a une connexion réseau ?
+if ! fping -q 8.8.8.8; then
+    if [ ! $quiet ]; then echo "Pas de connexion réseau disponible"; fi
+    exit 11
+fi
+
+if [ ! -e "$BACKUPFILE" ]; then
+    if [ ! $quiet ]; then  echo "Sauvegarde de la base de données notmuch..."; fi
+    notmuch dump | xz > "$BACKUPFILE" || exit 1
+fi
+
+if [ $quiet ]; then
+    eval $NMSYNC -q -s && eval $MDSYNC -u Noninteractive.Quiet && eval $TAGSCRIPT >/dev/null
+else
+    eval $NMSYNC -s && eval $MDSYNC && eval $TAGSCRIPT
+fi

@@ -1,0 +1,55 @@
+#!/usr/bin/python
+
+import email
+import quopri
+import subprocess
+import sys
+import tempfile
+
+INLINE_MARKER_BEGINNING = '-----BEGIN PGP SIGNED MESSAGE-----'
+INLINE_MARKER_END = '-----END PGP SIGNATURE-----'
+
+def verify_multipart(part):
+    content = tempfile.NamedTemporaryFile()
+    c = part.get_payload(0).as_string()
+    c = c.replace('\n', '\r\n')
+    content.write(c)
+    content.flush()
+
+    sig = tempfile.NamedTemporaryFile()
+    s = part.get_payload(1).as_string()
+    sig.write(s)
+    sig.flush()
+
+    p = subprocess.call(["gpg", "--batch", "--quiet", "--verify-options", "show-primary-uid-only", "--verify", sig.name, content.name])
+    sys.exit(p)
+
+def verify_inline(txt):
+    msg = tempfile.NamedTemporaryFile(suffix='.asc')
+    txt = quopri.decodestring(txt)
+    txt = txt.replace('\n', '\r\n')
+    msg.write(txt)
+    msg.flush()
+    
+    p = subprocess.call(["gpg", "--batch", "--quiet", "--verify-options", "show-primary-uid-only", "--verify", msg.name])
+
+    sys.exit(p)
+
+fn = sys.argv[1]
+msg = email.message_from_file(open(fn))
+
+# Find multipart/signed
+for part in msg.walk():
+    if part.get_content_type() == 'multipart/signed':
+        verify_multipart(part)
+
+# Find inline signed message
+txt = msg.as_string()
+beg = txt.find(INLINE_MARKER_BEGINNING)
+if beg > 0:
+    end = txt.find(INLINE_MARKER_END) + len(INLINE_MARKER_END) + 1
+    verify_inline(txt[beg:end])
+
+print >>sys.stderr, "No multipart/signed part was found!"
+sys.exit(1)
+

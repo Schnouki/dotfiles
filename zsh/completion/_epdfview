@@ -1,0 +1,7 @@
+#compdef epdfview
+
+#local expl
+
+_description files expl 'PDF file'
+#_files "$@" "$expl[@]" -g "*.(#i)pdf"
+_files -g "*.(#i)pdf"

@@ -1,0 +1,35 @@
+# -*- mode: sh; -*-
+
+alias ls='ls -Fh --color=auto'
+alias l='ls -Fh --color=auto'
+alias lk='ls -Fh --color=auto'
+alias la='ls -Fha --color=auto'
+alias ll='ls -Fhl --color=auto'
+alias lla='ls -Fhla --color=auto'
+
+alias df='df -h'
+alias free='free -m'
+
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+
+#alias ssu="sudo -i"
+alias ssu="sudo -H su -"
+
+alias ec="emacsclient -n -c -a \"\""
+
+# Correct options for xfig
+alias xfig='xfig -Portrait -specialtext -latexfonts -startlatexFont default'
+
+# Disable spelling correction for some commands
+alias cp="nocorrect cp"
+alias mv="nocorrect mv"
+alias rm="nocorrect rm"
+
+# Rencontre du 3eme type -- Close Encounters of the Third Kind :)
+alias rd3t="sudo beep -f 392 -l 500 -n -f 440 -l 500 -n -f 349.2 -l 500 -n -f 174.6 -l 500 -n -f 261.6 -l 1000"
+alias rd3t2="sudo beep -f 784 -l 500 -n -f 880 -l 500 -n -f 698.4 -l 500 -n -f 349.2 -l 500 -n -f 523.2 -l 1000"
+
+# Useless junk
+alias go_home="disper -s; sudo netcfg -d kimsufi-vpn; my-s2ram && sleep 15 && sudo netcfg freebox"
+alias go_work="sudo netcfg -d freebox; my-s2ram && sleep 15 && disper -e && while ! fping -q 8.8.8.8; do sleep 1; done; sudo netcfg kimsufi-vpn"

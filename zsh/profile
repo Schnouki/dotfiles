@@ -1,0 +1,109 @@
+# -*- mode: sh; -*-
+
+##### Environment variables
+# Paths
+
+# Programs
+export EDITOR="emacsclient -c -a \"\""
+[[ "`hostname`" == "odin" ]] && export BROWSER=auto-browser:google-chrome:firefox:opera
+
+# Program-specifig options
+export GREP_OPTIONS="--exclude=*.svn-base --exclude-dir=.svn"
+
+##### History
+export HISTFILE=~/.histfile
+export HISTSIZE=1000
+export SAVEHIST=1000
+export DIRSTACKSIZE=16
+setopt hist_ignore_space
+setopt appendhistory
+
+##### Colors
+autoload colors
+colors
+# Nice colors in ls. Changing TERM is needed because dircolors doesn't know
+# about rxvt-256color...
+eval `TERM=xterm-256color dircolors -b`
+
+##### Prompt
+autoload -U promptinit
+promptinit
+setopt promptsubst
+if [[ $TERM == "dumb" ]]; then    # in emacs
+    export PS1='%(?..[%?])%!:%~%# '
+    # for tramp to not hang, need the following. cf:
+    # http://www.emacswiki.org/emacs/TrampMode
+    unsetopt zle
+    unsetopt prompt_cr
+    unsetopt prompt_subst
+    unfunction precmd
+    unfunction preexec
+else
+    # VCS info in the right prompt, based on http://kriener.org/articles/2009/06/04/zsh-prompt-magic
+    autoload -Uz vcs_info
+
+    FMT_BRANCH="%{$fg[magenta]%}%s:%{$fg[blue]%}%b%B%{$fg[magenta]%}%u%c%%b%{$fg[default]%}"
+    FMT_ACTION="(%{$fg[blue]%}%a%{$fg[default]%})"
+
+    zstyle ':vcs_info:*' check-for-changes true
+    zstyle ':vcs_info:*' unstagedstr '*'
+    zstyle ':vcs_info:*' stagedstr   '^'
+    zstyle ':vcs_info:*' actionformats "${FMT_BRANCH}${FMT_ACTION} / "
+    zstyle ':vcs_info:*' formats       "${FMT_BRANCH} / "
+    zstyle ':vcs_info:*' nvcsformats   ""
+
+    export PS1="%B%(!.%{$fg[red]%}.%{$fg[green]%})%n%{$fg[yellow]%}@%{$fg[white]%}%m %{$fg[yellow]%}%# %{$fg[default]%}%b"
+    export RPS1="%(?..%B%{$fg[red]%}%?%b%{$fg[default]%} / )"'${vcs_info_msg_0_}'"%{$fg[cyan]%}%28<...<%~%<<%{$fg[default]%} / %B%{$fg[cyan]%}%*%{$fg[default]%}%b"
+
+    function precmd {
+        # Terminal title
+        case $TERM in
+            xterm*|rxvt*|Eterm|screen) print -Pn "\e]0;%n@%m: %~\a" ;;
+        esac
+        
+        # Update VCS prompt (without telling stuff like "fatal: This operation
+        # must be run in a work tree" if we are in a .git dir)
+        vcs_info 2>/dev/null
+    }
+fi
+
+##### Completion
+autoload -Uz compinit
+compinit
+zstyle :compinstall filename "$HOME/.zshrc"
+zstyle ':completion::complete:*' use-cache 1
+
+unsetopt list_ambiguous
+setopt auto_remove_slash
+setopt glob_dots
+setopt chase_links
+setopt hist_verify
+setopt hist_ignore_all_dups
+setopt auto_cd
+setopt auto_pushd
+setopt correctall
+
+# Avoid repeating file names when completing these commands
+zstyle ':completion:*:rm:*' ignore-line yes
+zstyle ':completion:*:mv:*' ignore-line yes
+zstyle ':completion:*:cp:*' ignore-line yes
+
+# Some colors
+zstyle ':completion:*:*:kill:*:processes' list-colors "=(#b) #([0-9]#)*=36=31"
+
+# Load custom scripts
+fpath=($HOME/.config/zsh/completion $fpath)
+autoload -U $HOME/.config/zsh/completion/*(:t)
+
+# Useful stuff for writing and debugging completion functions
+#zstyle ':completion:*' verbose yes
+#zstyle ':completion:*:descriptions' format '%B%d%b'
+#zstyle ':completion:*:messages' format '%d'
+#zstyle ':completion:*:warnings' format 'No matches for: %d'
+#zstyle ':completion:*' group-name ''
+
+##### Various options
+setopt extendedglob
+
+# Don't send "HUP" to running jobs when logging out
+unsetopt hup
