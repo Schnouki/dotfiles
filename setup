@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Setup each part of the repo after an update
+
+for S in setup.*; do 
+    echo "Running $S..."
+    source ./$S || exit 1
+done
