@@ -1,0 +1,11 @@
+auto-save-list
+.emacs.desktop
+.emacs.desktop.lock
+.org-id-locations
+places
+server
+tramp
+image-dired
+
+# Symlinks
+golbarg.el
