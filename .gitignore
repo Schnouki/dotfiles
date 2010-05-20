@@ -1,6 +1,13 @@
 /*
 !.gitignore
 !setup*
+
+# Dotfiles
+!fonts.conf
+!Xdefaults
+!xinitrc
+
+# Folders
 !awesome
 !emacs
 !notmuch
