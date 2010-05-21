@@ -96,7 +96,7 @@ else
       local active = string.match(status, "%[(o[nf]+)%]")
       if vol == nil then
          return nil
-      elseif active == "off" then
+      elseif active == "on" then
          return tonumber(vol)
       else
          return -tonumber(vol)
