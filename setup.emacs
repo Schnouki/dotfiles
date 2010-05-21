@@ -5,7 +5,7 @@ if [ ! -e ~/.emacs.d ]; then
     ln -s ~/.config/emacs ~/.emacs.d
 elif [ -L ~/.emacs.d ]; then
     # Correct target?
-    if [ "$(readlink ~/.emacs.d)" != ".config/emacs" ]; then
+    if [ "$(readlink ~/.emacs.d)" != "$HOME/.config/emacs" ]; then
         echo "~/.emacs.d points to a wrong target :("
         exit 1
     fi
