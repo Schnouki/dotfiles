@@ -30,14 +30,14 @@ function setup_dir_symlink() {
     if [ ! -e "$link" ]; then
         ln -s "$target" "$link"
     elif [ -L "$link" ]; then
-    # Correct target?
+        # Correct target?
         if [ "$(readlink "$link")" != "$target" ]; then
             echo "$link points to a wrong target :("
             exit 1
         fi
     elif [ -d "$link" ]; then
         if [ "$(/bin/ls -A "$link")" ]; then
-        # Not empty: fail
+            # Not empty: fail
             echo "~/$link exists and is not empty :("
             exit 1
         else
@@ -59,7 +59,7 @@ function setup_decrypt() {
 
     if [ ! -e "$dst" ] || [ "$src" -nt "$sf" ]; then
         echo "Decrypting $dst"
-        gpg --output "$dst" --decrypt $src || exit 1
+        gpg2 --output "$dst" --decrypt "$src" || exit 1
         touch "$sf"
     fi
 }
