@@ -12,7 +12,13 @@ x11vnc -o /var/log/x11vnc.log -forever -bg -localhost -solid black -avahi -unixp
 nvidia-settings -l
 
 # GPG agent
-eval `gpg-agent --daemon --enable-ssh-support`
+gnupginf="$HOME/.gnupg/gpg-agent.info"
+if ( pgrep -u "${USER}" gpg-agent ); then
+    eval `cat $gnupginf`
+    eval `cut -d= -f1 $gnupginf | xargs echo export`
+else
+    eval `gpg-agent --daemon`
+fi
 
 # Screensaver
 xscreensaver -no-splash &
