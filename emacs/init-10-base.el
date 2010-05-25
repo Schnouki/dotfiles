@@ -15,9 +15,9 @@
 
 ;; Default font
 (add-to-list 'default-frame-alist
-	     (if (string= (shell-command-to-string "hostname") "odin")
+	     (if (string= (shell-command-to-string "hostname") "odin\n")
 		 '(font ."Mono-9")
-	       '(font . "Mono-11")))  
+	       '(font . "Mono-11")))
 
 ;; Display date and time
 (display-time)
