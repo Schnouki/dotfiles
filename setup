@@ -2,6 +2,68 @@
 
 # Setup each part of the repo after an update
 
+# Helper functions
+function setup_file_symlink() {
+    local target link
+    target="$HOME/.config/$1"
+    link="$HOME/$2"
+
+    if [ ! -e "$link" ]; then
+        ln -s "$target" "$link"
+    elif [ -L "$link" ]; then
+        # Correct target?
+        if [ "$(readlink "$link")" != "$target" ]; then
+            echo "~/$link points to a wrong target :("
+            exit 1
+        fi
+    else
+        echo "There is something wrong with ~/$link :/"
+        exit 1
+    fi
+}
+
+function setup_dir_symlink() {
+    local target link
+    target="$HOME/.config/$1"
+    link="$HOME/$2"
+
+    if [ ! -e "$link" ]; then
+        ln -s "$target" "$link"
+    elif [ -L "$link" ]; then
+    # Correct target?
+        if [ "$(readlink "$link")" != "$target" ]; then
+            echo "$link points to a wrong target :("
+            exit 1
+        fi
+    elif [ -d "$link" ]; then
+        if [ "$(/bin/ls -A "$link")" ]; then
+        # Not empty: fail
+            echo "~/$link exists and is not empty :("
+            exit 1
+        else
+            rmdir "$link" && ln -s "$target" "$link"
+        fi
+    else
+        echo "There is something wrong with ~/$link :/"
+        exit 1
+    fi
+}
+
+function setup_decrypt() {
+    local src dst sf
+    src="$HOME/.config/$1"
+    dst="$HOME/$2"
+
+    # Status file name
+    sf="$HOME/.config/.last_update_$(echo "$src" | md5sum | cut -d' ' -f1)"
+
+    if [ ! -e "$dst" ] || [ "$src" -nt "$sf" ]; then
+        echo "Decrypting $dst"
+        gpg --output "$dst" --decrypt $src || exit 1
+        touch "$sf"
+    fi
+}
+
 for S in setup.*; do 
     echo "Running $S..."
     source ./$S || exit 1

@@ -1,19 +1,8 @@
 #!/bin/bash
 
-# Check for dotfiles
+# Setup dotfiles
 for F in fonts.conf Xdefaults xinitrc; do
-    if [ ! -e "$HOME/.$F" ]; then
-        ln -s "$HOME/.config/$F" "$HOME/.$F"
-    elif [ -L "$HOME/.$F" ]; then
-        # Correct target?
-        if [ "$(readlink "$HOME/.$F")" != "$HOME/.config/$F" ]; then
-            echo "~/.$F points to a wrong target :("
-            exit 1
-        fi
-    else
-        echo "There is something wrong with ~/.$F :/"
-        exit 1
-    fi
+    setup_file_symlink "$F" ".$F"
 done
 
 # File-specifig stuff

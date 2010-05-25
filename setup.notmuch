@@ -1,8 +1,4 @@
 #!/bin/bash
 
-# Check for the autotag script
-if [ ! -e ~/.config/notmuch/.last_update ] || [ ~/.config/notmuch/autotag.gpg -nt ~/.config/notmuch/.last_update ]; then
-    echo "Decrypting notmuch/autotag.gpg"
-    gpg --output ~/.config/notmuch/autotag --decrypt ~/.config/notmuch/autotag.gpg || exit 1
-    touch ~/.config/notmuch/.last_update
-fi
+# Decrypt the autotag script
+setup_decrypt "notmuch/autotag.gpg" ".config/notmuch/autotag"
