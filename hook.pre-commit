@@ -1,0 +1,15 @@
+#!/bin/zsh
+
+# Check if it is ok to commit now
+
+# Check if the hook is enabled (useful is this script is called by hand...)
+HOOKNAME="$HOME/.config/.git/hooks/${0:e}"
+if [ ! -e "$HOOKNAME" ]; then
+    ln -s "${0:a}" "$HOOKNAME"
+elif [ -L "$HOOKNAME" ]; then
+    # Correct target?
+    if [ "$(readlink "$HOOKNAME")" != "${0:a}" ]; then
+        echo "~/.config/.git/hooks/${0:e} points to a wrong target :("
+        exit 1
+    fi
+fi
