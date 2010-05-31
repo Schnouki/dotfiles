@@ -200,19 +200,32 @@ pb_vol:buttons(awful.util.table.join(
 
 require('markup')
 
-tb_mails = widget({ type = "textbox" })
-function tb_mails_set_count(n)
-   local s = " ✉ " .. n
-   if n > 0 then
-      s = markup.bold(markup.fg.urgent(s))
+-- Widget with number of unread mails if notmuch is available
+local f = io.open("/usr/bin/notmuch")
+if f then
+
+   tb_mails = widget({ type = "textbox" })
+   function tb_mails_set_count(n)
+      local s = " ✉ " .. n
+      if n > 0 then
+         s = markup.bold(markup.fg.urgent(s))
+      end
+      tb_mails.text = s
    end
-   tb_mails.text = s
-end
-function tb_mails_update()
-   local p = io.popen("notmuch count tag:unread")
-   local n = tonumber(p:read("*a"))
-   io.close(p)
-   tb_mails_set_count(n)
+   function tb_mails_update()
+      local p = io.popen("notmuch count tag:unread")
+      local n = tonumber(p:read("*a"))
+      io.close(p)
+      if n then
+         tb_mails_set_count(n)
+      end
+   end
+
+else
+   -- Stubs for stuff needed elsewhere
+   tb_mails = nil
+   function tb_mails_update()
+   end
 end
 
 -- Afficher des infos sur le client qui a le focus
