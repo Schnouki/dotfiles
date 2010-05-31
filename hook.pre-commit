@@ -5,29 +5,19 @@ hook_exit_code=0
 
 # Helper functions
 function hook_update_encrypted_file() {
-    local src dst
+    local src dst sf
     src="$HOME/$1"
     dst="$HOME/.config/$2"
+    sf="$HOME/.config/.last_update_$(echo "$src" | md5sum | cut -d' ' -f1)"
 
-    if [ ! -e "$dst" ] || [ "$src" -nt "$dst" ]; then
+    if [ ! -e "$dst" ] || [ "$src" -nt "$sf" ]; then
         echo "New version of $src found, encrypting it..."
         rm "$dst"
         gpg2 --quiet --batch --output "$dst" --encrypt "$src"
+        touch "$sf"
         hook_exit_code=1
     fi
 }
-
-# Check if the hook is enabled (useful is this script is called by hand...)
-HOOKNAME="$HOME/.config/.git/hooks/${0:e}"
-if [ ! -e "$HOOKNAME" ]; then
-    ln -s "${0:a}" "$HOOKNAME"
-elif [ -L "$HOOKNAME" ]; then
-    # Correct target?
-    if [ "$(readlink "$HOOKNAME")" != "${0:a}" ]; then
-        echo "~/.config/.git/hooks/${0:e} points to a wrong target :("
-        exit 1
-    fi
-fi
 
 # Check for sensitive configuration files: SSH, GnuPG
 hook_update_encrypted_file ".ssh/config" "ssh.gpg"
