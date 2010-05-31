@@ -7,6 +7,7 @@
 !fonts.conf
 !Xdefaults
 !xinitrc
+!*.gpg
 
 # Folders
 !awesome

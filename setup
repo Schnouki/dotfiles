@@ -60,6 +60,7 @@ function setup_decrypt() {
     if [ ! -e "$dst" ] || [ "$src" -nt "$sf" ]; then
         echo "Decrypting $dst"
         gpg2 --output "$dst" --decrypt "$src" || exit 1
+        chmod 0600 "$dst"
         touch "$sf"
     fi
 }

@@ -5,6 +5,10 @@ for F in fonts.conf Xdefaults xinitrc; do
     setup_file_symlink "$F" ".$F"
 done
 
+# Setup encrypted dotfiles
+setup_decrypt "ssh.gpg" ".ssh/config"
+setup_decrypt "gpg.conf.gpg" ".gnupg/gpg.conf"
+
 # File-specifig stuff
 
 # Merge Xdefaults

@@ -1,6 +1,21 @@
 #!/bin/zsh
 
 # Check if it is ok to commit now
+hook_exit_code=0
+
+# Helper functions
+function hook_update_encrypted_file() {
+    local src dst
+    src="$HOME/$1"
+    dst="$HOME/.config/$2"
+
+    if [ ! -e "$dst" ] || [ "$src" -nt "$dst" ]; then
+        echo "New version of $src found, encrypting it..."
+        rm "$dst"
+        gpg2 --quiet --batch --output "$dst" --encrypt "$src"
+        hook_exit_code=1
+    fi
+}
 
 # Check if the hook is enabled (useful is this script is called by hand...)
 HOOKNAME="$HOME/.config/.git/hooks/${0:e}"
@@ -13,3 +28,9 @@ elif [ -L "$HOOKNAME" ]; then
         exit 1
     fi
 fi
+
+# Check for sensitive configuration files: SSH, GnuPG
+hook_update_encrypted_file ".ssh/config" "ssh.gpg"
+hook_update_encrypted_file ".gnupg/gpg.conf" "gpg.conf.gpg"
+
+exit $hook_exit_code
