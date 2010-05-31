@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # Setup ~/.emacs.d and ~/.emacs
 setup_dir_symlink "emacs" ".emacs.d"

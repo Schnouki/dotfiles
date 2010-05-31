@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # Decrypt the autotag script
 setup_decrypt "notmuch/autotag.gpg" ".config/notmuch/autotag"

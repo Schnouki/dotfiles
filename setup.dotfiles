@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # Setup dotfiles
 for F in fonts.conf Xdefaults xinitrc; do
