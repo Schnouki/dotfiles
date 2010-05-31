@@ -268,9 +268,9 @@ persokeys = {
    awful.key({ }, "XF86AudioLowerVolume", function () volume_upd(pb_vol, volume_minus()) end),
    awful.key({ }, "XF86AudioMute",        function () volume_upd(pb_vol, volume_mute())  end),
 
-   awful.key({ modkey }, "Up",   function () volume_upd(pb_vol, volume_plus())  end),
-   awful.key({ modkey }, "Down", function () volume_upd(pb_vol, volume_minus()) end),
-   awful.key({ modkey }, ".",    function () volume_upd(pb_vol, volume_mute())  end),
+   awful.key({ modkey }, "Up",        function () volume_upd(pb_vol, volume_plus())  end),
+   awful.key({ modkey }, "Down",      function () volume_upd(pb_vol, volume_minus()) end),
+   awful.key({ modkey }, "KP_Delete", function () volume_upd(pb_vol, volume_mute())  end),
 
    -- F2 - verrouiller l'écran
    awful.key({ }, "XF86ScreenSaver", function () os.execute("xscreensaver-command -lock") end),
@@ -290,7 +290,7 @@ persokeys = {
 
    -- Éditeur de texte avec la touche ThinkVantage
    awful.key({ }, "XF86Launch1", function () awful.util.spawn(editor_cmd) end),
-   awful.key({ modkey }, "KP_0", function () awful.util.spawn(editor_cmd) end),
+   awful.key({ modkey }, "KP_Insert", function () awful.util.spawn(editor_cmd) end),
 }
 
 persoclientkeys = {
