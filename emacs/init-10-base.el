@@ -107,7 +107,8 @@
 
 ;; Save opened files and other stuff
 ;; http://www.xsteve.at/prg/emacs/power-user-tips.html
-(setq desktop-save 'if-exists
+(setq desktop-save t
+      desktop-load-locked-desktop t
       desktop-path '("." "~/.config/emacs"))
 (desktop-save-mode 1)
 (setq desktop-globals-to-save
