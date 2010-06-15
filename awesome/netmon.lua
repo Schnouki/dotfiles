@@ -1,4 +1,3 @@
-
 local status_file
 local io, os, pairs = require("io"), require("os"), pairs
 
