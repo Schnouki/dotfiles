@@ -172,6 +172,11 @@ nm_ifs = {
 }
 tb_net.text = " " .. netmon.netmon(nm_ifs, "8.8.8.8")
 
+require("nvtemp")
+nvtemp.init()
+tb_nv = widget({ type = "textbox" })
+tb_nv.text = " GPU: ... "
+
 require("battmon")
 tb_batt = widget({ type = "textbox" })
 tb_batt.text = " " .. battery_mon() .. " "
@@ -338,6 +343,7 @@ for s = 1, screen.count() do
         pb_vol,
         tb_batt,
         tb_net,
+        tb_nv,
         tb_mails,
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
@@ -600,6 +606,7 @@ mytimer5:start()
 mytimer15 = timer { timeout = 15 }
 mytimer15:add_signal("timeout", function ()
     tb_net.text = " " .. netmon.netmon(nm_ifs, "8.8.8.8")
+    tb_nv.text = " " .. nvtemp.format() .. " "
     tb_mails_update()
 end)
 mytimer15:start()
