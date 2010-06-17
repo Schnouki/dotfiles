@@ -34,9 +34,12 @@ bindkey ''    backward-kill-word
 
 #bindkey '[2~' overwrite-mode
 
-# Ctrl+arrow to search in history
+# Ctrl+arrow or PgUp/PgDown to search in history
 bindkey '[1;5A' history-search-backward
 bindkey '[1;5B' history-search-forward
+
+bindkey '[5~' history-search-backward
+bindkey '[6~' history-search-forward
 
 # Completion in the middle of a word
 bindkey '	' expand-or-complete-prefix
