@@ -162,20 +162,30 @@ function new_transient(c)
    end
 end
 
+-- Fonctions perso
+function gethost()
+   local f = io.popen ("/bin/hostname")
+   local n = f:read("*a") or "none"
+   f:close()
+   return string.gsub(n, "\n$", "")
+end
+
 -- Widgets perso
 require("netmon")
 netmon.init()
 tb_net = widget({ type = "textbox" })
-nm_ifs = {
-   ["E"] = "eth0",
-   ["W"] = "wlan0",
-}
+nm_ifs = { ["E"] = "eth0" }
+if gethost() == "odin" then
+   nm_ifs["W"] = "wlan0"
+end
 tb_net.text = " " .. netmon.netmon(nm_ifs, "8.8.8.8")
 
-require("nvtemp")
-nvtemp.init()
-tb_nv = widget({ type = "textbox" })
-tb_nv.text = " GPU: ... "
+if gethost() == "thor" then
+   require("nvtemp")
+   nvtemp.init()
+   tb_nv = widget({ type = "textbox" })
+   tb_nv.text = " GPU: ... "
+end
 
 require("battmon")
 tb_batt = widget({ type = "textbox" })
@@ -606,7 +616,7 @@ mytimer5:start()
 mytimer15 = timer { timeout = 15 }
 mytimer15:add_signal("timeout", function ()
     tb_net.text = " " .. netmon.netmon(nm_ifs, "8.8.8.8")
-    tb_nv.text = " " .. nvtemp.format() .. " "
+    if tb_nv then tb_nv.text = " " .. nvtemp.format() .. " " end
     tb_mails_update()
 end)
 mytimer15:start()

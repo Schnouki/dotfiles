@@ -1,10 +1,3 @@
-function gethost()
-   local f = io.popen ("/bin/hostname")
-   local n = f:read("*a") or "none"
-   f:close()
-   return string.gsub(n, "\n$", "")
-end
-
 if gethost() == "odin" then
    -- OSS 4
 
