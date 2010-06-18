@@ -53,6 +53,7 @@ function setup_decrypt() {
     local src dst sf
     src="$HOME/.config/$1"
     dst="$HOME/$2"
+    exe="$3"
 
     # Status file name
     sf="$HOME/.config/.last_update_$(echo "$src" | md5sum | cut -d' ' -f1)"
@@ -60,7 +61,11 @@ function setup_decrypt() {
     if [ ! -e "$dst" ] || [ ! -e "$sf" ] || [ "$src" -nt "$sf" ]; then
         echo "Decrypting $dst"
         gpg2 --output "$dst" --decrypt "$src" || exit 1
-        chmod 0600 "$dst"
+        if [ "$exe" ]; then 
+            chmod 0700 "$dst"
+        else
+            chmod 0600 "$dst"
+        fi
         touch "$sf"
     fi
 }
