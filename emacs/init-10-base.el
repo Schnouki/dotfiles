@@ -5,6 +5,7 @@
 ;; Paths
 (add-to-list 'load-path "~/dev/org-mode/lisp")
 (add-to-list 'load-path "~/dev/org-mode/contrib/lisp")
+(add-to-list 'load-path "~/dev/magit")
 (add-to-list 'load-path "~/.config/emacs")
 
 ;; Custom file
