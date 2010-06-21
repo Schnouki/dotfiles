@@ -288,11 +288,14 @@ persokeys = {
    awful.key({ modkey }, "KP_Delete", function () volume_upd(pb_vol, volume_mute())  end),
 
    -- F2 - verrouiller l'écran
-   awful.key({ }, "XF86ScreenSaver", function () os.execute("xscreensaver-command -lock") end),
+   awful.key({ }, "XF86ScreenSaver",      function () os.execute("xscreensaver-command -lock") end),
+   awful.key({ modkey, "Control" }, "F2", function () os.execute("xscreensaver-command -lock") end),
    -- F3 - éteindre l'écran
-   awful.key({ }, "XF86Battery",     function () os.execute("xset dpms force suspend") end), -- éventuellement "standby" au lieu de "suspend"
+   awful.key({ }, "XF86Battery",          function () os.execute("xset dpms force suspend") end),
+   awful.key({ modkey, "Control" }, "F3", function () os.execute("xset dpms force suspend") end),
    -- F4 - mettre l'ordi en veille
-   awful.key({ }, "XF86Sleep",       function () awful.util.spawn("my-s2ram") end),
+   awful.key({ }, "XF86Sleep",            function () awful.util.spawn("my-s2ram") end),
+   awful.key({ modkey, "Control" }, "F4", function () awful.util.spawn("my-s2ram") end),
    -- F7 - écran externe
    awful.key({ }, "XF86Display",     function () awful.util.spawn("gdisper") end),
 
@@ -304,7 +307,7 @@ persokeys = {
    awful.key({ }, "Print", function () awful.util.spawn("twitscreen") end),
 
    -- Éditeur de texte avec la touche ThinkVantage
-   awful.key({ }, "XF86Launch1", function () awful.util.spawn(editor_cmd) end),
+   awful.key({ }, "XF86Launch1",      function () awful.util.spawn(editor_cmd) end),
    awful.key({ modkey }, "KP_Insert", function () awful.util.spawn(editor_cmd) end),
 }
 
