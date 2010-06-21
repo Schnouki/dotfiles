@@ -100,11 +100,16 @@ function graphite_build_module() {
         # Trouver la racine...
         while [[ ! -e "configure.sh" ]]; do cd ..; done
 
+        # Trouver le nombre de cœurs
+        local cores=2
+        which lstopo &>/dev/null && cores=$(lstopo --only core | wc -l)
+
         # Message d'avertissement
         echo "=============================="
         echo "== Compilation: $(pwd)"
         echo "== Mode: $mode"
         echo "== Type: $type"
+        echo "== Cores: $cores"
         echo "=============================="
         sleep 1
         
@@ -113,7 +118,7 @@ function graphite_build_module() {
         [[ ! -e "build" ]] && sh ./configure.sh
         
         # Compilation
-        cd build/Linux-$mode && make
+        cd build/Linux-$mode && make -j$(( $cores + 1))
 
         # Retour à l'envoyeur
         cd "$orig_dir"
