@@ -56,3 +56,12 @@
 	     (ispell-change-dictionary "american")
 	     (flyspell-mode)
 	     (setq compile-command "make -C ~/site/www")))
+
+;; smerge-mode, as suggested in the doc
+(autoload 'smerge-mode "smerge-mode" nil t)
+(defun sm-try-smerge ()
+  (save-excursion
+    (goto-char (point-min))
+    (when (re-search-forward "^<<<<<<< " nil t)
+      (smerge-mode 1))))
+(add-hook 'find-file-hook 'sm-try-smerge t)

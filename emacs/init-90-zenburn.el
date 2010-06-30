@@ -97,6 +97,14 @@
     )
   (add-hook 'ediff-load-hook 'schnouki/zenburn-for-ediff)
 
+  (defun schnouki/zenburn-for-smerge ()
+    (set-face-foreground 'smerge-mine zenburn-cyan)
+    (set-face-foreground 'smerge-other zenburn-green+3)
+    ;;(set-face-foreground 'smerge-base zenburn-orange)
+    (set-face-background 'smerge-markers zenburn-bg+1)
+    (set-face-background 'smerge-refined-change zenburn-red-4))
+  (add-hook 'smerge-mode-hook 'schnouki/zenburn-for-smerge)
+
   (defun schnouki/zenburn-for-golbarg ()
     (set-face-background golbarg-header-face zenburn-bg-1))
   (add-hook 'golbarg-mode-hook 'schnouki/zenburn-for-golbarg)
