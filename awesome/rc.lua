@@ -239,8 +239,8 @@ if f then
 else
    -- Stubs for stuff needed elsewhere
    tb_mails = nil
-   function tb_mails_update()
-   end
+   function tb_mails_update() end
+   function tb_mails_set_count(n) end
 end
 
 -- Afficher des infos sur le client qui a le focus
