@@ -243,6 +243,12 @@ else
    function tb_mails_set_count(n) end
 end
 
+-- Spop status
+require("spop")
+spop.init("localhost", 6602)
+tb_spop = widget({ type = "textbox" })
+tb_spop.text = " [spop] "
+
 -- Afficher des infos sur le client qui a le focus
 -- d'après http://github.com/MajicOne/awesome-configs/blob/master/rc.lua
 function win_info ()
@@ -309,6 +315,12 @@ persokeys = {
    -- Éditeur de texte avec la touche ThinkVantage
    awful.key({ }, "XF86Launch1",      function () awful.util.spawn(editor_cmd) end),
    awful.key({ modkey }, "KP_Insert", function () awful.util.spawn(editor_cmd) end),
+
+   -- Spop
+   awful.key({ modkey, "Control" }, "Up",    spop.toggle),
+   awful.key({ modkey, "Control" }, "Down",  spop.stop),
+   awful.key({ modkey, "Control" }, "Left",  spop.prev),
+   awful.key({ modkey, "Control" }, "Right", spop.next),
 }
 
 persoclientkeys = {
@@ -358,6 +370,7 @@ for s = 1, screen.count() do
         tb_net,
         tb_nv,
         tb_mails,
+        tb_spop,
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
     }
