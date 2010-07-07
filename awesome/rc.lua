@@ -220,10 +220,13 @@ local f = io.open("/usr/bin/notmuch")
 if f then
 
    tb_mails = widget({ type = "textbox" })
+   tb_mails_color_normal   = "#7cb8bb" -- blue-1
+   tb_mails_color_updating = "#ac7373" -- red-2
+   tb_mails_color = tb_mails_color_normal
    function tb_mails_set_count(n)
-      local s = " ✉ " .. n
+      local s = markup.fg.color(tb_mails_color, " ✉ " .. n)
       if n > 0 then
-         s = markup.bold(markup.fg.urgent(s))
+         s = markup.bold(s)
       end
       tb_mails.text = s
    end
@@ -235,12 +238,17 @@ if f then
          tb_mails_set_count(n)
       end
    end
-
+   function tb_mails_updating(u)
+      if u then tb_mails_color = tb_mails_color_updating
+      else      tb_mails_color = tb_mails_color_normal
+      end
+   end
 else
    -- Stubs for stuff needed elsewhere
    tb_mails = nil
    function tb_mails_update() end
    function tb_mails_set_count(n) end
+   function tb_mails_updating(u) end
 end
 
 -- Spop status

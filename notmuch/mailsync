@@ -28,7 +28,7 @@ quiet=
 if [ "$1" = "-q" ]; then quiet=1; fi
 
 # Preload la base de données de notmuch
-cat $MAILDIR/.notmuch/xapian/* >/dev/null &
+nice -n 15 cat $MAILDIR/.notmuch/xapian/* >/dev/null &
 
 # Est-ce qu'on a une sauvegarde fraîche ?
 BACKUPFILE="$BACKUPDIR/db-$(date +"%Y%m%d").xz"
@@ -44,8 +44,16 @@ if [ ! -e "$BACKUPFILE" ]; then
     notmuch dump | xz > "$BACKUPFILE" || exit 1
 fi
 
+# Indiquer à awesome que la mise à jour commence
+n=$(/usr/bin/notmuch count tag:unread)
+echo "tb_mails_updating(true)\ntb_mails_set_count($n)" | awesome-client
+
 if [ $quiet ]; then
     eval $NMSYNC -q -s && eval $MDSYNC -u Noninteractive.Quiet && eval $TAGSCRIPT >/dev/null
 else
     eval $NMSYNC -s && eval $MDSYNC && eval $TAGSCRIPT
 fi
+
+# Mettre à jour l'affichage dans awesome
+n=$(/usr/bin/notmuch count tag:unread)
+echo "tb_mails_updating(nil)\ntb_mails_set_count($n)" | awesome-client
