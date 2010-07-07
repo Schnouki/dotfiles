@@ -325,8 +325,8 @@ persokeys = {
    awful.key({ modkey }, "KP_Insert", function () awful.util.spawn(editor_cmd) end),
 
    -- Spop
-   awful.key({ modkey, "Control" }, "Up",    spop.toggle),
-   awful.key({ modkey, "Control" }, "Down",  spop.stop),
+   awful.key({ modkey, "Control" }, "Up",    spop.stop),
+   awful.key({ modkey, "Control" }, "Down",  spop.toggle),
    awful.key({ modkey, "Control" }, "Left",  spop.prev),
    awful.key({ modkey, "Control" }, "Right", spop.next),
 }
