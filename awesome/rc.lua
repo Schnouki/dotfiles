@@ -325,6 +325,11 @@ persokeys = {
    awful.key({ modkey }, "KP_Insert", function () awful.util.spawn(editor_cmd) end),
 
    -- Spop
+   awful.key({ }, "XF86AudioStop", spop.stop),
+   awful.key({ }, "XF86AudioPlay", spop.toggle),
+   awful.key({ }, "XF86AudioPrev", spop.prev),
+   awful.key({ }, "XF86AudioNext", spop.next),
+
    awful.key({ modkey, "Control" }, "Up",    spop.stop),
    awful.key({ modkey, "Control" }, "Down",  spop.toggle),
    awful.key({ modkey, "Control" }, "Left",  spop.prev),
