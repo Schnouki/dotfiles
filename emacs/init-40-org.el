@@ -28,14 +28,15 @@
 ;; MobileOrg -- http://orgmode.org/manual/MobileOrg.html
 (setq org-mobile-directory "/scp:kimsufi:mobileorg/")
 
-(setq org-directory "~/org/")
-(setq org-todo-keywords '((sequence "TODO" "STARTED" "|" "DONE" "CANCELED")))
-(setq schnouki/org-todo-keywords-sort-order '("DONE" "STARTED" "TODO" "CANCELED"))
-(setq org-log-done 'time)
-(setq org-enforce-todo-dependencies t)
-(setq org-enforce-toto-checkbox-dependencies t)
-(setq org-agenda-dim-blocked-tasks t)
-(setq org-agenda-custom-commands
+(setq org-directory "~/org/"
+      org-todo-keywords '((sequence "TODO" "STARTED" "|" "DONE" "CANCELED"))
+      schnouki/org-todo-keywords-sort-order '("DONE" "STARTED" "TODO" "CANCELED")
+      org-log-done 'time
+      org-enforce-todo-dependencies t
+      org-enforce-toto-checkbox-dependencies t
+      org-support-shift-select t
+      org-agenda-dim-blocked-tasks t
+      org-agenda-custom-commands
       '(("c" . "TODO par catégories")
 	("cp" "Catégorie: perso" tags-todo "+perso")
 	("cj" "Catégorie: pro"   tags-todo "+pro")
@@ -47,8 +48,8 @@
 
 (org-remember-insinuate)
 (global-set-key (kbd "C-! r") 'org-remember)
-(setq org-default-notes-file (concat org-directory "/notes.org"))
-(setq org-remember-templates
+(setq org-default-notes-file (concat org-directory "/notes.org")
+      org-remember-templates
       '(("TODO" ?t "* TODO %?\n  %i\n  %a"   "todo.org")
         ("Idée" ?i "* %^{Title}\n  %i\n  %a" org-default-notes-file "Idées")))
 
