@@ -334,6 +334,8 @@ persokeys = {
    awful.key({ modkey, "Control" }, "Down",  spop.toggle),
    awful.key({ modkey, "Control" }, "Left",  spop.prev),
    awful.key({ modkey, "Control" }, "Right", spop.next),
+
+   awful.key({ modkey, "Mod1" }, "Down", spop.cycle),
 }
 
 persoclientkeys = {
