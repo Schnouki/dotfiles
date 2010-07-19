@@ -45,6 +45,7 @@
 			       ("unread"   . "tag:unread")
 			       ("flagged"  . "tag:flagged")
 			       ("todo"     . "tag:todo")
+			       ("notes"    . "tag:notes")
 			       ("drafts"   . "tag:draft")
 			       ("sent"     . "tag:sent")
 			       ("april"    . "tag:april and tag:unread")
