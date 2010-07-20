@@ -33,15 +33,18 @@ nice -n 15 cat $MAILDIR/.notmuch/xapian/* >/dev/null &
 # Is a recent backup available?
 BACKUPFILE=$BACKUPDIR/db-$(date +"%Y%m%d").xz
 
+if [ ! -e "$BACKUPFILE" ]; then
+    if [ ! $quiet ]; then  echo "Saving the notmuch database..."; fi
+    notmuch dump | xz > "$BACKUPFILE" || exit 1
+
+    # Remove backups older than a month
+    find "$BACKUPDIR" -name 'db-*.xz' -and -mtime +30 -exec rm \{\} +
+fi
+
 # Is a network connection available?
 if ! fping -q 8.8.8.8; then
     if [ ! $quiet ]; then echo "No network connection"; fi
     exit 11
-fi
-
-if [ ! -e "$BACKUPFILE" ]; then
-    if [ ! $quiet ]; then  echo "Saving the notmuch database..."; fi
-    notmuch dump | xz > "$BACKUPFILE" || exit 1
 fi
 
 # Tell awesome the update begins
