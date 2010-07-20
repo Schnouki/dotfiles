@@ -8,16 +8,16 @@ MDSYNC="python -W ignore $(which offlineimap)"
 TAGSCRIPT=$BACKUPDIR/autotag
 
 # Already running?
-PIDFILE=/tmp/mailsync.$UID
-if [ -e "$PIDFILE" ]; then
-    pid=$(cat "$PIDFILE")
-    echo "Process already running (PID $pid)."
+zmodload zsh/net/socket
+SOCKET=/tmp/mailsync.$UID
+zsocket -l "$SOCKET" 2>/dev/null
+if [ $? != 0 ]; then
+    echo "Process already running."
     exit 1
 fi
-echo "$$" > "$PIDFILE"
 
 TRAPEXIT() {
-    rm "$PIDFILE"
+    rm "$SOCKET"
 }
 TRAPINT() {
     return $(( 128 + $1 ))
