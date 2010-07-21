@@ -11,6 +11,8 @@
 
 # Folders
 !awesome
+!ddns
+ddns/key
 !emacs
 !notmuch
 !zsh

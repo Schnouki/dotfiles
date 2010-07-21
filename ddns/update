@@ -1,0 +1,23 @@
+#!/bin/zsh
+
+# Parameters
+local server="schnouki.net"
+local domain="nancy.schnouki.net"
+local ttl=900
+local keydir=$HOME/.config/ddns/key
+
+# Get host name and IPv6 address
+local host=$(hostname)
+local ip=$(ip -6 addr show scope global | awk '/inet6/ {print $2}' | cut -d/ -f 1 | head -n 1)
+
+# Get key name
+cd "$keydir" || exit 1
+local key=$(ls -tr *.private | tail -n 1)
+
+# Do the update
+nsupdate -k "$key" <<EOF
+server $server
+update delete $host.$domain AAAA
+update add $host.$domain $ttl AAAA $ip
+send
+EOF
