@@ -27,6 +27,9 @@ TRAPINT() {
 quiet=
 if [ "$1" = "-q" ]; then quiet=1; fi
 
+# Check the DISPLAY environment variable (needed for D-Bus and awesome-client)
+[[ -z "$DISPLAY" ]] && export DISPLAY=:0.0
+
 # Preload notmuch database
 nice -n 15 cat $MAILDIR/.notmuch/xapian/* >/dev/null &
 
