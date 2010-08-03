@@ -21,8 +21,8 @@ bindkey '[8~' end-of-line
 bindkey '[A'  up-line-or-history
 bindkey '[B'  down-line-or-history
 
-bindkey '[D'  backward-char
 bindkey '[C'  forward-char 
+bindkey '[D'  backward-char
 
 #bindkey ''    backward-delete-char
 bindkey '[3~' delete-char

@@ -8,7 +8,7 @@ export XDG_CACHE_HOME=$HOME/.cache
 
 # Programs
 export EDITOR="emacsclient -c -a \"\""
-[[ "`hostname`" == "odin" ]] && export BROWSER=auto-browser:google-chrome:firefox:opera
+[[ $(hostname) == "odin" ]] && export BROWSER=auto-browser:google-chrome:firefox:opera
 
 # Program-specifig options
 export GREP_OPTIONS="--exclude=*.svn-base --exclude-dir=.svn"

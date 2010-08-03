@@ -12,7 +12,7 @@ function upload_zsh_config() {
     [[ -z "$dest" ]] && echo "Usage: $0 remote_ssh_host" && return 1
     
     pushd $HOME &>/dev/null
-    tar cj .config/zsh | ssh -axo "ClearAllForwardings yes" "$dest" "cat | tar xj && rm .zshrc && ln .config/zsh/zshrc .zshrc && echo \"zsh config updated on \$(hostname)\""
+    tar cj .config/zsh | ssh -axo "ClearAllForwardings yes" "$dest" "cat | tar xj && rm -f .zshrc && ln .config/zsh/zshrc .zshrc && echo \"zsh config updated on \$(hostname)\""
     popd &>/dev/null
 }
 
