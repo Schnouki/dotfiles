@@ -14,5 +14,7 @@
 !ddns
 ddns/key
 !emacs
+!irssi
+irssi/nickserv.*
 !notmuch
 !zsh
