@@ -53,43 +53,6 @@
       '(("TODO" ?t "* TODO %?\n  %i\n  %a"   "todo.org")
         ("Idée" ?i "* %^{Title}\n  %i\n  %a" org-default-notes-file "Idées")))
 
-;; Custom faces for specific TODO keywords
-;; http://orgmode.org/worg/org-hacks.php#sec-19
-(eval-after-load 'org-faces
- '(progn
-    (defcustom org-todo-keyword-faces nil
-      "Faces for specific TODO keywords.
-This is a list of cons cells, with TODO keywords in the car and
-faces in the cdr.  The face can be a symbol, a color, or a
-property list of attributes, like (:foreground \"blue\" :weight
-bold :underline t)."
-      :group 'org-faces
-      :group 'org-todo
-      :type '(repeat
-              (cons
-               (string :tag "Keyword")
-               (choice color (sexp :tag "Face")))))))
-
-(eval-after-load 'org
- '(progn
-    (defun org-get-todo-face-from-color (color)
-      "Returns a specification for a face that inherits from org-todo
- face and has the given color as foreground. Returns nil if
- color is nil."
-      (when color
-        `(:inherit org-warning :foreground ,color)))
-
-    (defun org-get-todo-face (kwd)
-      "Get the right face for a TODO keyword KWD.
-If KWD is a number, get the corresponding match group."
-      (if (numberp kwd) (setq kwd (match-string kwd)))
-      (or (let ((face (cdr (assoc kwd org-todo-keyword-faces))))
-            (if (stringp face)
-                (org-get-todo-face-from-color face)
-              face))
-          (and (member kwd org-done-keywords) 'org-done)
-          'org-todo))))
-
 ;; Also use custom faces for checkbox statistics
 (eval-after-load 'org-list
   '(progn
@@ -182,3 +145,11 @@ Use the same as for the todo keywods."
 (add-hook 'after-save-hook 'ba/org-adjust-tags-column-after-save)
 (add-hook 'org-agenda-mode-hook '(lambda ()
 				   (setq org-agenda-tags-column (- (window-width)))))
+
+
+;; Workaround a bug that causes org-mobile-push to fail when
+;; org-todo-keyword-faces is set. Not pretty, but works...
+(defadvice org-mobile-push
+  (around org-mobile-push-disable-todo-keyword-faces activate)
+  (let ((org-todo-keyword-faces nil))
+    ad-do-it))
