@@ -40,7 +40,11 @@
 ;; Global keys to launch notmuch
 (global-set-key (kbd "C-! n") 'notmuch)
 
-;; Saved searches
+;; Various notmuch parameters:
+;; - saved searches
+;; - directory for sent messages
+;; - kill message-mode buffer after a mail is sent
+;; - poll script that fetches new mail
 (setq notmuch-saved-searches '(("inbox"    . "tag:inbox")
 			       ("unread"   . "tag:unread")
 			       ("flagged"  . "tag:flagged")
@@ -60,14 +64,10 @@
 			       ("pympress" . "tag:pympress and tag:unread")
 			       ("social"   . "tag:social and tag:unread")
 			       ("facebook" . "tag:facebook and tag:unread")
-			       ("lwn"      . "from:lwn.net and tag:unread")
-))
-
-;; Directory for sent messages
-(setq notmuch-fcc-dirs '(("Sent")))
-
-;; Kill message-mode buffer after a mail is sent
-(setq message-kill-buffer-on-exit t)
+			       ("lwn"      . "from:lwn.net and tag:unread"))
+      notmuch-fcc-dirs '(("Sent"))
+      message-kill-buffer-on-exit t
+      notmuch-poll-script "~/.config/notmuch/mailsync")
 
 ;; Useful key bindings in notmuch buffers
 (eval-after-load 'notmuch
