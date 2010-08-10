@@ -69,7 +69,7 @@ function svreload() {
     done
 }
 
-function pacQ {
+function pacQ() {
     local tab align
     tab=()
     pacman -Q $@ | while read p v; do
@@ -79,7 +79,6 @@ function pacQ {
     zformat -a align " " $tab
     print -lr -- $align
 }
-
 
 function graphite_build_module() {
     local autopushd=$(setopt | grep autopushd)
