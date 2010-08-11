@@ -24,8 +24,8 @@ servers = (
   { address = "irc.link-net.org"; chatnet = "LinkNet"; port = "6667"; },
   { address = "silc.silcnet.org"; chatnet = "SILC"; port = "706"; },
   {
-    address = "www.rez-metz.supelec.fr";
-    chatnet = "Supelec";
+    address = "193.48.225.246";
+    chatnet = "Era";
     port = "6667";
     use_ssl = "no";
     ssl_verify = "no";
@@ -95,14 +95,14 @@ chatnets = {
     max_whois = "30";
   };
   SILC = { type = "SILC"; };
-  Supelec = { type = "IRC"; };
+  Era = { type = "IRC"; };
 };
 
 channels = (
   { name = "#irssi"; chatnet = "ircnet"; autojoin = "No"; },
   { name = "silc"; chatnet = "silc"; autojoin = "No"; },
-  { name = "#campus"; chatnet = "Supelec"; autojoin = "yes"; },
-  { name = "#d20"; chatnet = "Supelec"; autojoin = "yes"; }
+  { name = "#campus"; chatnet = "Era"; autojoin = "yes"; },
+  { name = "#d20"; chatnet = "Era"; autojoin = "yes"; }
 );
 
 aliases = {
