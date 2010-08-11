@@ -301,6 +301,7 @@ settings = {
     chanact_header = "Act: ";
     chanact_filter = "1";
     awl_display_key = "%C$Q:%n$H$C$S";
+    azerty_set_on_load = "yes";
   };
 };
 hilights = ( );
@@ -313,3 +314,21 @@ mainwindows = {
   2 = { first_line = "10"; lines = "56"; };
   1 = { first_line = "1"; lines = "9"; };
 };
+keyboard = (
+  { key = "meta-&"; id = "change_window"; data = "1"; },
+  { key = "meta-é"; id = "change_window"; data = "2"; },
+  { key = "meta-Ã©"; id = "change_window"; data = "2"; },
+  { key = "meta-\""; id = "change_window"; data = "3"; },
+  { key = "meta-'"; id = "change_window"; data = "4"; },
+  { key = "meta-("; id = "change_window"; data = "5"; },
+  { key = "meta--"; id = "change_window"; data = "6"; },
+  { key = "meta-è"; id = "change_window"; data = "7"; },
+  { key = "meta-Ã¨"; id = "change_window"; data = "7"; },
+  { key = "meta-_"; id = "change_window"; data = "8"; },
+  { key = "meta-ç"; id = "change_window"; data = "9"; },
+  { key = "meta-Ã§"; id = "change_window"; data = "9"; },
+  { key = "meta-à"; id = "change_window"; data = "10"; },
+  { key = "meta-Ã "; id = "change_window"; data = "10"; },
+  { key = "meta-a"; id = "change_window"; data = "11"; },
+  { key = "meta-z"; id = "change_window"; data = "12"; }
+);
