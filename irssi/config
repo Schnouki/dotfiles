@@ -29,6 +29,14 @@ servers = (
     port = "6667";
     use_ssl = "no";
     ssl_verify = "no";
+  },
+  {
+    address = "chat.freenode.net";
+    chatnet = "Freenode";
+    port = "7000";
+    use_ssl = "yes";
+    ssl_verify = "yes";
+    ssl_capath = "/etc/ssl/certs";
   }
 );
 
@@ -96,6 +104,7 @@ chatnets = {
   };
   SILC = { type = "SILC"; };
   Era = { type = "IRC"; };
+  Freenode = { type = "IRC"; };
 };
 
 channels = (
@@ -300,11 +309,11 @@ settings = {
   "perl/core/scripts" = {
     chanact_header = "Act: ";
     chanact_filter = "1";
-    awl_display_key = "%C$Q:%n$H$C$S";
+    awl_display_key = "%C$N:%n$H$C$S";
     azerty_set_on_load = "yes";
+    awl_hide_data = "1";
   };
 };
-hilights = ( );
 logs = { };
 windows = {
   1 = { immortal = "yes"; name = "hilight"; sticky = "yes"; };
