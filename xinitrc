@@ -21,7 +21,7 @@ else
 fi
 
 # Screensaver
-xscreensaver -no-splash &
+[[ $(hostname) != "odin" ]] && xscreensaver -no-splash &
 
 # Tell Java we have a "non-reparenting window manager"
 wmname LG3D
