@@ -1,0 +1,13 @@
+body {
+    background-color: #3f3f3f;
+    color: #dcdccc;
+}
+ 
+a:link {
+    color: #8cd0d3 !important;
+}
+ 
+td {
+    background-color: white
+    color: black;
+}

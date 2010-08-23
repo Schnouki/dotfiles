@@ -1,0 +1,90 @@
+/* Interesting URLs:
+ *  - http://eriwen.com/css/tweaking-thunderbirds-chrome/
+ *  - http://www.linnhe2.free-online.co.uk/thunderbird/chrome.html
+ */
+
+/* The @namespace line is supposed to be mandatory, but @-moz-document does not work if
+ * it's here.
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+ */
+
+/* Links (e.g. addons window) */
+.text-link {
+    color: #8cd0d3 !important;
+}
+
+/* Unread messages */
+treechildren::-moz-tree-cell(unread) {
+    background-color: #4f3f3f !important;
+}
+treechildren::-moz-tree-cell(unread,selected) {
+    background-color: #5f3f3f !important;
+}
+
+/* Replied messages */
+treechildren::-moz-tree-cell(replied) {
+    background-color: #3f4f3f !important;
+}
+treechildren::-moz-tree-cell(replied,selected) {
+    background-color: #3f5f3f !important;
+}
+treechildren::-moz-tree-cell(replied,current) {
+    background-color: #3f6f3f !important;
+}
+
+/* Deleted messages */
+treechildren::-moz-tree-cell(imapdeleted) {
+    background-color: #1f1f1f !important;
+}
+treechildren::-moz-tree-cell(imapdeleted,selected) {
+    background-color: #2f2f2f !important;
+}
+treechildren::-moz-tree-cell(imapdeleted,current) {
+    background-color: #3f3f3f !important;
+}
+
+/* Folder pane alternating row colours */
+#folderTree treechildren::-moz-tree-row(odd) {
+    background-image: url("chrome://messenger/skin/icons/row.png");
+    background-position: bottom;
+    background-repeat: repeat-x;
+}
+
+/* Hide folder pane header */
+#folderPaneHeader {
+    display: none !important;
+}
+
+/* Message summary -- d'après http://forums.mozillazine.org/viewtopic.php?f=39&t=1921529 */
+@-moz-document url(chrome://messenger/content/multimessageview.xhtml) {
+    body {
+        background-color: #3f3f3f !important;
+        color: #dcdcdc !important;
+    }
+    #headingwrapper {
+        background-color: #3f3f5f !important;
+        color: #dcdccc !important;
+    }
+}
+
+/* Enigmail */
+.enigmailHeaderBoxLabelNoSignature {
+  background-color: #4f4f4f !important;
+  color: #dcdccc !important;
+}
+.enigmailHeaderBoxLabelSignatureOk {
+  background-color: #323f32 !important;
+  color: #dcdccc !important;
+}
+.enigmailHeaderBoxLabelSignatureVerified {
+  background-color: #323f3f !important;
+  color: #dcdccc !important;
+}
+.enigmailHeaderBoxLabelSignatureNotOk {
+ background-color: #3f323f !important;
+ color: #dcdccc !important;
+}
+.enigmailHeaderBoxLabelSignatureUnknown {
+ background-color: #3f3f32 !important;
+ color: #dcdccc !important;
+}
