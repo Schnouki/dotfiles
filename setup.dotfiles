@@ -6,7 +6,7 @@ for F in hook.*; do
 done
 
 # Setup dotfiles
-for F in fonts.conf Xdefaults xinitrc; do
+for F in fonts.conf gtkrc-2.0 Xdefaults xinitrc; do
     setup_file_symlink "$F" ".$F"
 done
 
