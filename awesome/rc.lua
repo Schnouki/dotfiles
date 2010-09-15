@@ -68,7 +68,7 @@ gamemenu = {
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "jeux", gamemenu },
-                                    { "gajim", "gajim", image("/usr/share/pixmaps/gajim.png") },
+                                    { "gajim", "gajim", image("/usr/share/icons/hicolor/64x64/apps/gajim.png") },
                                     { "thunderbird", "thunderbird", image("/usr/share/pixmaps/thunderbird.png") },
                                     { "firefox", "firefox", image("/usr/share/pixmaps/firefox.png") },
                                     { "chrome", "google-chrome", image("/opt/google/chrome/product_logo_16.png") },
