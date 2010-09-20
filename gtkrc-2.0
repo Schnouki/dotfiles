@@ -1,6 +1,8 @@
 # GUI theme
 include "/usr/share/themes/NOX/gtk-2.0/gtkrc"
 
+# Emacs-like keyboard layout
+include "/usr/share/themes/Emacs/gtk-2.0-key/gtkrc"
 
 # Misc stuff
 gtk-can-change-accels = 1
