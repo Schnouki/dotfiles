@@ -12,6 +12,10 @@
   (setq indent-tabs-mode t))
 (add-hook 'emacs-lisp-mode-hook 'schnouki/emacs-lisp-default-indent)
 
+;; Shorter key bindings for folding/hideshow
+(global-set-key (kbd "C-! :") 'folding-toggle-show-hide)
+(global-set-key (kbd "C-! !") 'hs-toggle-hiding)
+
 ;; Default compilation commands
 (setq-default compile-command "make") ;; I don't want "make -k"
 (add-hook 'LaTeX-mode-hook (lambda () (setq compile-command "latexmk -pdf")))

@@ -2,12 +2,22 @@
 ;; Major modes
 ;; -----------------------------------------------------------------------------
 
+;; HideShow minor mode for common major modes
+(add-hook 'c-mode-common-hook   'hs-minor-mode)
+(add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)
+(add-hook 'java-mode-hook       'hs-minor-mode)
+(add-hook 'lisp-mode-hook       'hs-minor-mode)
+(add-hook 'perl-mode-hook       'hs-minor-mode)
+(add-hook 'sh-mode-hook         'hs-minor-mode)
+
+;; Prepare various major modes
 (load "auctex.el" nil t t)
 (load "preview-latex.el" nil t t)
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
 
 (autoload 'lua-mode "lua-mode" "Lua mode." t)
 (setq auto-mode-alist (append '(("\\.lua$" . lua-mode)) auto-mode-alist))
+(add-hook 'lua-mode 'hs-minor-mode)
 
 (autoload 'python-mode "python-mode.el" "Python mode." t)
 (setq auto-mode-alist (append '(("\\.py$" . python-mode)) auto-mode-alist))
@@ -26,6 +36,7 @@
 
 (autoload 'cuda-mode "cuda-mode.el" "Cuda mode." t)
 (setq auto-mode-alist (append '(("\\.cu$" . cuda-mode)) auto-mode-alist))
+(folding-add-to-marks-list 'cuda-mode "// {{{" "// }}}" nil t)
 
 (autoload 'cmake-mode "cmake-mode.el" "CMake mode." t)
 (setq auto-mode-alist
