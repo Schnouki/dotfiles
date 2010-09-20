@@ -20,7 +20,7 @@ if ( pgrep -u "${USER}" gpg-agent ); then
     eval `cat $gnupginf`
     eval `cut -d= -f1 $gnupginf | xargs echo export`
 else
-    eval `gpg-agent --daemon`
+    eval `gpg-agent --daemon --write-env-file $gnupginf`
 fi
 
 # Screensaver
