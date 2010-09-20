@@ -7,6 +7,7 @@ server
 tramp
 image-dired
 abbrev_defs
+el-get
 
 # Symlinks
 golbarg.el
