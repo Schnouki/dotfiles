@@ -13,8 +13,12 @@
 (add-hook 'emacs-lisp-mode-hook 'schnouki/emacs-lisp-default-indent)
 
 ;; Shorter key bindings for folding/hideshow
-(global-set-key (kbd "C-! :") 'folding-toggle-show-hide)
-(global-set-key (kbd "C-! !") 'hs-toggle-hiding)
+(global-set-key (kbd "C-! :") '(lambda () (interactive)
+				 (unless folding-mode (folding-mode))
+				 (folding-toggle-show-hide)))
+(global-set-key (kbd "C-! !") '(lambda () (interactive)
+				 (unless hs-minor-mode (hs-minor-mode))
+				 (hs-toggle-hiding)))
 
 ;; Default compilation commands
 (setq-default compile-command "make") ;; I don't want "make -k"
