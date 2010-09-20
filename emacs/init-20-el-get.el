@@ -16,6 +16,11 @@
 	       :url "http://git.savannah.gnu.org/cgit/emacs-tiny-tools.git/plain/lisp/other/folding.el?h=devel"
 	       :features (folding folding-isearch)
 	       :after 'folding-mode-add-find-file-hook)
+	(:name pymacs
+	       :build ("make" "sudo make install"))
+	(:name python-mode
+	       :type bzr
+	       :url "lp:python-mode")
 	))
 
 (el-get)
