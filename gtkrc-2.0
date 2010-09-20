@@ -1,14 +1,6 @@
-# -- THEME AUTO-WRITTEN DO NOT EDIT
+# GUI theme
 include "/usr/share/themes/NOX/gtk-2.0/gtkrc"
 
-style "user-font" {
-	font_name = "Sans 10"
-}
 
-widget_class "*" style "user-font"
-
-gtk-font-name="Sans 10"
-
-include "/home/schnouki/.gtkrc.mine"
-
-# -- THEME AUTO-WRITTEN DO NOT EDIT
+# Misc stuff
+gtk-can-change-accels = 1

@@ -6,7 +6,8 @@
 # Dotfiles
 !fonts.conf
 !gtkrc-2.0
-!gtkrc.mine
+!gtkrc-odin
+!gtkrc-thor
 !Xdefaults
 !xinitrc
 !*.gpg
