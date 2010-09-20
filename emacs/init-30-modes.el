@@ -76,3 +76,7 @@
     (when (re-search-forward "^<<<<<<< " nil t)
       (smerge-mode 1))))
 (add-hook 'find-file-hook 'sm-try-smerge t)
+
+;; Display the current function name in the mode line
+(which-function-mode 1)
+
