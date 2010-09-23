@@ -41,6 +41,7 @@ fi
 
 # Useless apps to run at boot...
 gnote &
+gnotero &
 #gajim &
 #thunderbird &
 #firefox &
