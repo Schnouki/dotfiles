@@ -41,3 +41,13 @@ URxvt.scrollBar:         false
 URxvt.scrollTtyOutput:   false
 URxvt.scrollWithBuffer:  true
 URxvt.scrollTtyKeypress: true
+
+/* Tabs */
+URxvt.perl-ext-common: default,tabbedex
+URxvt.autohide:        true
+URxvt.tabbar-bg:       0
+URxvt.tabbar-fg:       8
+URxvt.tab-bg:          0
+URxvt.tab-fg:          3
+URxvt.title-bg:        0
+URxvt.title-fg:        12
