@@ -27,3 +27,11 @@
 .enigmailHeaderValue {
   color: black !important;
 }
+
+/* Lightning */
+#ltnSidebar, minimonth {
+    background-color: #5C5E61 !important;
+}
+.minimonth-month-box {
+    background-color: #525458 !important;
+}
