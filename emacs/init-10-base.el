@@ -96,7 +96,24 @@
 (setq select-active-region t)
 
 ;; ediff window setup
-(setq ediff-window-setup-function 'ediff-setup-windows-plain)
+;; - don't open a new frame for the control buffer
+;; - split horizontally if the current frame is wide enough
+(setq ediff-window-setup-function 'ediff-setup-windows-plain
+      ediff-split-window-function (lambda (&optional arg)
+				    (if (> (frame-width) 150)
+					(split-window-horizontally arg)
+				      (split-window-vertically arg))))
+;; - restore window configuration when quitting ediff
+(add-hook 'ediff-load-hook
+	  (lambda ()
+	    (add-hook 'ediff-before-setup-hook
+		      (lambda ()
+			(setq ediff-saved-window-configuration (current-window-configuration))))
+	    (let ((restore-window-configuration
+		   (lambda ()
+		     (set-window-configuration ediff-saved-window-configuration))))
+	      (add-hook 'ediff-quit-hook restore-window-configuration 'append)
+	      (add-hook 'ediff-suspend-hook restore-window-configuration 'append))))
 
 ;; Remember the last visited line in a file
 (setq-default save-place t)
