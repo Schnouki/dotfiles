@@ -6,7 +6,7 @@
  '(font-latex-fontify-sectioning 1.05)
  '(inhibit-startup-screen t)
  '(org-agenda-files (quote ("~/org/gcal/pro.org" "~/org/gcal/perso.org" "~/org/migration_serveur.org" "~/org/todo.org")))
- '(safe-local-variable-values (quote ((py-indent-offset . 4) (ispell-dictionary . "francais") (ispell-dictionary . "american")))))
+ '(safe-local-variable-values (quote ((pkgbuild-update-sums-on-save) (py-indent-offset . 4) (ispell-dictionary . "francais") (ispell-dictionary . "american")))))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.

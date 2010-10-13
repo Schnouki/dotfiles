@@ -1,20 +1,9 @@
-stjerm.key: space
-stjerm.mod: alt
-stjerm.border: thick
-stjerm.font: Mono 9
-stjerm.allowreorder: true
-stjerm.scrollbar: right
-stjerm.foreground: lightgrey
-stjerm.widthpercent: 100
-stjerm.heightpercent: 60
-
 XBomb.*font: lucidasans-12
 XBomb.*grid.font: lucidasans-bold-14
 
-
 /* Tango colors for urxvt */
-URxvt.foreground: #C8C8C8
-URxvt.background: #323232
+URxvt.foreground: #C0C0C0
+URxvt.background: #171717
 URxvt.color0:     #2E3436
 URxvt.color1:     #CC0000
 URxvt.color2:     #4E9A06
@@ -32,7 +21,7 @@ URxvt.color13:    #AD7FA8
 URxvt.color14:    #34E2E2
 URxvt.color15:    #EEEEEC
 
-URxvt.transparent: true
+URxvt.transparent: false
 URxvt.shading:     10
 URxvt.fading:      40
 URxvt.font:        xft:Mono:pixelsize=12.5
