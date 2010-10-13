@@ -12,7 +12,7 @@ fi
 x11vnc -o /var/log/x11vnc.log -forever -bg -localhost -solid black -avahi -unixpw schnouki
 
 # NVIDIA card configuration
-nvidia-settings -l
+nvidia-settings -l &
 
 # GPG agent
 gnupginf="$HOME/.gnupg/gpg-agent.info"
@@ -40,6 +40,7 @@ if [ -e "$EMACSPIDFILE" ]; then
 fi
 
 # Useless apps to run at boot...
+dropboxd &
 gnote &
 gnotero &
 #gajim &
