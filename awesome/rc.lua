@@ -75,7 +75,7 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
                                     { "chrome", "google-chrome", image("/opt/google/chrome/product_logo_16.png") },
                                     { "spotify", "spotify", image("/home/schnouki/.config/awesome/icons/spotify.png") },
                                     { "open office", "soffice", image("/usr/share/icons/hicolor/16x16/apps/ooo-writer.png") },
-                                    { "acroread", "acroread", image("/usr/share/pixmaps/AdobeReader9.png") },
+                                    { "acroread", "acroread", image("/usr/share/pixmaps/acroread.png") },
                                     { "galculator", "galculator", image("/usr/share/pixmaps/galculator.png") },
                                     { "g-commander", "gnome-commander", image("/usr/share/pixmaps/gnome-commander.png") },
                                     { "gdmap", "gdmap", image("/usr/share/pixmaps/gdmap_icon.png") },
