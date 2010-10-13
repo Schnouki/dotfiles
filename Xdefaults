@@ -22,7 +22,6 @@ URxvt.color14:    #34E2E2
 URxvt.color15:    #EEEEEC
 
 URxvt.transparent: false
-URxvt.shading:     10
 URxvt.fading:      40
 URxvt.font:        xft:Mono:pixelsize=12.5
 
