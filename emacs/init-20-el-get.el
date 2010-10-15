@@ -8,7 +8,7 @@
 (setq el-get-dir "~/.config/emacs/el-get"
       el-get-recipe-path '("~/.config/emacs/el-get/el-get/recipes")
       el-get-sources
-      '(el-get google-maps google-weather verbiste
+      '(el-get erc-highlight-nicknames flyguess google-maps google-weather rainbow-mode undo-tree verbiste
 	(:name magit
 	       :url "git://github.com/Schnouki/magit.git")
 	(:name folding
@@ -24,3 +24,11 @@
 	))
 
 (el-get)
+
+(defun schnouki/el-get-update-all ()
+  (interactive)
+  (let (item)
+    (dolist (item el-get-sources)
+      (el-get-update (symbol-name
+		      (if (symbolp item) item
+			(plist-get item :name)))))))
