@@ -8,7 +8,9 @@
 (setq el-get-dir "~/.config/emacs/el-get"
       el-get-recipe-path '("~/.config/emacs/el-get/el-get/recipes")
       el-get-sources
-      '(el-get erc-highlight-nicknames flyguess google-maps google-weather rainbow-mode undo-tree verbiste
+      '(erc-highlight-nicknames flyguess google-maps google-weather rainbow-mode undo-tree verbiste
+	(:name el-get
+	       :url "git://github.com/Schnouki/el-get.git")
 	(:name magit
 	       :url "git://github.com/Schnouki/magit.git")
 	(:name folding
