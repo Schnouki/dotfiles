@@ -598,6 +598,8 @@ awful.rules.rules = {
       properties = { tag = tags[1][1] } },
     { rule = { instance = "spotify.exe" },
       properties = { tag = tags[1][9] } },
+    { rule = { class = "Audacious" },
+      properties = { floating = true, ontop = true, sticky = true } },
     { rule = { class = nil, instance = nil },
       callback = handle_graphite },
 }
