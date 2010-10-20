@@ -4,3 +4,29 @@
 .ac-url-text {
     color: #8ff !important;
 }
+
+/* Download bar */
+.db_progressindicator {
+    color: #000 !important;
+}
+.db_buttonText {
+    font-size: 7pt !important;
+}
+.db_filenameLabel {
+    font-size: 7pt !important;
+}
+#downbarMainMenuButton,
+#downbarClearButton,
+#downbarToMiniButton {
+    /*height: 22px !important;*/
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    border: 0 !important;
+}
+
+/* Restart button */
+#restart-app {
+    border-top: 0 !important;
+    border-bottom: 0 !important;
+    height: 16px !important;
+}
