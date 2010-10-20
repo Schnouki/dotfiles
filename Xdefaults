@@ -21,6 +21,7 @@ URxvt.color13:    #AD7FA8
 URxvt.color14:    #34E2E2
 URxvt.color15:    #EEEEEC
 
+URxvt.termName:    rxvt-256color
 URxvt.transparent: false
 URxvt.fading:      40
 URxvt.font:        xft:Mono:pixelsize=12.5
