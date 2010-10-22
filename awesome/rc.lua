@@ -66,20 +66,23 @@ gamemenu = {
    { "hedgewars", "hedgewars", image("/usr/share/pixmaps/hedgewars.png") },
 }
 
+utilsmenu = {
+   { "galculator", "galculator", image("/usr/share/pixmaps/galculator.png") },
+   { "gdmap", "gdmap", image("/usr/share/pixmaps/gdmap_icon.png") },
+}
+
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "jeux", gamemenu },
+                                    { "utils", utilsmenu },
                                     { "gajim", "gajim", image("/usr/share/icons/hicolor/64x64/apps/gajim.png") },
-                                    { "pino", "pino" },
                                     { "thunderbird", "thunderbird", image("/usr/share/pixmaps/thunderbird.png") },
                                     { "firefox", "firefox", image("/usr/share/pixmaps/firefox.png") },
                                     { "chrome", "google-chrome", image("/opt/google/chrome/product_logo_16.png") },
                                     { "picasa", "/usr/local/bin/picasa", image("/home/schnouki/.config/awesome/icons/picasa.png") },
                                     { "spotify", "spotify", image("/home/schnouki/.config/awesome/icons/spotify.png") },
-                                    { "open office", "soffice", image("/usr/share/icons/hicolor/16x16/apps/ooo-writer.png") },
+                                    { "libre office", "soffice", image("/usr/share/icons/hicolor/16x16/apps/ooo-writer.png") },
                                     { "acroread", "acroread", image("/usr/share/pixmaps/acroread.png") },
-                                    { "galculator", "galculator", image("/usr/share/pixmaps/galculator.png") },
-                                    { "g-commander", "gnome-commander", image("/usr/share/pixmaps/gnome-commander.png") },
-                                    { "gdmap", "gdmap", image("/usr/share/pixmaps/gdmap_icon.png") },
+                                    { "gcmd", "gnome-commander", image("/usr/share/pixmaps/gnome-commander.png") },
                                     { "open terminal", terminal }
                                   }
                         })
