@@ -7,6 +7,7 @@
 (add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)
 (add-hook 'java-mode-hook       'hs-minor-mode)
 (add-hook 'lisp-mode-hook       'hs-minor-mode)
+(add-hook 'lua-mode             'hs-minor-mode)
 (add-hook 'perl-mode-hook       'hs-minor-mode)
 (add-hook 'sh-mode-hook         'hs-minor-mode)
 
@@ -17,7 +18,7 @@
 
 (autoload 'lua-mode "lua-mode" "Lua mode." t)
 (setq auto-mode-alist (append '(("\\.lua$" . lua-mode)) auto-mode-alist))
-(add-hook 'lua-mode 'hs-minor-mode)
+(folding-add-to-marks-list 'lua-mode "-- {{{" "-- }}}" nil t)
 
 (autoload 'python-mode "python-mode.el" "Python mode." t)
 (setq auto-mode-alist (append '(("\\.py$" . python-mode)) auto-mode-alist))

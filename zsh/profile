@@ -1,6 +1,9 @@
 # -*- mode: sh; -*-
 
 ##### Environment variables
+# Avoid FPATH pollution due to Intel ICC/MKL
+unset FPATH
+
 # Paths
 export XDG_DATA_HOME=$HOME/.local/share
 export XDG_CONFIG_HOME=$HOME/.config
@@ -22,7 +25,7 @@ setopt hist_ignore_space
 setopt appendhistory
 
 ##### Colors
-autoload colors
+autoload -U colors
 colors
 # Nice colors in ls. Changing TERM is needed because dircolors doesn't know
 # about rxvt-256color...

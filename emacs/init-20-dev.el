@@ -3,9 +3,9 @@
 ;; -----------------------------------------------------------------------------
 
 ;; Tabs and indentation
-(setq c-basic-offset 4)
-(setq-default indent-tabs-mode nil) ;; No tabs at all!
-(setq-default c-indent-level 4)
+(setq-default c-basic-offset 4
+	      c-indent-level 4
+	      indent-tabs-mode nil) ;; No tabs at all!
 
 ;; Default parameters for emacs-lisp
 (defun schnouki/emacs-lisp-default-indent ()
@@ -86,5 +86,5 @@
 
 ;; Access the Common Lisp HyperSpec
 ;; http://clisp.cvs.sourceforge.net/*checkout*/clisp/clisp/emacs/clhs.el
-(require 'clhs)
-(global-set-key (kbd "C-h M-f") 'common-lisp-hyperspec)
+;(require 'clhs)
+;(global-set-key (kbd "C-h M-f") 'common-lisp-hyperspec)
