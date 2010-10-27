@@ -13,6 +13,7 @@ os.setlocale("fr_FR.utf8")
 os.setlocale("C", "numeric")
 
 -- {{{ Variable definitions
+
 -- Themes define colours, icons, and wallpapers
 beautiful.init("/home/schnouki/.config/awesome/themes/schnouki-zenburn.lua")
 
@@ -40,6 +41,7 @@ layouts =
     awful.layout.suit.magnifier,
     awful.layout.suit.floating
 }
+
 -- }}}
 
 -- {{{ Tags
@@ -52,6 +54,7 @@ end
 -- }}}
 
 -- {{{ Menu
+
 -- Create a laucher widget and a main menu
 myawesomemenu = {
    { "manual", terminal .. " -e man awesome" },
@@ -89,9 +92,11 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
 
 mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
                                      menu = mymainmenu })
+
 -- }}}
 
 -- {{{ Wibox
+-- {{{ Default stuff
 -- Create a textclock widget
 mytextclock = awful.widget.textclock({ align = "right" }, " %a %e %b %Y %T %Z ", 1)
 
@@ -138,7 +143,17 @@ mytasklist.buttons = awful.util.table.join(
                                               if client.focus then client.focus:raise() end
                                           end))
 
+-- }}}
+-- {{{ Personal stuff
+-- Fonctions perso
+function gethost()
+   local f = io.popen("/bin/hostname")
+   local n = f:read("*a") or "none"
+   f:close()
+   return string.gsub(n, "\n$", "")
+end
 
+-- {{{ Window management
 -- Gestion de la titlebar
 function handle_titlebar(c)
    if awful.client.floating.get(c) then
@@ -166,16 +181,9 @@ function new_transient(c)
       client.focus = c
    end
 end
+-- }}}
 
--- Fonctions perso
-function gethost()
-   local f = io.popen ("/bin/hostname")
-   local n = f:read("*a") or "none"
-   f:close()
-   return string.gsub(n, "\n$", "")
-end
-
--- Widgets perso
+-- {{{ Widgets perso
 require("netmon")
 netmon.init()
 tb_net = widget({ type = "textbox" })
@@ -218,7 +226,39 @@ pb_vol:buttons(awful.util.table.join(
        awful.button({ }, 2, function () volume_upd(pb_vol, volume_mute() ) end)
 ))
 
+-- Afficher des infos sur le client qui a le focus
+-- d'après http://github.com/MajicOne/awesome-configs/blob/master/rc.lua
 require('markup')
+function win_info ()
+   local c = client.focus
+
+   -- Quick little short-circuit.
+   if c == nil then return end
+
+   local title, class, instance, role, type = nil, nil, nil, nil, nil
+   title    = c.name
+   class    = c.class
+   instance = c.instance
+   role     = c.role
+   type     = c.type
+ 
+   -- We don't want to error on nil.
+   if title    == nil then title    = markup.fg.focus('nil') end
+   if class    == nil then class    = markup.fg.focus('nil') end
+   if instance == nil then instance = markup.fg.focus('nil') end
+   if role     == nil then role     = markup.fg.focus('nil') end
+   if type     == nil then type     = markup.fg.focus('nil') end
+   
+   naughty.notify({
+      text = markup.fg.focus('      Role: ') .. role  .. '\n' ..
+             markup.fg.focus('      Type: ') .. type  .. '\n' ..
+             markup.fg.focus('      Title: ') .. title .. '\n' ..
+             markup.fg.focus('    Class: ') .. class .. '\n' ..
+             markup.fg.focus('Instance: ') .. instance,
+      timeout = 5,
+      hover_timeout = 0.5
+   })
+end
 
 -- Widget with number of unread mails if notmuch is available
 local f = io.open("/usr/bin/notmuch")
@@ -261,41 +301,10 @@ require("spop")
 spop.init("localhost", 6602)
 tb_spop = widget({ type = "textbox" })
 tb_spop.text = " [spop] "
-
--- Afficher des infos sur le client qui a le focus
--- d'après http://github.com/MajicOne/awesome-configs/blob/master/rc.lua
-function win_info ()
-   local c = client.focus
-
-   -- Quick little short-circuit.
-   if c == nil then return end
-
-   local title, class, instance, role, type = nil, nil, nil, nil, nil
-   title    = c.name
-   class    = c.class
-   instance = c.instance
-   role     = c.role
-   type     = c.type
- 
-   -- We don't want to error on nil.
-   if title    == nil then title    = markup.fg.focus('nil') end
-   if class    == nil then class    = markup.fg.focus('nil') end
-   if instance == nil then instance = markup.fg.focus('nil') end
-   if role     == nil then role     = markup.fg.focus('nil') end
-   if type     == nil then type     = markup.fg.focus('nil') end
-   
-   naughty.notify({
-      text = markup.fg.focus('      Role: ') .. role  .. '\n' ..
-             markup.fg.focus('      Type: ') .. type  .. '\n' ..
-             markup.fg.focus('      Title: ') .. title .. '\n' ..
-             markup.fg.focus('    Class: ') .. class .. '\n' ..
-             markup.fg.focus('Instance: ') .. instance,
-      timeout = 5,
-      hover_timeout = 0.5
-   })
-end
+-- }}}
 
 -- {{{ Raccourcis claviers persos
+
 persokeys = {
    -- Volume
    awful.key({ }, "XF86AudioRaiseVolume", function () volume_upd(pb_vol, volume_plus())  end),
@@ -352,7 +361,7 @@ persoclientkeys = {
 
 -- }}}
 
-
+-- {{{ Wibox creation
 for s = 1, screen.count() do
     -- Create a promptbox for each screen
     mypromptbox[s] = awful.widget.prompt({ layout = awful.widget.layout.horizontal.leftright })
@@ -394,9 +403,9 @@ for s = 1, screen.count() do
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
     }
-end
+ end
 -- }}}
-
+-- }}}
 -- {{{ Mouse bindings
 root.buttons(awful.util.table.join(
     awful.button({ }, 3, function () mymainmenu:toggle() end),
@@ -406,6 +415,7 @@ root.buttons(awful.util.table.join(
 -- }}}
 
 -- {{{ Key bindings
+
 globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
@@ -530,6 +540,7 @@ for k, v in pairs(persoclientkeys) do
    table.foreach(v, function(_, kk) table.insert(clientkeys, kk) end)
 end
 root.keys(globalkeys)
+
 -- }}}
 
 -- {{{ Rules
@@ -614,6 +625,7 @@ no_titlebar_apps = {
 -- }}}
 
 -- {{{ Signals
+
 -- Signal function to execute when a new client appears.
 client.add_signal("manage", function (c, startup)
     -- Add a titlebar
@@ -644,8 +656,10 @@ end)
 
 client.add_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+
 -- }}}
 
+-- {{{ Timers
 mytimer5 = timer { timeout = 5 }
 mytimer5:add_signal("timeout", function ()
     tb_batt.text = " " .. battery_mon() .. " "
@@ -660,3 +674,4 @@ mytimer15:add_signal("timeout", function ()
     tb_mails_update()
 end)
 mytimer15:start()
+-- }}}
