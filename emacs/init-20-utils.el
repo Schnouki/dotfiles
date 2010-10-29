@@ -72,7 +72,6 @@ this function with a prefix forces the creation of a new buffer."
      (if (> m 0) (concat (number-to-string m) "m" (if (> s 0) " ")))
      (if (> s 0) (concat (number-to-string s) "s")))))
 
-
 ;; Position function for strings
 (defun string-position (item seq)
   "Find the first occurence of ITEM in SEQ.
@@ -83,7 +82,6 @@ Return the index of the matching item, or nil if not found."
       (setq count (1+ count)))
     (if (= count len) nil count)))
 
-
 ;; Remove *blabla* buffers, except those in the immortal-star-buffers list
 (setq schnouki/immortal-star-buffers '("*scratch*"))
 (defun schnouki/kill-star-buffers ()
@@ -93,7 +91,7 @@ Return the index of the matching item, or nil if not found."
 	buf-name)
     (dolist (buf (buffer-list))
       (setq buf-name (buffer-name buf))
-      (when (and (string-match "^\\*.+\\*$" (buffer-name buf)) (not (string-position buf-name schnouki/immortal-star-buffers)))
+      (when (and (string-match "^\\*.+$" (buffer-name buf)) (not (string-position buf-name schnouki/immortal-star-buffers)))
 	(kill-buffer buf)
 	(setq count (1+ count))))
     (message (concat (int-to-string count) " buffers killed"))))
