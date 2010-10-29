@@ -91,10 +91,13 @@
 
 (defvar zenburn-fg "#dcdccc")
 
+(defvar zenburn-bg-2 "#1f1f1f")
 (defvar zenburn-bg-1 "#2b2b2b")
 (defvar zenburn-bg "#3f3f3f")
 (defvar zenburn-bg+1 "#4f4f4f")
 (defvar zenburn-bg+2 "#5f5f5f")
+(defvar zenburn-bg+3 "#6f6f6f")
+(defvar zenburn-bg+4 "#7f7f7f")
 (defvar zenburn-red+1 "#dca3a3")
 (defvar zenburn-red "#cc9393")
 (defvar zenburn-red-1 "#bc8383")
@@ -328,9 +331,11 @@ static char *gnus-pointer[] = {
 	'(fixme-face ((t (:foreground "#dcdccc" :background "#3f3f3f"
 									 :weight bold :box nil)))) ; Colours taken from vim ":hl Todo"
 
-	'(semantic-tag-boundary-face ((t (:overline "#5f5f5f")))) ; zenburn-bg+2
+	`(semantic-complete-inline-face ((t (:underline ,zenburn-yellow-2))))
+	`(semantic-tag-boundary-face ((t (:overline ,zenburn-blue-2))))
 	'(semantic-decoration-on-unparsed-includes
 	  ((t (:foreground "#88b090" :background "#2e3330")))) ; zenburn-highlight-damp
+	'(ecb-default-highlight-face ((t (:background "#7c2c63")))) ; zenburn-magenta-6
 
 	'(font-lock-pseudo-keyword
 	   ((t (:inherit zenburn-primary-2))))
@@ -427,18 +432,19 @@ static char *gnus-pointer[] = {
 	`(minibuffer-prompt ((t (:foreground ,zenburn-yellow))))
 	`(Buffer-menu-buffer ((t (:inherit zenburn-primary-1))))
 
-	`(region ((t (:foreground nil :background ,zenburn-bg+2))))
+	`(region ((t (:foreground nil :background "#0f2f0f"))))
 	`(secondary-selection ((t (:foreground nil :background "#506070"))))
 
 	'(trailing-whitespace ((t (:inherit font-lock-warning))))
 	'(highlight ((t (:underline t))))
 	'(paren ((t (:inherit zenburn-lowlight-1))))
-	'(show-paren-mismatch ((t (:inherit font-lock-warning))))
-	`(show-paren-match ((t (:foreground ,zenburn-blue-1 :underline t))))
+	'(show-paren-mismatch ((t (:inherit font-lock-warning :weight bold
+				    :foreground nil :background "#6c3333"))))
+	`(show-paren-match ((t (:foreground nil :background ,zenburn-blue-5 :underline nil))))
 	'(match ((t (:weight bold))))
 
-	`(button ((t (:foreground ,zenburn-yellow :background "#506070"
-		       :weight bold :underline t))))
+	`(button ((t (:foreground ,zenburn-yellow :background nil
+		       :weight bold :underline nil))))
 
 	`(cursor ((t (:background "#aaaaaa" :foreground nil))))
 	'(hover-highlight ((t (:underline t :foreground "#f8f893"))))
@@ -785,6 +791,10 @@ static char *gnus-pointer[] = {
 	'(font-latex-warning ((t (:inherit font-lock-warning))))
 	'(font-latex-sedate ((t (:inherit zenburn-primary-1))))
 	'(font-latex-title-4 ((t (:inherit zenburn-title))))
+	`(font-latex-sectioning-5 ((t (:foreground ,zenburn-blue))))
+	`(font-latex-math ((t (:foreground ,zenburn-orange))))
+	`(font-latex-verbatim ((t (:foreground ,zenburn-orange))))
+	`(font-latex-italic ((t (:foreground ,zenburn-green))))
 
 	'(makefile-space ((t (:inherit font-lock-warning))))
 	'(makefile-shell ((t (nil))))
@@ -893,6 +903,12 @@ static char *gnus-pointer[] = {
 
 	'(setnu-line-number ((t (:inherit zenburn-lowlight-2))))
 
+	`(smerge-mine ((t (:foreground ,zenburn-cyan))))
+	`(smerge-other ((t (:foreground ,zenburn-green+3))))
+	;`(smerge-base ((t (:foreground zenburn-orange))))
+	`(smerge-markers ((t (:background ,zenburn-bg+1))))
+	`(smerge-refined-change ((t (:background ,zenburn-red-4))))
+
 	'(speedbar-button ((t (:inherit zenburn-primary-1))))
 	'(speedbar-file ((t (:inherit zenburn-primary-2))))
 	'(speedbar-directory ((t (:inherit zenburn-primary-5))))
@@ -942,10 +958,14 @@ static char *gnus-pointer[] = {
 	'(w3m-form
 	   ((t (:inherit widget-field))))
 
-	`(hl-line ((t (:background ,zenburn-bg-1))))
+	`(hl-line ((t (:background ,zenburn-bg+1 :underline nil))))
 
 	'(magit-section-title ((t (:inherit zenburn-primary-1))))
 	'(magit-branch ((t (:inherit zenburn-primary-2))))
+	`(magit-item-highlight ((t (:background ,zenburn-bg-1))))
+	`(magit-diff-add ((t (:foreground ,zenburn-green))))
+	`(magit-diff-del ((t (:foreground ,zenburn-red))))
+	`(magit-log-graph ((t (:foreground ,zenburn-bg+4))))
 
 	'(flyspell-duplicate ((t (:inherit zenburn-primary-1))))
 	'(flyspell-incorrect ((t (:inherit font-lock-warning))))
@@ -1119,8 +1139,12 @@ static char *gnus-pointer[] = {
 	   fancy-widget-inactive-face
 	   fancy-widget-single-line-field-face
 	   font-latex-bold-face
+	   font-latex-italic-face
+	   font-latex-math-face
+	   font-latex-sectioning-5-face
 	   font-latex-sedate-face
 	   font-latex-title-4-face
+	   font-latex-verbatim-face
 	   font-latex-warning-face
 	   font-lock-builtin-face
 	   font-lock-comment-delimiter-face

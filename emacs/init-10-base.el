@@ -55,9 +55,6 @@
 (require 'paren)
 (show-paren-mode t)
 (setq show-paren-style 'expression)
-(set-face-background 'show-paren-match-face "#cff")
-(set-face-background 'show-paren-mismatch-face "#fcc")
-(set-face-attribute 'show-paren-mismatch-face nil :weight 'bold)
 
 ;; Show the matching parenthseis when it is offscreen
 ;; http://www.emacswiki.org/emacs/ShowParenMode#toc1
@@ -81,7 +78,6 @@
 ;; Highlight current line
 ;; http://www.emacsblog.org/2007/04/09/highlight-the-current-line/
 (global-hl-line-mode 1)
-(set-face-background 'hl-line "#eee")
 
 ;; Case-insensitive search
 (setq case-fold-search t)
