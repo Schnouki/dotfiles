@@ -13,10 +13,23 @@
 
   (set-face-background 'hl-line zenburn-bg+1)
   (set-face-attribute 'hl-line nil :underline nil)
-  (set-face-background 'show-paren-match-face zenburn-blue-4)
-  (set-face-background 'show-paren-mismatch-face zenburn-red-4)
-  (set-face-attribute 'show-paren-mismatch-face nil :weight 'bold)
-  (set-face-attribute 'show-paren-match-face nil :weight 'normal)
+
+  (set-face-attribute 'region nil
+		      :foreground nil
+		      :background "#0f2f0f") ; zenburn-green-7
+
+  (set-face-attribute 'show-paren-match-face nil
+		      :foreground nil
+		      :background zenburn-blue-5
+		      :underline nil)
+  (set-face-attribute 'show-paren-mismatch-face nil
+		      :foreground nil
+		      :background "#6c3333" ; zenburn-red-6
+		      :weight 'bold)
+
+  (set-face-attribute 'button nil
+		      :background nil
+		      :underline nil)
 
   ;; Tag/face mapping in notmuch
   (setq notmuch-search-line-faces '(("deleted" . '(:background "#6f3f3f"))
