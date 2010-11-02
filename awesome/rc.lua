@@ -80,7 +80,7 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
                                     { "gajim", "gajim", image("/usr/share/icons/hicolor/64x64/apps/gajim.png") },
                                     { "thunderbird", "thunderbird", image("/usr/share/pixmaps/thunderbird.png") },
                                     { "firefox", "firefox", image("/usr/share/pixmaps/firefox.png") },
-                                    { "chrome", "google-chrome", image("/opt/google/chrome/product_logo_16.png") },
+                                    { "chromium", "chromium", image("/usr/share/icons/hicolor/16x16/apps/chromium.png") },
                                     { "picasa", "/usr/local/bin/picasa", image("/home/schnouki/.config/awesome/icons/picasa.png") },
                                     { "spotify", "spotify", image("/home/schnouki/.config/awesome/icons/spotify.png") },
                                     { "libre office", "soffice", image("/usr/share/icons/hicolor/16x16/apps/ooo-writer.png") },
