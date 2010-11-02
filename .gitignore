@@ -5,6 +5,7 @@
 
 # Dotfiles
 !fonts.conf
+!mimeo.conf
 !gtkrc-2.0
 !gtkrc-odin
 !gtkrc-thor
