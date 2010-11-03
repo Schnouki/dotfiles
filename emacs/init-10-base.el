@@ -136,6 +136,8 @@
                 (shell-command-history    . 50)
                 tags-file-name
                 register-alist)))
+;; http://www.emacswiki.org/emacs/DeskTop
+(add-hook 'auto-save-hook 'desktop-save-in-desktop-dir)
 
 ;; Abort the minibuffer when using the mouse
 ;; http://trey-jackson.blogspot.com/2010/04/emacs-tip-36-abort-minibuffer-when.html
