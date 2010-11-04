@@ -57,3 +57,11 @@
                 :name "OpenNL project"
                 :file "~/Recherche/ALICE/OpenNL/opennl/CMakeLists.txt"
                 :include-path '("/src"))
+
+(ede-cpp-root-project "Spop"
+                :name "Spop project"
+                :file "~/dev/spop/CMakeLists.txt"
+                :include-path '("/src" "/plugin")
+		:system-include-path '("/usr/include/dbus-1.0"
+				       "/usr/include/glib-2.0"
+				       "/usr/include/libsoup-2.4"))
