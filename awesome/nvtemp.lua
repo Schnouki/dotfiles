@@ -8,7 +8,7 @@ function init()
 end
 
 function query()
-   local cmd = "~/.config/awesome/nvtemp.zsh > " .. status_file .. " &"
+   local cmd = "~/.config/awesome/nvtemp.sh > " .. status_file .. " &"
    os.execute(cmd)
 end
 

@@ -664,13 +664,13 @@ mytimer5 = timer { timeout = 5 }
 mytimer5:add_signal("timeout", function ()
     tb_batt.text = " " .. battery_mon() .. " "
     volume_upd(pb_vol, volume_get())
+    if tb_nv then tb_nv.text = " " .. nvtemp.format() .. " " end
 end)
 mytimer5:start()
 
 mytimer15 = timer { timeout = 15 }
 mytimer15:add_signal("timeout", function ()
     tb_net.text = " " .. netmon.netmon(nm_ifs, "8.8.8.8")
-    if tb_nv then tb_nv.text = " " .. nvtemp.format() .. " " end
     tb_mails_update()
 end)
 mytimer15:start()
