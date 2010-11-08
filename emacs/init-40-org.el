@@ -26,7 +26,7 @@
 (global-set-key (kbd "C-! u") 'schnouki/org-update-gcal)
 
 ;; MobileOrg -- http://orgmode.org/manual/MobileOrg.html
-(setq org-mobile-directory "/scp:kimsufi:mobileorg/")
+(setq org-mobile-directory "~/Dropbox/MobileOrg")
 
 (setq org-directory "~/org/"
       org-todo-keywords '((sequence "TODO" "STARTED" "|" "DONE" "CANCELED"))
