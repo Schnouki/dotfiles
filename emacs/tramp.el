@@ -2816,7 +2816,7 @@ target of the symlink differ."
   (tramp-send-command-and-read
    vec
    (format
-    "((%s %s || %s -h %s) && %s -c '((\"%%N\") %%h %s %s %%X.0 %%Y.0 %%Z.0 %%s.0 \"%%A\" t %%i.0 -1)' %s || echo nil)"
+    "( (%s %s || %s -h %s) && %s -c '((\"%%N\") %%h %s %s %%Xe0 %%Ye0 %%Ze0 %%se0 \"%%A\" t %%ie0 -1)' %s || echo nil)"
     (tramp-get-file-exists-command vec)
     (tramp-shell-quote-argument localname)
     (tramp-get-test-command vec)
@@ -3223,7 +3223,7 @@ value of `default-file-modes', without execute permissions."
      ;; but it does not work on all remote systems.  Therefore, we
      ;; quote the filenames via sed.
      "cd %s; echo \"(\"; (%s -a | sed -e s/\\$/\\\"/g -e s/^/\\\"/g | xargs "
-     "%s -c '(\"%%n\" (\"%%N\") %%h %s %s %%X.0 %%Y.0 %%Z.0 %%s.0 \"%%A\" t %%i.0 -1)'); "
+     "%s -c '(\"%%n\" (\"%%N\") %%h %s %s %%Xe0 %%Ye0 %%Ze0 %%se0 \"%%A\" t %%ie0 -1)'); "
      "echo \")\"")
     (tramp-shell-quote-argument localname)
     (tramp-get-ls-command vec)
