@@ -61,6 +61,9 @@
   '(add-to-list 'TeX-command-list
                 '("DVI to PDF" "dvipdfmx %d" TeX-run-command t t) t))
 
+;; Default scaling for preview-latex
+(setq preview-scale 1.4)
+
 ;; Compilation: scroll the *compilation* buffer window as output appears, but
 ;; stop scrolling at the first error
 (setq compilation-scroll-output t

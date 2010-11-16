@@ -17,6 +17,10 @@
 		 '(font ."Mono-7")
 	       '(font . "Mono-11")))
 
+;; Web browser
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program "chromium")
+
 ;; Display date and time
 (display-time)
 (setq display-time-24hr-format t)
