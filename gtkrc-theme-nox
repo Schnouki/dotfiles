@@ -75,6 +75,8 @@ gtk-toolbar-style       = GTK_TOOLBAR_ICONS
 # +-----------------------------------------------------------------------------------------------------------------------------------------------+
 # | BASE STYLES
 style "NOX" { 
+    color["nox_link"]         = shade(1.25, @clr_blu)
+    color["nox_visited_link"] = shade(1.25, @clr_red)
 # +- -
 # | NOX (CORE)
 # +- -
@@ -87,8 +89,8 @@ style "NOX" {
     GtkWidget           :: scroll-arrow-hlength             = 16                # [              16 ] ( >= 1 ) Length of horizontal scroll arrows.
     GtkWidget           :: scroll-arrow-vlength             = 16                # [              16 ] ( >= 1 ) Length of vertical scroll arrows.
 
-    GtkWidget           :: link-color                       = shade(1.25, @clr_blu)
-    GtkWidget           :: visited-link-color               = shade(1.25, @clr_red)
+    GtkWidget           :: link-color                       = @nox_link
+    GtkWidget           :: visited-link-color               = @nox_visited_link
 # +- -
 # | PROPERTiES (WINDOWS)
 # +- -
@@ -230,7 +232,6 @@ style "NOX" {
     engine "murrine" {
         animation           = TRUE      # Animations on progressbars, radio and checkbuttons.
         colorize_scrollbar  = TRUE      # Colorized scrollbars.
-        gradients           = TRUE      # Gradients.
         rgba                = FALSE     # RGBA support.
 
         focus_color         = @clr_blu
