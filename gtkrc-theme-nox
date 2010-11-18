@@ -1,0 +1,703 @@
+# +---------------------------------------------------------------------------------------------------------------------------+------------- - ---+
+# | NOX - Gtk theme for ECSTATiCA, powered by murrine                                                                         ' estrayk@gmail.com |
+# +--- -                                                                                                                                          +
+# | Copyright (C) 2009 estrayk                                                                                                                    '
+# ,
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program.  If not, see http://www.gnu.org/licenses/.
+#
+# +--- -
+# | REFERENCE
+# ,
+#	typedef enum
+#	{
+#		GTK_SHADOW_NONE             /* No outline. 										*/,
+#		GTK_SHADOW_IN               /* The outline is bevelled inwards.					*/,
+#		GTK_SHADOW_OUT              /* The outline is bevelled outwards like a button. 	*/,
+#		GTK_SHADOW_ETCHED_IN        /* The outline has a sunken 3d appearance. 			*/,
+#		GTK_SHADOW_ETCHED_OUT       /* The outline has a raised 3d appearance. 			*/
+#	} GtkShadowType;
+#
+#	typedef enum
+#	{
+#		GTK_ARROWS_BOTH             /* Place one arrow on each end of the menu. 		*/,
+#		GTK_ARROWS_START            /* Place both arrows at the top of the menu. 		*/,
+#		GTK_ARROWS_END              /* Place both arrows at the bottom of the menu.		*/
+#	} GtkArrowPlacement;
+#
+#   typedef enum
+#   {
+#       GTK_TOOLBAR_ICONS           /* Buttons display only icons in the toolbar.                                           */,
+#       GTK_TOOLBAR_TEXT            /* Buttons display only text labels in the toolbar.                                     */,
+#       GTK_TOOLBAR_BOTH            /* Buttons display text and icons in the toolbar.                                       */,
+#       GTK_TOOLBAR_BOTH_HORIZ      /* Buttons display icons and text alongside each other, rather than vertically stacked. */
+#   } GtkToolbarStyle;
+#
+#   typedef enum
+#   {
+#       GTK_ICON_SIZE_INVALID       ,
+#       GTK_ICON_SIZE_MENU          ,
+#       GTK_ICON_SIZE_SMALL_TOOLBAR ,
+#       GTK_ICON_SIZE_LARGE_TOOLBAR ,
+#       GTK_ICON_SIZE_BUTTON        ,
+#       GTK_ICON_SIZE_DND           ,
+#       GTK_ICON_SIZE_DIALOG
+#   } GtkIconSize;
+#
+# +--- -
+# | SETTINGS
+# ,
+gtk_color_scheme        = "nox_bgr: #5C5E61;nox_fgr: #EEEEEC;nox_bas: #D7D7D7;nox_txt: #1F1F1F;fg_color: #EEEEEC;bg_color: #5C5E61;text_color: #1F1F1F;base_color: #D7D7D7;selected_fg_color: #1F1F1F;selected_bg_color: #7CA4CF;tooltip_fg_color: #1F1F1F;tooltip_bg_color: #FCF5B8;clr_red: #EF2929;clr_grn: #8AE234;clr_blu:#729FCF"
+
+gtk-icon-sizes          = "gtk-button=16,16:gtk-menu=16,16:panel-button=16,16:panel-menu=16,16:gtk-large-toolbar=24,24" # gtk-toolbar=16,16:gtk-small-toolbar=16,16
+
+gtk-menu-popup-delay    = 100
+gtk-font-name           = "Helvetica 8"
+
+gtk-button-images       = 1
+gtk-menu-images         = 1
+
+gtk-toolbar-icon-size   = GTK_ICON_SIZE_LARGE_TOOLBAR
+gtk-toolbar-style       = GTK_TOOLBAR_ICONS
+
+
+# +-----------------------------------------------------------------------------------------------------------------------------------------------+
+# +-----------------------------------------------------------------------------------------------------------------------------------------------+
+# | BASE STYLES
+style "NOX" { 
+# +- -
+# | NOX (CORE)
+# +- -
+# | PROPERTiES
+# , 
+    GtkWidget           :: focus-line-pattern               = "\001\001"        #                              Dash pattern used to draw the focus indicator.
+    GtkWidget           :: focus-line-width                 = 1                 # [               1 ] ( >= 0 ) Width, in pixels, of the focus indicator line.
+    GtkWidget           :: focus-padding                    = 1                 # [               1 ] ( >= 0 ) Width, in pixels, between focus indicator and the widget box.
+    GtkWidget           :: interior-focus                   = 1                 # [               1 ] ( bool ) Draw the focus indicator inside widgets.
+    GtkWidget           :: scroll-arrow-hlength             = 16                # [              16 ] ( >= 1 ) Length of horizontal scroll arrows.
+    GtkWidget           :: scroll-arrow-vlength             = 16                # [              16 ] ( >= 1 ) Length of vertical scroll arrows.
+
+    GtkWidget           :: link-color                       = shade(1.25, @clr_blu)
+    GtkWidget           :: visited-link-color               = shade(1.25, @clr_red)
+# +- -
+# | PROPERTiES (WINDOWS)
+# +- -
+    GtkDialog           :: action-area-border               = 4                 # [               5 ] ( >= 0 ) Width of border around the button area at the bottom of the dialog.
+    GtkDialog           :: button-spacing                   = 4                 # [               6 ] ( >= 0 ) Spacing between buttons.
+    GtkDialog           :: content-area-border              = 2                 # [               2 ] ( >= 0 ) Width of border around the main dialog area.
+    GtkDialog           :: content-area-spacing             = 0                 # [               0 ] ( >= 0 ) The default spacing used between elements of the content area of the dialog.
+# +- -
+# | PROPERTiES (CONTROLS)
+# +- -
+    GtkButton           :: child-displacement-x             = 1                 # [               0 ]          How far in x direction to move the button when its depressed.
+    GtkButton           :: child-displacement-y             = 1                 # [               0 ]          ... y
+    GtkButton           :: default-border                   = { 0, 0, 0, 0 }    #                              Extra space to add for CAN_DEFAULT buttons.
+    GtkButton           :: displace-focus                   = 0                 # [               0 ] ( bool ) Whether the child_displacement_x/child_displacement_y properties should also affect the focus rectangle.
+    GtkButton           :: image-spacing                    = 2                 # [               2 ] ( >= 0 ) Spacing in pixels between the image and label.
+
+    GtkCheckButton      :: indicator-size                   = 13                # [              13 ] ( >= 0 ) Size of check or radio indicator.
+    GtkCheckButton      :: indicator-spacing                = 2                 # [               2 ] ( >= 0 ) Spacing around check or radio indicator.
+    GtkCheckMenuItem    :: indicator-size                   = 13                # [              13 ] ( >= 0 ) Size of check or radio indicator.
+
+    GtkOptionMenu       :: indicator-size                   = { 6, 10 }         #                              Size of dropdown indicator.
+    GtkOptionMenu       :: indicator-spacing                = {	6, 5, 0, 0 }    #                              Spacing around indicator.
+
+    GtkComboBox         :: appears-as-list                  = 0                 # [               0 ] ( bool ) Whether dropdowns should look like lists rather than menus.
+    GtkComboBox         :: arrow-size                       = 13                # [              15 ] ( >= 0 ) Sets the minimum size of the arrow in the combo box.
+    GtkComboBox         :: shadow-type                      = GTK_SHADOW_NONE   # [ GTK_SHADOW_NONE ]          Which kind of shadow to draw around the combo box.
+
+    GtkPaned            :: handle-size                      = 4                 # [               5 ] ( >= 0 ) Width of handle.
+
+#    GtkRange            :: arrow-displacement-x             = 0                 # [               0 ]          How far in the x direction to move the arrow when the button is depressed.
+#    GtkRange            :: arrow-displacement-y             = 0                 # [               0 ]          ... y
+#    GtkRange            :: arrow-scaling                    = 0.3               # [             0.5 ] ( 0.1  ) The arrow size proportion relative to the scroll button size.
+#    GtkRange            :: stepper-size                     = 14                # [              14 ] ( >= 0 ) Length of step buttons at ends.
+#    GtkRange            :: stepper-spacing                  = 0                 # [               0 ] ( >= 0 ) The spacing between the stepper buttons and thumb. Note that setting this value to anything > 0 will automatically set the trough-under-steppers style property to TRUE as well. Also, stepper-spacing won't have any effect if there are no steppers.
+#    GtkRange            :: trough-border                    = 1                 # [               1 ] ( >= 0 ) Spacing between thumb/steppers and outer trough bevel.
+#    GtkRange            :: trough-under-steppers            = 1                 # [               1 ] ( bool ) Whether to draw the trough across the full length of the range or to exclude the steppers and their spacing. Note that setting the "stepper-spacing" style property to any value > 0 will automatically enable trough-under-steppers too.
+
+    GtkScale            :: activate-slider                  = 1                 # [               0 ] ( bool ) With this option set to TRUE, sliders will be drawn ACTIVE and with shadow IN while they are dragged.
+    GtkScale            :: slider-length                    = 23                # [              31 ] ( >= 0 ) Length of scale's slider.	
+    GtkScale            :: slider-width                     = 14                # [              14 ] ( >= 0 ) Width of scrollbar or scale thumb.
+    GtkScale            :: trough-side-details              = 1                 # [               0 ] ( bool ) When TRUE, the parts of the trough on the two sides of the slider are drawn with different details.
+
+
+    
+    GtkScrollbar        :: activate-slider                  = 1                 # [               0 ] ( bool ) With this option set to TRUE, sliders will be drawn ACTIVE and with shadow IN while they are dragged.
+    GtkScrollbar        :: arrow-scaling                    = 0.4               # [             0.5 ] ( 0.1  ) The arrow size proportion relative to the scroll button size.
+    GtkScrollbar        :: fixed-slider-length              = 0                 # [               0 ] ( bool ) Don't change slider size, just lock it to the minimum length.
+    GtkScrollbar        :: min-slider-length                = 50                # [              21 ] ( >= 0 ) Minimum length of scrollbar slider.
+    GtkScrollbar        :: slider-width                     = 15                # [              14 ] ( >= 0 ) Width of scrollbar or scale thumb.    
+    GtkScrollbar        :: stepper-spacing                  = 0                 # [               0 ] ( >= 0 ) The spacing between the stepper buttons and thumb. Note that setting this value to anything > 0 will automatically set the trough-under-steppers style property to TRUE as well. Also, stepper-spacing won't have any effect if there are no steppers.
+    GtkScrollbar        :: trough-border                    = 0                 # [               1 ] ( >= 0 ) Spacing between thumb/steppers and outer trough bevel.
+    GtkScrollbar        :: trough-side-details              = 0                 # [               0 ] ( bool ) When TRUE, the parts of the trough on the two sides of the slider are drawn with different details.    
+    GtkScrollbar        :: trough-under-steppers            = 1                 # [               1 ] ( bool ) Whether to draw the trough across the full length of the range or to exclude the steppers and their spacing. Note that setting the "stepper-spacing" style property to any value > 0 will automatically enable trough-under-steppers too.
+ 
+    GtkScrollbar        :: has-backward-stepper             = 1                 # [               1 ] ( bool ) Display the standard backward arrow button.
+    GtkScrollbar        :: has-forward-stepper              = 1                 # [               1 ] ( bool ) Display the standard forward arrow button.
+    GtkScrollbar        :: has-secondary-backward-stepper   = 0                 # [               0 ] ( bool ) Display a second backward arrow button on the opposite end of the scrollbar.
+    GtkScrollbar        :: has-secondary-forward-stepper    = 0                 # [               0 ] ( bool ) Display a second forward arrow button on the opposite end of the scrollbar.
+ 
+    GtkHScrollbar       :: has-secondary-backward-stepper   = 0                 # [               0 ] ( bool ) Display a second backward arrow button on the opposite end of the scrollbar.
+    GtkHScrollbar       :: has-secondary-forward-stepper    = 0                 # [               0 ] ( bool ) Display a second forward arrow button on the opposite end of the scrollbar.
+    GtkVScrollbar       :: has-secondary-backward-stepper   = 0                 # [               0 ] ( bool ) Display a second backward arrow button on the opposite end of the scrollbar.
+    GtkVScrollbar       :: has-secondary-forward-stepper    = 0                 # [               0 ] ( bool ) Display a second forward arrow button on the opposite end of the scrollbar.
+# +-
+# | PROPERTiES (MENUS)
+# +-
+    GtkMenuBar          :: internal-padding                 = 1                 # [               1 ] ( >= 0 ) Amount of border space between the menubar shadow and the menu items.
+    GtkMenuBar          :: shadow-type                      = GTK_SHADOW_OUT    # [  GTK_SHADOW_OUT ]          Style of bevel around the menubar. 
+
+    GtkMenu             :: arrow-placement                  = GTK_ARROWS_BOTH   # [ GTK_ARROWS_BOTH ]          Indicates where scroll arrows should be placed.
+    GtkMenu             :: arrow-scaling                    = 0.5               # [             0.7 ] ( 0.1  ) Arbitrary constant to scale down the size of the scroll arrow.
+    GtkMenu             :: double-arrows                    = 1                 # [               1 ] ( bool ) When scrolling, always show both arrows.
+    GtkMenu             :: horizontal-offset                = -2                # [              -2 ]          When the menu is a submenu, position it this number of pixels offset horizontally.
+    GtkMenu             :: horizontal-padding               = 0                 # [               0 ] ( >= 0 ) Extra space at the left and right edges of the menu.
+    GtkMenu             :: vertical-offset                  = 0                 # [               0 ]          When the menu is a submenu, position it this number of pixels offset vertically.
+    GtkMenu             :: vertical-padding                 = 0                 # [               0 ] ( >= 0 ) Extra space at the top and bottom of the menu.
+
+    GtkMenuItem         :: arrow-scaling                    = 0.5               # [             0.8 ] ( 0.2  ) Amount of space used up by arrow, relative to the menu item's font size.
+    GtkMenuItem         :: arrow-spacing                    = 10                # [              10 ] ( >= 0 ) Space between label and arrow.
+    GtkMenuItem         :: horizontal-padding               = 3                 # [               3 ] ( >= 0 ) Padding to left and right of the menu item.
+    GtkMenuItem         :: selected-shadow-type             = GTK_SHADOW_NONE   # [ GTK_SHADOW_NONE ]          Shadow type when item is selected.
+    GtkMenuItem         :: toggle-spacing                   = 4                 # [               5 ] ( >= 0 ) Space between icon and label.
+    GtkMenuItem         :: width-chars                      = 12                # [              12 ] ( >= 0 ) The minimum desired width of the menu item in characters.
+# +-
+# | PROPERTiES (...)
+# +-	
+    GtkArrow            :: arrow-scaling                    = 0.5               # [             0.7 ] ( 0.1  ) Amount of space used up by arrow.
+
+    GtkNotebook         :: arrow-spacing                    = 0                 # [               0 ] ( >= 0 ) Spacing between the scroll arrows and the tabs.
+    GtkNotebook         :: tab-curvature                    = 1                 # [               1 ] ( >= 0 ) Size of tab curvature.
+    GtkNotebook         :: tab-overlap                      = 1                 # [               2 ]          Size of tab overlap area.
+
+    GtkTreeView         :: horizontal-separator             = 8                 # [               2 ] ( >= 0 ) Horizontal space between cells. Must be an even number.
+    GtkTreeView         :: vertical-separator               = 2                 # [               2 ] ( >= 0 ) Vertical space between cells. Must be an even number.
+
+    GtkEntry            :: honors-transparent-bg-hint       = 1                 # [               0 ] ( bool ) (Clearlooks) Without this, gecko will fill in the background of the entry.
+
+
+#    GtkToolbar::shadow_type = GTK_SHADOW_ETCHED_IN
+
+    
+#    GtkExpander :: expander-size = 8
+#    GtkExpander :: expander-spacing = 20
+
+
+    xthickness = 1
+    ythickness = 1
+
+# +-
+# | COLORS
+# +-
+    bg[NORMAL]          = @bg_color
+    bg[PRELIGHT]        = shade(1.1, @bg_color)
+    bg[ACTIVE]          = shade(0.9, @bg_color)
+    bg[INSENSITIVE]     = @bg_color
+    bg[SELECTED]        = @selected_bg_color
+
+    fg[NORMAL]          = @fg_color
+    fg[PRELIGHT]        = @fg_color
+    fg[ACTIVE]          = shade(0.9, @fg_color)
+    fg[INSENSITIVE]     = shade(0.7, @bg_color)
+    fg[SELECTED]        = @selected_fg_color
+
+    base[NORMAL]        = @base_color
+    base[PRELIGHT]      = @base_color
+    base[INSENSITIVE]   = shade(1.0, @bg_color)
+    base[ACTIVE]        = shade(0.9, @selected_bg_color)
+    base[SELECTED]      = @selected_bg_color
+
+    text[NORMAL]        = @text_color
+    text[PRELIGHT]      = @text_color
+    text[ACTIVE]        = @selected_fg_color
+    text[INSENSITIVE]   = shade(0.7, @bg_color)
+    text[SELECTED]      = @selected_fg_color
+
+# +-
+# | ENGiNE (MURRiNE)
+# +-
+    engine "murrine" {
+        animation           = TRUE      # Animations on progressbars, radio and checkbuttons.
+        colorize_scrollbar  = TRUE      # Colorized scrollbars.
+        gradients           = TRUE      # Gradients.
+        rgba                = FALSE     # RGBA support.
+
+        focus_color         = @clr_blu
+
+        glazestyle          = 0         # [ 0   ] (0) Flat,         (1) Curved,     (2) Concave,        (3) Top Curved, (4) Beryl 
+        glowstyle           = 2         # [ 0   ] (0) Top,          (1) Bottom,     (2) Top & Bottom,   (3) Horizontal, (4) Centered
+        lightborderstyle    = 1         # [ 0   ] (0) Top,          (1) All sides
+        listviewheaderstyle = 1         # [ 0   ] (0) Flat,         (1) Glassy,     (2) Raised
+        listviewstyle       = 1         # [ 0   ] (0) NULL,         (1) Dots
+        menustyle           = 0         # [ 0   ] (0) No VStripe,   (1) VStripe
+        menuitemstyle       = 1         # [ 0   ] (0) Flat,         (1) Glassy,     (2) Striped
+        menubarstyle        = 3         # [ 0   ] (0) Flat,         (1) Glassy,     (2) Gradient,       (3) Striped
+        menubaritemstyle    = 1         # [ 0   ] (0) MenuItem,     (1) Button
+        progressbarstyle    = 1         # [ 1   ] (0) NULL,         (1) Stripes,    (2) Cells
+        reliefstyle         = 2         # [ 2   ] (0) Flat,         (1) Inset,      (2) Shadow
+        scrollbarstyle      = 2         # [ 0   ] (0) NULL,         (1) Circles,    (2) Handles,        (3) DStripes,   (4) 3 & 2,  (5) HStripes,   (6) 5 & 2 
+        sliderstyle         = 1         # [ 0   ] (0) NULL,         (1) Handles
+        stepperstyle        = 0         # [ 0   ] (0) Classic,      (1) Unified
+        toolbarstyle        = 1         # [ 0   ] (0) Flat,         (1) Glassy
+
+        contrast            = 1.0       # [ 1.0 ] ( 0.10 ) ( 0 - 2 )
+        glow_shade          = 1.2       # [ 1.0 ] ( 0.10 ) ( 0 - 2 )
+        highlight_shade     = 1.0       # [ 1.1 ] ( 0.01 ) ( 0 - 2 )
+        lightborder_shade   = 1.5       # [ 1.1 ] ( 0.01 ) ( 0 - 2 ) 
+        roundness           = 2         # [ 1   ] ( 1.00 ) ( 0 - 8 )
+        gradient_shades     = { 1.125, 1.05, 1.0, 0.875 }
+    }
+}
+style "NOX_BIG" {
+# +- -
+# | NOX (CORE x 2)
+# ,
+    xthickness = 2
+    ythickness = 2
+}
+style "NOX_FAT" {
+# +- -
+# | NOX (CORE x 3)
+# ,
+    xthickness = 3
+    ythickness = 3
+}
+
+style "NOX_BASE__BUTTON" = "NOX_FAT" {
+# +- -
+# | NOX -> BUTTON
+# ,
+    bg[NORMAL] = shade(1.05, @bg_color) # bg default.
+}
+
+style "NOX_BASE__TOGGLE_CHECK_RADIO" = "NOX_FAT" { 
+# +- -
+# | NOX -> TOGGLE
+# ,
+    bg[PRELIGHT] = @bg_color # text hover.
+}
+
+style "NOX_BASE__TOGGLE_CHECK" = "NOX_BASE__TOGGLE_CHECK_RADIO" {
+# +- -
+# | NOX -> TOGGLE CHECK
+# ,
+    bg[SELECTED]    = shade(1.2, @clr_grn) # check bg fill.
+
+    text[NORMAL]    = shade(0.4, @clr_grn) # check indicator default.
+    text[PRELIGHT]  = shade(0.2, @clr_grn) # check indicator hover.
+    text[ACTIVE]    = shade(0.6, @clr_grn) # check indicator press.
+}
+
+style "NOX_BASE__TOGGLE_RADIO" = "NOX_BASE__TOGGLE_CHECK_RADIO" {
+# +- -
+# | NOX -> TOGGLE RADIO
+# ,
+    bg[SELECTED]    = shade(1.2, @clr_red) # radio bg fill.
+
+    text[NORMAL]    = shade(0.4, @clr_red) # radio indicator default.
+    text[PRELIGHT]  = shade(0.2, @clr_red) # radio indicator hover.
+    text[ACTIVE]    = shade(0.6, @clr_red) # radio indicator press.
+}
+
+style "NOX_BASE__EXPANDER" {
+# +- -
+# | NOX -> EXPANDER
+# ,
+    bg[PRELIGHT]    = @bg_color                         # no highlighed bg rectangle!
+
+    fg[NORMAL]      = @fg_color                         # frame.
+    fg[PRELIGHT]    = shade(1.2, @selected_bg_color)    # hover.
+
+    base[NORMAL]    = @selected_bg_color                # frame bg.
+}
+
+style "NOX_BASE__MENU" = "NOX_BIG" {
+# +- -
+# | NOX -> MENU
+# ,
+    bg[NORMAL] = shade(1.25, @bg_color)	# bg default.
+}
+
+style "NOX_BASE__MENU_ITEM" = "NOX_BASE__MENU" {
+# +- -
+# | NOX -> MENU -> iTEM
+# ,
+    xthickness = 1 #2
+    ythickness = 3 #3
+
+    GtkWidget :: separator-height   = 0         # [ 0 ] ...
+    GtkWidget :: separator-width    = 0         # [ 0 ] ...
+    GtkWidget :: wide-separators    = 1         # [ 0 ] Configurable width and should be drawn using a box instead of a line.
+
+    bg[PRELIGHT]    = shade(0.85, @bg_color)    # bg active.
+    bg[SELECTED]    = shade(0.85, @bg_color)    # bg active.
+
+    text[NORMAL]    = shade(1.4, @clr_red)      # check item indicator.
+    text[PRELIGHT]  = shade(1.6, @clr_red)      # check item indicator hover.
+}
+
+style "NOX_BASE__MENUBAR" {
+# +- -
+# | NOX -> MENUBAR
+# ,
+    bg[NORMAL] = shade(0.85, @bg_color) # bg default.
+}
+
+style "NOX_BASE__MENUBAR_ITEM" = "NOX_BASE__MENU_ITEM" {
+# +- -
+# | NOX -> MENUBAR -> iTEM
+# ,
+    bg[PRELIGHT] = shade(1.25, @bg_color) # bg press, menu -> bg default.
+}
+
+style "NOX_BASE__NOTEBOOK" = "NOX_BIG" {
+# +- -
+# | NOX -> NOTEBOOK
+# , 
+    bg[ACTIVE] = shade(0.7, @bg_color) # inactive tab bg.
+}
+
+style "NOX_BASE__TOOLBAR" = "NOX_BIG" {
+# +- -
+# | NOX -> TOOLBAR
+# , 
+}
+
+style "NOX_BASE__TREEVIEW" {
+# +- -
+# | NOX -> TREEViEW
+# ,
+    base[SELECTED]  = mix(0.25, @base_color, @selected_bg_color) # selection bg.
+    base[ACTIVE]    = mix(0.05, @base_color, @selected_bg_color) # selection no-focus bg.
+}
+
+style "NOX_BASE__RANGE" = "NOX_BASE__BUTTON" {
+# +- -
+# | NOX -> RANGE
+# ,
+    xthickness = 1
+    ythickness = 1
+}
+
+style "NOX_BASE__RANGE_SCALE" = "NOX_BASE__RANGE" {
+# +- -
+# | NOX -> RANGE -> SCALE
+# ,
+    bg[ACTIVE] = shade(1.25, @bg_color) # bg press.
+}
+
+style "NOX_BASE__RANGE_SCROLLBAR" = "NOX_BASE__RANGE" {
+# +- -
+# | NOX -> RANGE -> SCROLLBAR
+# ,
+    bg[SELECTED] = mix(0.6, shade(1.1, @bg_color), @selected_bg_color) # slider bg.
+}
+
+style "NOX_BASE__TOOLTIP" = "NOX_FAT" {
+# +- -
+# | NOX -> TOOLTiP
+# ,
+    bg[NORMAL] = @tooltip_bg_color
+    fg[NORMAL] = @tooltip_fg_color
+}
+
+
+# +-----------------------------------------------------------------------------------------------------------------------------------------------+
+# +-----------------------------------------------------------------------------------------------------------------------------------------------+
+# | WIDGET STYLES
+# +---------- -
+# | GtkBin [ (TOGGLE)BUTTON | EXPANDER ]
+style "NOX__BUTTON" = "NOX_BASE__BUTTON" { 
+# +- -
+# | GtkButton
+# ,
+    engine "murrine" {}
+}
+    style "NOX__TOGGLE_CHECK" = "NOX_BASE__TOGGLE_CHECK" { 
+    # +- -
+    # | GtkButton -> GtkToggleButton -> GtkCheckButton
+    # ,
+        engine "murrine" {}
+    }
+        style "NOX__TOGGLE_RADIO" = "NOX_BASE__TOGGLE_RADIO" { 
+        # +- -
+        # | GtkButton -> GtkToggleButton -> GtkCheckButton -> GtkRadioButton
+        # ,
+            engine "murrine" {}
+        }
+
+style "NOX__EXPANDER" = "NOX_BASE__EXPANDER" {
+# +- -
+# | GtkExpander
+# ,
+}
+
+# +---------- -
+# | GtkContainer [ MENU(BAR) ] 
+style "NOX__MENU" = "NOX_BASE__MENU" { 
+# +- -
+# | GtkMenuShell -> GtkMenu
+# ,
+    engine "murrine" {}
+}
+    style "NOX__MENU_ITEM" = "NOX_BASE__MENU_ITEM" { 
+    # +- -
+    # | GtkItem -> GtkMenuItem
+    # ,
+        engine "murrine" {
+            roundness = 1
+        }
+    }
+
+style "NOX__MENUBAR" = "NOX_BASE__MENUBAR" { 
+# +- -
+# | GtkMenuShell -> GtkMenuBar
+# ,	
+    engine "murrine" {}
+}
+    style "NOX__MENUBAR_ITEM" = "NOX_BASE__MENUBAR_ITEM" { 
+    # +- -
+    # | GtkMenuShell -> GtkMenuBar -> x
+    # ,	
+        engine "murrine" {}
+    }
+
+
+
+# +---------- -
+# | GtkContainer [ (NOTEBOOK|TOOLBAR) ]
+style "NOX__NOTEBOOK" = "NOX_BASE__NOTEBOOK" {
+# +- -
+# | GtkNotebook
+# ,
+    engine "murrine" {
+        contrast        = 1.0
+        gradient_shades = { 1.85, 1.25, 1.2, 1.0 }
+    }
+
+#    engine "clearlooks" {
+#        disable_focus   = TRUE
+#        contrast        = 0.93
+#        radius          = 2.0
+#        reliefstyle     = 1
+#        style           = GLOSSY # GLOSSY GUMMY INVERTED CLASSIC
+#    }
+}
+
+style "NOX__TOOLBAR" = "NOX_BASE__TOOLBAR" {
+# +- -
+# | GtkToolbar
+# ,
+}
+
+
+
+# +---------- -
+# | GtkContainer [ (LIST|TREE(VIEW)) ]
+style "NOX__TREEVIEW" = "NOX_BASE__TREEVIEW" {
+# +- -
+# | GtkTreeView
+# ,
+    fg[NORMAL]      = @text_color               # expander.
+    fg[PRELIGHT]    = shade(1.6, @text_color)   # ...
+    fg[ACTIVE]      = @text_color               # .
+
+    engine "murrine" {
+        gradient_shades = { 1.1, 1.05, 1.025, 0.9 }        
+    }
+}
+    style "NOX__TREEVIEW_HEADER" {
+    # +- -
+    # | GtkTreeView -> *header*
+    # ,
+        xthickness = 2
+        ythickness = 1
+
+        fg[NORMAL]      = @fg_color                 # expander reset.
+        fg[PRELIGHT]    = @fg_color                 # ...
+        fg[ACTIVE]      = shade(0.9, @fg_color)     # .
+    }
+
+
+
+# +---------- -
+# | GtkWidget [ ENTRY ]
+style "NOX__ENTRY" = "NOX_FAT" { 
+# +- -
+# | GtkEntry
+# ,
+    engine "murrine" {}
+}
+    style "NOX__ENTRY_SPIN" = "NOX_FAT" { 
+    # +- -
+    # | GtkEntry -> GtkSpinButton
+    # ,
+        engine "murrine" {}
+    }
+
+
+
+# +---------- -
+# | GtkWidget [ SC(ALE|ROLLBAR) ]
+style "NOX__RANGE_SCALE" = "NOX_BASE__RANGE_SCALE" {
+# +- -
+# | GtkRange -> GtkScale
+# ,
+    engine "murrine" { 
+        contrast = 1.15
+    }
+}
+
+style "NOX__RANGE_SCROLLBAR" = "NOX_BASE__RANGE_SCROLLBAR" {
+# +- -
+# | GtkRange -> GtkScrollbar
+# ,
+    engine "murrine" { 
+        contrast = 1.2
+    }
+}
+
+
+
+# +---------- -
+# | G(tk)Object  [ TOOLTIP ]
+style "NOX__TOOLTIP" = "NOX_BASE__TOOLTIP" { 
+# +- -
+# | GtkTooltip(s)
+# ,
+    engine "murrine" {
+        gradient_shades = { 0.95, 1.0, 1.0, 0.95 }
+    }
+}
+
+
+
+
+
+# +-----------------------------------------------------------------------------------------------------------------------------------------------+
+# +-----------------------------------------------------------------------------------------------------------------------------------------------+
+# | MATCHES
+# ,
+class "GtkWidget"       style "NOX"
+class "GtkButton"       style "NOX__BUTTON"
+class "GtkCheckButton"  style "NOX__TOGGLE_CHECK"
+class "GtkRadioButton"  style "NOX__TOGGLE_RADIO"
+class "GtkExpander"     style "NOX__EXPANDER"
+class "GtkMenuBar"      style "NOX__MENUBAR"
+class "GtkMenu"         style "NOX__MENU"
+class "GtkMenuItem"     style "NOX__MENU_ITEM"
+class "GtkNotebook"     style "NOX__NOTEBOOK"
+class "GtkToolbar"      style "NOX__TOOLBAR"
+class "GtkTreeView"     style "NOX__TREEVIEW"
+class "GtkEntry"        style "NOX__ENTRY"
+class "GtkSpinButton"   style "NOX__ENTRY_SPIN"
+class "GtkRange"        style "NOX_BASE__RANGE"
+class "GtkScale"        style "NOX__RANGE_SCALE"
+class "GtkScrollbar"    style "NOX__RANGE_SCROLLBAR"
+
+# +- -
+# | MATCHES (WiDGETS)
+# ,
+widget_class "*<GtkMenuBar>.*"                  style "NOX__MENUBAR_ITEM"
+widget_class "*.<GtkTreeView>.<GtkButton>"      style "NOX__TREEVIEW_HEADER"
+widget_class "*.<GtkCTree>.<GtkButton>"         style "NOX__TREEVIEW_HEADER"
+widget_class "*.<GtkList>.<GtkButton>"          style "NOX__TREEVIEW_HEADER"
+widget_class "*.<GtkCList>.<GtkButton>"         style "NOX__TREEVIEW_HEADER"
+
+# +- -
+# | MATCHES (SPECiAL)
+# ,
+widget "*gtk-tooltip*" style:highest "NOX__TOOLTIP"
+
+
+
+
+
+# +-----------------------------------------------------------------------------------------------------------------------------------------------+
+# +-----------------------------------------------------------------------------------------------------------------------------------------------+
+# | WORKAROUNDS
+# +-
+# | CLEARLOOKS
+style "FIX__TEXT_IS_FG_COLOR" { 
+# +- -
+# | Wrokaround style for places where the text color is used instead of the fg color.
+# ,
+    text[NORMAL]        = @fg_color
+    text[PRELIGHT]      = @fg_color
+    text[ACTIVE]        = shade(0.9, @fg_color)
+    text[INSENSITIVE]   = shade(0.7, @bg_color)
+    text[SELECTED]      = @selected_fg_color
+}
+style "FIX__FG_IS_TEXT_COLOR" { 
+# +- -
+# | Workaround style for places where the fg color is used instead of the text color.
+# ,
+    fg[NORMAL]      = @text_color
+    fg[PRELIGHT]    = @text_color
+    fg[ACTIVE]      = @selected_fg_color
+    fg[INSENSITIVE] = shade(0.7, @bg_color)
+    fg[SELECTED]    = @selected_fg_color
+}
+
+widget_class "*.<GtkComboBox>.<GtkCellView>"            style "FIX__TEXT_IS_FG_COLOR" # http://bugzilla.gnome.org/show_bug.cgi?id=382646
+widget       "*.gtk-combobox-popup-menu.*"              style "FIX__TEXT_IS_FG_COLOR" # This is the part of the workaround that fixes the menus
+widget_class "*<GtkListItem>*"                          style "FIX__FG_IS_TEXT_COLOR" # Work around the usage of GtkLabel inside GtkListItems to display text.
+widget_class "*<GtkCList>"                              style "FIX__FG_IS_TEXT_COLOR" # GtkCList also uses the fg color to draw text on top of the base colors.
+widget_class "*<EelEditableLabel>"                      style "FIX__FG_IS_TEXT_COLOR" # Nautilus when renaming files, and maybe other places.
+# +- -
+# | ANJUTA
+widget_class "*GdlDockItemGrip*"                        style "FIX__TEXT_IS_FG_COLOR"
+# +- -
+# | GNOME
+style "FIX__GNOME_CFG_CENTER" {
+    fg[ACTIVE]      = shade(0.9, @fg_color)
+    fg[NORMAL]      = @text_color
+    fg[PRELIGHT]    = @fg_color
+}
+style "FIX__GNOME_PANEL" {
+    bg[NORMAL] = @bg_color
+}
+
+widget_class "*<BonoboDock>.*<ApplicationTile>*"        style "FIX__GNOME_CFG_CENTER"
+widget_class "*PanelWidget*" 					        style "FIX__GNOME_PANEL"
+# +- -
+# | PiDGiN
+widget_class "*<PidginStatusBox>.<GtkToggleButton>*"    style "FIX__TEXT_IS_FG_COLOR" # Buddy list status combo.
+# +- -
+# | QUOD LiBET
+widget_class "quodlibet+qltk+views+TreeViewHints*"      style "NOX__TOOLTIP"
+# +-----------------------------------------------------------------------------------------------------------------------------------------------+
+# +-----------------------------------------------------------------------------------------------------------------------------------------------+
+
+
+
+
+
+# +---------- -
+# , Notifcation daemon (TEST)
+#
+style "NOX__IFY" {
+    bg[NORMAL]      = shade(1.0, @nox_txt)          # BG
+    bg[ACTIVE]      = shade(0.8, @nox_bas)          # BORDER
+
+    fg[NORMAL]      = mix(0.5, @nox_bas, @clr_blu)  # FG HEADER 
+    fg[ACTIVE]      = mix(0.5, @nox_bas, @clr_red)  # FG HEADER CRITICAL
+
+    text[NORMAL] 	= @nox_bas
+
+    base[NORMAL]	= mix(0.25, @nox_txt, @clr_blu) # NORMAL STRIPE
+    base[ACTIVE] 	= mix(0.25, @nox_txt, @clr_red) # CRITICAL ...
+}
+widget_class "noxify" style:highest "NOX__IFY" 	# libnotify (noxify)
+

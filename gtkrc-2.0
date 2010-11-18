@@ -1,5 +1,6 @@
 # GUI theme
-include "/usr/share/themes/NOX/gtk-2.0/gtkrc"
+#include "/usr/share/themes/NOX/gtk-2.0/gtkrc"
+include "gtkrc-theme-nox"
 
 # Misc stuff
 gtk-can-change-accels = 1
