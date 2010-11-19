@@ -607,6 +607,9 @@ class "GtkRange"        style "NOX_BASE__RANGE"
 class "GtkScale"        style "NOX__RANGE_SCALE"
 class "GtkScrollbar"    style "NOX__RANGE_SCROLLBAR"
 
+# Claws-Mail custom widgets
+class "*Tree*"          style "NOX__TREEVIEW"
+
 # +- -
 # | MATCHES (WiDGETS)
 # ,
