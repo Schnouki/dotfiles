@@ -65,3 +65,15 @@
 		:system-include-path '("/usr/include/dbus-1.0"
 				       "/usr/include/glib-2.0"
 				       "/usr/include/libsoup-2.4"))
+
+(ede-cpp-root-project "Gnome Commander"
+		:name "Gnome Commander project"
+		:file "~/dev/gcmd/Makefile"
+		:include-path '("/"
+				"/libgcmd"
+				"/src"
+				"/src/dialogs"
+				"/src/interviewer"
+				"/src/tags")
+		:system-include-path '("/usr/include/gtk-2.0"
+				       "/usr/include/libgnomeui-2.0"))
