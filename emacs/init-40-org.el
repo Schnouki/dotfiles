@@ -16,19 +16,13 @@
 ;; TODO-list
 (defun schnouki/org-todo-list ()
   (interactive)
-  (find-file "~/org/todo.org"))
+  (find-file "~/Dropbox/org/todo.org"))
 (global-set-key (kbd "C-! t") 'schnouki/org-todo-list)
-
-;; Update from Google Calendar using ical2org
-(defun schnouki/org-update-gcal ()
-  (interactive)
-  (shell-command "~/org/gcal/update.sh"))
-(global-set-key (kbd "C-! u") 'schnouki/org-update-gcal)
 
 ;; MobileOrg -- http://orgmode.org/manual/MobileOrg.html
 (setq org-mobile-directory "~/Dropbox/MobileOrg")
 
-(setq org-directory "~/org/"
+(setq org-directory "~/Dropbox/org/"
       org-todo-keywords '((sequence "TODO" "STARTED" "|" "DONE" "CANCELED"))
       schnouki/org-todo-keywords-sort-order '("DONE" "STARTED" "TODO" "CANCELED")
       org-log-done 'time
