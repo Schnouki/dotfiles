@@ -65,7 +65,7 @@
 			       ("social"   . "tag:social and tag:unread")
 			       ("facebook" . "tag:facebook and tag:unread")
 			       ("lwn"      . "from:lwn.net and tag:unread"))
-      notmuch-fcc-dirs '(("Sent"))
+      notmuch-fcc-dirs "Sent"
       message-kill-buffer-on-exit t
       notmuch-poll-script "~/.config/notmuch/mailsync")
 
@@ -113,7 +113,7 @@ in the current buffer."
        "Open an HTML mail in a web browser."
        (interactive)
        (message "Opening in a web browser...")
-       (notmuch-show-pipe-message "~/.config/notmuch/view-html"))
+       (notmuch-show-pipe-message nil "~/.config/notmuch/view-html"))
 
      (defun schnouki/notmuch-show-verify ()
        "Verify the PGP signature of the current mail."

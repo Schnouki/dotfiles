@@ -3,8 +3,7 @@
 MAILDIR=$HOME/mail
 BACKUPDIR=$HOME/.config/notmuch
 
-NMSYNC=$HOME/dev/notmuch/notmuchsync/notmuchsync
-MDSYNC="python -W ignore $(which offlineimap)"
+MDSYNC="offlineimap -o"
 TAGSCRIPT=$BACKUPDIR/autotag
 
 # Already running?
@@ -56,9 +55,9 @@ echo "tb_mails_updating(true)\ntb_mails_set_count($n)" | awesome-client
 
 # Run notmuchsync, then offlineimap, then the autotag script
 if [ $quiet ]; then
-    eval $NMSYNC -q -s && eval $MDSYNC -u Noninteractive.Quiet && eval $TAGSCRIPT >/dev/null
+    eval $MDSYNC -u Noninteractive.Quiet && eval $TAGSCRIPT >/dev/null
 else
-    eval $NMSYNC -s && eval $MDSYNC && eval $TAGSCRIPT
+    eval $MDSYNC && eval $TAGSCRIPT
 fi
 
 # Update the display in awesome
