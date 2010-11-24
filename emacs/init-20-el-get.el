@@ -22,9 +22,10 @@
 
 (defun schnouki/el-get-update-all ()
   (interactive)
-  (let (item)
+  (let (item name)
     (dolist (item el-get-sources)
-      (el-get-update (symbol-name
-		      (if (symbolp item) item
-			(plist-get item :name)))))))
-
+      (setq name (symbol-name
+		  (if (symbolp item) item
+		    (plist-get item :name))))
+      (message (concat "## Updating " name " ##"))
+      (el-get-update name))))
