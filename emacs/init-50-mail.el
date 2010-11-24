@@ -110,10 +110,18 @@ in the current buffer."
        (kill-this-buffer))
 
      (defun schnouki/notmuch-view-html ()
-       "Open an HTML mail in a web browser."
+       "Open the HTML parts of a mail in a web browser."
        (interactive)
-       (message "Opening in a web browser...")
-       (notmuch-show-pipe-message nil "~/.config/notmuch/view-html"))
+       (with-current-notmuch-show-message
+	(let ((mm-handle (mm-dissect-buffer)))
+	  (notmuch-foreach-mime-part
+	   (lambda (p)
+	     (if (string-equal (mm-handle-media-type p) "text/html")
+		 (mm-display-external p (lambda ()
+					  (message "Opening web browser...")
+					  (browse-url-of-buffer)
+					  (bury-buffer)))))
+	   mm-handle))))
 
      (defun schnouki/notmuch-show-verify ()
        "Verify the PGP signature of the current mail."
