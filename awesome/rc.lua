@@ -39,7 +39,9 @@ layouts =
     awful.layout.suit.fair.horizontal,
     awful.layout.suit.max,
     awful.layout.suit.magnifier,
-    awful.layout.suit.floating
+    awful.layout.suit.floating,
+    awful.layout.suit.spiral,
+    awful.layout.suit.spiral.dwindle,
 }
 
 -- }}}
