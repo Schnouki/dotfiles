@@ -77,3 +77,10 @@
 (defun schnouki/zenburn-for-golbarg ()
   (set-face-background golbarg-header-face zenburn-bg-1))
 (add-hook 'golbarg-mode-hook 'schnouki/zenburn-for-golbarg)
+
+;; Undo-Tree
+(eval-after-load 'undo-tree
+  '(progn
+     (set-face-foreground 'undo-tree-visualizer-default-face zenburn-bg+4)
+     (set-face-foreground 'undo-tree-visualizer-current-face zenburn-red)
+     (set-face-foreground 'undo-tree-visualizer-active-branch-face zenburn-fg)))

@@ -96,3 +96,12 @@ Return the index of the matching item, or nil if not found."
 	(setq count (1+ count))))
     (message (concat (int-to-string count) " buffers killed"))))
 (global-set-key (kbd "C-x M-k") 'schnouki/kill-star-buffers)
+
+;; undo-tree
+(eval-after-load 'undo-tree
+  '(progn
+     ;; Lighter displayed in mode line
+     (setq undo-tree-mode-lighter " UT")
+
+     ;; ...and enable!
+     (global-undo-tree-mode)))
