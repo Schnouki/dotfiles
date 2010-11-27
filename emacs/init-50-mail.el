@@ -12,10 +12,6 @@
 (setq user-full-name "Thomas Jost"
       user-mail-address "schnouki@schnouki.net"
       mail-smtp-address "mail.schnouki.net"
-      mail-signature t
-      mail-signature-file "~/.signature/schnouki"
-      message-signature t
-      message-signature-file "~/.signature/schnouki"
       message-directory "~/mail/"
       message-auto-save-directory nil)
 
@@ -142,4 +138,22 @@ in the current buffer."
 
 
      ;; Display the hl-line correctly in notmuch-search
-     (add-hook 'notmuch-search-hook '(lambda () (overlay-put global-hl-line-overlay 'priority 1)))))
+     (add-hook 'notmuch-search-hook '(lambda () (overlay-put global-hl-line-overlay 'priority 1)))
+
+     ;; Choose signature according to the From header
+     (defun schnouki/notmuch-choose-signature ()
+       (let* ((from (message-fetch-field "From"))
+	      (sigfile
+	       (catch 'first-match
+		 (dolist (re-file schnouki/message-signatures)
+		   (when (string-match-p (car re-file) from)
+		     (throw 'first-match (cdr re-file)))))))
+	 (if sigfile
+	     (with-temp-buffer
+	       (insert-file-contents sigfile)
+	       (buffer-string)))))
+
+     (setq message-signature 'schnouki/notmuch-choose-signature
+	   schnouki/message-signatures '(("thomas.jost@inria.fr" . "~/.signature/loria")
+					 ("thomas.jost@loria.fr" . "~/.signature/loria")
+					 (".*"                   . "~/.signature/schnouki")))))
