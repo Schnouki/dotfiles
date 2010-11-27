@@ -33,7 +33,6 @@
       starttls-gnutls-program "gnutls-cli"
       starttls-extra-arguments nil)
 
-
 ;; Load notmuch
 (autoload 'notmuch "notmuch" nil t)
 
@@ -141,21 +140,6 @@ in the current buffer."
      (add-hook 'notmuch-show-hook 'schnouki/notmuch-show-keys)
      (add-hook 'notmuch-search-hook 'schnouki/notmuch-search-keys)
 
-     (defun notmuch-search-color-line (start end line-tag-list)
-       "Colorize lines in notmuch-search based on tags"
-       (if notmuch-search-line-faces
-	   (let ((overlay (make-overlay start end))
-		 (tags-faces (copy-alist notmuch-search-line-faces))
-		 line-face)
-	     (while tags-faces
-	       (let* ((tag-face (car tags-faces))
-		      (tag (car tag-face))
-		      (face (cdr tag-face)))
-		 (if (member tag line-tag-list)
-		     (setq line-face (append face line-face)))
-		 (setq tags-faces (cdr tags-faces))))
-	     (if line-face
-		 (overlay-put overlay 'face line-face)))))
 
      ;; Display the hl-line correctly in notmuch-search
      (add-hook 'notmuch-search-hook '(lambda () (overlay-put global-hl-line-overlay 'priority 1)))))
