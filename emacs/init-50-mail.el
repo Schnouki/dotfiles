@@ -60,7 +60,9 @@
 			       ("social"   . "tag:social and tag:unread")
 			       ("facebook" . "tag:facebook and tag:unread")
 			       ("lwn"      . "from:lwn.net and tag:unread"))
-      notmuch-fcc-dirs "Sent"
+      notmuch-fcc-dirs '(("thomas.jost@loria.fr" . "inria/Sent")
+			 ("thomas.jost@inria.fr" . "inria/Sent")
+			 (".*"                   . "schnouki.net/Sent"))
       message-kill-buffer-on-exit t
       notmuch-poll-script "~/.config/notmuch/mailsync")
 
@@ -136,6 +138,59 @@ in the current buffer."
      (add-hook 'notmuch-show-hook 'schnouki/notmuch-show-keys)
      (add-hook 'notmuch-search-hook 'schnouki/notmuch-search-keys)
 
+     ;; Temporary fix for the buggy Fcc handling
+     (defun notmuch-fcc-header-setup ()
+       "Add an Fcc header to the current message buffer.
+
+Can be added to `message-send-hook' and will set the Fcc header
+based on the values of `notmuch-fcc-dirs'. An existing Fcc header
+will NOT be removed or replaced."
+       
+       (let ((subdir
+	      (cond
+	       ((or (not notmuch-fcc-dirs)
+		    (message-fetch-field "Fcc"))
+		;; Nothing set or an existing header.
+		nil)
+	       
+	       ((stringp notmuch-fcc-dirs)
+		notmuch-fcc-dirs)
+	       
+	       ((listp notmuch-fcc-dirs)
+		(let* ((from (message-fetch-field "From"))
+		       (match
+			(catch 'first-match
+			  (dolist (re-folder notmuch-fcc-dirs)
+			    (when (string-match-p (car re-folder) from)
+			      (throw 'first-match re-folder))))))
+		  (if match
+		      (cdr match)
+		    (message "No Fcc header added.")
+		    nil)))
+	       
+	       (t
+		(error "Invalid `notmuch-fcc-dirs' setting (neither string nor list)")))))
+	 
+	 (when subdir
+	   (message-add-header
+	    (concat "Fcc: "
+		    ;; If the resulting directory is not an absolute path,
+		    ;; prepend the standard notmuch database path.
+		    (if (= (elt subdir 0) ?/)
+			subdir
+		      (concat (notmuch-database-path) "/" subdir))))
+	   
+	   ;; finally test if fcc points to a valid maildir
+	   (let ((fcc-header (message-fetch-field "Fcc")))
+	     (unless (notmuch-maildir-fcc-dir-is-maildir-p fcc-header)
+	       (cond ((not (file-writable-p fcc-header))
+		      (error (format "No permission to create %s, which does not exist"
+				     fcc-header)))
+		     ((y-or-n-p (format "%s is not a maildir. Create it? "
+					fcc-header))
+		      (notmuch-maildir-fcc-create-maildir fcc-header))
+		     (t
+		      (error "Message not sent"))))))))
 
      ;; Display the hl-line correctly in notmuch-search
      (add-hook 'notmuch-search-hook '(lambda () (overlay-put global-hl-line-overlay 'priority 1)))
