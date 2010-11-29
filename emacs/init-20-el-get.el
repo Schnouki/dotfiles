@@ -18,6 +18,10 @@
 	       :build ("make" "sudo make install"))
 	(:name undo-tree
 	       :features undo-tree)
+	(:name adoc-mode
+	       :type http
+	       :url "http://sensorflo-emacs.googlecode.com/svn/trunk/adoc-mode/adoc-mode.el"
+	       :features adoc-mode)
 	))
 
 (el-get)
