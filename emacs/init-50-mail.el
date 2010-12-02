@@ -71,8 +71,9 @@
   '(progn
      (defun notmuch-search-mark-read-and-archive-thread ()
        (interactive)
+       (notmuch-search-remove-tag "inbox")
        (notmuch-search-remove-tag "unread")
-       (notmuch-search-archive-thread))
+       (forward-line))
 
      (defun notmuch-show-mark-read-and-archive-thread ()
        "Mark as read and archive each message in thread, then show next thread from search.
