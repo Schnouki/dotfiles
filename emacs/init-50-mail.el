@@ -208,7 +208,24 @@ will NOT be removed or replaced."
 	(with-temp-buffer
 	  (insert-file-contents sigfile)
 	  (buffer-string)))))
+
+;; Set From header according to the To header
+(defun schnouki/choose-sender ()
+  (let* ((to (message-fetch-field "To"))
+	 (from
+	  (catch 'first-match
+	    (dolist (rule schnouki/message-sender-rules)
+	      (when (string-match-p (car rule) to)
+		(throw 'first-match (cdr rule)))))))
+    (if from
+	(progn
+	  (setq from (concat user-full-name " <" from ">"))
+	  (message-replace-header "From" from)
+	  (message (concat "Sender set to " from))))))
+(add-hook 'message-setup-hook 'schnouki/choose-sender)
+
 (setq message-signature 'schnouki/choose-signature
       schnouki/message-signatures '(("thomas.jost@inria.fr" . "~/.signature/loria")
 				    ("thomas.jost@loria.fr" . "~/.signature/loria")
-				    (".*"                   . "~/.signature/schnouki")))
+				    (".*"                   . "~/.signature/schnouki"))
+      schnouki/message-sender-rules '(("@fsfeurope.org" . "schnouki@fsfe.org")))
