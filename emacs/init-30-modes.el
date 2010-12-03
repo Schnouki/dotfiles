@@ -34,6 +34,9 @@
 (setq auto-mode-alist (append '(("\\.md$" . markdown-mode) ("\\.markdown$" . markdown-mode)) auto-mode-alist))
 (add-hook 'markdown-mode-hook '(lambda () (setq markdown-command "~/.config/emacs/markdown.sh")))
 
+(autoload 'adoc-mode "adoc-mode.el" "AsciiDoc mode." t)
+(setq auto-mode-alist (append '(("\\.adoc?$" . adoc-mode)) auto-mode-alist))
+
 (autoload 'jinja-mode "jinja.el" "Jinja mode." t)
 
 (autoload 'cuda-mode "cuda-mode.el" "Cuda mode." t)

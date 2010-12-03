@@ -624,6 +624,8 @@ awful.rules.rules = {
       callback = handle_graphite },
 }
 no_titlebar_apps = {
+   ["gnome-commander"] = true,
+   ["lt-gnome-commander"] = true,
    ["Wine"] = true,
    ["xine"] = true,
    ["Xitk"] = true,

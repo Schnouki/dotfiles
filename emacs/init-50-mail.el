@@ -71,8 +71,9 @@
   '(progn
      (defun notmuch-search-mark-read-and-archive-thread ()
        (interactive)
+       (notmuch-search-remove-tag "inbox")
        (notmuch-search-remove-tag "unread")
-       (notmuch-search-archive-thread))
+       (forward-line))
 
      (defun notmuch-show-mark-read-and-archive-thread ()
        "Mark as read and archive each message in thread, then show next thread from search.
@@ -193,22 +194,38 @@ will NOT be removed or replaced."
 		      (error "Message not sent"))))))))
 
      ;; Display the hl-line correctly in notmuch-search
-     (add-hook 'notmuch-search-hook '(lambda () (overlay-put global-hl-line-overlay 'priority 1)))
+     (add-hook 'notmuch-search-hook '(lambda () (overlay-put global-hl-line-overlay 'priority 1)))))
 
-     ;; Choose signature according to the From header
-     (defun schnouki/notmuch-choose-signature ()
-       (let* ((from (message-fetch-field "From"))
-	      (sigfile
-	       (catch 'first-match
-		 (dolist (re-file schnouki/message-signatures)
-		   (when (string-match-p (car re-file) from)
-		     (throw 'first-match (cdr re-file)))))))
-	 (if sigfile
-	     (with-temp-buffer
-	       (insert-file-contents sigfile)
-	       (buffer-string)))))
+;; Choose signature according to the From header
+(defun schnouki/choose-signature ()
+  (let* ((from (message-fetch-field "From"))
+	 (sigfile
+	  (catch 'first-match
+	    (dolist (re-file schnouki/message-signatures)
+	      (when (string-match-p (car re-file) from)
+		(throw 'first-match (cdr re-file)))))))
+    (if sigfile
+	(with-temp-buffer
+	  (insert-file-contents sigfile)
+	  (buffer-string)))))
 
-     (setq message-signature 'schnouki/notmuch-choose-signature
-	   schnouki/message-signatures '(("thomas.jost@inria.fr" . "~/.signature/loria")
-					 ("thomas.jost@loria.fr" . "~/.signature/loria")
-					 (".*"                   . "~/.signature/schnouki")))))
+;; Set From header according to the To header
+(defun schnouki/choose-sender ()
+  (let* ((to (message-fetch-field "To"))
+	 (from
+	  (catch 'first-match
+	    (dolist (rule schnouki/message-sender-rules)
+	      (when (string-match-p (car rule) to)
+		(throw 'first-match (cdr rule)))))))
+    (if from
+	(progn
+	  (setq from (concat user-full-name " <" from ">"))
+	  (message-replace-header "From" from)
+	  (message (concat "Sender set to " from))))))
+(add-hook 'message-setup-hook 'schnouki/choose-sender)
+
+(setq message-signature 'schnouki/choose-signature
+      schnouki/message-signatures '(("thomas.jost@inria.fr" . "~/.signature/loria")
+				    ("thomas.jost@loria.fr" . "~/.signature/loria")
+				    (".*"                   . "~/.signature/schnouki"))
+      schnouki/message-sender-rules '(("@fsfeurope.org" . "schnouki@fsfe.org")))
