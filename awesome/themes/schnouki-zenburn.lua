@@ -8,7 +8,7 @@
 
 -- {{{ Main
 theme = {}
-theme.wallpaper_cmd = { "smartbg /home/schnouki/images/wallpapers/wp1 /home/schnouki/images/wallpapers/wp2" }
+theme.wallpaper_cmd = { "smartbg /home/schnouki/images/wallpapers" }
 -- }}}
 
 -- {{{ Styles

@@ -680,4 +680,10 @@ mytimer15:add_signal("timeout", function ()
     tb_mails_update()
 end)
 mytimer15:start()
+
+mytimer300 = timer { timeout = 300 }
+mytimer300:add_signal("timeout", function ()
+    awful.util.spawn(beautiful.wallpaper_cmd[1])
+end)
+mytimer300:start()
 -- }}}
