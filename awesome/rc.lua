@@ -66,9 +66,10 @@ myawesomemenu = {
 }
 
 gamemenu = {
+   { "battle for wesnoth", "wesnoth", image("/usr/share/icons/wesnoth-icon.png") },
    { "frozen bubble", "frozen-bubble", image("/usr/share/pixmaps/frozen-bubble.png") },
    { "kobo deluxe", "kobodl", image("/usr/share/pixmaps/kobo-icon.xpm") },
-   { "hedgewars", "hedgewars", image("/usr/share/pixmaps/hedgewars.png") },
+   { "minecraft", "minecraft", image("/usr/share/pixmaps/minecraft.png") },
 }
 
 utilsmenu = {
@@ -81,7 +82,6 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
                                     { "utils", utilsmenu },
                                     { "gajim", "gajim", image("/usr/share/icons/hicolor/64x64/apps/gajim.png") },
                                     { "thunderbird", "thunderbird", image("/usr/share/pixmaps/thunderbird.png") },
-                                    { "firefox", "firefox", image("/usr/share/pixmaps/firefox.png") },
                                     { "chromium", "chromium", image("/usr/share/icons/hicolor/16x16/apps/chromium.png") },
                                     { "picasa", "/usr/local/bin/picasa", image("/home/schnouki/.config/awesome/icons/picasa.png") },
                                     { "spotify", "spotify", image("/home/schnouki/.config/awesome/icons/spotify.png") },
@@ -620,6 +620,8 @@ awful.rules.rules = {
       properties = { tag = tags[1][9] } },
     { rule = { class = "Audacious" },
       properties = { floating = true, ontop = true, sticky = true } },
+    { rule = { name = "Minecraft" },
+      properties = { floating = true } },
     { rule = { class = nil, instance = nil },
       callback = handle_graphite },
 }
