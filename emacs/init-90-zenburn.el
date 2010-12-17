@@ -8,12 +8,18 @@
 (zenburn)
 
 ;; Tag/face mapping in notmuch
-(setq notmuch-search-line-faces '(("deleted" . '(:background "#6f3f3f"))
+(setq notmuch-search-line-faces '(("delete"  . '(:background "#3b2b2b"))
 				  ("draft"   . '(:slant italic))
-				  ("flagged" . '(:background "#5f3f5f"))
+				  ("flagged" . '(:background "#4b2f4b"))
 				  ("sent"    . '(:weight bold))
-				  ("todo"    . '(:background "#3f3f5f"))
-				  ("unread"  . '(:background "#3f4f3f"))))
+				  ("todo"    . '(:background "#2f2f4b"))
+				  ("unread"  . '(:background "#2b3b2b"))))
+(set-face-foreground 'notmuch-search-date                 zenburn-yellow)
+(set-face-foreground 'notmuch-search-count                zenburn-cyan)
+(set-face-foreground 'notmuch-search-subject              zenburn-fg)
+(set-face-foreground 'notmuch-search-matching-authors     "#ffeece") ;; zenburn-yellow+1
+(set-face-foreground 'notmuch-search-non-matching-authors "#b09f6f") ;; zenburn-yellow-4
+(set-face-attribute  'notmuch-tag-face                nil :foreground zenburn-green+2 :slant 'italic)
 
 ;; Org-mode keywords
 (eval-after-load 'org
