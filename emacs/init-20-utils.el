@@ -83,7 +83,7 @@ Return the index of the matching item, or nil if not found."
     (if (= count len) nil count)))
 
 ;; Remove *blabla* buffers, except those in the immortal-star-buffers list
-(setq schnouki/immortal-star-buffers '("*scratch*"))
+(setq schnouki/immortal-star-buffers '("*scratch*" "*OfflineIMAP*"))
 (defun schnouki/kill-star-buffers ()
   "Remove most star-buffers (`*Messages*', `*Compilation', ...) that are not in the `schnouki/immortal-star-buffers' list."
   (interactive)

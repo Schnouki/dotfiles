@@ -84,3 +84,20 @@
      (set-face-foreground 'undo-tree-visualizer-default-face zenburn-bg+4)
      (set-face-foreground 'undo-tree-visualizer-current-face zenburn-red)
      (set-face-foreground 'undo-tree-visualizer-active-branch-face zenburn-fg)))
+
+;; OfflineIMAP
+(eval-after-load 'offlineimap
+  '(progn
+     (set-face-foreground 'offlineimap-msg-acct-face             zenburn-magenta)
+     (set-face-foreground 'offlineimap-msg-connecting-face       zenburn-bg+4)
+     (set-face-foreground 'offlineimap-msg-syncfolders-face      zenburn-blue)
+     (set-face-foreground 'offlineimap-msg-syncingfolders-face   zenburn-cyan)
+     (set-face-foreground 'offlineimap-msg-skippingfolder-face   zenburn-cyan)
+     (set-face-foreground 'offlineimap-msg-loadmessagelist-face  zenburn-green)
+     (set-face-foreground 'offlineimap-msg-syncingmessages-face  zenburn-blue)
+     (set-face-foreground 'offlineimap-msg-copyingmessage-face   zenburn-orange)
+     (set-face-foreground 'offlineimap-msg-deletingmessages-face zenburn-red)
+     (set-face-foreground 'offlineimap-msg-deletingmessage-face  zenburn-red)
+     (set-face-foreground 'offlineimap-msg-addingflags-face      zenburn-yellow)
+     (set-face-foreground 'offlineimap-msg-deletingflags-face    zenburn-magenta)
+     (set-face-foreground 'offlineimap-error-face                zenburn-red)))

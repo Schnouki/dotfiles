@@ -27,7 +27,10 @@
       smtpmail-starttls-credentials '(("mail.schnouki.net" 587 nil nil))
       starttls-use-gnutls t
       starttls-gnutls-program "gnutls-cli"
-      starttls-extra-arguments nil)
+      starttls-extra-arguments nil
+      offlineimap-enable-mode-line-p 
+      '(member major-mode 
+	       '(offlineimap-mode notmuch-hello-mode notmuch-search-mode notmuch-show-mode)))
 
 ;; Load notmuch
 (autoload 'notmuch "notmuch" nil t)

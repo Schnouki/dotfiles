@@ -9,7 +9,7 @@
       el-get-recipe-path '("~/.config/emacs/el-get/el-get/recipes")
       el-get-sources
       '(flyguess folding google-maps google-weather
-	ioccur python-mode rainbow-mode verbiste
+	ioccur offlineimap python-mode rainbow-mode verbiste
 	(:name el-get
 	       :url "git://github.com/Schnouki/el-get.git")
 	(:name magit
