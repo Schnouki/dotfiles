@@ -25,9 +25,23 @@ TRAPINT() {
     return $(( 128 + $1 ))
 }
 
-# Quiet mode?
+# Parse command line options
 quiet=
-if [ "$1" = "-q" ]; then quiet=1; fi
+while getopts fhqs OPT; do
+    case $OPT in
+        f) MDSYNC="$MDSYNC -q" ;;
+        q) quiet=1 ;;
+        s) MDSYNC="$MDSYNC -1" ;;
+        *)
+            echo "$0 [options]"
+            echo ""
+            echo "Available options:"
+            echo "  -f  fast mode (don't sync IMAP flags)"
+            echo "  -q  quiet mode (no output)"
+            echo "  -s  single-threaded mode"
+            exit 1 ;;
+    esac
+done
 
 # Check the DISPLAY environment variable (needed for D-Bus and awesome-client)
 [[ -z "$DISPLAY" ]] && export DISPLAY=:0.0
