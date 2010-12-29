@@ -6,6 +6,9 @@ BACKUPDIR=$HOME/.config/notmuch
 MDSYNC="offlineimap -o"
 TAGSCRIPT="nosync $BACKUPDIR/autotag"
 
+# Use the SCHED_IDLEPRIO scheduling policy
+schedtool -D $$
+
 # Already running?
 zmodload zsh/net/socket
 SOCKET=/tmp/mailsync.$UID
