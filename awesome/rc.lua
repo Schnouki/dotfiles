@@ -596,8 +596,6 @@ awful.rules.rules = {
       properties = { floating = true } },
     { rule = { name = "R Graphics: Device 2 (ACTIVE)" },
       properties = { floating = true } },
-    { rule = { class = "Chromium" },
-      properties = { tag = tags[1][3] } },
     { rule = { class = "Chromium", name = "Préférences de Chromium" },
       properties = { floating = true } },
     { rule = { class = "Firefox" },
