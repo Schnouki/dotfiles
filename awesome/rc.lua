@@ -18,7 +18,7 @@ os.setlocale("C", "numeric")
 beautiful.init("/home/schnouki/.config/awesome/themes/schnouki-zenburn.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "urxvt"
+terminal = "roxterm"
 editor = "emacsclient -c -a \"\""
 -- editor_cmd = terminal .. " -e " .. editor
 editor_cmd = editor

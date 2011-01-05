@@ -21,4 +21,5 @@ ddns/key
 !emacs
 !mozilla
 !notmuch
+!roxterm.sourceforge.net
 !zsh
