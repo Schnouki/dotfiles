@@ -23,6 +23,7 @@
 ;; Default compilation commands
 (setq-default compile-command "make") ;; I don't want "make -k"
 (add-hook 'LaTeX-mode-hook (lambda () (setq compile-command "latexmk -pdf")))
+(global-set-key (kbd "C-! c") 'compile)
 
 ;; Prevent ispell from verifying some LaTeX commands
 ;; http://stat.genopole.cnrs.fr/dw/~jchiquet/fr/latex/emacslatex
