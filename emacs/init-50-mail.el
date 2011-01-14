@@ -72,6 +72,16 @@
 ;; Useful key bindings in notmuch buffers
 (eval-after-load 'notmuch
   '(progn
+     (defun notmuch-search-filter-by-date (days)
+       (interactive "NNumber of days to display: ")
+       (let* ((now (current-time))
+	      (beg (time-subtract now (days-to-time days)))
+	      (filter
+	       (concat
+		(format-time-string "%s.." beg)
+		(format-time-string "%s" now))))
+	 (notmuch-search-filter filter)))
+     
      (defun notmuch-search-mark-read-and-archive-thread ()
        (interactive)
        (notmuch-search-remove-tag "inbox")
@@ -137,6 +147,7 @@ in the current buffer."
 
      (defun schnouki/notmuch-search-keys ()
        (interactive)
+       (local-set-key "d" 'notmuch-search-filter-by-date)
        (local-set-key "z" 'notmuch-search-mark-read-and-archive-thread))
 
      (add-hook 'notmuch-show-hook 'schnouki/notmuch-show-keys)
