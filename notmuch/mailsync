@@ -3,9 +3,6 @@
 MAILDIR=$HOME/mail
 BACKUPDIR=$HOME/.config/notmuch
 
-MDSYNC="offlineimap -o"
-TAGSCRIPT="nosync $BACKUPDIR/autotag"
-
 # Use the SCHED_IDLEPRIO scheduling policy
 schedtool -D $$
 
@@ -69,9 +66,9 @@ echo "tb_mails_updating(true)\ntb_mails_set_count($n)" | awesome-client
 
 # Run notmuchsync, then offlineimap, then the autotag script
 if [ $quiet ]; then
-    eval $MDSYNC -u Noninteractive.Quiet && eval $TAGSCRIPT >/dev/null
+    offlineimap -o -u Noninteractive.Quiet && nosync $BACKUPDIR/autotag >/dev/null
 else
-    eval $MDSYNC && eval $TAGSCRIPT
+    offlineimap -o && nosync $BACKUPDIR/autotag
 fi
 
 # Update the display in awesome
