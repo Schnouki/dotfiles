@@ -30,11 +30,14 @@
   '(progn
      (setq org-todo-keyword-faces
 	   '(("STARTED"   . "#8cd0d3") ; zenburn-blue
-	     ("CANCELED"  . "#7f7f7f") ; zenburn-bg+4
-
 	     ("WIP"       . "#8cd0d3") ; zenburn-blue
+
 	     ("PROPOSÉ"   . "#7f9f7f") ; zenburn-green
+	     ("READY"     . "#7f9f7f") ; zenburn-green
+
 	     ("ABANDONNÉ" . "#7f7f7f") ; zenburn-bg+4
+	     ("CANCELED"  . "#7f7f7f") ; zenburn-bg+4
+	     ("N/A"       . "#7f7f7f") ; zenburn-bg+4
 	     ("REFUSÉ"    . "#7f7f7f") ; zenburn-bg+4
 	     ))))
 
