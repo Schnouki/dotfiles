@@ -63,9 +63,10 @@
 			       ("social"   . "tag:social and tag:unread")
 			       ("facebook" . "tag:facebook and tag:unread")
 			       ("lwn"      . "from:lwn.net and tag:unread"))
-      notmuch-fcc-dirs '(("thomas.jost@loria.fr" . "inria/Sent")
-			 ("thomas.jost@inria.fr" . "inria/Sent")
-			 (".*"                   . "schnouki.net/Sent"))
+      notmuch-fcc-dirs '(("thomas.jost@loria.fr"       . "inria/Sent")
+			 ("thomas.jost@inria.fr"       . "inria/Sent")
+			 ("thomas.jost@univ-nancy2.fr" . "inria/Sent")
+			 (".*"                         . "schnouki.net/Sent"))
       message-kill-buffer-on-exit t
       notmuch-poll-script "~/.config/notmuch/mailsync")
 
@@ -240,7 +241,8 @@ will NOT be removed or replaced."
 (add-hook 'message-setup-hook 'schnouki/choose-sender)
 
 (setq message-signature 'schnouki/choose-signature
-      schnouki/message-signatures '(("thomas.jost@inria.fr" . "~/.signature/loria")
-				    ("thomas.jost@loria.fr" . "~/.signature/loria")
-				    (".*"                   . "~/.signature/schnouki"))
+      schnouki/message-signatures '(("thomas.jost@inria.fr"       . "~/.signature/loria")
+				    ("thomas.jost@loria.fr"       . "~/.signature/loria")
+				    ("thomas.jost@univ-nancy2.fr" . "~/.signature/loria")
+				    (".*"                         . "~/.signature/schnouki"))
       schnouki/message-sender-rules '(("@fsfeurope.org" . "schnouki@fsfe.org")))
