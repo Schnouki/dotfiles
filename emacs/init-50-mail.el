@@ -225,17 +225,18 @@ will NOT be removed or replaced."
 
 ;; Set From header according to the To header
 (defun schnouki/choose-sender ()
-  (let* ((to (message-fetch-field "To"))
-	 (from
-	  (catch 'first-match
-	    (dolist (rule schnouki/message-sender-rules)
-	      (when (string-match-p (car rule) to)
-		(throw 'first-match (cdr rule)))))))
-    (if from
-	(progn
-	  (setq from (concat user-full-name " <" from ">"))
-	  (message-replace-header "From" from)
-	  (message (concat "Sender set to " from))))))
+  (let ((to (message-fetch-field "To")))
+    (when to
+      (let ((from
+	     (catch 'first-match
+	       (dolist (rule schnouki/message-sender-rules)
+		 (when (string-match-p (car rule) to)
+		   (throw 'first-match (cdr rule)))))))
+	(if from
+	    (progn
+	      (setq from (concat user-full-name " <" from ">"))
+	      (message-replace-header "From" from)
+	      (message (concat "Sender set to " from))))))))
 (add-hook 'message-setup-hook 'schnouki/choose-sender)
 
 (setq message-signature 'schnouki/choose-signature
