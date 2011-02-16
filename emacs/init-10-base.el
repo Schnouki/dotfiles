@@ -150,3 +150,13 @@
   (when (>= (recursion-depth) 1)
     (abort-recursive-edit)))
 (add-hook 'mouse-leave-buffer-hook 'stop-using-minibuffer)
+
+;; Don't ask if I want to kill a buffer with a live process attached to it
+;; http://www.masteringemacs.org/articles/2010/11/14/disabling-prompts-emacs/
+(setq kill-buffer-query-functions
+      (remq 'process-kill-buffer-query-function
+	    kill-buffer-query-functions))
+
+;; Automagically make scripts executable
+;; http://www.masteringemacs.org/articles/2011/01/19/script-files-executable-automatically/
+(add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
