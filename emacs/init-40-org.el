@@ -19,8 +19,11 @@
 
       org-enforce-todo-dependencies t
       org-enforce-toto-checkbox-dependencies t
+      org-hierarchical-todo-statistics nil
+      org-hierarchical-checkbox-statistics nil
 
       org-agenda-dim-blocked-tasks t
+      org-agenda-include-diary t
       org-agenda-files (mapcar (lambda (s) (concat org-directory s))
 			       '("todo.org" "cours.org"))
       org-agenda-custom-commands
@@ -45,14 +48,6 @@
       org-remember-templates
       '(("TODO" ?t "* TODO %?\n  %i\n  %a"   "todo.org")
         ("Idée" ?i "* %^{Title}\n  %i\n  %a" org-default-notes-file "Idées")))
-
-;; Also use custom faces for checkbox statistics
-(eval-after-load 'org-list
-  '(progn
-     (defun org-get-checkbox-statistics-face ()
-       "Select the face for checkbox statistics.
-Use the same as for the todo keywods."
-       (org-get-todo-face (match-string 1)))))
 
 ;; Get the index of a todo keyword in the schnouki/org-todo-keywords-sort-order list
 ;; Used to sort a todo-list by todo order
