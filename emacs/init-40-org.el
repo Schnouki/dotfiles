@@ -4,28 +4,22 @@
 
 (require 'org-install)
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
-(global-set-key (kbd "C-! l") 'org-store-link)
-(global-set-key (kbd "C-! a") 'org-agenda)
-(global-set-key (kbd "C-! b") 'org-iswitchb)
 (add-hook 'org-mode-hook
           (lambda ()
             (turn-on-font-lock)
             (define-key org-mode-map (kbd "C-M-g") 'org-plot/gnuplot)))
+
+;; Various parameters
 (setq-default org-tags-column -80)
-
-;; TODO-list
-(defun schnouki/org-todo-list ()
-  (interactive)
-  (find-file "~/Dropbox/org/todo.org"))
-(global-set-key (kbd "C-! t") 'schnouki/org-todo-list)
-
 (setq org-directory "~/Dropbox/org/"
       org-todo-keywords '((sequence "TODO" "STARTED" "|" "DONE" "CANCELED"))
       schnouki/org-todo-keywords-sort-order '("DONE" "STARTED" "TODO" "CANCELED")
       org-log-done 'time
+      org-support-shift-select t
+
       org-enforce-todo-dependencies t
       org-enforce-toto-checkbox-dependencies t
-      org-support-shift-select t
+
       org-agenda-dim-blocked-tasks t
       org-agenda-files (mapcar (lambda (s) (concat org-directory s))
 			       '("todo.org" "cours.org"))
@@ -38,6 +32,12 @@
 	("pa" "Priorité haute"   tags-todo "+PRIORITY=\"A\"")
 	("pb" "Priorité normale" tags-todo "+PRIORITY=\"B\"")
 	("pc" "Priorité basse"   tags-todo "+PRIORITY=\"C\"")))
+
+;; Keyboard shortcuts
+(global-set-key (kbd "C-! l") 'org-store-link)
+(global-set-key (kbd "C-! a") 'org-agenda)
+(global-set-key (kbd "C-! b") 'org-iswitchb)
+(global-set-key (kbd "C-! t") '(lambda () (interactive) (find-file (concat org-directory "todo.org"))))
 
 (org-remember-insinuate)
 (global-set-key (kbd "C-! r") 'org-remember)
