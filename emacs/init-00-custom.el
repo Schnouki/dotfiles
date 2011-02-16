@@ -6,7 +6,6 @@
  '(ecb-options-version "2.40")
  '(font-latex-fontify-sectioning 1.05)
  '(inhibit-startup-screen t)
- '(org-agenda-files (quote ("~/Dropbox/org/todo.org")))
  '(safe-local-variable-values (quote ((pkgbuild-update-sums-on-save) (py-indent-offset . 4) (ispell-dictionary . "francais") (ispell-dictionary . "american")))))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.

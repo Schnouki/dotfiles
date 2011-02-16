@@ -27,6 +27,8 @@
       org-enforce-toto-checkbox-dependencies t
       org-support-shift-select t
       org-agenda-dim-blocked-tasks t
+      org-agenda-files (mapcar (lambda (s) (concat org-directory s))
+			       '("todo.org" "cours.org"))
       org-agenda-custom-commands
       '(("c" . "TODO par catégories")
 	("cp" "Catégorie: perso" tags-todo "+perso")
