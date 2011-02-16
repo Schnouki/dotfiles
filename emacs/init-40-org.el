@@ -42,12 +42,12 @@
 (global-set-key (kbd "C-! b") 'org-iswitchb)
 (global-set-key (kbd "C-! t") '(lambda () (interactive) (find-file (concat org-directory "todo.org"))))
 
-(org-remember-insinuate)
-(global-set-key (kbd "C-! r") 'org-remember)
+;; Capture
+(global-set-key (kbd "C-! r") 'org-capture)
 (setq org-default-notes-file (concat org-directory "/notes.org")
-      org-remember-templates
-      '(("TODO" ?t "* TODO %?\n  %i\n  %a"   "todo.org")
-        ("Idée" ?i "* %^{Title}\n  %i\n  %a" org-default-notes-file "Idées")))
+      org-capture-templates
+      '(("t" "TODO" entry (file "todo.org") "* TODO %?\n  %i\n  %a" :unnarrowed)
+        ("i" "Idée" entry (file) "* Idée : %^{Titre} (%T)\n  %i\n  %a" :unnarrowed)))
 
 ;; Get the index of a todo keyword in the schnouki/org-todo-keywords-sort-order list
 ;; Used to sort a todo-list by todo order
