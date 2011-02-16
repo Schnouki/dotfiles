@@ -19,9 +19,6 @@
   (find-file "~/Dropbox/org/todo.org"))
 (global-set-key (kbd "C-! t") 'schnouki/org-todo-list)
 
-;; MobileOrg -- http://orgmode.org/manual/MobileOrg.html
-(setq org-mobile-directory "~/Dropbox/MobileOrg")
-
 (setq org-directory "~/Dropbox/org/"
       org-todo-keywords '((sequence "TODO" "STARTED" "|" "DONE" "CANCELED"))
       schnouki/org-todo-keywords-sort-order '("DONE" "STARTED" "TODO" "CANCELED")
@@ -139,11 +136,3 @@ Use the same as for the todo keywods."
 (add-hook 'after-save-hook 'ba/org-adjust-tags-column-after-save)
 (add-hook 'org-agenda-mode-hook '(lambda ()
 				   (setq org-agenda-tags-column (- (window-width)))))
-
-
-;; Workaround a bug that causes org-mobile-push to fail when
-;; org-todo-keyword-faces is set. Not pretty, but works...
-(defadvice org-mobile-push
-  (around org-mobile-push-disable-todo-keyword-faces activate)
-  (let ((org-todo-keyword-faces nil))
-    ad-do-it))
