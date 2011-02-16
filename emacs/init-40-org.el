@@ -68,9 +68,9 @@ Use the same as for the todo keywods."
 			     "\\)\\>")))
     (save-excursion
       (mark-whole-buffer)
-      (org-sort-entries-or-items nil ?a)
-      (org-sort-entries-or-items nil ?p)
-      (org-sort-entries-or-items nil ?f 'schnouki/org-sort-by-todo-keywords))
+      (org-sort-entries nil ?a)
+      (org-sort-entries nil ?p)
+      (org-sort-entries nil ?f 'schnouki/org-sort-by-todo-keywords))
     (org-overview)
     (org-content)
     (save-excursion
