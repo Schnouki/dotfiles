@@ -18,7 +18,7 @@
       org-support-shift-select t
 
       org-enforce-todo-dependencies t
-      org-enforce-toto-checkbox-dependencies t
+      org-enforce-todo-checkbox-dependencies t
       org-hierarchical-todo-statistics nil
       org-hierarchical-checkbox-statistics nil
 
