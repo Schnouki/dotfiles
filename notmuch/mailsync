@@ -67,11 +67,15 @@ echo "tb_mails_updating(true)\ntb_mails_set_count($n)" | awesome-client
 # Set the Maildir T flag on message with the notmuch "deleted" tag
 (( $(notmuch count tag:deleted) > 0 )) && notmuch search --output=files tag:deleted | xargs -d'\n' rm
 
-# Run notmuchsync, then offlineimap, then the autotag script
+# Run offlineimap, then "notmuch new", then the autotag script
 if [ $quiet ]; then
-    offlineimap -o -u Noninteractive.Quiet && nosync $BACKUPDIR/autotag >/dev/null
+    offlineimap -o -u Noninteractive.Quiet && \
+        nosync notmuch new >/dev/null && \
+        nosync $BACKUPDIR/autotag.py >/dev/null
 else
-    offlineimap -o && nosync $BACKUPDIR/autotag
+    offlineimap -o && \
+        nosync notmuch new && \
+        nosync $BACKUPDIR/autotag.py
 fi
 
 # Update the display in awesome

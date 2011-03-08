@@ -22,6 +22,6 @@ function hook_update_encrypted_file() {
 # Check for sensitive configuration files: SSH, GnuPG, etc.
 hook_update_encrypted_file ".ssh/config" "ssh.gpg"
 hook_update_encrypted_file ".gnupg/gpg.conf" "gpg.conf.gpg"
-hook_update_encrypted_file ".config/notmuch/autotag" "notmuch/autotag.gpg"
+hook_update_encrypted_file ".config/notmuch/autotag.py" "notmuch/autotag.py.gpg"
 
 exit $hook_exit_code
