@@ -3,9 +3,6 @@
 MAILDIR=$HOME/mail
 BACKUPDIR=$HOME/.config/notmuch
 
-# Use the SCHED_IDLEPRIO scheduling policy
-schedtool -D $$
-
 # Already running?
 zmodload zsh/net/socket
 SOCKET=/tmp/mailsync.$UID
@@ -61,11 +58,11 @@ if ! fping -q 8.8.8.8; then
 fi
 
 # Tell awesome the update begins
-n=$(/usr/bin/notmuch count tag:unread)
+n=$(notmuch count tag:unread)
 echo "tb_mails_updating(true)\ntb_mails_set_count($n)" | awesome-client
 
 # Set the Maildir T flag on message with the notmuch "deleted" tag
-(( $(notmuch count tag:deleted) > 0 )) && notmuch search --output=files tag:deleted | xargs -d'\n' rm
+(( $(notmuch count tag:deleted) > 0 )) && notmuch search --output=files tag:deleted | xargs -rd'\n' rm
 
 # Run offlineimap, then "notmuch new", then the autotag script
 if [ $quiet ]; then
@@ -79,5 +76,5 @@ else
 fi
 
 # Update the display in awesome
-n=$(/usr/bin/notmuch count tag:unread)
+n=$(notmuch count tag:unread)
 echo "tb_mails_updating(nil)\ntb_mails_set_count($n)" | awesome-client
