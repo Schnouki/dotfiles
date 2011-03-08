@@ -1,0 +1,13 @@
+#!/bin/zsh
+
+rids=()
+
+notmuch search --output=files tag:sent | while read f; do
+    rid=$(gawk 'BEGIN { IGNORECASE=1 } $1 ~ /^In-Reply-To:/ { print $2 }' "$f" | sed 's/<\(.*\)>/\1/')
+    if [ "${rid}" ]; then
+        rids+=(${rid})
+    fi
+done
+
+for rid in ${rids}; do echo "or id:${rid}"; done \
+    | xargs notmuch tag +replied "id:$rids[1]"
