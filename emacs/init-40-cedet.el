@@ -2,22 +2,15 @@
 ;; CEDET 
 ;; -----------------------------------------------------------------------------
 
-(add-to-list 'load-path "/usr/share/emacs/site-lisp/cedet")
-(load-file "/usr/share/emacs/site-lisp/cedet/common/cedet.el")
+(require 'cedet)
 
 ;; Project management - EDE package
 (global-ede-mode t)
 
-;; Semantic code helpers
-;; (probably redundant with which-func-mode which is already enabled somewhere else)
-(semantic-load-enable-excessive-code-helpers)
-
-;; To use additional features for names completion, and displaying of
-;; information for tags & classes, you also need to load the semantic-ia package
-(require 'semantic-ia)
-
-;; Access to system include files
-(require 'semantic-gcc)
+;; Semantic
+(require 'semantic)
+(setq semantic-default-submodes semantic-submode-list)
+(semantic-mode 1)
 
 ;; Some key bindings
 ;; - Completion
