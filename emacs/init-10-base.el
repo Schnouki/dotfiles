@@ -160,3 +160,6 @@
 ;; Automagically make scripts executable
 ;; http://www.masteringemacs.org/articles/2011/01/19/script-files-executable-automatically/
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
+
+;; Better buffer switching
+(iswitchb-mode 1)
