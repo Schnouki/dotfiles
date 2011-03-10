@@ -8,20 +8,14 @@
 (setq el-get-dir "~/.config/emacs/el-get"
       el-get-recipe-path '("~/.config/emacs/el-get/el-get/recipes")
       el-get-sources
-      '(flyguess folding google-maps google-weather
-	ioccur offlineimap python-mode rainbow-mode verbiste
+      '(flyguess folding
+	ioccur python-mode verbiste
 	(:name el-get
 	       :url "git://github.com/Schnouki/el-get.git")
 	(:name magit
 	       :url "git://github.com/Schnouki/magit.git")
-	(:name pymacs
-	       :build ("make" "sudo make install"))
 	(:name undo-tree
 	       :features undo-tree)
-	(:name adoc-mode
-	       :type http
-	       :url "http://sensorflo-emacs.googlecode.com/svn/trunk/adoc-mode/adoc-mode.el"
-	       :features adoc-mode)
 	))
 
 (el-get)
