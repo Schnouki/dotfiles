@@ -209,20 +209,22 @@ will NOT be removed or replaced."
 
      ;; Custom version of notmuch address expansion. Just a little bit different.
      (defun notmuch-address-expand-name ()
+       (ido-mode 1)
        (let* ((end (point))
 	      (beg (save-excursion
-		     (re-search-backward "\\(\\`\\|[\n:,]\\)[ \t]*")
-		     (goto-char (match-end 0))
-		     (point)))
+		     (save-match-data
+		       (re-search-backward "\\(\\`\\|[\n:,]\\)[ \t]*")
+		       (match-end 0))))
 	      (orig (buffer-substring-no-properties beg end))
 	      (completion-ignore-case t)
 	      (options (notmuch-address-options orig))
 	      (num-options (length options))
+	      (ido-enable-flex-matching t)
 	      (chosen (if (eq num-options 1)
 			  (car options)
-			(completing-read (format "Address (%s matches): " num-options)
-					 options nil nil nil 'notmuch-address-history
-					 (car options)))))
+			(ido-completing-read (format "Address (%s matches): " num-options)
+					     options nil nil nil 'notmuch-address-history
+					     (car options)))))
 	 (when chosen
 	   (push chosen notmuch-address-history)
 	   (delete-region beg end)
