@@ -27,10 +27,7 @@
       smtpmail-starttls-credentials '(("mail.schnouki.net" 587 nil nil))
       starttls-use-gnutls t
       starttls-gnutls-program "gnutls-cli"
-      starttls-extra-arguments nil
-      offlineimap-enable-mode-line-p 
-      '(member major-mode 
-	       '(offlineimap-mode notmuch-hello-mode notmuch-search-mode notmuch-show-mode)))
+      starttls-extra-arguments nil)
 
 ;; Load notmuch
 (autoload 'notmuch "notmuch" nil t)
@@ -43,6 +40,7 @@
 ;; - directory for sent messages
 ;; - kill message-mode buffer after a mail is sent
 ;; - poll script that fetches new mail
+;; - addresses completion
 (setq notmuch-saved-searches '(("inbox"    . "tag:inbox")
 			       ("unread"   . "tag:unread")
 			       ("flagged"  . "tag:flagged")
@@ -68,7 +66,8 @@
 			 ("thomas.jost@univ-nancy2.fr" . "inria/Sent")
 			 (".*"                         . "schnouki.net/Sent"))
       message-kill-buffer-on-exit t
-      notmuch-poll-script "~/.config/notmuch/mailsync")
+      notmuch-poll-script "~/.config/notmuch/mailsync"
+      notmuch-address-command "~/.config/notmuch/addrbook.py")
 
 ;; Useful key bindings in notmuch buffers
 (eval-after-load 'notmuch
@@ -207,6 +206,27 @@ will NOT be removed or replaced."
 		      (notmuch-maildir-fcc-create-maildir fcc-header))
 		     (t
 		      (error "Message not sent"))))))))
+
+     ;; Custom version of notmuch address expansion. Just a little bit different.
+     (defun notmuch-address-expand-name ()
+       (let* ((end (point))
+	      (beg (save-excursion
+		     (re-search-backward "\\(\\`\\|[\n:,]\\)[ \t]*")
+		     (goto-char (match-end 0))
+		     (point)))
+	      (orig (buffer-substring-no-properties beg end))
+	      (completion-ignore-case t)
+	      (options (notmuch-address-options orig))
+	      (num-options (length options))
+	      (chosen (if (eq num-options 1)
+			  (car options)
+			(completing-read (format "Address (%s matches): " num-options)
+					 options nil nil nil 'notmuch-address-history
+					 (car options)))))
+	 (when chosen
+	   (push chosen notmuch-address-history)
+	   (delete-region beg end)
+	   (insert chosen))))
 
      ;; Display the hl-line correctly in notmuch-search
      (add-hook 'notmuch-search-hook '(lambda () (overlay-put global-hl-line-overlay 'priority 1)))))

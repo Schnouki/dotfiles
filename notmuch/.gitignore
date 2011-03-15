@@ -1,2 +1,4 @@
+*.db
+*.pyc
 *.xz
 autotag.py
