@@ -8,8 +8,28 @@ function init()
 end
 
 function query()
-   local cmd = "~/.config/awesome/nvtemp.sh > " .. status_file .. " &"
+   local cmd = "nvidia-smi -a > " .. status_file .. " &"
    os.execute(cmd)
+end
+
+function format_temp_gpu(temp)
+   local color = "green"
+   if temp >= 80 then
+      color = "red"
+   elseif temp >= 65 then
+      color = "yellow"
+   end
+   return '<span foreground="' .. color .. '">' .. temp .. '</span>:'
+end
+
+function format_temp_board(temp)
+   local color = "green"
+   if temp >= 65 then
+      color = "red"
+   elseif temp >= 50 then
+      color = "yellow"
+   end
+   return '<span foreground="' .. color .. '">' .. temp .. '</span>/'
 end
 
 function format()
@@ -18,20 +38,30 @@ function format()
 
    if not f then
       query()
-      return "GPU: ..."
+      return "GPU: n/a"
    end
 
+   local temp_section = false
+   local sect, name, temp
    for line in f:lines() do
-      local temp = tonumber(line)
-      local color = "green"
-
-      if temp >= 80 then
-         color = "red"
-      elseif temp >= 65 then
-         color = "yellow"
+      -- Temperature section?
+      sect = string.match(line, "^    (%w+)")
+      if sect then
+         temp_section = (sect == "Temperature")
       end
 
-      s = s .. '<span foreground="' .. color .. '">' .. line .. '</span>/'
+      -- Temperatures?
+      if temp_section then
+         name, temp = string.match(line, "^%s+(%w+)%s+: (%d+)")
+         if name then
+            temp = tonumber(temp)
+            if name == "Gpu" then
+               s = s .. format_temp_gpu(temp)
+            elseif name == "Board" then
+               s = s .. format_temp_board(temp)
+            end
+         end
+      end
    end
 
    f:close()
@@ -39,6 +69,6 @@ function format()
    if #s > 0 then
       return "GPU: " .. string.sub(s, 1, -2) .. "°C"
    else
-      return "GPU: ..."
+      return "GPU: n/a"
    end
 end
