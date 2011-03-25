@@ -1,0 +1,59 @@
+#compdef be
+
+# Zsh completion script for be. Rename this file to _be and copy in in your zsh
+# function path (/usr/share/zsh/site-functions for instance).
+#
+# If you do not want to install it globally, you can copy it somewhere else and
+# add that directory to $fpath. This must be done before compinit is called. If
+# the file is copied to ~/.zsh.d, your ~/.zshrc file could look like this:
+#
+# fpath=("$HOME/.zsh.d" $fpath)
+# autoload -U compinit
+# compinit
+
+_be_bug_descr() {
+    local $bug=$1
+}
+
+_be() {
+    local comps vcomps buglist
+
+    # First try to comlete using the full command
+    comps=($($words --complete))
+
+    # If it fails, remove the last word first
+    [[ $? != 0 ]] && comps=($(${words[1,-2]} --complete))
+
+    # Now filter the results and try to add some more details
+    vcomps=()
+    typeset -A buglist
+    for c in $comps; do
+        # Ignore some keywords
+        [[ "$c" == "--complete" ]] && continue
+
+        if [[ "$c" =~ "/" ]]; then
+            # Did we already read the bug list?
+            if [[ ${#buglist} -eq 0 ]]; then
+                # FIXME: if the command has a --repo argument, we should put it here too.
+                local tab id st desc
+                be list --status=all | while read line; do
+                    tab=(${(s.:.)line})
+                    id=$tab[1]
+                    st=$tab[2]
+                    desc=$tab[3]
+
+                    id=${id#*/}
+                    buglist+=("/$id" "\[$st\]$desc")
+                done
+            fi
+
+            c="${c}[${buglist[$c]}]"
+        fi
+
+        vcomps+="$c"
+    done
+
+    _values "" $vcomps[@]
+}
+
+_be "$@"
