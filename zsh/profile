@@ -75,6 +75,11 @@ else
 fi
 
 ##### Completion
+# Load custom scripts
+fpath=($HOME/.config/zsh/completion $fpath)
+autoload -U $HOME/.config/zsh/completion/*(:t)
+
+# Now init the completion system
 autoload -Uz compinit
 compinit
 zstyle :compinstall filename "$HOME/.zshrc"
@@ -97,10 +102,6 @@ zstyle ':completion:*:cp:*' ignore-line yes
 
 # Some colors
 zstyle ':completion:*:*:kill:*:processes' list-colors "=(#b) #([0-9]#)*=36=31"
-
-# Load custom scripts
-fpath=($HOME/.config/zsh/completion $fpath)
-autoload -U $HOME/.config/zsh/completion/*(:t)
 
 # Useful stuff for writing and debugging completion functions
 #zstyle ':completion:*' verbose yes
