@@ -67,7 +67,7 @@ _be() {
                     tab=(${(s.:.)line})
                     id=$tab[1]
                     st=$tab[2]
-                    desc=$tab[3]
+                    desc=${(j.:.)tab[3,-1]}
 
                     id=${id#*/}
                     buglist+=("/$id" "\[$st\]$desc")
