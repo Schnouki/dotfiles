@@ -8,6 +8,10 @@ if [ -f "$HOME/.Xmodmap" ]; then
 	xmodmap "$HOME/.Xmodmap"
 fi
 
+# Allow root to use this display (hello sudo!)
+# (Also add DISPLAY and GTK2_RC_FILES to env_keep in /etc/sudoers)
+xhost +local:root
+
 # VNC server
 x11vnc -o /var/log/x11vnc.log -forever -bg -localhost -solid black -avahi -unixpw schnouki
 
