@@ -1,10 +1,10 @@
 #!/bin/zsh
 
-MAILDIR=$HOME/mail
 # Exit if any command fails
 set -e
 
 CONFIGDIR=$HOME/.config/notmuch
+MAILDIR=$HOME/mail
 GITDIR=$MAILDIR/.notmuch/git
 HOST=$(hostname)
 
@@ -25,14 +25,14 @@ TRAPINT() {
 }
 
 # Check the DISPLAY environment variable (needed for D-Bus and awesome-client)
-[[ -z "$DISPLAY" ]] && export DISPLAY=:0.0
+[[ -z "$DISPLAY" ]] && export DISPLAY=:0.0 || true
 
 # Tell awesome the update begins
 n=$(notmuch count tag:unread)
 echo "tb_mails_updating(true)\ntb_mails_set_count($n)" | awesome-client
 
 # Removes messages with the "deleted" tag
-(( $(notmuch count tag:deleted) > 0 )) && notmuch search --output=files tag:deleted | xargs -rd'\n' rm
+(( $(notmuch count tag:deleted) > 0 )) && (notmuch search --output=files tag:deleted | xargs -rd'\n' rm)
 
 # Several functions are used to control the sync flow. backup(), gitmuch_load()
 # and fetch_mail() are run asynchronously, so we need to take special care of
@@ -45,7 +45,7 @@ function backup() {
 
     if [ ! -e "$BACKUPFILE" ]; then
         echo -n "\r\t\t\t\tBackup..."
-        notmuch dump | xz > "$BACKUPFILE" || (echo "\nBackup failed" && exit 1)
+        (notmuch dump | xz > "$BACKUPFILE") || (echo "\nBackup failed" && exit 1)
 
         # Remove backups older than a month
         find "$CONFIGDIR" -name 'db-*.xz' -and -mtime +30 -exec rm \{\} +
@@ -102,13 +102,13 @@ function fetch_mail() {
 # Update the notmuch DB
 function update_db() {
     echo "Updating the notmuch database..."
-    nosync notmuch new || exit 1
+    nosync notmuch new
 }
 
 # Autotag new messages
 function autotag() {
     echo "Autotagging new messages..."
-    nosync $CONFIGDIR/autotag.py || exit 1
+    nosync $CONFIGDIR/autotag.py
 }
 
 # Run first steps asynchronously
