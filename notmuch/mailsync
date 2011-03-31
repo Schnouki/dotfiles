@@ -1,7 +1,12 @@
 #!/bin/zsh
 
 MAILDIR=$HOME/mail
+# Exit if any command fails
+set -e
+
 CONFIGDIR=$HOME/.config/notmuch
+GITDIR=$MAILDIR/.notmuch/git
+HOST=$(hostname)
 
 # Already running?
 zmodload zsh/net/socket
@@ -52,14 +57,39 @@ function backup() {
 # Save the DB for sync with gitmuch
 function gitmuch_save() {
     echo -n "\r\t\tGitmuch save..."
-    $CONFIGDIR/gitmuch save || (echo "\nGitmuch save failed" && exit 1)
+    pushd -q "$GITDIR"
+    notmuch dump tags
+    if git commit -a --dry-run >/dev/null; then
+        git commit -a -m "Dump on $HOST" >/dev/null
+    fi
+    popd -q
     echo -n "\r\t\tGitmuch save OK"
 }
 
 # Load (and merge) a remote DB
 function gitmuch_load() {
     echo "Gitmuch load..."
-    $CONFIGDIR/gitmuch load || exit 1
+    pushd -q "$GITDIR"
+
+    local localrev newrev tmpfile
+    localrev=$(cat .git/refs/heads/master)
+
+    # Try to do a fast-forward pull. If it does not, merge it with manual intervention.
+    git pull -q --ff-only || do_merge
+    newrev=$(cat .git/refs/heads/master)
+
+    if [[ "$localrev" != "$newrev" ]]; then
+        # There were changes: apply them to the DB
+        tmpfile=$(mktemp)
+        git diff '$localrev..$newrev' | grep '^+[^++ b/]' | cut -c 2- > "$tmpfile"
+        notmuch restore "$tmpfile"
+        rm "$tmpfile"
+    fi
+    
+    # Push changes (local + merge)
+    git push -q
+
+    popd -q
 }
 
 # Fetch new mails
