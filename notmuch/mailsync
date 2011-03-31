@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 MAILDIR=$HOME/mail
-BACKUPDIR=$HOME/.config/notmuch
+CONFIGDIR=$HOME/.config/notmuch
 
 # Already running?
 zmodload zsh/net/socket
@@ -19,61 +19,80 @@ TRAPINT() {
     return $(( 128 + $1 ))
 }
 
-# Parse command line options
-quiet=
-while getopts fhqs OPT; do
-    case $OPT in
-        f) MDSYNC="$MDSYNC -q" ;;
-        q) quiet=1 ;;
-        s) MDSYNC="$MDSYNC -1" ;;
-        *)
-            echo "$0 [options]"
-            echo ""
-            echo "Available options:"
-            echo "  -f  fast mode (don't sync IMAP flags)"
-            echo "  -q  quiet mode (no output)"
-            echo "  -s  single-threaded mode"
-            exit 1 ;;
-    esac
-done
-
 # Check the DISPLAY environment variable (needed for D-Bus and awesome-client)
 [[ -z "$DISPLAY" ]] && export DISPLAY=:0.0
-
-# Is a recent backup available?
-BACKUPFILE=$BACKUPDIR/db-$(date +"%Y%m%d").xz
-
-if [ ! -e "$BACKUPFILE" ]; then
-    if [ ! $quiet ]; then  echo "Saving the notmuch database..."; fi
-    notmuch dump | xz > "$BACKUPFILE" || exit 1
-
-    # Remove backups older than a month
-    find "$BACKUPDIR" -name 'db-*.xz' -and -mtime +30 -exec rm \{\} +
-fi
-
-# Is a network connection available?
-if ! fping -q 8.8.8.8; then
-    if [ ! $quiet ]; then echo "No network connection"; fi
-    exit 11
-fi
 
 # Tell awesome the update begins
 n=$(notmuch count tag:unread)
 echo "tb_mails_updating(true)\ntb_mails_set_count($n)" | awesome-client
 
-# Set the Maildir T flag on message with the notmuch "deleted" tag
+# Removes messages with the "deleted" tag
 (( $(notmuch count tag:deleted) > 0 )) && notmuch search --output=files tag:deleted | xargs -rd'\n' rm
 
-# Run offlineimap, then "notmuch new", then the autotag script
-if [ $quiet ]; then
-    offlineimap -o -u Noninteractive.Quiet && \
-        nosync notmuch new >/dev/null && \
-        nosync $BACKUPDIR/autotag.py >/dev/null
-else
-    offlineimap -o && \
-        nosync notmuch new && \
-        nosync $BACKUPDIR/autotag.py
-fi
+# Several functions are used to control the sync flow. backup(), gitmuch_load()
+# and fetch_mail() are run asynchronously, so we need to take special care of
+# their outputs in order to leave them readable.
+
+# Backup the DB
+function backup() {
+    # Is a recent backup available?
+    BACKUPFILE=$CONFIGDIR/db-$(date +"%Y%m%d").xz
+
+    if [ ! -e "$BACKUPFILE" ]; then
+        echo -n "\r\t\t\t\tBackup..."
+        notmuch dump | xz > "$BACKUPFILE" || (echo "\nBackup failed" && exit 1)
+
+        # Remove backups older than a month
+        find "$CONFIGDIR" -name 'db-*.xz' -and -mtime +30 -exec rm \{\} +
+
+        echo -n "\r\t\t\t\tBackup OK"
+    fi
+}
+
+# Save the DB for sync with gitmuch
+function gitmuch_save() {
+    echo -n "\r\t\tGitmuch save..."
+    $CONFIGDIR/gitmuch save || (echo "\nGitmuch save failed" && exit 1)
+    echo -n "\r\t\tGitmuch save OK"
+}
+
+# Load (and merge) a remote DB
+function gitmuch_load() {
+    echo "Gitmuch load..."
+    $CONFIGDIR/gitmuch load || exit 1
+}
+
+# Fetch new mails
+function fetch_mail() {
+    echo -n "\rFetch mail..."
+    offlineimap -o -u Noninteractive.Quiet || (echo "\nFetch mail failed" && exit 1)
+    echo -n "\rFetch mail OK"
+}
+
+# Update the notmuch DB
+function update_db() {
+    echo "Updating the notmuch database..."
+    nosync notmuch new || exit 1
+}
+
+# Autotag new messages
+function autotag() {
+    echo "Autotagging new messages..."
+    nosync $CONFIGDIR/autotag.py || exit 1
+}
+
+# Run first steps asynchronously
+backup       &
+gitmuch_save &
+fetch_mail   &
+#jobs
+wait
+jobs
+echo
+
+update_db
+gitmuch_load
+autotag
 
 # Update the display in awesome
 n=$(notmuch count tag:unread)
