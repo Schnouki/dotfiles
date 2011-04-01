@@ -34,6 +34,27 @@ echo "tb_mails_updating(true)\ntb_mails_set_count($n)" | awesome-client
 # Several functions are used to control the sync flow. backup(), Some of them
 # are run asynchronously, so we need to take special care of their outputs in
 # order to leave them readable.
+autoload -U colors
+colors
+function status_start() {
+    local prefix name
+    prefix=$1; shift
+    msg=$*
+    echo -ne "\r${prefix}${fg_bold[blue]}[${fg_bold[white]}${msg}${fg_bold[blue]}]${fg_no_bold[default]}"
+}
+function status_ok() {
+    local prefix name
+    prefix=$1; shift
+    msg=$*
+    echo -ne "\r${prefix}${fg_bold[green]}[${fg_bold[white]}${msg}${fg_bold[green]}]${fg_no_bold[default]}"
+}
+function status_err() {
+    local prefix name
+    prefix=$1; shift
+    msg=$*
+    echo -ne "\r${prefix}${fg_bold[red]}[${fg_bold[white]}${msg}${fg_bold[red]}]${fg_no_bold[default]}"
+    exit 1
+}
 
 # Backup the DB
 function backup() {
@@ -41,21 +62,22 @@ function backup() {
     BACKUPFILE=$CONFIGDIR/db-$(date +"%Y%m%d").xz
 
     if [ ! -e "$BACKUPFILE" ]; then
-        echo -n "\r\t\t\t\tBackup..."
-        (notmuch dump | xz > "$BACKUPFILE") || (echo "\nBackup failed" && exit 1)
+        status_start "\t\t" "Backup"
+
+        (notmuch dump | xz > "$BACKUPFILE") || status_err "\t\t" "Backup"
 
         # Remove backups older than a month
         find "$CONFIGDIR" -name 'db-*.xz' -and -mtime +30 -exec rm \{\} +
 
-        echo -n "\r\t\t\t\tBackup OK"
+        status_ok "\t\t" "Backup"
     fi
 }
 
 # Fetch new mails
 function fetch_mail() {
-    echo -n "\rFetch mail..."
-    offlineimap -o -u Noninteractive.Quiet || (echo "\nFetch mail failed" && exit 1)
-    echo -n "\rFetch mail OK"
+    status_start "" "Fetch mail"
+    offlineimap -o -u Noninteractive.Quiet || status_err "" "Fetch mail"
+    status_ok "" "Fetch mail"
 }
 
 # Update the notmuch DB
@@ -77,7 +99,9 @@ wait
 echo
 
 update_db
+echo
 autotag
+echo
 
 # Update the display in awesome
 n=$(notmuch count tag:unread)
