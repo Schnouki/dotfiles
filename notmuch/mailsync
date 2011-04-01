@@ -7,12 +7,12 @@ CONFIGDIR=$HOME/.config/notmuch
 MAILDIR=$HOME/mail
 GITDIR=$MAILDIR/.notmuch/git
 HOST=$(hostname)
+MERGEFILE=
 
 # Already running?
 zmodload zsh/net/socket
 SOCKET=/tmp/mailsync.$UID
-zsocket -l "$SOCKET" 2>/dev/null
-if [ $? != 0 ]; then
+if ! zsocket -l "$SOCKET" 2>/dev/null; then
     echo "Process already running."
     exit 1
 fi
@@ -54,24 +54,17 @@ function backup() {
     fi
 }
 
-# Save the DB for sync with gitmuch
-function gitmuch_save() {
-    echo -n "\r\t\tGitmuch save..."
+# Sync the DB with gitmuch
+function gitmuch_sync() {
+    echo -n "\r\t\tGitmuch sync..."
     pushd -q "$GITDIR"
+
+    local localrev newrev tmpfile
+
     notmuch dump tags
     if git commit -a --dry-run >/dev/null; then
         git commit -a -m "Dump on $HOST" >/dev/null
     fi
-    popd -q
-    echo -n "\r\t\tGitmuch save OK"
-}
-
-# Load (and merge) a remote DB
-function gitmuch_load() {
-    echo "Gitmuch load..."
-    pushd -q "$GITDIR"
-
-    local localrev newrev tmpfile
     localrev=$(cat .git/refs/heads/master)
 
     # Try to do a fast-forward pull. If it does not, merge it with manual intervention.
@@ -79,17 +72,15 @@ function gitmuch_load() {
     newrev=$(cat .git/refs/heads/master)
 
     if [[ "$localrev" != "$newrev" ]]; then
-        # There were changes: apply them to the DB
-        tmpfile=$(mktemp)
-        git diff '$localrev..$newrev' | grep '^+[^++ b/]' | cut -c 2- > "$tmpfile"
-        notmuch restore "$tmpfile"
-        rm "$tmpfile"
+        # There were changes: save them so that they can be applied a little later
+        MERGEFILE=$(mktemp)
+        git diff "$localrev..$newrev" | grep '^+[^++ b/]' | cut -c 2- > "$MERGEFILE"
     fi
     
     # Push changes (local + merge)
     git push -q
-
     popd -q
+    echo -n "\r\t\tGitmuch sync OK"
 }
 
 # Fetch new mails
@@ -103,6 +94,13 @@ function fetch_mail() {
 function update_db() {
     echo "Updating the notmuch database..."
     nosync notmuch new
+
+    # If there is a mergefile, use it to get new tags
+    if [[ -n "$MERGEFILE" ]]; then
+        echo "Merging new messages..."
+        notmuch restore "$MERGEFILE"
+        rm "$MERGEFILE"
+    fi
 }
 
 # Autotag new messages
@@ -113,15 +111,12 @@ function autotag() {
 
 # Run first steps asynchronously
 backup       &
-gitmuch_save &
+gitmuch_sync &
 fetch_mail   &
-#jobs
 wait
-jobs
 echo
 
 update_db
-gitmuch_load
 autotag
 
 # Update the display in awesome
