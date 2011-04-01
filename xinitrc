@@ -34,14 +34,7 @@ fi
 wmname LG3D
 
 # Emacs daemon
-EMACSPIDFILE="$HOME/.config/emacs/.emacs.desktop.lock"
-if [ -e "$EMACSPIDFILE" ]; then
-    epid=$(cat "$EMACSPIDFILE")
-    if ! [ -e "/proc/$epid/exe" -a $(readline "/proc/$epid/exe") = "/usr/bin/emacs" ]; then
-        rm "$EMACSPIDFILE"
-        emacs --daemon
-    fi
-fi
+[[ -S "/tmp/emacs$UID/server" ]] || (emacs --daemon &)
 
 # Useless apps to run at boot...
 dropboxd &
