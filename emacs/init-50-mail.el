@@ -67,7 +67,8 @@
 			 (".*"                         . "schnouki.net/Sent"))
       message-kill-buffer-on-exit t
       notmuch-poll-script "~/.config/notmuch/mailsync"
-      notmuch-address-command "~/.config/notmuch/addrbook.py")
+      notmuch-address-command "~/.config/notmuch/addrbook.py"
+      notmuch-crypto-process-mime t)
 
 ;; Useful key bindings in notmuch buffers
 (eval-after-load 'notmuch

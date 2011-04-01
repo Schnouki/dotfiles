@@ -23,7 +23,21 @@
      (set-face-foreground 'notmuch-search-subject              zenburn-fg)
      (set-face-foreground 'notmuch-search-matching-authors     "#ffeece") ;; zenburn-yellow+1
      (set-face-foreground 'notmuch-search-non-matching-authors "#b09f6f") ;; zenburn-yellow-4
-     (set-face-attribute  'notmuch-tag-face                nil :foreground zenburn-green+2 :slant 'italic)))
+     (set-face-attribute  'notmuch-tag-face                nil :foreground zenburn-green+2 :slant 'italic)
+
+     (mapcar '(lambda (f) (set-face-attribute f nil :bold t :background zenburn-bg-1))
+	     '(notmuch-crypto-not-processed notmuch-crypto-signature-not-processed
+               notmuch-crypto-signature-good notmuch-crypto-signature-good-key
+	       notmuch-crypto-signature-unknown notmuch-crypto-signature-bad
+	       notmuch-crypto-encryption))
+
+     (set-face-foreground 'notmuch-crypto-not-processed           zenburn-blue-2)
+     (set-face-foreground 'notmuch-crypto-signature-not-processed zenburn-red)
+     (set-face-foreground 'notmuch-crypto-signature-good          zenburn-green+3)
+     (set-face-foreground 'notmuch-crypto-signature-good-key      zenburn-cyan)
+     (set-face-foreground 'notmuch-crypto-signature-unknown       "#bf8f6f") ;; zenburn-orange-2
+     (set-face-foreground 'notmuch-crypto-signature-bad           zenburn-red+1)
+     (set-face-foreground 'notmuch-crypto-encryption              zenburn-magenta)))
 
 ;; Org-mode keywords
 (eval-after-load 'org
