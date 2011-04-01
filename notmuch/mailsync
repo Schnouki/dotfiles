@@ -5,9 +5,6 @@ set -e
 
 CONFIGDIR=$HOME/.config/notmuch
 MAILDIR=$HOME/mail
-GITDIR=$MAILDIR/.notmuch/git
-HOST=$(hostname)
-MERGEFILE=
 
 # Already running?
 zmodload zsh/net/socket
@@ -34,9 +31,9 @@ echo "tb_mails_updating(true)\ntb_mails_set_count($n)" | awesome-client
 # Removes messages with the "deleted" tag
 (( $(notmuch count tag:deleted) > 0 )) && (notmuch search --output=files tag:deleted | xargs -rd'\n' rm)
 
-# Several functions are used to control the sync flow. backup(), gitmuch_load()
-# and fetch_mail() are run asynchronously, so we need to take special care of
-# their outputs in order to leave them readable.
+# Several functions are used to control the sync flow. backup(), Some of them
+# are run asynchronously, so we need to take special care of their outputs in
+# order to leave them readable.
 
 # Backup the DB
 function backup() {
@@ -54,35 +51,6 @@ function backup() {
     fi
 }
 
-# Sync the DB with gitmuch
-function gitmuch_sync() {
-    echo -n "\r\t\tGitmuch sync..."
-    pushd -q "$GITDIR"
-
-    local localrev newrev tmpfile
-
-    notmuch dump tags
-    if git commit -a --dry-run >/dev/null; then
-        git commit -a -m "Dump on $HOST" >/dev/null
-    fi
-    localrev=$(cat .git/refs/heads/master)
-
-    # Try to do a fast-forward pull. If it does not, merge it with manual intervention.
-    git pull -q --ff-only || do_merge
-    newrev=$(cat .git/refs/heads/master)
-
-    if [[ "$localrev" != "$newrev" ]]; then
-        # There were changes: save them so that they can be applied a little later
-        MERGEFILE=$(mktemp)
-        git diff "$localrev..$newrev" | grep '^+[^++ b/]' | cut -c 2- > "$MERGEFILE"
-    fi
-    
-    # Push changes (local + merge)
-    git push -q
-    popd -q
-    echo -n "\r\t\tGitmuch sync OK"
-}
-
 # Fetch new mails
 function fetch_mail() {
     echo -n "\rFetch mail..."
@@ -94,13 +62,6 @@ function fetch_mail() {
 function update_db() {
     echo "Updating the notmuch database..."
     nosync notmuch new
-
-    # If there is a mergefile, use it to get new tags
-    if [[ -n "$MERGEFILE" ]]; then
-        echo "Merging new messages..."
-        notmuch restore "$MERGEFILE"
-        rm "$MERGEFILE"
-    fi
 }
 
 # Autotag new messages
@@ -111,7 +72,6 @@ function autotag() {
 
 # Run first steps asynchronously
 backup       &
-gitmuch_sync &
 fetch_mail   &
 wait
 echo
