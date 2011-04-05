@@ -145,11 +145,13 @@ in the current buffer."
        (interactive)
        (local-set-key "H" 'schnouki/notmuch-view-html)
        (local-set-key "W" 'schnouki/notmuch-show-verify)
+       (local-set-key "m" 'schnouki/notmuch-mua-mail)
        (local-set-key "z" 'notmuch-show-mark-read-and-archive-thread-then-exit))
 
      (defun schnouki/notmuch-search-keys ()
        (interactive)
        (local-set-key "d" 'notmuch-search-filter-by-date)
+       (local-set-key "m" 'schnouki/notmuch-mua-mail)
        (local-set-key "z" 'notmuch-search-mark-read-and-archive-thread))
 
      (add-hook 'notmuch-show-hook 'schnouki/notmuch-show-keys)
@@ -264,9 +266,19 @@ will NOT be removed or replaced."
 	      (message (concat "Sender set to " from))))))))
 (add-hook 'message-setup-hook 'schnouki/choose-sender)
 
+;; Choose the identify used to write a new mail
+(defun schnouki/notmuch-mua-mail (&optional from)
+  (interactive)
+  (unless from
+    (setq from (ido-completing-read "Sender identity: " schnouki/mua-identities
+				    nil nil nil nil (car schnouki/mua-identities))))
+  (notmuch-mua-mail nil nil (list (cons 'from from))))
+
 (setq message-signature 'schnouki/choose-signature
       schnouki/message-signatures '(("thomas.jost@inria.fr"       . "~/.signature/loria")
 				    ("thomas.jost@loria.fr"       . "~/.signature/loria")
 				    ("thomas.jost@univ-nancy2.fr" . "~/.signature/loria")
 				    (".*"                         . "~/.signature/schnouki"))
-      schnouki/message-sender-rules '(("@fsfeurope.org" . "schnouki@fsfe.org")))
+      schnouki/message-sender-rules '(("@fsfeurope.org" . "schnouki@fsfe.org"))
+      schnouki/mua-identities '("Thomas Jost <schnouki@schnouki.net>"
+				"Thomas Jost <thomas.jost@gmail.com>"))
