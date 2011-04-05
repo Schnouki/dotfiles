@@ -99,9 +99,7 @@ wait
 echo
 
 update_db
-echo
 autotag
-echo
 
 # Update the display in awesome
 n=$(notmuch count tag:unread)
