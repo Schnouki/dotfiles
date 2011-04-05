@@ -48,6 +48,7 @@
 			       ("notes"    . "tag:notes")
 			       ("drafts"   . "tag:draft")
 			       ("sent"     . "tag:sent")
+			       ("d20"      . "tag:d20 and tag:ml")
 			       ("all MLs"  . "tag:ml and tag:unread")
 			       ("april"    . "tag:april and tag:unread")
 			       ("arch"     . "tag:arch and tag:unread")
