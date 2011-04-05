@@ -2,29 +2,12 @@
 ;; Mail client
 ;; -----------------------------------------------------------------------------
 
-
-;; Mail parameters
-;(require 'sendmail)
-;(require 'smtpmail)
-;(require 'starttls)
-;(require 'notmuch)
-
-(setq user-full-name "Thomas Jost"
-      user-mail-address "schnouki@schnouki.net"
-      mail-smtp-address "mail.schnouki.net"
-      message-directory "~/mail/"
-      message-auto-save-directory nil)
-
-(setq send-mail-function 'smtpmail-send-it
+;; Mail parameters -- more of them in init-99-private.el ;)
+(setq message-auto-save-directory nil
+      send-mail-function 'smtpmail-send-it
       message-send-mail-function 'smtpmail-send-it
-      smtpmail-default-smtp-server "mail.schnouki.net"
-      smtpmail-smtp-server "mail.schnouki.net"
-      smtpmail-smtp-service 587
       smtpmail-debug-info nil
       smtpmail-debug-verb nil
-      smtpmail-sendto-domain "schnouki.net"
-      smtpmail-auth-credentials '(("mail.schnouki.net" 587 "schnouki" nil))
-      smtpmail-starttls-credentials '(("mail.schnouki.net" 587 nil nil))
       starttls-use-gnutls t
       starttls-gnutls-program "gnutls-cli"
       starttls-extra-arguments nil)
@@ -37,10 +20,10 @@
 
 ;; Various notmuch parameters:
 ;; - saved searches
-;; - directory for sent messages
 ;; - kill message-mode buffer after a mail is sent
 ;; - poll script that fetches new mail
 ;; - addresses completion
+;; - crypto stuff
 (setq notmuch-saved-searches '(("inbox"    . "tag:inbox")
 			       ("unread"   . "tag:unread")
 			       ("flagged"  . "tag:flagged")
@@ -62,10 +45,6 @@
 			       ("social"   . "tag:social and tag:unread")
 			       ("facebook" . "tag:facebook and tag:unread")
 			       ("lwn"      . "from:lwn.net and tag:unread"))
-      notmuch-fcc-dirs '(("thomas.jost@loria.fr"       . "inria/Sent")
-			 ("thomas.jost@inria.fr"       . "inria/Sent")
-			 ("thomas.jost@univ-nancy2.fr" . "inria/Sent")
-			 (".*"                         . "schnouki.net/Sent"))
       message-kill-buffer-on-exit t
       notmuch-poll-script "~/.config/notmuch/mailsync"
       notmuch-address-command "~/.config/notmuch/addrbook.py"
@@ -274,11 +253,4 @@ will NOT be removed or replaced."
 				    nil nil nil nil (car schnouki/mua-identities))))
   (notmuch-mua-mail nil nil (list (cons 'from from))))
 
-(setq message-signature 'schnouki/choose-signature
-      schnouki/message-signatures '(("thomas.jost@inria.fr"       . "~/.signature/loria")
-				    ("thomas.jost@loria.fr"       . "~/.signature/loria")
-				    ("thomas.jost@univ-nancy2.fr" . "~/.signature/loria")
-				    (".*"                         . "~/.signature/schnouki"))
-      schnouki/message-sender-rules '(("@fsfeurope.org" . "schnouki@fsfe.org"))
-      schnouki/mua-identities '("Thomas Jost <schnouki@schnouki.net>"
-				"Thomas Jost <thomas.jost@gmail.com>"))
+(setq message-signature 'schnouki/choose-signature)

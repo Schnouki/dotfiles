@@ -10,3 +10,6 @@ if [ ! -e emacs/el-get/el-get/el-get.el ]; then
         && git clone git://github.com/dimitri/el-get.git emacs/el-get/el-get \
         || exit 1
 fi
+
+# Decrypt init-99-private.el
+setup_decrypt "emacs/init-99-private.el.gpg" ".config/emacs/init-99-private.el"

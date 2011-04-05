@@ -11,3 +11,6 @@ el-get
 
 # Symlinks
 golbarg.el
+
+# Private
+init-99-private.el
