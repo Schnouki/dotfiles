@@ -5,6 +5,7 @@ from BeautifulSoup import BeautifulSoup
 import email.header
 import email.parser
 import email.utils
+import logging
 import notmuch
 import os.path
 import re
@@ -45,14 +46,13 @@ class AddrBook(object):
                 tot_addr += self._add(addrs)
                 tot_msg += 1
                 if (tot_msg % 20) == 0:
-                    print "\rMessages: %d; addresses: %d" % (tot_msg, tot_addr),
-                sys.stdout.flush()
+                    logging.debug("Messages: %d; addresses: %d" % (tot_msg, tot_addr))
         finally:
             # At the end, save the DB
             self._merge_db()
             with open(os.path.expanduser(_DBPATH), "wb") as f:
                 pickle.dump(self._db, f, pickle.HIGHEST_PROTOCOL)
-            print "\rTotal: indexed %d messages and %d addresses. %d unique addresses in the address book." % (tot_msg, tot_addr, len(self._db))
+            logging.info("Total: indexed %d messages and %d addresses. %d unique addresses in the address book." % (tot_msg, tot_addr, len(self._db)))
 
     def _add(self, addrs):
         n = 0
@@ -67,8 +67,8 @@ class AddrBook(object):
                     try:
                         user = dh[0].decode(dh[1])
                     except Exception, e:
-                        print >>sys.stderr, e
-                        print >>sys.stderr, "Faulty data:", dh
+                        logging.warning(e)
+                        logging.warning("Faulty data:", dh)
                 else:
                     s = BeautifulSoup(dh[0])
                     user = unicode(s)
@@ -141,6 +141,9 @@ class AddrBook(object):
                 print addr.encode("utf-8")
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO,
+                        format="%(levelname)s: %(message)s")
+
     # If called without any argument, this is supposed to be a first run: index everything
     if len(sys.argv) == 1:
         if os.path.exists(os.path.expanduser(_DBPATH)):
