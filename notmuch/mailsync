@@ -89,7 +89,7 @@ function update_db() {
 # Autotag new messages
 function autotag() {
     echo "Autotagging new messages..."
-    nosync $CONFIGDIR/autotag.py
+    nosync $CONFIGDIR/autotag.py -q
 }
 
 # Run first steps asynchronously
