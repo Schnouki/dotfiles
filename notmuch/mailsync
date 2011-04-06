@@ -55,51 +55,71 @@ function status_err() {
     echo -ne "\r${prefix}${fg_bold[red]}[${fg_bold[white]}${msg}${fg_bold[red]}]${fg_no_bold[default]}"
     exit 1
 }
+function status_wait() {
+    local prefix name
+    prefix=$1; shift
+    msg=$*
+    echo -ne "\r${prefix}${fg_no_bold[blue]}[${fg_no_bold[white]}${msg}${fg_no_bold[blue]}]${fg_no_bold[default]}"
+}
 
 # Backup the DB
 function backup() {
+    local prefix name
+    prefix=$1; shift
+    msg=$*
+
     # Is a recent backup available?
     BACKUPFILE=$CONFIGDIR/db-$(date +"%Y%m%d").xz
-
     if [ ! -e "$BACKUPFILE" ]; then
-        status_start "\t\t" "Backup"
-
-        (notmuch dump | xz > "$BACKUPFILE") || status_err "\t\t" "Backup"
-
+        status_start "$prefix" "$msg"
+        (notmuch dump | xz > "$BACKUPFILE") || status_err "$prefix" "$msg"
         # Remove backups older than a month
         find "$CONFIGDIR" -name 'db-*.xz' -and -mtime +30 -exec rm \{\} +
-
-        status_ok "\t\t" "Backup"
+        status_ok "$prefix" "$msg"
     fi
 }
 
 # Fetch new mails
 function fetch_mail() {
-    status_start "" "Fetch mail"
-    offlineimap -o -u Noninteractive.Quiet || status_err "" "Fetch mail"
-    status_ok "" "Fetch mail"
+    local prefix name
+    prefix=$1; shift
+    msg=$*
+    status_start "$prefix" "$msg"
+    offlineimap -o -u Noninteractive.Quiet || status_err "$prefix" "$msg"
+    status_ok "$prefix" "$msg"
 }
 
 # Update the notmuch DB
 function update_db() {
-    echo "Updating the notmuch database..."
-    nosync notmuch new
+    local prefix name
+    prefix=$1; shift
+    msg=$*
+    status_start "$prefix" "$msg"
+    nosync notmuch new >/dev/null || status_err "$prefix" "$msg"
+    status_ok "$prefix" "$msg"
 }
 
 # Autotag new messages
 function autotag() {
-    echo "Autotagging new messages..."
-    nosync $CONFIGDIR/autotag.py -q
+    local prefix name
+    prefix=$1; shift
+    msg=$*
+    status_start "$prefix" "$msg"
+    nosync $CONFIGDIR/autotag.py -q || status_err "$prefix" "$msg"
+    status_ok "$prefix" "$msg"
 }
 
 # Run first steps asynchronously
-backup       &
-fetch_mail   &
-wait
-echo
+backup       "\t\t\t\t\t\t" "Backup"     &
+fetch_mail   ""             "Fetch mail" &
 
-update_db
-autotag
+status_wait  "\t\t"         "DB update"
+status_wait  "\t\t\t\t"     "Autotag"
+wait
+
+update_db    "\t\t"         "DB update"
+autotag      "\t\t\t\t"     "Autotag"
+echo
 
 # Update the display in awesome
 n=$(notmuch count tag:unread)
