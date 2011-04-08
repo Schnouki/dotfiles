@@ -120,6 +120,10 @@ in the current buffer."
        (interactive)
        (shell-command (concat "~/.config/notmuch/verify " (notmuch-show-get-filename)) "*Notmuch verify*"))
 
+     (defun schnouki/notmuch-hello-keys ()
+       (interactive)
+       (local-set-key "m" 'schnouki/notmuch-mua-mail))
+
      (defun schnouki/notmuch-show-keys ()
        (interactive)
        (local-set-key "H" 'schnouki/notmuch-view-html)
@@ -135,6 +139,11 @@ in the current buffer."
 
      (add-hook 'notmuch-show-hook 'schnouki/notmuch-show-keys)
      (add-hook 'notmuch-search-hook 'schnouki/notmuch-search-keys)
+
+     ;; There's no notmuch-hello-hook...
+     (defadvice notmuch-hello (after schnouki/notmuch-hello-set-keys)
+       (schnouki/notmuch-hello-keys))
+     (ad-activate 'notmuch-hello)
 
      ;; Temporary fix for the buggy Fcc handling
      (defun notmuch-fcc-header-setup ()
