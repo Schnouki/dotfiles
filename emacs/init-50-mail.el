@@ -237,10 +237,11 @@ will NOT be removed or replaced."
 	(with-temp-buffer
 	  (insert-file-contents sigfile)
 	  (buffer-string)))))
+(setq message-signature 'schnouki/choose-signature)
 
 ;; Set From header according to the To header
 (defun schnouki/choose-sender ()
-  (let ((to (message-fetch-field "To")))
+  (let ((to (message-field-value "To")))
     (when to
       (let ((from
 	     (catch 'first-match
@@ -262,4 +263,3 @@ will NOT be removed or replaced."
 				    nil nil nil nil (car schnouki/mua-identities))))
   (notmuch-mua-mail nil nil (list (cons 'from from))))
 
-(setq message-signature 'schnouki/choose-signature)
