@@ -10,7 +10,9 @@
       smtpmail-debug-verb nil
       starttls-use-gnutls t
       starttls-gnutls-program "gnutls-cli"
-      starttls-extra-arguments nil)
+      starttls-extra-arguments nil
+      mail-specify-envelope-from t
+      mail-envelope-from 'header)
 
 ;; Load notmuch
 (autoload 'notmuch "notmuch" nil t)
