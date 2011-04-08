@@ -263,3 +263,21 @@ will NOT be removed or replaced."
 				    nil nil nil nil (car schnouki/mua-identities))))
   (notmuch-mua-mail nil nil (list (cons 'from from))))
 
+;; Choose SMTP server used to send a mail
+;; Inspired by http://www.emacswiki.org/emacs/MultipleSMTPAccounts
+(defun schnouki/change-smtp ()
+  "Change SMTP server according to the current From header"
+  (let* ((from (cadr (mail-extract-address-components (message-field-value "From"))))
+	 (server (assoc from schnouki/smtp-servers)))
+    (when server
+      (make-local-variable 'smtpmail-smtp-server)
+      (make-local-variable 'smtpmail-smtp-service)
+      (make-local-variable 'smtpmail-sendto-domain)
+      (setq smtpmail-smtp-server   (nth 1 server)
+	    smtpmail-smtp-service  (nth 2 server)
+	    smtpmail-sendto-domain (nth 3 server)))))
+(defadvice smtpmail-via-smtp (before schnouki/set-smtp-account
+ 				     (&optional recipient smtpmail-text-buffer))
+   "First set SMTP account."
+     (with-current-buffer smtpmail-text-buffer (schnouki/change-smtp)))
+(ad-activate 'smtpmail-via-smtp)
