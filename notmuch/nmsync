@@ -1,0 +1,28 @@
+#!/bin/zsh
+
+function nm_push() {
+    notmuch dump | gzip | ssh kimsufi 'cat > notmuch.dump.gz'
+}
+
+function nm_get() {
+    mailsync || return 1
+    (notmuch dump > "$TMPDIR/old" || exit 1) &
+    (scp kimsufi:notmuch.dump.gz "$TMPDIR/new.gz" || exit 1) &
+    wait
+    gunzip "$TMPDIR/new.gz" || exit 1
+    (diff -u "$TMPDIR/old" "$TMPDIR/new" | awk '/^+/ && (NR>2) { print substr($0, 2)}' > "$TMPDIR/restore") || exit 1
+    notmuch restore "$TMPDIR/restore"
+}
+
+case "$1" in
+    "get"|"push")
+        TMPDIR=$(mktemp -d)
+        nm_$1
+        ret=$?
+        rm -rf "$TMPDIR"
+        exit $ret
+        ;;
+    *)
+        echo "Usage: $(basename $0) get|push"
+        exit 1
+esac
