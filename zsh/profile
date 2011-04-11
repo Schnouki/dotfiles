@@ -13,6 +13,7 @@ export BROWSER=chromium
 
 # Program-specifig options
 export GREP_OPTIONS="--exclude=*.svn-base --exclude-dir=.svn"
+export ACKRC="$HOME/config/ackrc"
 
 # 256-color terminal
 [[ $TERM == "xterm" ]] && export TERM="xterm-256color"
