@@ -124,3 +124,6 @@ echo
 # Update the display in awesome
 n=$(notmuch count tag:unread)
 echo "tb_mails_updating(nil)\ntb_mails_set_count($n)" | awesome-client
+
+# And display a notification
+$CONFIGDIR/notify.py
