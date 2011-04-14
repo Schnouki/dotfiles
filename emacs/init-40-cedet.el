@@ -50,13 +50,10 @@
 
 ;; Mode-specific key bindings
 (defun cedet-C-local-keys-hook ()
-  (local-set-key "." 'semantic-complete-analyze-inline)
-  (local-set-key ">" 'semantic-complete-analyze-inline))
-(add-hook 'c-mode-hook 'cedet-C-local-keys-hook)
-(add-hook 'c++-mode-hook 'cedet-C-local-keys-hook)
-(add-hook 'cuda-mode-hook 'cedet-C-local-keys-hook)
-(add-hook 'idl-mode-hook 'cedet-C-local-keys-hook)
-(add-hook 'java-mode-hook 'cedet-C-local-keys-hook)
+  (when (semantic-active-p)
+    (local-set-key "." 'semantic-complete-self-insert)
+    (local-set-key ">" 'semantic-complete-self-insert)))
+(add-hook 'c-mode-common-hook 'cedet-C-local-keys-hook)
 
 ;; Python include path
 (semantic-add-system-include "/usr/lib/python2.7/" 'python-mode)
