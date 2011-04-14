@@ -269,7 +269,7 @@ will NOT be removed or replaced."
 ;; Inspired by http://www.emacswiki.org/emacs/MultipleSMTPAccounts
 (defun schnouki/change-smtp ()
   "Change SMTP server according to the current From header"
-  (let* ((from (cadr (mail-extract-address-components (message-field-value "From"))))
+  (let* ((from (downcase (cadr (mail-extract-address-components (message-field-value "From")))))
 	 (server (assoc from schnouki/smtp-servers)))
     (when server
       (make-local-variable 'smtpmail-smtp-server)
