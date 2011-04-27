@@ -4,6 +4,9 @@
 # is not significant. Underline and underscore are equivalent, as are clear and
 # reset. The color alone sets the foreground color, and on_color sets the
 # background color.
---color-filename "bold blue"
---color-lineno "bold magenta"
---color-match "bold"
+--color-filename=bold blue
+--color-lineno=bold magenta
+--color-match=bold
+
+# Always color, even if piping to a another program
+--color
