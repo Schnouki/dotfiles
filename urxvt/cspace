@@ -1,0 +1,14 @@
+#! perl
+
+sub on_key_press {
+    my ($self, $event) = @_;
+    #print "State: " . $event->{state} . "\nKeycode: " . $event->{keycode} . "\n";
+    if (($event->{state} == 4) && ($event->{keycode} == 65)) {
+        # Same state+keycode as C-@
+        $self->key_press(132, 19);
+        1
+    }
+    else {
+        0
+    }
+}

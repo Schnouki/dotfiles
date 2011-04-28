@@ -23,4 +23,5 @@ ddns/key
 !mozilla
 !notmuch
 !roxterm.sourceforge.net
+!urxvt
 !zsh
