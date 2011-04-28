@@ -11,10 +11,6 @@
 # autoload -U compinit
 # compinit
 
-_be_bug_descr() {
-    local $bug=$1
-}
-
 _be() {
     local comps vcomps buglist kwds
 
