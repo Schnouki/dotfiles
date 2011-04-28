@@ -10,3 +10,6 @@
 
 # Always color, even if piping to a another program
 --color
+
+# Custom types
+--type-set=cuda=.cu
