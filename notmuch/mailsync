@@ -85,7 +85,7 @@ function fetch_mail() {
     prefix=$1; shift
     msg=$*
     status_start "$prefix" "$msg"
-    offlineimap -o -u Noninteractive.Quiet || status_err "$prefix" "$msg"
+    offlineimap -o -u quiet || status_err "$prefix" "$msg"
     status_ok "$prefix" "$msg"
 }
 
