@@ -243,6 +243,10 @@ will NOT be removed or replaced."
 (setq message-signature 'schnouki/choose-signature)
 
 ;; Set From header according to the To header
+;; schnouki/message-sender-rules is a list of cons cells: if the "To" header
+;; matched the car of an entry, then From is set to the cdr of that entry.
+;; e.g. '(("@gmail.com" . "me@gmail.com")
+;;        ("some-ml@whatever.com" . "subscribed-address@eggbaconandspam.com"))
 (defun schnouki/choose-sender ()
   (let ((to (message-field-value "To")))
     (when to
@@ -259,6 +263,8 @@ will NOT be removed or replaced."
 (add-hook 'message-setup-hook 'schnouki/choose-sender)
 
 ;; Choose the identity used to write a new mail
+;; schnouki/mua-identities is a list of strings
+;; e.g. '("Me <me@spanishinquisition.com>" "Other Me <doctor@tardis.com>")
 (defun schnouki/notmuch-mua-mail (&optional from)
   (interactive)
   (unless from
@@ -278,8 +284,10 @@ will NOT be removed or replaced."
 
 ;; TODO: check message-alternative-emails...
 
-;; Choose SMTP server used to send a mail
+;; Choose SMTP server used to send a mail according to the From header
 ;; Inspired by http://www.emacswiki.org/emacs/MultipleSMTPAccounts
+;; schnouki/smtp-servers is a list of lists. Each of these lists has 4 elements:
+;; corresponding sender address, server hostname, server port, server domain.
 (defun schnouki/change-smtp ()
   "Change SMTP server according to the current From header"
   (let* ((from (downcase (cadr (mail-extract-address-components (message-field-value "From")))))
