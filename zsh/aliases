@@ -38,3 +38,6 @@ alias rd3t2="sudo beep -f 784 -l 500 -n -f 880 -l 500 -n -f 698.4 -l 500 -n -f 3
 # Useless junk
 alias go_home="disper -s; sudo netcfg -d kimsufi-vpn; my-s2ram && sleep 15 && sudo netcfg freebox"
 alias go_work="sudo netcfg -d freebox; my-s2ram && sleep 15 && disper -e && while ! fping -q 8.8.8.8; do sleep 1; done; sudo netcfg kimsufi-vpn"
+
+# http://www.mail-archive.com/screen-users@gnu.org/msg01271.html
+alias raw_keys="tput smkx; cat; tput rmkx"
