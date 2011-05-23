@@ -14,7 +14,7 @@ done
 setup_decrypt "ssh.gpg" ".ssh/config"
 setup_decrypt "gpg.conf.gpg" ".gnupg/gpg.conf"
 
-# Merge Xdefaults
+# Load Xdefaults
 if [ "$DISPLAY" ]; then
-    xrdb -merge ~/.Xdefaults
+    xrdb -load ~/.Xdefaults
 fi

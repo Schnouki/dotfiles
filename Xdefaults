@@ -1,7 +1,7 @@
 XBomb.*font: lucidasans-12
 XBomb.*grid.font: lucidasans-bold-14
 
-/* Tango colors for urxvt */
+! Tango colors for urxvt
 URxvt.foreground: #C0C0C0
 URxvt.background: #171717
 URxvt.color0:     #2E3436
@@ -22,14 +22,30 @@ URxvt.color14:    #34E2E2
 URxvt.color15:    #EEEEEC
 
 URxvt.termName:    rxvt-256color
-URxvt.transparent: false
-URxvt.fading:      40
+URxvt.transparent: true
+URxvt.shading:     30
+URxvt.fading:      15
 URxvt.font:        xft:Mono:pixelsize=12.5
 
+URxvt.saveLines:         4096
 URxvt.scrollBar:         false
 URxvt.scrollTtyOutput:   false
 URxvt.scrollWithBuffer:  true
 URxvt.scrollTtyKeypress: true
 
-URxvt.perl-lib: /home/schnouki/.config/urxvt
-URxvt.perl-ext: default,cspace
+URxvt.perl-lib:       /home/schnouki/.config/urxvt
+URxvt.perl-ext:       default,cspace,matcher,tabbedex
+
+URxvt.urlLauncher:    chromium
+URxvt.matcher.button: 1
+
+URxvt.new-button:     no
+URxvt.autohide:       yes
+URxvt.tabbar-fg:      244
+URxvt.tabbar-bg:      16
+URxvt.tab-fg:         255
+URxvt.tab-bg:         52
+URxvt.title-fg:       244
+URxvt.title-bg:       16
+
+!(call-process-shell-command "xrdb -load ~/.Xdefaults")
