@@ -14,6 +14,9 @@ done
 setup_decrypt "ssh.gpg" ".ssh/config"
 setup_decrypt "gpg.conf.gpg" ".gnupg/gpg.conf"
 
+# Setup encrypted tarballs
+setup_decrypt_tarball "weechat.tar.gpg"
+
 # Load Xdefaults
 if [ "$DISPLAY" ]; then
     xrdb -load ~/.Xdefaults
