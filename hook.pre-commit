@@ -19,10 +19,30 @@ function hook_update_encrypted_file() {
     fi
 }
 
+hook_update_encrypted_tarball() {
+    local srcname src dst sf cs gcs
+    srcname=$1
+    dst="$HOME/.config/$2"
+    src=(${@:3})
+    sf="$HOME/.config/.last_update_$(echo "$dst" | md5sum | cut -d' ' -f1)"
+    cs=$(tar c -C "$HOME" ${src/$HOME\//} | tar xO | md5sum | cut -d' ' -f1)
+    [[ ! -e "$sf" ]] && touch "$sf"
+    gcs=$(cat "$sf")
+
+    if [ ! -e "$dst" ] || [ "$cs" != "$gcs" ]; then
+        echo "New version of $srcname found, encrypting it..."
+        tar c -C "$HOME" ${src/$HOME\//} | gpg2 --quiet --batch --output "$dst" --encrypt
+        echo "$cs" > "$sf"
+        hook_exit_code=1    
+    fi
+}
+
 # Check for sensitive configuration files: SSH, GnuPG, etc.
 hook_update_encrypted_file ".ssh/config" "ssh.gpg"
 hook_update_encrypted_file ".gnupg/gpg.conf" "gpg.conf.gpg"
 hook_update_encrypted_file ".config/emacs/init-99-private.el" "emacs/init-99-private.el.gpg"
 hook_update_encrypted_file ".config/notmuch/autotag.py" "notmuch/autotag.py.gpg"
+
+hook_update_encrypted_tarball "Weechat" "weechat.tar.gpg" ~/.weechat/{*.conf,{perl,python}/**/**(-.)}
 
 exit $hook_exit_code

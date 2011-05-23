@@ -70,6 +70,21 @@ function setup_decrypt() {
     fi
 }
 
+function setup_decrypt_tarball() {
+    local src sf cs
+    src="$HOME/.config/$1"
+
+    # Status file name
+    sf="$HOME/.config/.last_update_$(echo "$src" | md5sum | cut -d' ' -f1)"
+
+    if [ ! -e "$sf" ] || [ "$src" -nt "$sf" ]; then
+        echo "Decrypting ${src:t}"
+        # zsh MULTIOS option FTW!
+        { gpg2 --decrypt "$src" } >  >(tar x -C "$HOME") > >(tar xO | md5sum | cut -d' ' -f1 > "$sf")
+        touch "$sf"
+    fi
+}
+
 for S in setup.*; do 
     echo "Running $S..."
     source ./$S || exit 1
