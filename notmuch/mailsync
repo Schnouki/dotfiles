@@ -14,7 +14,7 @@ if ! zsocket -l "$SOCKET" 2>/dev/null; then
     exit 1
 fi
 
-zshexit() {
+TRAPZERR() {
     rm "$SOCKET"
 }
 TRAPINT() {
@@ -127,3 +127,5 @@ echo "tb_mails_updating(nil)\ntb_mails_set_count($n)" | awesome-client
 
 # And display a notification
 $CONFIGDIR/notify.py
+
+rm "$SOCKET"
