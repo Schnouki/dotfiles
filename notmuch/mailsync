@@ -5,6 +5,7 @@ set -e
 
 CONFIGDIR=$HOME/.config/notmuch
 MAILDIR=$HOME/mail
+MAXLOGS=50
 
 # Already running?
 zmodload zsh/net/socket
@@ -81,11 +82,16 @@ function backup() {
 
 # Fetch new mails
 function fetch_mail() {
-    local prefix name
+    local prefix name i j
     prefix=$1; shift
     msg=$*
+    [[ -e "$CONFIGDIR/mail.$MAXLOGS.log" ]] && rm "$CONFIGDIR/mail.$MAXLOGS.log"
+    for ((i=$MAXLOGS-1; i >= 0; i--)); do
+        j=$(( $i+1 ))
+        [[ -e "$CONFIGDIR/mail.$i.log" ]] && mv "$CONFIGDIR/mail.$i.log" "$CONFIGDIR/mail.$j.log"
+    done
     status_start "$prefix" "$msg"
-    offlineimap -o -u quiet || status_err "$prefix" "$msg"
+    offlineimap -o > "$CONFIGDIR/mail.0.log" || status_err "$prefix" "$msg"
     status_ok "$prefix" "$msg"
 }
 

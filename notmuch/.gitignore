@@ -1,4 +1,5 @@
 *.db
+*.log
 *.pyc
 *.xz
 autotag.py
