@@ -31,7 +31,7 @@ hook_update_encrypted_tarball() {
 
     if [ ! -e "$dst" ] || [ "$cs" != "$gcs" ]; then
         echo "New version of $srcname found, encrypting it..."
-        tar c -C "$HOME" ${src/$HOME\//} | gpg2 --quiet --batch --output "$dst" --encrypt
+        tar c -C "$HOME" ${src/$HOME\//} | gpg2 --quiet --batch --encrypt > "$dst"
         echo "$cs" > "$sf"
         hook_exit_code=1    
     fi
