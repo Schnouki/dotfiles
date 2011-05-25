@@ -1,4 +1,4 @@
 #!/bin/zsh
 # Usage: git difftool -x $HOME/.config/gpgdiff file.gpg
 
-diff -u <(cat "$1"|gpg -d) <(cat "$2"|gpg -d)
+diff -a -u <(cat "$1"|gpg -d) <(cat "$2"|gpg -d)
