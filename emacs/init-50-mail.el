@@ -15,6 +15,7 @@
       mail-envelope-from 'header)
 
 ;; Load notmuch
+(add-to-list 'load-path "~/dev/notmuch/emacs")
 (autoload 'notmuch "notmuch" nil t)
 
 ;; Global keys to launch notmuch
@@ -122,31 +123,19 @@ in the current buffer."
        (interactive)
        (shell-command (concat "~/.config/notmuch/verify " (notmuch-show-get-filename)) "*Notmuch verify*"))
 
-     (defun schnouki/notmuch-hello-keys ()
-       (interactive)
-       (local-set-key "m" 'schnouki/notmuch-mua-mail))
-
      (defun schnouki/notmuch-show-keys ()
        (interactive)
        (local-set-key "H" 'schnouki/notmuch-view-html)
        (local-set-key "W" 'schnouki/notmuch-show-verify)
-       (local-set-key "f" 'schnouki/notmuch-mua-forward-message)
-       (local-set-key "m" 'schnouki/notmuch-mua-mail)
        (local-set-key "z" 'notmuch-show-mark-read-and-archive-thread-then-exit))
 
      (defun schnouki/notmuch-search-keys ()
        (interactive)
        (local-set-key "d" 'notmuch-search-filter-by-date)
-       (local-set-key "m" 'schnouki/notmuch-mua-mail)
        (local-set-key "z" 'notmuch-search-mark-read-and-archive-thread))
 
      (add-hook 'notmuch-show-hook 'schnouki/notmuch-show-keys)
      (add-hook 'notmuch-search-hook 'schnouki/notmuch-search-keys)
-
-     ;; There's no notmuch-hello-hook...
-     (defadvice notmuch-hello (after schnouki/notmuch-hello-set-keys)
-       (schnouki/notmuch-hello-keys))
-     (ad-activate 'notmuch-hello)
 
      ;; Temporary fix for the buggy Fcc handling
      (defun notmuch-fcc-header-setup ()
@@ -261,26 +250,6 @@ will NOT be removed or replaced."
 	      (message-replace-header "From" from)
 	      (message (concat "Sender set to " from))))))))
 (add-hook 'message-setup-hook 'schnouki/choose-sender)
-
-;; Choose the identity used to write a new mail
-;; schnouki/mua-identities is a list of strings
-;; e.g. '("Me <me@spanishinquisition.com>" "Other Me <doctor@tardis.com>")
-(defun schnouki/notmuch-mua-mail (&optional from)
-  (interactive)
-  (unless from
-    (setq from (ido-completing-read "Sender identity: " schnouki/mua-identities
-				    nil nil nil nil (car schnouki/mua-identities))))
-  (notmuch-mua-mail nil nil (list (cons 'from from))))
-
-;; Choose the identity used to forward a mail
-(defun schnouki/notmuch-mua-forward-message ()
-  (interactive)
-  (let* ((from (ido-completing-read "Sender identity: " schnouki/mua-identities
-				    nil nil nil nil (car schnouki/mua-identities)))
-	 (address-components (mail-extract-address-components from))
-	 (user-full-name (car address-components))
-	 (user-mail-address (cadr address-components)))
-    (notmuch-mua-forward-message)))
 
 ;; TODO: check message-alternative-emails...
 
