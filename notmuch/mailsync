@@ -131,6 +131,9 @@ echo
 n=$(notmuch count tag:unread)
 echo "tb_mails_updating(nil)\ntb_mails_set_count($n)" | awesome-client
 
+# Notify Emacs
+dbus-send --session --dest="org.gnu.Emacs" "/org/gnu/Emacs" "org.gnu.Emacs.NotmuchNotify"
+
 # And display a notification
 $CONFIGDIR/notify.py
 
