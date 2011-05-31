@@ -18,6 +18,9 @@ x11vnc -o /var/log/x11vnc.log -forever -bg -localhost -solid black -avahi -unixp
 # NVIDIA card configuration
 nvidia-settings -l &
 
+# D-Bus -- https://wiki.archlinux.org/index.php/D-Bus#Using_D-Bus_without_a_desktop_environment
+[[ -z "$DBUS_SESSION_BUS_ADDRESS" ]] && eval "$(dbus-launch --sh-syntax --exit-with-session)"
+
 # GPG agent
 gnupginf="$HOME/.gnupg/gpg-agent.info"
 if ( pgrep -u "${USER}" gpg-agent ); then
