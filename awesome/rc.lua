@@ -68,6 +68,7 @@ myawesomemenu = {
 gamemenu = {
    { "battle for wesnoth", "wesnoth", image("/usr/share/icons/wesnoth-icon.png") },
    { "frozen bubble", "frozen-bubble", image("/usr/share/pixmaps/frozen-bubble.png") },
+   { "kildclient", "kildclient", image("/usr/share/pixmaps/kildclient.png") },
    { "kobo deluxe", "kobodl", image("/usr/share/pixmaps/kobo-icon.xpm") },
    { "minecraft", "minecraft", image("/usr/share/pixmaps/minecraft.png") },
 }
@@ -75,13 +76,13 @@ gamemenu = {
 utilsmenu = {
    { "galculator", "galculator", image("/usr/share/pixmaps/galculator.png") },
    { "gdmap", "gdmap", image("/usr/share/pixmaps/gdmap_icon.png") },
+   { "gucharmap", "gucharmap", image("/usr/share/icons/gnome/16x16/apps/accessories-character-map.png") },
 }
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "jeux", gamemenu },
                                     { "utils", utilsmenu },
                                     { "gajim", "gajim", image("/usr/share/icons/hicolor/64x64/apps/gajim.png") },
-                                    { "thunderbird", "thunderbird", image("/usr/share/pixmaps/thunderbird.png") },
                                     { "chromium", "chromium", image("/usr/share/icons/hicolor/16x16/apps/chromium.png") },
                                     { "shotwell", "shotwell", image("/home/schnouki/.config/awesome/icons/shotwell.png") },
                                     { "spotify", "spotify", image("/home/schnouki/.config/awesome/icons/spotify.png") },
