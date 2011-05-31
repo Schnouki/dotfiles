@@ -219,3 +219,15 @@ in the current buffer."
    "First set SMTP account."
      (with-current-buffer smtpmail-text-buffer (schnouki/change-smtp)))
 (ad-activate 'smtpmail-via-smtp)
+
+;; Autorefresh notmuch-hello using D-Bus
+(eval-after-load 'notmuch
+  '(progn
+     (require 'dbus)
+     (defun schnouki/notmuch-dbus-notify ()
+       (when (get-buffer "*notmuch-hello*")
+	 (message "Notmuch notify")
+	 (notmuch-hello-update t)))
+     (dbus-register-method :session dbus-service-emacs dbus-path-emacs
+			   dbus-service-emacs "NotmuchNotify"
+			   'schnouki/notmuch-dbus-notify)))
