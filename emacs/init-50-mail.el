@@ -53,6 +53,9 @@
       notmuch-address-command "~/.config/notmuch/addrbook.py"
       notmuch-crypto-process-mime t)
 
+;; Add some features to message-mode
+(add-hook 'message-setup-hook '(lambda () (footnote-mode t)))
+
 ;; Useful key bindings in notmuch buffers
 (eval-after-load 'notmuch
   '(progn
