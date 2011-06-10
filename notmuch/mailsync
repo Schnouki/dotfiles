@@ -54,6 +54,7 @@ function status_err() {
     prefix=$1; shift
     msg=$*
     echo -ne "\r${prefix}${fg_bold[red]}[${fg_bold[white]}${msg}${fg_bold[red]}]${fg_no_bold[default]}"
+    rm "$SOCKET"
     exit 1
 }
 function status_wait() {
