@@ -47,5 +47,8 @@ gnotero &
 #thunderbird &
 #firefox &
 
+# Be nice to my eyes
+gtk-redshift -l 48.7:6.2 -t 6500:4000 &>/dev/null &
+
 exec awesome
 #exec twm
