@@ -86,7 +86,7 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
                                     { "chromium", "chromium", image("/usr/share/icons/hicolor/16x16/apps/chromium.png") },
                                     { "shotwell", "shotwell", image("/home/schnouki/.config/awesome/icons/shotwell.png") },
                                     { "spotify", "spotify", image("/home/schnouki/.config/awesome/icons/spotify.png") },
-                                    { "libre office", "soffice", image("/usr/share/icons/hicolor/16x16/apps/ooo-writer.png") },
+                                    { "libre office", "soffice", image("/usr/share/icons/hicolor/16x16/apps/writer.png") },
                                     { "acroread", "acroread", image("/usr/share/pixmaps/acroread.png") },
                                     { "gcmd", "gnome-commander", image("/usr/share/pixmaps/gnome-commander.png") },
                                     { "open terminal", terminal }
