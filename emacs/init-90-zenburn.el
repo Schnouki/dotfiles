@@ -28,13 +28,14 @@
      (mapcar '(lambda (f) (set-face-attribute f nil :bold t :background zenburn-bg-1))
 	     '(notmuch-crypto-signature-good notmuch-crypto-signature-good-key
 	       notmuch-crypto-signature-unknown notmuch-crypto-signature-bad
-	       notmuch-crypto-decryption))
+	       notmuch-crypto-decryption notmuch-crypto-part-header))
 
-     (set-face-foreground 'notmuch-crypto-signature-good          zenburn-green+3)
-     (set-face-foreground 'notmuch-crypto-signature-good-key      zenburn-cyan)
-     (set-face-foreground 'notmuch-crypto-signature-bad           zenburn-red+1)
-     (set-face-foreground 'notmuch-crypto-signature-unknown       "#bf8f6f") ;; zenburn-orange-2
-     (set-face-foreground 'notmuch-crypto-decryption              zenburn-magenta)))
+     (set-face-foreground 'notmuch-crypto-signature-good     zenburn-green+3)
+     (set-face-foreground 'notmuch-crypto-signature-good-key zenburn-cyan)
+     (set-face-foreground 'notmuch-crypto-signature-bad      zenburn-red+1)
+     (set-face-foreground 'notmuch-crypto-signature-unknown  "#bf8f6f") ;; zenburn-orange-2
+     (set-face-foreground 'notmuch-crypto-decryption         zenburn-magenta)
+     (set-face-foreground 'notmuch-crypto-part-header        zenburn-blue-2)))
 
 ;; Org-mode keywords
 (eval-after-load 'org
