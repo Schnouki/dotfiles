@@ -5,6 +5,10 @@
 ;; Paths
 (add-to-list 'load-path "~/.config/emacs")
 
+;; Fix for tramp "recursive load"
+;; (http://lists.gnu.org/archive/html/help-gnu-emacs/2011-05/msg00064.html)
+(load "/usr/share/emacs/23.3/lisp/net/tramp.el.gz")
+
 ;; Custom file
 (setq custom-file "~/.config/emacs/init-00-custom.el")
 
