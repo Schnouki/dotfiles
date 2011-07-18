@@ -2,6 +2,7 @@ auto-save-list
 .emacs.desktop
 .emacs.desktop.lock
 .org-id-locations
+ede-projects.el
 places
 server
 tramp

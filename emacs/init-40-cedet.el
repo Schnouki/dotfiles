@@ -61,8 +61,8 @@
 (setq semantic-python-dependency-system-include-path
       '("/usr/lib/python2.7/"
 	"/usr/lib/python2.7/site-packages/"
-	"/usr/lib/python3.1/"
-	"/usr/lib/python3.1/site-packages/"))
+	"/usr/lib/python3.2/"
+	"/usr/lib/python3.2/site-packages/"))
 
 ;; -----------------------------------------------------------------------------
 ;; ECB -- Emacs Code Browser 
@@ -90,7 +90,7 @@
 
 (ede-cpp-root-project "Gnome Commander"
 		:name "Gnome Commander project"
-		:file "~/dev/gcmd/Makefile"
+		:file "~/dev/gcmd/autogen.sh"
 		:include-path '("/"
 				"/libgcmd"
 				"/src"
