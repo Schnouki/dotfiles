@@ -234,9 +234,10 @@ in the current buffer."
   '(progn
      (require 'dbus)
      (defun schnouki/notmuch-dbus-notify ()
-       (when (get-buffer "*notmuch-hello*")
-	 (message "Notmuch notify")
-	 (notmuch-hello-update t)))
+       (save-excursion
+	 (save-restriction
+	   (when (get-buffer "*notmuch-hello*")
+	     (notmuch-hello-update t)))))
      (dbus-register-method :session dbus-service-emacs dbus-path-emacs
 			   dbus-service-emacs "NotmuchNotify"
 			   'schnouki/notmuch-dbus-notify)))
