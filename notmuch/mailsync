@@ -22,6 +22,24 @@ TRAPINT() {
     return $(( 128 + $1 ))
 }
 
+# Command line options
+do_backup=1
+
+while getopts "b" opt; do
+    case "$opt" in
+        b)
+            do_backup=0 ;;
+        *)
+            echo "Usage: $0 [options]"
+            echo
+            echo "Options:"
+            echo "  -b   don't do a backup"
+            rm /tmp/mailsync.$UID
+            exit 1
+            ;;
+    esac
+done
+
 # Check the DISPLAY environment variable (needed for D-Bus and awesome-client)
 [[ -z "$DISPLAY" ]] && export DISPLAY=:0.0 || true
 
@@ -68,11 +86,12 @@ function status_wait() {
 function backup() {
     local prefix name
     prefix=$1; shift
+    do_backup=$1; shift
     msg=$*
 
     # Is a recent backup available?
     BACKUPFILE=$CONFIGDIR/db-$(date +"%Y%m%d").xz
-    if [ ! -e "$BACKUPFILE" ]; then
+    if [ ! -e "$BACKUPFILE" ] && [ "$do_backup"="1" ]; then
         status_start "$prefix" "$msg"
         (notmuch dump | xz > "$BACKUPFILE") || status_err "$prefix" "$msg"
         # Remove backups older than a month
@@ -117,7 +136,7 @@ function autotag() {
 }
 
 # Run first steps asynchronously
-backup       "\t\t\t\t\t\t" "Backup"     &
+backup       "\t\t\t\t\t\t" $do_backup   "Backup" &
 fetch_mail   ""             "Fetch mail" &
 
 status_wait  "\t\t"         "DB update"
