@@ -1,8 +1,5 @@
 #!/bin/zsh
 
-# Check if it is ok to commit now
-hook_exit_code=0
-
 # Helper functions
 function hook_update_encrypted_file() {
     local src dst sf
@@ -15,7 +12,6 @@ function hook_update_encrypted_file() {
         rm "$dst"
         gpg2 --quiet --batch --output "$dst" --encrypt "$src"
         touch "$sf"
-        hook_exit_code=1
     fi
 }
 
@@ -33,7 +29,6 @@ hook_update_encrypted_tarball() {
         echo "New version of $srcname found, encrypting it..."
         tar c -C "$HOME" ${src/$HOME\//} | gpg2 --quiet --batch --encrypt > "$dst"
         echo "$cs" > "$sf"
-        hook_exit_code=1    
     fi
 }
 
@@ -44,5 +39,3 @@ hook_update_encrypted_file ".config/emacs/init-99-private.el" "emacs/init-99-pri
 hook_update_encrypted_file ".config/notmuch/autotag.py" "notmuch/autotag.py.gpg"
 
 hook_update_encrypted_tarball "Weechat" "weechat.tar.gpg" ~/.weechat/{*.conf,{perl,python}/**/**(-.)}
-
-exit $hook_exit_code
