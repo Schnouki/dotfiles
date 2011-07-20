@@ -1,4 +1,4 @@
-if gethost() == "odin" then
+if gethost() == "odin-OSS4" then
    -- OSS 4
 
    oss_channel = "misc.front"
@@ -98,25 +98,25 @@ else
 
    -- Lit le volume et indique si le mode muet est activé
    function volume_get()
-      local cmd = "amixer sget " .. actrl
+      local cmd = "amixer -c0 sget " .. actrl
       return volume_cmd(cmd)
    end
 
    -- Augmentation du volume
    function volume_plus()
-      local cmd = "amixer sset " .. actrl .. " 1+"
+      local cmd = "amixer -c0 sset " .. actrl .. " 1+"
       return volume_cmd(cmd)
    end
 
    -- Diminution du volume
    function volume_minus()
-      local cmd = "amixer sset " .. actrl .. " 1-"
+      local cmd = "amixer -c0 sset " .. actrl .. " 1-"
       return volume_cmd(cmd)
    end
 
    -- Activation/désactivation du mode muet
    function volume_mute()
-      local cmd = "amixer sset " .. actrl .. " toggle"
+      local cmd = "amixer -c0 sset " .. actrl .. " toggle"
       return volume_cmd(cmd)
    end
 

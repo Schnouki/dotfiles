@@ -21,6 +21,9 @@ nvidia-settings -l &
 # D-Bus -- https://wiki.archlinux.org/index.php/D-Bus#Using_D-Bus_without_a_desktop_environment
 [[ -z "$DBUS_SESSION_BUS_ADDRESS" ]] && eval "$(dbus-launch --sh-syntax --exit-with-session)"
 
+# PulseAudio
+[[ -x /usr/bin/start-pulseaudio-x11 ]] && /usr/bin/start-pulseaudio-x11
+
 # GPG agent
 gnupginf="$HOME/.gnupg/gpg-agent.info"
 if ( pgrep -u "${USER}" gpg-agent ); then
