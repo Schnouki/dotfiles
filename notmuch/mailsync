@@ -15,6 +15,9 @@ if ! zsocket -l "$SOCKET" 2>/dev/null; then
     exit 1
 fi
 
+#TRAPEXIT() {
+#    echo "TRAPEXIT"
+#}
 TRAPZERR() {
     rm "$SOCKET"
 }
@@ -84,7 +87,7 @@ function status_wait() {
 
 # Backup the DB
 function backup() {
-    local prefix name
+    local prefix name lastbak
     prefix=$1; shift
     do_backup=$1; shift
     msg=$*
@@ -93,7 +96,8 @@ function backup() {
     BACKUPFILE=$CONFIGDIR/db-$(date +"%Y%m%d").xz
     if [ ! -e "$BACKUPFILE" ] && [ "$do_backup"="1" ]; then
         status_start "$prefix" "$msg"
-        (notmuch dump | xz > "$BACKUPFILE") || status_err "$prefix" "$msg"
+        lastbak=$(ls -t "$CONFIGDIR"/db-*.xz | head -n1)
+        ($CONFIGDIR/notmuch-incr-dump "$lastbak" 2>/dev/null | xz > "$BACKUPFILE") || status_err "$prefix" "$msg"
         # Remove backups older than a month
         find "$CONFIGDIR" -name 'db-*.xz' -and -mtime +30 -exec rm \{\} +
         status_ok "$prefix" "$msg"

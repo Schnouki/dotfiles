@@ -1,12 +1,14 @@
 #!/bin/zsh
 
+lastbak=$(ls -t ~/.config/notmuch/db-*.xz | head -n1)
+
 function nm_push() {
-    notmuch dump | gzip | ssh kimsufi 'cat > notmuch.dump.gz'
+    ~/.config/notmuch/notmuch-incr-dump $lastbak 2>/dev/null | gzip | ssh kimsufi 'cat > notmuch.dump.gz'
 }
 
 function nm_get() {
-    mailsync || return 1
-    (notmuch dump > "$TMPDIR/old" || exit 1) &
+    mailsync -b || return 1
+    (~/.config/notmuch/notmuch-incr-dump $lastbak 2>/dev/null > "$TMPDIR/old" || exit 1) &
     (scp kimsufi:notmuch.dump.gz "$TMPDIR/new.gz" || exit 1) &
     wait
     gunzip "$TMPDIR/new.gz" || exit 1
