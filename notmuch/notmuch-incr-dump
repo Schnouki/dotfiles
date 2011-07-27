@@ -1,0 +1,88 @@
+#!/usr/bin/env python2
+# -*- coding: utf-8 -*-
+
+import argparse
+import gzip
+import os.path
+import sys
+
+import notmuch
+
+def open_dump(filename):
+    mt = os.path.getmtime(filename)
+    
+    # Gzip?
+    try:
+        gf = gzip.GzipFile(filename, "rb")
+        gf.read(1)
+        gf.seek(0)
+        return (filename, gf, mt)
+    except IOError:
+        gf.close()
+
+    # LZMA?
+    try:
+        import lzma
+        lf = lzma.LZMAFile(filename, "rb")
+        lf.read(1)
+        lf.seek(0)
+        return (filename, lf, mt)
+    except ImportError:
+        pass
+    except lzma.error:
+        lf.close()
+
+    return (filename, open(filename, "r"), mt)
+
+p = argparse.ArgumentParser(description="Incremental dumps of the Notmuch DB")
+p.add_argument("old_db", type=open_dump, help="old database")
+p.add_argument("mtime", type=int, nargs="?", help="first mtime to consider. If omitted, will default to OLD_DB's mtime.")
+args = p.parse_args()
+if args.mtime is None:
+    args.mtime = int(args.old_db[2])
+
+nmdb = notmuch.Database(mode=notmuch.Database.MODE.READ_ONLY)
+
+# Read old DB
+dump = {}
+print >>sys.stderr, "Reading %s..." % args.old_db[0],
+for line in args.old_db[1]:
+    line = line.strip()
+    eid = line.index(" (")
+    msg_id = line[:eid]
+    tags = line[eid+2:-1].split()
+    dump[msg_id] = tags
+print >>sys.stderr, "%d lines." % len(dump)
+
+# Updated messages
+print >>sys.stderr, "Looking for new messages...",
+query = notmuch.Query(nmdb, "mtime:%d.." % args.mtime)
+c = 0
+for msg in query.search_messages():
+    c += 1
+    msg_id = msg.get_message_id()
+    tags = msg.get_tags()
+    dump[msg_id] = tags
+print >>sys.stderr, "%d messages updated." % c
+
+# Deleted messages...
+print >>sys.stderr, "Looking for deleted messages...",
+dels = []
+for msg_id in dump.iterkeys():
+    msg = nmdb.find_message(msg_id)
+    if msg is None:
+        dels.append(msg_id)
+for msg_id in dels:
+    del dump[msg_id]
+print >>sys.stderr, "%d messages removed." % len(dels)
+
+# Dumping new DB
+print >>sys.stderr, "Dumping DB...",
+for msg_id in sorted(dump.iterkeys()):
+    tags = " ".join(dump[msg_id])
+    s = "%s (%s)" % (msg_id, tags)
+    try:
+        print s
+    except UnicodeEncodeError:
+        print s.encode("utf-8")
+print >>sys.stderr, "%d entries dumped." % len(dump)
