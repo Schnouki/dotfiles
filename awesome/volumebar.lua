@@ -1,4 +1,4 @@
-if gethost() == "odin-OSS4" then
+if gethost() == "odin" then
    -- OSS 4
 
    oss_channel = "misc.front"
