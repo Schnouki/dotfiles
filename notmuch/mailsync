@@ -115,7 +115,7 @@ function fetch_mail() {
         [[ -e "$CONFIGDIR/mail.$i.log" ]] && mv "$CONFIGDIR/mail.$i.log" "$CONFIGDIR/mail.$j.log"
     done
     status_start "$prefix" "$msg"
-    offlineimap -o > "$CONFIGDIR/mail.0.log" || status_err "$prefix" "$msg"
+    timeout 4m offlineimap -o > "$CONFIGDIR/mail.0.log" || status_err "$prefix" "$msg"
     status_ok "$prefix" "$msg"
 }
 
