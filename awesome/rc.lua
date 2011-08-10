@@ -304,6 +304,9 @@ require("spop")
 spop.init("localhost", 6602)
 tb_spop = widget({ type = "textbox" })
 tb_spop.text = " [spop] "
+tb_spop:buttons(awful.util.table.join(
+   awful.button({ }, 1, function () awful.util.spawn("dspop") end)
+))
 -- }}}
 
 -- {{{ Raccourcis claviers persos
