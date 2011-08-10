@@ -20,6 +20,7 @@
 
 ;; Global keys to launch notmuch
 (global-set-key (kbd "C-! n") 'notmuch)
+(global-set-key (kbd "C-ç n") 'notmuch)
 
 ;; Various notmuch parameters:
 ;; - saved searches

@@ -13,17 +13,20 @@
 (add-hook 'emacs-lisp-mode-hook 'schnouki/emacs-lisp-default-indent)
 
 ;; Shorter key bindings for folding/hideshow
-(global-set-key (kbd "C-! :") '(lambda () (interactive)
-				 (unless folding-mode (folding-mode))
-				 (folding-toggle-show-hide)))
-(global-set-key (kbd "C-! !") '(lambda () (interactive)
-				 (unless hs-minor-mode (hs-minor-mode))
-				 (hs-toggle-hiding)))
+(dolist (key (list (kbd "C-! :") (kbd "C-ç f")))
+  (global-set-key key '(lambda () (interactive)
+			 (unless folding-mode (folding-mode))
+			 (folding-toggle-show-hide))))
+(dolist (key (list (kbd "C-! !") (kbd "C-ç ç")))
+  (global-set-key key '(lambda () (interactive)
+			 (unless hs-minor-mode (hs-minor-mode))
+			 (hs-toggle-hiding))))
 
 ;; Default compilation commands
 (setq-default compile-command "make") ;; I don't want "make -k"
 (add-hook 'LaTeX-mode-hook (lambda () (setq compile-command "latexmk -pdf")))
 (global-set-key (kbd "C-! c") 'compile)
+(global-set-key (kbd "C-ç c") 'compile)
 
 ;; Prevent ispell from verifying some LaTeX commands
 ;; http://stat.genopole.cnrs.fr/dw/~jchiquet/fr/latex/emacslatex

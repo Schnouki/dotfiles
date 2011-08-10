@@ -64,7 +64,9 @@
 (setq golbarg-posts-dir "~/site/www/posts")
 (setq golbarg-drafts-dir "~/site/www/drafts")
 (global-set-key (kbd "C-! g") 'golbarg-new-draft)
+(global-set-key (kbd "C-ç g") 'golbarg-new-draft)
 (global-set-key (kbd "C-! M-g") '(lambda () (interactive) (find-file golbarg-drafts-dir)))
+(global-set-key (kbd "C-ç M-g") '(lambda () (interactive) (find-file golbarg-drafts-dir)))
 (setq auto-mode-alist (append `((,(concat "^" (expand-file-name "~/site/www/") "/.+") . golbarg-mode)) auto-mode-alist))
 (add-hook 'golbarg-mode-hook 
 	  '(lambda ()

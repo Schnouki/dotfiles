@@ -38,12 +38,17 @@
 
 ;; Keyboard shortcuts
 (global-set-key (kbd "C-! l") 'org-store-link)
+(global-set-key (kbd "C-ç l") 'org-store-link)
 (global-set-key (kbd "C-! a") 'org-agenda)
+(global-set-key (kbd "C-ç a") 'org-agenda)
 (global-set-key (kbd "C-! b") 'org-iswitchb)
+(global-set-key (kbd "C-ç b") 'org-iswitchb)
 (global-set-key (kbd "C-! t") '(lambda () (interactive) (find-file (concat org-directory "todo.org"))))
+(global-set-key (kbd "C-ç t") '(lambda () (interactive) (find-file (concat org-directory "todo.org"))))
 
 ;; Capture
 (global-set-key (kbd "C-! r") 'org-capture)
+(global-set-key (kbd "C-ç r") 'org-capture)
 (setq org-default-notes-file (concat org-directory "/notes.org")
       org-capture-templates
       '(("t" "TODO" entry (file "todo.org") "* TODO %?\n  %i\n  %a" :unnarrowed)
@@ -78,6 +83,7 @@
 	    (hide-subtree))))
 ))
 (global-set-key (kbd "C-! s") 'schnouki/org-sort-todo-list)
+(global-set-key (kbd "C-ç s") 'schnouki/org-sort-todo-list)
 
 ;; Dynamically adjust tag position 
 ;; http://orgmode.org/worg/org-hacks.php#sec-13
