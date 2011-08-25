@@ -86,6 +86,7 @@
                 :include-path '("/src" "/plugin")
 		:system-include-path '("/usr/include/dbus-1.0"
 				       "/usr/include/glib-2.0"
+				       "/usr/include/json-glib-1.0"
 				       "/usr/include/libsoup-2.4"))
 
 (ede-cpp-root-project "Gnome Commander"
