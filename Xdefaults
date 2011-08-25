@@ -1,3 +1,11 @@
+! freetype2-infinality
+Xft.autohint: 0
+Xft.lcdfilter:  lcddefault
+Xft.hintstyle:  hintslight
+Xft.hinting: 1
+Xft.antialias: 1
+Xft.rgba: rgb
+
 XBomb.*font: lucidasans-12
 XBomb.*grid.font: lucidasans-bold-14
 
