@@ -1,0 +1,3 @@
+#!/bin/sh
+
+emacsclient -a "" -n -c -e '(progn (notmuch-mua-mail-url "'$1'") (delete-other-windows))'

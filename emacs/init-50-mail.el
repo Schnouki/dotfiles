@@ -171,6 +171,22 @@ in the current buffer."
 	   (delete-region beg end)
 	   (insert chosen))))
 
+     (defun notmuch-mua-mail-url (url)
+       (interactive (browse-url-interactive-arg "Mailto URL: "))
+       (let* ((alist (rfc2368-parse-mailto-url url))
+	      (to (assoc "To" alist))
+	      (subject (assoc "Subject" alist))
+	      (body (assoc "Body" alist))
+	      (rest (delete to (delete subject (delete body alist))))
+	      (to (cdr to))
+	      (subject (cdr subject))
+	      (body (cdr body))
+	      (mail-citation-hook (unless body mail-citation-hook)))
+	 (notmuch-mua-mail to subject rest nil nil
+			   (if body
+			       (list 'insert body)
+			     (list 'insert-buffer (current-buffer))))))
+
      ;; Display the hl-line correctly in notmuch-search
      (add-hook 'notmuch-search-hook '(lambda () (overlay-put global-hl-line-overlay 'priority 1)))))
 
