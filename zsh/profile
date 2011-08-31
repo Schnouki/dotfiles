@@ -118,3 +118,5 @@ setopt extendedglob
 
 # Don't send "HUP" to running jobs when logging out
 unsetopt hup
+
+autoload -Uz zmv
