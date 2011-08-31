@@ -61,19 +61,19 @@
 
 ;; Golbarg, the most awesome blog engine ever
 (require 'golbarg)
-(setq golbarg-posts-dir "~/site/www/posts")
-(setq golbarg-drafts-dir "~/site/www/drafts")
+(setq golbarg-posts-dir "~/site/schnouki.net/posts")
+(setq golbarg-drafts-dir "~/site/schnouki.net/drafts")
 (global-set-key (kbd "C-! g") 'golbarg-new-draft)
 (global-set-key (kbd "C-ç g") 'golbarg-new-draft)
 (global-set-key (kbd "C-! M-g") '(lambda () (interactive) (find-file golbarg-drafts-dir)))
 (global-set-key (kbd "C-ç M-g") '(lambda () (interactive) (find-file golbarg-drafts-dir)))
-(setq auto-mode-alist (append `((,(concat "^" (expand-file-name "~/site/www/") "/.+") . golbarg-mode)) auto-mode-alist))
+(setq auto-mode-alist (append `((,(concat "^" (expand-file-name "~/site/schnouki.net/") "/.+") . golbarg-mode)) auto-mode-alist))
 (add-hook 'golbarg-mode-hook 
 	  '(lambda ()
 	     (turn-on-auto-fill)
 	     (ispell-change-dictionary "american")
 	     (flyspell-mode)
-	     (setq compile-command "make -C ~/site/www")))
+	     (setq compile-command "make -C ~/site/schnouki.net")))
 
 ;; smerge-mode, as suggested in the doc
 (autoload 'smerge-mode "smerge-mode" nil t)
@@ -86,4 +86,3 @@
 
 ;; Display the current function name in the mode line
 (which-function-mode 1)
-
