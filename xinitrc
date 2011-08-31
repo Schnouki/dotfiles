@@ -36,6 +36,10 @@ fi
 # Tell Java we have a "non-reparenting window manager"
 wmname LG3D
 
+# Tell Java to anti-alias fonts
+# https://wiki.archlinux.org/index.php/Java_Runtime_Environment_Fonts
+export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=gasp'
+
 # Emacs daemon
 [[ -S "/tmp/emacs$UID/server" ]] || (emacs --daemon &)
 
