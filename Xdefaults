@@ -44,7 +44,7 @@ URxvt.scrollTtyKeypress: true
 URxvt.perl-lib:       /home/schnouki/.config/urxvt
 URxvt.perl-ext:       default,cspace,matcher,tabbedex
 
-URxvt.urlLauncher:    chromium
+URxvt.urlLauncher:    firefox
 URxvt.matcher.button: 1
 
 ! Tabbedex features
