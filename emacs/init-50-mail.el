@@ -6,11 +6,13 @@
 (setq message-auto-save-directory nil
       send-mail-function 'smtpmail-send-it
       message-send-mail-function 'smtpmail-send-it
+      message-send-mail-partially-limit nil
       smtpmail-debug-info nil
       smtpmail-debug-verb nil
       starttls-use-gnutls t
       starttls-gnutls-program "gnutls-cli"
       starttls-extra-arguments nil
+      password-cache-expiry 300
       mail-specify-envelope-from t
       mail-envelope-from 'header)
 
