@@ -167,3 +167,5 @@
 ;; ido-mode for better buffer switching, file selection, etc.
 (require 'ido)
 (ido-mode 1)
+(setq ido-default-file-method 'selected-window
+      ido-default-buffer-method 'selected-window)
