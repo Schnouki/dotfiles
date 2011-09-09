@@ -4,17 +4,14 @@
 
 ;; Mail parameters -- more of them in init-99-private.el ;)
 (setq message-auto-save-directory nil
-      send-mail-function 'smtpmail-send-it
-      message-send-mail-function 'smtpmail-send-it
+      send-mail-function 'message-send-mail-with-sendmail ;sendmail-send-it
+      message-send-mail-function 'message-send-mail-with-sendmail
+      sendmail-program "/usr/bin/msmtp"
+      message-sendmail-extra-arguments (list (concat "--domain=" (system-name)))
       message-send-mail-partially-limit nil
-      smtpmail-debug-info nil
-      smtpmail-debug-verb nil
-      starttls-use-gnutls t
-      starttls-gnutls-program "gnutls-cli"
-      starttls-extra-arguments nil
-      password-cache-expiry 300
       mail-specify-envelope-from t
-      mail-envelope-from 'header)
+      mail-envelope-from 'header
+      message-sendmail-envelope-from 'header)
 
 ;; Load notmuch
 (add-to-list 'load-path "~/dev/notmuch/emacs")
@@ -228,21 +225,22 @@ in the current buffer."
 
 ;; TODO: check message-alternative-emails...
 
-;; Choose SMTP server used to send a mail according to the From header
-;; Inspired by http://www.emacswiki.org/emacs/MultipleSMTPAccounts
-;; schnouki/smtp-servers is a list of lists. Each of these lists has 4 elements:
-;; corresponding sender address, server hostname, server port, server domain.
-(defun schnouki/change-smtp ()
-  "Change SMTP server according to the current From header"
+;; Choose msmtp account used to send a mail according to the From header
+;; schnouki/msmtp-accounts is a list cons cells: ("from_regexp" . "account").
+(defun schnouki/change-msmtp-account ()
+  "Change msmtp account according to the current From header"
   (let* ((from (downcase (cadr (mail-extract-address-components (message-field-value "From")))))
-	 (server (assoc from schnouki/smtp-servers)))
-    (when server
-      (make-local-variable 'smtpmail-smtp-server)
-      (make-local-variable 'smtpmail-smtp-service)
-      (make-local-variable 'smtpmail-sendto-domain)
-      (setq smtpmail-smtp-server   (nth 1 server)
-	    smtpmail-smtp-service  (nth 2 server)
-	    smtpmail-sendto-domain (nth 3 server)))))
+	 (account
+	  (catch 'first-match
+	    (dolist (re-account schnouki/msmtp-accounts)
+	      (when (string-match-p (car re-account) from)
+		(throw 'first-match (cdr re-account)))))))
+    (make-local-variable 'message-sendmail-extra-arguments)
+    (if account
+	(setq message-sendmail-extra-arguments (append (list "-a" account) message-sendmail-extra-arguments))
+      (error (concat "Sender address does not match any msmtp account: " account)))))
+(add-hook 'message-send-mail-hook 'schnouki/change-msmtp-account)
+
 (defadvice smtpmail-via-smtp (before schnouki/set-smtp-account
  				     (&optional recipient smtpmail-text-buffer))
    "First set SMTP account."
