@@ -63,6 +63,9 @@
      (set-face-background 'rst-level-5-face "#6f6f6f")
      (set-face-background 'rst-level-6-face "#777777")))
 
+;; diff and magit-diff
+(set-face-foreground 'diff-context "#bcbcac") ;; zenburn-fg-2
+
 ;; Ediff (weird, does not work in zenburn.el...)
 (defun schnouki/zenburn-for-ediff ()
   ;; Non-active regions
