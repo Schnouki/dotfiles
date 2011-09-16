@@ -8,12 +8,10 @@
 (setq el-get-dir "~/.config/emacs/el-get"
       el-get-recipe-path '("~/.config/emacs/el-get/el-get/recipes")
       el-get-sources
-      '(flyguess folding
+      '(doxymacs flyguess folding
 	ioccur python-mode verbiste
-	(:name el-get
-	       :url "git://github.com/Schnouki/el-get.git")
 	(:name magit
-	       :url "git://github.com/Schnouki/magit.git")
+	       :url "git@github.com:Schnouki/magit.git")
 	(:name undo-tree
 	       :features undo-tree)
 	))

@@ -86,3 +86,9 @@
 
 ;; Display the current function name in the mode line
 (which-function-mode 1)
+
+;; doxymacs
+(defun doxymacs-mode-and-fontify ()
+  (doxymacs-mode t)
+  (doxymacs-font-lock))
+(add-hook 'c-mode-common-hook 'doxymacs-mode-and-fontify)
