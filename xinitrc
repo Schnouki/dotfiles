@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Fuck Xorg -- https://bugs.freedesktop.org/show_bug.cgi?id=23705
+[[ $(hostname) == "odin" ]] && xrandr --fbmm 331x207
+
 # GTK-2.0 RC files
 export GTK2_RC_FILES="$HOME/.config/gtkrc-2.0:$HOME/.config/gtkrc-$(hostname):/etc/gtk-2.0/gtkrc"
 
@@ -16,7 +19,7 @@ xhost +local:root
 x11vnc -o /var/log/x11vnc.log -forever -bg -localhost -solid black -avahi -unixpw schnouki
 
 # NVIDIA card configuration
-nvidia-settings -l &
+[[ $(hostname) != "odin" ]] && nvidia-settings -l &
 
 # D-Bus -- https://wiki.archlinux.org/index.php/D-Bus#Using_D-Bus_without_a_desktop_environment
 [[ -z "$DBUS_SESSION_BUS_ADDRESS" ]] && eval "$(dbus-launch --sh-syntax --exit-with-session)"
@@ -52,7 +55,7 @@ gnotero &
 #firefox &
 
 # Be nice to my eyes
-gtk-redshift -l 48.7:6.2 -t 6500:4000 &>/dev/null &
+#gtk-redshift -l 48.7:6.2 -t 6500:4000 &>/dev/null &
 
 exec awesome
 #exec twm
