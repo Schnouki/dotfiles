@@ -83,7 +83,7 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
                                     { "jeux", gamemenu },
                                     { "utils", utilsmenu },
                                     { "gajim", "gajim", image("/usr/share/icons/hicolor/64x64/apps/gajim.png") },
-                                    { "firefox", "firefox", image("/usr/share/icons/hicolor/16x16/apps/firefox.png") },
+                                    { "firefox", "firefox-beta-bin", image("/usr/share/pixmaps/firefox-beta-bin-icon.png") },
                                     { "chromium", "chromium", image("/usr/share/icons/hicolor/16x16/apps/chromium.png") },
                                     { "shotwell", "shotwell", image("/home/schnouki/.config/awesome/icons/shotwell.png") },
                                     { "spotify", "spotify", image("/home/schnouki/.config/awesome/icons/spotify.png") },
