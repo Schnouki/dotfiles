@@ -17,7 +17,7 @@
 
 ;; Default font
 (add-to-list 'default-frame-alist
-	     (if (string= (shell-command-to-string "hostname") "odin\n")
+	     (if (string-prefix-p "odin" (system-name))
 		 '(font ."Mono-7")
 	       '(font . "Mono-11")))
 
