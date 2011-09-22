@@ -15,6 +15,12 @@ export BROWSER=chromium
 export GREP_OPTIONS="--exclude=*.svn-base --exclude-dir=.svn"
 export ACKRC="$XDG_CONFIG_HOME/ackrc"
 
+# Go
+export GOROOT=$HOME/go
+export GOARCH=amd64
+export GOOS=linux
+export PATH=$HOME/go/bin:$PATH
+
 # 256-color terminal
 [[ $TERM == "xterm" ]] && export TERM="xterm-256color"
 
