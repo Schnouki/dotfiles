@@ -139,3 +139,9 @@
 (add-hook 'after-save-hook 'ba/org-adjust-tags-column-after-save)
 (add-hook 'org-agenda-mode-hook '(lambda ()
 				   (setq org-agenda-tags-column (- (window-width)))))
+
+;; Deft (yep, it's not org...)
+(setq deft-directory "~/Dropbox/deft"
+      deft-extension "org"
+      deft-text-mode 'org-mode)
+(global-set-key (kbd "C-! d") 'deft)
