@@ -186,6 +186,27 @@ in the current buffer."
 			       (list 'insert body)
 			     (list 'insert-buffer (current-buffer))))))
 
+     (defun schnouki/notmuch-signal-spamham (type)
+       (let ((notmuch-mua-switch-function nil))
+	 (notmuch-mua-forward-message)
+	 (message-replace-header "To" (concat "sa-" type "@schnouki.net"))
+	 (message-remove-header "Fcc")
+	 (message-sort-headers)
+	 (message-hide-headers)
+	 (set-buffer-modified-p nil)
+	 (message-goto-to)
+	 (when (yes-or-no-p (concat "Really flag this as " type "?"))
+	   (message-send-and-exit))
+	 (message-kill-buffer)))
+
+     (defun schnouki/notmuch-signal-spam ()
+       (interactive)
+       (schnouki/notmuch-signal-spamham "spam"))
+
+     (defun schnouki/notmuch-signal-ham ()
+       (interactive)
+       (schnouki/notmuch-signal-spamham "ham"))
+
      ;; Display the hl-line correctly in notmuch-search
      (add-hook 'notmuch-search-hook '(lambda () (overlay-put global-hl-line-overlay 'priority 1)))))
 
