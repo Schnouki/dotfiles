@@ -7,7 +7,8 @@
 
 ;; Fix for tramp "recursive load"
 ;; (http://lists.gnu.org/archive/html/help-gnu-emacs/2011-05/msg00064.html)
-(load "/usr/share/emacs/23.3/lisp/net/tramp.el.gz")
+(when (< emacs-major-version 24)
+  (load "/usr/share/emacs/23.3/lisp/net/tramp.el.gz"))
 
 ;; Custom file
 (setq custom-file "~/.config/emacs/init-00-custom.el")
@@ -89,8 +90,10 @@
 ;; Case-insensitive search
 (setq case-fold-search t)
 
-;; Cut/copy/paste with S-delete, C-insert and S-insert
-(pc-selection-mode 1)
+;; Better selection behaviour
+(if (< emacs-major-version 24)
+    (pc-selection-mode 1)
+  (delete-selection-mode 1))
 
 ;; Highlight current region
 (transient-mark-mode t)

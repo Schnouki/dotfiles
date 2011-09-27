@@ -11,7 +11,9 @@
       message-send-mail-partially-limit nil
       mail-specify-envelope-from t
       mail-envelope-from 'header
-      message-sendmail-envelope-from 'header)
+      message-sendmail-envelope-from 'header
+
+      mm-text-html-renderer 'gnus-w3m)
 
 ;; Load notmuch
 (add-to-list 'load-path "~/dev/notmuch/emacs")
