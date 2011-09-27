@@ -5,6 +5,7 @@ auto-save-list
 ede-projects.el
 places
 server
+url
 tramp
 image-dired
 abbrev_defs

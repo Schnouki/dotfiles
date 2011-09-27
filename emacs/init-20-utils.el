@@ -28,7 +28,7 @@ this function with a prefix forces the creation of a new buffer."
 ;; "Smart" home key
 ;; Beginning of indented text --> beginning of "real" text --> beginning of line
 (defun schnouki/home-key ()
-  (interactive)
+  (interactive "^")
   (let
       ((pos-current (current-column))                                ;; Current position
        (pos-indent (progn (back-to-indentation) (current-column)))   ;; Beginning of indented text
