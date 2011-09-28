@@ -93,13 +93,13 @@ function backup() {
     msg=$*
 
     # Is a recent backup available?
-    BACKUPFILE=$CONFIGDIR/db-$(date +"%Y%m%d").xz
+    BACKUPFILE=$CONFIGDIR/bak/db-$(date +"%Y%m%d").xz
     if [ ! -e "$BACKUPFILE" ] && [ "$do_backup"="1" ]; then
         status_start "$prefix" "$msg"
-        lastbak=$(ls -t "$CONFIGDIR"/db-*.xz | head -n1)
+        lastbak=$(ls -t "$CONFIGDIR"/bak/db-*.xz | head -n1)
         ($CONFIGDIR/notmuch-incr-dump "$lastbak" 2>/dev/null | xz > "$BACKUPFILE") || status_err "$prefix" "$msg"
         # Remove backups older than a month
-        find "$CONFIGDIR" -name 'db-*.xz' -and -mtime +30 -exec rm \{\} +
+        find "$CONFIGDIR/bak" -name 'db-*.xz' -and -mtime +30 -exec rm \{\} +
         status_ok "$prefix" "$msg"
     fi
 }
@@ -109,13 +109,13 @@ function fetch_mail() {
     local prefix name i j
     prefix=$1; shift
     msg=$*
-    [[ -e "$CONFIGDIR/mail.$MAXLOGS.log" ]] && rm "$CONFIGDIR/mail.$MAXLOGS.log"
+    [[ -e "$CONFIGDIR/log/mail.$MAXLOGS.log" ]] && rm "$CONFIGDIR/log/mail.$MAXLOGS.log"
     for ((i=$MAXLOGS-1; i >= 0; i--)); do
         j=$(( $i+1 ))
-        [[ -e "$CONFIGDIR/mail.$i.log" ]] && mv "$CONFIGDIR/mail.$i.log" "$CONFIGDIR/mail.$j.log"
+        [[ -e "$CONFIGDIR/log/mail.$i.log" ]] && mv "$CONFIGDIR/log/mail.$i.log" "$CONFIGDIR/log/mail.$j.log"
     done
     status_start "$prefix" "$msg"
-    timeout 4m offlineimap -o > "$CONFIGDIR/mail.0.log" || status_err "$prefix" "$msg"
+    timeout 4m offlineimap -o > "$CONFIGDIR/log/mail.0.log" || status_err "$prefix" "$msg"
     status_ok "$prefix" "$msg"
 }
 

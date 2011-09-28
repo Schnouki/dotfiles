@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-lastbak=$(ls -t ~/.config/notmuch/db-*.xz | head -n1)
+lastbak=$(ls -t ~/.config/notmuch/bak/db-*.xz | head -n1)
 
 function nm_push() {
     ~/.config/notmuch/notmuch-incr-dump $lastbak 2>/dev/null | gzip | ssh kimsufi 'cat > notmuch.dump.gz'

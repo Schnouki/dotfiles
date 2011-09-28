@@ -1,5 +1,6 @@
 *.db
-*.log
 *.pyc
-*.xz
 autotag.py
+
+bak
+log
