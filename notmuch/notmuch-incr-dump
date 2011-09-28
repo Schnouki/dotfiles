@@ -3,6 +3,7 @@
 
 import argparse
 import gzip
+import os
 import os.path
 import sys
 
@@ -76,13 +77,25 @@ for msg_id in dels:
     del dump[msg_id]
 print >>sys.stderr, "%d messages removed." % len(dels)
 
-# Dumping new DB
-print >>sys.stderr, "Dumping DB...",
-for msg_id in sorted(dump.iterkeys()):
-    tags = " ".join(dump[msg_id])
-    s = "%s (%s)" % (msg_id, tags)
-    try:
-        print s
-    except UnicodeEncodeError:
-        print s.encode("utf-8")
-print >>sys.stderr, "%d entries dumped." % len(dump)
+# Check that numbers match
+print >>sys.stderr, "Checking for consistency...",
+local_count = len(dump)
+count_query = notmuch.Query(nmdb, "*")
+db_count = count_query.count_messages()
+
+if local_count == db_count:
+    # Dumping new DB
+    print >>sys.stderr, "ok\nDumping DB...",
+    for msg_id in sorted(dump.iterkeys()):
+        tags = " ".join(dump[msg_id])
+        s = "%s (%s)" % (msg_id, tags)
+        try:
+            print s
+        except UnicodeEncodeError:
+            print s.encode("utf-8")
+    print >>sys.stderr, "%d entries dumped." % len(dump)
+
+else:
+    print >>sys.stderr, "failed (local count: %d; DB count: %d)" % (local_count, db_count)
+    print >>sys.stderr, "Performing full DB dump..."
+    os.execlp("notmuch", "notmuch", "dump")
