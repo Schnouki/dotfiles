@@ -44,6 +44,9 @@
 ;; No beep, but flash screen
 (setq visible-bell t)
 
+;; Move point to top/bottom of buffer before signalling a scrolling error
+(setq scroll-error-top-bottom t)
+
 ;; Display file name in the window title bar
 (setq frame-title-format '(buffer-file-name "%b [%f]" "%b"))
 
