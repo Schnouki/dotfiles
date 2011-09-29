@@ -18,10 +18,13 @@
 ;; Load notmuch
 (add-to-list 'load-path "~/dev/notmuch/emacs")
 (autoload 'notmuch "notmuch" nil t)
+(autoload 'notmuch-mua-new-mail "notmuch" nil t)
 
 ;; Global keys to launch notmuch
 (global-set-key (kbd "C-! n") 'notmuch)
 (global-set-key (kbd "C-ç n") 'notmuch)
+(global-set-key (kbd "C-! m") 'notmuch-mua-new-mail)
+(global-set-key (kbd "C-ç m") 'notmuch-mua-new-mail)
 
 ;; Various notmuch parameters:
 ;; - saved searches
