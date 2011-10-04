@@ -63,7 +63,8 @@
       notmuch-poll-script "~/.config/notmuch/mailsync"
       notmuch-address-command "~/.config/notmuch/addrbook.py"
       notmuch-crypto-process-mime t
-      notmuch-mua-switch-function 'switch-to-buffer-other-frame)
+      notmuch-mua-switch-function 'switch-to-buffer-other-frame
+      notmuch-thousands-separator " ")
 
 ;; Add some features to message-mode
 (add-hook 'message-setup-hook '(lambda () (footnote-mode t)))
