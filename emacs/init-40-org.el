@@ -17,6 +17,8 @@
       org-log-done 'time
       org-support-shift-select t
 
+      org-agenda-window-setup 'other-window
+
       org-enforce-todo-dependencies t
       org-enforce-todo-checkbox-dependencies t
       org-hierarchical-todo-statistics nil
@@ -36,6 +38,10 @@
 	("pb" "Priorité normale" tags-todo "+PRIORITY=\"B\"")
 	("pc" "Priorité basse"   tags-todo "+PRIORITY=\"C\"")))
 
+(defun schnouki/org-visit-todo-list-buffer ()
+  (interactive)
+  (find-file (concat org-directory "todo.org")))
+
 ;; Keyboard shortcuts
 (global-set-key (kbd "C-! l") 'org-store-link)
 (global-set-key (kbd "C-ç l") 'org-store-link)
@@ -43,8 +49,8 @@
 (global-set-key (kbd "C-ç a") 'org-agenda)
 (global-set-key (kbd "C-! b") 'org-iswitchb)
 (global-set-key (kbd "C-ç b") 'org-iswitchb)
-(global-set-key (kbd "C-! t") '(lambda () (interactive) (find-file (concat org-directory "todo.org"))))
-(global-set-key (kbd "C-ç t") '(lambda () (interactive) (find-file (concat org-directory "todo.org"))))
+(global-set-key (kbd "C-! t") 'schnouki/org-visit-todo-list-buffer)
+(global-set-key (kbd "C-ç t") 'schnouki/org-visit-todo-list-buffer)
 
 ;; Capture
 (global-set-key (kbd "C-! r") 'org-capture)
