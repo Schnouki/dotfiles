@@ -14,6 +14,9 @@
 (setq org-directory "~/Dropbox/org/"
       org-todo-keywords '((sequence "TODO" "STARTED" "|" "DONE" "CANCELED"))
       schnouki/org-todo-keywords-sort-order '("DONE" "STARTED" "TODO" "CANCELED")
+      org-highest-priority ?A
+      org-default-priority ?C
+      org-lowest-priority  ?E
       org-log-done 'time
       org-support-shift-select t
 
@@ -34,9 +37,11 @@
 	("cj" "Catégorie: pro"   tags-todo "+pro")
 	("cd" "Catégorie: dev"   tags-todo "+dev")
 	("p" . "TODO par priorités")
-	("pa" "Priorité haute"   tags-todo "+PRIORITY=\"A\"")
-	("pb" "Priorité normale" tags-todo "+PRIORITY=\"B\"")
-	("pc" "Priorité basse"   tags-todo "+PRIORITY=\"C\"")))
+	("pa" "Priorité très haute" tags-todo "+PRIORITY=\"A\"")
+	("pb" "Priorité haute"      tags-todo "+PRIORITY=\"B\"")
+	("pc" "Priorité normale"    tags-todo "+PRIORITY=\"C\"")
+	("pd" "Priorité basse"      tags-todo "+PRIORITY=\"D\"")
+	("pe" "Priorité très basse" tags-todo "+PRIORITY=\"E\"")))
 
 (defun schnouki/org-visit-todo-list-buffer ()
   (interactive)

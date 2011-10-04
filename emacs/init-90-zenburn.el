@@ -51,6 +51,14 @@
 	     ("CANCELED"  . "#7f7f7f") ; zenburn-bg+4
 	     ("N/A"       . "#7f7f7f") ; zenburn-bg+4
 	     ("REFUSÉ"    . "#7f7f7f") ; zenburn-bg+4
+	     )
+
+	   org-priority-faces
+	   '((?A . (:foreground "#f0dfaf" :weight bold)) ; zenburn-yellow
+	     (?B . (:foreground "#e0cf9f" :weight bold)) ; zenburn-yellow-1
+	     (?C . (:foreground "#d0bf8f"))              ; zenburn-yellow-2
+	     (?D . (:foreground "#c0af7f"))              ; zenburn-yellow-3
+	     (?E . (:foreground "#b09f6f"))              ; zenburn-yellow-4
 	     ))))
 
 ;; ReST-mode (not really zenburn...)
