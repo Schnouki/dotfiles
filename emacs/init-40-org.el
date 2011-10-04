@@ -26,8 +26,8 @@
 
       org-agenda-dim-blocked-tasks t
       org-agenda-include-diary t
-      org-agenda-files (mapcar (lambda (s) (concat org-directory s))
-			       '("todo.org" "cours.org"))
+      org-agenda-files (mapcar (lambda (s) (concat org-directory s ".org"))
+			       '("todo" "cours" "perso" "pro"))
       org-agenda-custom-commands
       '(("c" . "TODO par catégories")
 	("cp" "Catégorie: perso" tags-todo "+perso")
