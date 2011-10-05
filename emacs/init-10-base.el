@@ -96,7 +96,11 @@
 ;; Better selection behaviour
 (if (< emacs-major-version 24)
     (pc-selection-mode 1)
-  (delete-selection-mode 1))
+  (progn
+    (delete-selection-mode 1)
+    (setq x-select-enable-clipboard t
+	  x-select-enable-primary   t)))
+
 
 ;; Highlight current region
 (transient-mark-mode t)
