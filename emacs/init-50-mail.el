@@ -144,6 +144,8 @@ in the current buffer."
      (defun schnouki/notmuch-show-keys ()
        (interactive)
        (local-set-key "H" 'schnouki/notmuch-view-html)
+       (local-set-key "SH" 'schnouki/notmuch-signal-ham)
+       (local-set-key "SS" 'schnouki/notmuch-signal-spam)
        (local-set-key "W" 'schnouki/notmuch-show-verify)
        (local-set-key "z" 'notmuch-show-mark-read-and-archive-thread-then-exit))
 
@@ -204,9 +206,9 @@ in the current buffer."
 	  (message-hide-headers)
 	  (message-goto-to)
 	  (set-buffer-modified-p nil)
-	  (when (yes-or-no-p (concat "Really flag this as " type "?"))
-	    (message-send-and-exit))
-	  (message-kill-buffer))))
+	  (if (yes-or-no-p (concat "Really flag this as " type "?"))
+	      (message-send-and-exit)
+	    (message-kill-buffer)))))
 
      (defun schnouki/notmuch-signal-spam ()
        (interactive)
