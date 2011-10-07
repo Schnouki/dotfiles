@@ -43,6 +43,7 @@
 			       ("d20"         . "tag:d20 and tag:ml")
 			       ("kléber"      . "tag:kléber")
 			       ("mp2"         . "tag:mp2")
+			       ("Gmail"       . "folder:Gmail and tag:unread")
 			       ("inria"       . "folder:inria and tag:unread")
 			       ("all MLs"     . "tag:ml and tag:unread")
 			       ("april"       . "tag:april and tag:unread")
