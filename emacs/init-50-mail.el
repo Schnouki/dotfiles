@@ -13,7 +13,8 @@
       mail-envelope-from 'header
       message-sendmail-envelope-from 'header
 
-      mm-text-html-renderer 'gnus-w3m)
+      mm-text-html-renderer 'gnus-w3m
+      gnus-inhibit-images t)
 
 ;; Load notmuch
 (add-to-list 'load-path "~/dev/notmuch/emacs")
