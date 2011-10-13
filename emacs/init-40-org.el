@@ -74,25 +74,21 @@
 
 ;; Sort todo-list
 (defun schnouki/org-sort-todo-list ()
-  "Sort buffer in alphabetical order, then by priority, then by status"
+  "Sort buffer in alphabetical order, then by status, then by priority."
   (interactive)
-  (let ((done-regexp (concat "\\<\\("
-			     (mapconcat 'regexp-quote org-done-keywords "\\|")
-			     "\\)\\>")))
-    (save-excursion
-      (mark-whole-buffer)
-      (org-sort-entries nil ?a)
-      (org-sort-entries nil ?p)
-      (org-sort-entries nil ?f 'schnouki/org-sort-by-todo-keywords))
-    (org-overview)
-    (org-content)
-    (save-excursion
-      (goto-char (point-max))
-      (while (re-search-backward done-regexp nil t)
-	  (progn
-	    (goto-char (match-beginning 0))
-	    (hide-subtree))))
-))
+  (save-excursion
+    (mark-whole-buffer)
+    (org-sort-entries nil ?a)
+    (org-sort-entries nil ?f 'schnouki/org-sort-by-todo-keywords)
+    (org-sort-entries nil ?p))
+  (org-overview)
+  (org-content)
+  (save-excursion
+    (goto-char (point-max))
+    (while (re-search-backward org-todo-regexp nil t)
+      (progn
+	(goto-char (match-beginning 0))
+	(hide-subtree)))))
 (global-set-key (kbd "C-! s") 'schnouki/org-sort-todo-list)
 (global-set-key (kbd "C-ç s") 'schnouki/org-sort-todo-list)
 
