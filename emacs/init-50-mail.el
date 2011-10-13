@@ -61,12 +61,13 @@
 			       ("social"      . "tag:social and tag:unread")
 			       ("facebook"    . "tag:facebook and tag:unread")
 			       ("lwn"         . "from:lwn.net and tag:unread"))
-      message-kill-buffer-on-exit t
       notmuch-poll-script "~/.config/notmuch/mailsync"
       notmuch-address-command "~/.config/notmuch/addrbook.py"
       notmuch-crypto-process-mime t
       notmuch-mua-switch-function 'switch-to-buffer-other-frame
+      message-kill-buffer-on-exit t
       notmuch-thousands-separator " ")
+(add-hook 'message-sent-hook 'delete-frame)
 
 ;; Add some features to message-mode
 (add-hook 'message-setup-hook '(lambda () (footnote-mode t)))
@@ -197,18 +198,19 @@ in the current buffer."
 			     (list 'insert-buffer (current-buffer))))))
 
      (defun schnouki/notmuch-signal-spamham (type)
-       (let ((notmuch-mua-switch-function nil))
-	 (with-current-notmuch-show-message
-	  (notmuch-mua-forward-message)
-	  (message-replace-header "To" (concat "sa-" type "@schnouki.net"))
-	  (message-remove-header "Fcc")
-	  (message-sort-headers)
-	  (message-hide-headers)
-	  (message-goto-to)
-	  (set-buffer-modified-p nil)
-	  (if (yes-or-no-p (concat "Really flag this as " type "?"))
-	      (message-send-and-exit)
-	    (message-kill-buffer)))))
+       (with-current-notmuch-show-message
+	(notmuch-mua-forward-message)
+	(message-replace-header "To" (concat "sa-" type "@schnouki.net"))
+	(message-remove-header "Fcc")
+	(message-sort-headers)
+	(message-hide-headers)
+	(message-goto-to)
+	(set-buffer-modified-p nil)
+	(if (yes-or-no-p (concat "Really flag this as " type "?"))
+	    (message-send-and-exit)
+	  (progn
+	    (message-kill-buffer)
+	    (delete-frame)))))
 
      (defun schnouki/notmuch-signal-spam ()
        (interactive)
