@@ -27,8 +27,11 @@
       org-hierarchical-todo-statistics nil
       org-hierarchical-checkbox-statistics nil
 
+      org-agenda-include-diary nil
+      diary-file (concat org-directory "diary")
+      calendar-date-style 'european
+
       org-agenda-dim-blocked-tasks t
-      org-agenda-include-diary t
       org-agenda-files (mapcar (lambda (s) (concat org-directory s ".org"))
 			       '("todo" "cours" "perso" "pro"))
       org-agenda-custom-commands
