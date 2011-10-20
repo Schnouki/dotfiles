@@ -9,7 +9,7 @@
       el-get-recipe-path '("~/.config/emacs/el-get/el-get/recipes")
       el-get-sources
       '(deft doxymacs flyguess folding haskell-mode
-	ioccur python-mode verbiste
+	ioccur python verbiste
 	(:name magit
 	       :url "git@github.com:Schnouki/magit.git")
 	(:name undo-tree
