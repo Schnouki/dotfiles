@@ -64,10 +64,9 @@
       notmuch-poll-script "~/.config/notmuch/mailsync"
       notmuch-address-command "~/.config/notmuch/addrbook.py"
       notmuch-crypto-process-mime t
-      notmuch-mua-switch-function 'switch-to-buffer-other-frame
+      notmuch-mua-compose-in 'new-frame
       message-kill-buffer-on-exit t
       notmuch-thousands-separator " ")
-(add-hook 'message-sent-hook 'delete-frame)
 
 ;; Add some features to message-mode
 (add-hook 'message-setup-hook '(lambda () (footnote-mode t)))
