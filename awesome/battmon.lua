@@ -8,6 +8,20 @@ function exists(filename)
    end
 end
 
+function file_as_number(filename)
+   local file = io.open(filename)
+   local n = file:read("*n")
+   io.close(file)
+   return n
+end
+
+function file_as_string(filename)
+   local file = io.open(filename)
+   local s = file:read("*l")
+   io.close(file)
+   return s
+end
+
 -- Texte en couleur
 function col(color, text)
    return "<span color=\"" .. color .. "\">" .. text .. "</span>"
@@ -15,45 +29,35 @@ end
 
 -- État des batteries
 function battery_mon()
-   local cur_cap = 0
-   local full_cap = 0
-   local rate = 0
    local state = 0 -- 0: idle, 1: charge, -1: discharge
-   local time = 0
-   local status = ""
+   local energy_full = 0
+   local energy_now = 0
+   local power_now = 0
+
    local i = 0
 
    while true do
       -- Est-ce que la batterie n° i existe ?
-      local batname = "/proc/acpi/battery/BAT" .. i
+      local batname = "/sys/class/power_supply/BAT" .. i
       i = i+1
       if exists(batname) then
-         -- Oui, on en extrait toutes les infos qu'il nous faut
-         local bat = io.open(batname .. "/state")
-         local text = bat:read("*a")
-         io.close(bat)
-
          -- Est-ce que la batterie est là ?
-         local present = string.match(text, "present: %s*(%w+)")
-         if present ~= "no" then
-            local bat_rate = string.match(text, "present rate:%s*(%d+)")
-            local bat_cap = string.match(text, "remaining capacity:%s*(%d+)")
-            rate = rate + bat_rate
-            cur_cap = cur_cap + bat_cap
-
-            if state == 0 then
-               local bat_state = string.match(text, "charging state:%s*([a-z]+)")
-               if bat_state == "discharging" then state = -1
-               elseif bat_state == "charging" then state = 1
-               end
+         local present = file_as_number(batname .. "/present")
+         if present == 1 then
+            local bat_state = file_as_string(batname .. "/status")
+            local read_cap = false
+            if bat_state == "Charging" then
+               state = 1
+               read_cap = true
+            elseif bat_state == "Discharging" then
+               state = -1
+               read_cap = true
             end
 
-            -- Maintenant il faut lire la capacité "pleine" de la batterie
-            bat = io.open(batname .. "/info")
-            text = bat:read("*a")
-            io.close(bat)
-            bat_cap = string.match(text, "last full capacity:%s*(%d+)")
-            full_cap = full_cap + bat_cap
+            -- Lecture de l'état actuel
+            energy_full = energy_full + file_as_number(batname .. "/energy_full")
+            energy_now  = energy_now  + file_as_number(batname .. "/energy_now")
+            power_now   = power_now   + file_as_number(batname .. "/power_now")
          end
       else
          break
@@ -61,29 +65,36 @@ function battery_mon()
    end
 
    -- Maintenant on construit la chaîne avec les infos utiles
+   local status = ""
 
    -- Est-ce qu'il y a une batterie branchée ?
-   if full_cap <= 0 then
+   if energy_full <= 0 then
       -- On indique qu'il n'y a aucune batterie
       status = "⌁"
    else
       -- Charge de la batterie
-      local charge_pc = math.floor(((cur_cap/full_cap) * 100))
+      local charge_pc = math.floor(((energy_now/energy_full) * 100))
 
       -- Mode de fonctionnement
       if state == 0 then
          -- Batteries idle
          status = col("yellow", charge_pc .. "% ⌁")
       else
+         local energy_left = 0
+
          if state == 1 then
             status = col("green", charge_pc .. "% ↗")
+            energy_left = energy_full - energy_now
          else
             local charge_color = "orange"
             if charge_pc <= 25 then charge_color = "red" end
             status = col(charge_color, charge_pc .. "% ↘")
+            energy_left = energy_now
          end
 
-         time = cur_cap / rate
+         -- Temps restant.
+         -- Les energy_* sont en µWh, power_now est en µW.
+         local time = energy_left / power_now -- Temps en *heures*
          local hour = math.floor(time)
          local min = math.floor((time - hour)*60)
          local timestr = ""
