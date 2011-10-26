@@ -4,7 +4,8 @@
 // Put all your code except special key, set*key, hook, blacklist.
 // ========================================================================= //
 //{{%PRESERVE%
-// Put your codes here
+plugins.options["hok.hint_keys"] = "0123456789";
+
 //}}%PRESERVE%
 // ========================================================================= //
 
@@ -50,10 +51,53 @@ hook.setHook('KeyBoardQuit', function (aEvent) {
 
 // ============================= Key bindings ============================== //
 
-key.setViewKey(['C-x', 'd'], function (ev, arg) {
+key.setGlobalKey(['C-x', 'd'], function (ev, arg) {
     document.getElementById("dtaCtxTDTA").doCommand();
 }, 'DownThemAll oneClick');
 
-key.setViewKey(['C-x', 'C-d'], function (ev, arg) {
+key.setGlobalKey(['C-x', 'C-d'], function (ev, arg) {
     document.getElementById("dtaCtxDTA").doCommand();
 }, 'DownThemAll');
+
+key.setGlobalKey(['C-x', 'C-u'], function (ev, arg) {
+    BrowserViewSourceOfDocument(content.document);
+}, 'View page source');
+
+key.setGlobalKey(['C-x', 'C-i'], function (ev, arg) {
+    BrowserPageInfo();
+}, 'View page info');
+
+key.setGlobalKey(['C-x', 'a'], function (ev, arg) {
+    var mi = document.getElementById("toggle_addon-bar");
+    var val = mi.getAttribute("checked");
+    if (val) {
+        mi.setAttribute("checked", "");
+    } else {
+        mi.setAttribute("checked", "true");
+    }
+    mi.click();
+}, 'Toggle addon toolbar');
+
+key.setGlobalKey('C-s', function (ev) {
+    command.iSearchForwardKs(ev);
+}, 'Emacs like incremental search forward', true);
+
+key.setViewKey('f', function (ev, arg) {
+    ext.exec("hok-start-foreground-mode", arg, ev);
+}, 'Start Hit a Hint foreground mode', true);
+
+key.setViewKey('F', function (ev, arg) {
+    ext.exec("hok-start-background-mode", arg, ev);
+}, 'Start Hit a Hint background mode', true);
+
+key.setViewKey(';', function (ev, arg) {
+    ext.exec("hok-start-extended-mode", arg, ev);
+}, 'Start Hit a Hint extended mode', true);
+
+key.setViewKey(['C-c', 'C-f'], function (ev, arg) {
+    ext.exec("hok-start-continuous-mode", arg, ev);
+}, 'Start Hit a Hint continuous mode', true);
+
+key.setViewKey('a', function (ev, arg) {
+    ext.exec('tanything', arg, ev);
+}, 'View all tabs ', true);
