@@ -24,6 +24,7 @@
 !ddns
 ddns/key
 !emacs
+!gtk-3.0
 !mozilla
 !notmuch
 !roxterm.sourceforge.net
