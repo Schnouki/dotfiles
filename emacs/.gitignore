@@ -1,8 +1,10 @@
 auto-save-list
+%backup%~
 .emacs.desktop
 .emacs.desktop.lock
 .org-id-locations
 ede-projects.el
+elpa/
 places
 server
 url
