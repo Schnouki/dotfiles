@@ -10,16 +10,24 @@ end
 
 function file_as_number(filename)
    local file = io.open(filename)
-   local n = file:read("*n")
-   io.close(file)
-   return n
+   if file then
+      local n = file:read("*n")
+      io.close(file)
+      return n
+   else
+      return -1
+   end
 end
 
 function file_as_string(filename)
    local file = io.open(filename)
-   local s = file:read("*l")
-   io.close(file)
-   return s
+   if file then
+      local s = file:read("*l")
+      io.close(file)
+      return s
+   else
+      return ""
+   end
 end
 
 -- Texte en couleur
