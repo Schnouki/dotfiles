@@ -53,13 +53,10 @@ function battery_mon()
          local present = file_as_number(batname .. "/present")
          if present == 1 then
             local bat_state = file_as_string(batname .. "/status")
-            local read_cap = false
             if bat_state == "Charging" then
                state = 1
-               read_cap = true
             elseif bat_state == "Discharging" then
                state = -1
-               read_cap = true
             end
 
             -- Lecture de l'état actuel
@@ -105,11 +102,7 @@ function battery_mon()
          local time = energy_left / power_now -- Temps en *heures*
          local hour = math.floor(time)
          local min = math.floor((time - hour)*60)
-         local timestr = ""
-
-         timestr = timestr .. hour .. ":"
-         if min < 10 then timestr = timestr .. "0" end
-         timestr = timestr .. min
+         local timestr = string.format("%d:%02d", hour, min)
 
          local time_color = "lightblue"
          if (time <= .25) then time_color = "red"
