@@ -9,7 +9,8 @@
 (package-initialize)
 
 ;; Packages
-(setq schnouki/packages '(deft haskell-mode ioccur pymacs python-mode))
+(setq schnouki/packages '(deft haskell-mode ioccur pymacs python-mode
+			  solarized-theme zenburn-theme))
 (let ((count 0)
       (msg "Missing packages: "))
   (dolist (package schnouki/packages)

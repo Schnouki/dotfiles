@@ -2,12 +2,41 @@
 ;; zenburn color theme
 ;; -----------------------------------------------------------------------------
 
-(require 'color-theme)
-(require 'zenburn)
+(load-theme 'zenburn)
 
-(zenburn)
+(setq zenburn-fg       "#dcdccc"
+      zenburn-fg-1     "#656555"
+      zenburn-bg-1     "#2b2b2b"
+      zenburn-bg-05    "#383838"
+      zenburn-bg       "#3f3f3f"
+      zenburn-bg+1     "#4f4f4f"
+      zenburn-bg+2     "#5f5f5f"
+      zenburn-red+1    "#dca3a3"
+      zenburn-red      "#cc9393"
+      zenburn-red-1    "#bc8383"
+      zenburn-red-2    "#ac7373"
+      zenburn-red-3    "#9c6363"
+      zenburn-red-4    "#8c5353"
+      zenburn-orange   "#dfaf8f"
+      zenburn-yellow   "#f0dfaf"
+      zenburn-yellow-1 "#e0cf9f"
+      zenburn-yellow-2 "#d0bf8f"
+      zenburn-green-1  "#5f7f5f"
+      zenburn-green    "#7f9f7f"
+      zenburn-green+1  "#8fb28f"
+      zenburn-green+2  "#9fc59f"
+      zenburn-green+3  "#afd8af"
+      zenburn-green+4  "#bfebbf"
+      zenburn-cyan     "#93e0e3"
+      zenburn-blue+1   "#94bff3"
+      zenburn-blue     "#8cd0d3"
+      zenburn-blue-1   "#7cb8bb"
+      zenburn-blue-2   "#6ca0a3"
+      zenburn-blue-3   "#5c888b"
+      zenburn-blue-4   "#4c7073"
+      zenburn-blue-5   "#366060"
+      zenburn-magenta  "#dc8cc3")
 
-;; Tag/face mapping in notmuch
 (setq notmuch-search-line-faces '(("delete"  . '(:background "#3b2b2b"))
 				  ("draft"   . '(:slant italic))
 				  ("flagged" . '(:background "#4b2f4b"))
@@ -72,7 +101,9 @@
      (set-face-background 'rst-level-6-face "#777777")))
 
 ;; diff and magit-diff
-(set-face-foreground 'diff-context "#bcbcac") ;; zenburn-fg-2
+(eval-after-load 'diff-mode
+  '(progn
+     (set-face-foreground 'diff-context "#bcbcac"))) ;; zenburn-fg-2
 
 ;; Ediff (weird, does not work in zenburn.el...)
 (defun schnouki/zenburn-for-ediff ()
@@ -137,3 +168,30 @@
      (set-face-foreground 'offlineimap-msg-addingflags-face      zenburn-yellow)
      (set-face-foreground 'offlineimap-msg-deletingflags-face    zenburn-magenta)
      (set-face-foreground 'offlineimap-error-face                zenburn-red)))
+
+;; show-paren-mode
+(eval-after-load 'paren
+  '(progn
+     (set-face-attribute 'show-paren-match    nil :weight 'normal :foreground nil :background zenburn-blue-5)
+     (set-face-attribute 'show-paren-mismatch nil :weight 'bold   :foreground nil :background "#6c3333")))
+
+;; hl-line-mode
+(eval-after-load 'hl-line
+  '(progn
+     (set-face-background 'hl-line zenburn-bg+1)))
+
+;; message-mode
+(eval-after-load 'message
+  '(progn
+     (let ((faces `((message-cited-text        ,zenburn-green   nil)
+		    (message-header-name       ,zenburn-green+1 nil)
+		    (message-header-other      ,zenburn-green   nil)
+		    (message-header-to         ,zenburn-yellow  t)
+		    (message-header-cc         ,zenburn-yellow  t)
+		    (message-header-newsgroups ,zenburn-yellow  t)
+		    (message-header-subject    ,zenburn-orange  t)
+		    (message-header-xheader    ,zenburn-green   nil)
+		    (message-mml               ,zenburn-yellow  t))))
+       (dolist (item faces)
+	 (set-face-foreground (car item) (cadr item))
+	 (set-face-bold-p (car item) (caddr item))))))
