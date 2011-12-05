@@ -148,7 +148,7 @@
 ;; Undo-Tree
 (eval-after-load 'undo-tree
   '(progn
-     (set-face-foreground 'undo-tree-visualizer-default-face zenburn-bg+4)
+     (set-face-foreground 'undo-tree-visualizer-default-face "#7f7f7f") ; ;zenburn-bg+4
      (set-face-foreground 'undo-tree-visualizer-current-face zenburn-red)
      (set-face-foreground 'undo-tree-visualizer-active-branch-face zenburn-fg)))
 
@@ -156,7 +156,7 @@
 (eval-after-load 'offlineimap
   '(progn
      (set-face-foreground 'offlineimap-msg-acct-face             zenburn-magenta)
-     (set-face-foreground 'offlineimap-msg-connecting-face       zenburn-bg+4)
+     (set-face-foreground 'offlineimap-msg-connecting-face       "#7f7f7f") ;; zenburn-bg+4
      (set-face-foreground 'offlineimap-msg-syncfolders-face      zenburn-blue)
      (set-face-foreground 'offlineimap-msg-syncingfolders-face   zenburn-cyan)
      (set-face-foreground 'offlineimap-msg-skippingfolder-face   zenburn-cyan)
