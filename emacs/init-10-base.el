@@ -18,9 +18,9 @@
 
 ;; Default font
 (add-to-list 'default-frame-alist
-	     (if (string-prefix-p "odin" (system-name))
-		 '(font ."Mono-7")
-	       '(font . "Mono-11")))
+	     `(font . ,(if (string-prefix-p "odin" (system-name))
+			   "Mono-7"
+			 "Mono-10")))
 
 ;; Web browser
 (setq browse-url-browser-function 'browse-url-firefox)
