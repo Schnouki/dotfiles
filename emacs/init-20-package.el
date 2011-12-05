@@ -11,13 +11,11 @@
 ;; Packages
 (setq schnouki/packages '(deft haskell-mode ioccur pymacs python-mode
 			  solarized-theme zenburn-theme))
-(let ((count 0)
-      (msg "Missing packages: "))
+(let ((refreshed nil))
   (dolist (package schnouki/packages)
     (unless (package-installed-p package)
-      (setq msg (concat msg
-			(if (> count 0) ", ")
-			(symbol-name package))
-	    count (1+ count))))
-  (when (> count 0)
-    (message msg)))
+      (message (concat "Installing missing package: " (symbol-name package)))
+      (unless refreshed
+	(package-refresh-contents)
+	(setq refreshed t))
+      (package-install package))))
