@@ -33,7 +33,8 @@
 ;; - poll script that fetches new mail
 ;; - addresses completion
 ;; - crypto stuff
-(setq notmuch-saved-searches '(("unread"      . "tag:unread")
+(setq notmuch-saved-searches '(("home"        . "tag:inbox or tag:todo or tag:unread")
+			       ("unread"      . "tag:unread")
 			       ("inbox"       . "tag:inbox")			       
 			       ("flagged"     . "tag:flagged")
 			       ("todo"        . "tag:todo")
