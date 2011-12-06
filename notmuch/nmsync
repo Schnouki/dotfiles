@@ -1,5 +1,7 @@
 #!/bin/zsh
 
+set -e
+
 lastbak=$(ls -t ~/.config/notmuch/bak/db-*.xz | head -n1)
 
 function nm_push() {
@@ -7,22 +9,18 @@ function nm_push() {
 }
 
 function nm_get() {
-    mailsync -b || return 1
-    (~/.config/notmuch/notmuch-incr-dump $lastbak 2>/dev/null > "$TMPDIR/old" || exit 1) &
-    (scp kimsufi:notmuch.dump.gz "$TMPDIR/new.gz" || exit 1) &
-    wait
-    gunzip "$TMPDIR/new.gz" || exit 1
-    (diff -u "$TMPDIR/old" "$TMPDIR/new" | awk '/^+/ && (NR>2) { print substr($0, 2)}' > "$TMPDIR/restore") || exit 1
-    notmuch restore "$TMPDIR/restore"
+    mailsync -b
+    diff -u \
+        <(~/.config/notmuch/notmuch-incr-dump $lastbak 2>/dev/null | sort) \
+        <(ssh kimsufi 'cat notmuch.dump.gz' | zcat | sort) \
+        |  awk '/^+/ && (NR>2) { print substr($0, 2)}' \
+        | notmuch restore
 }
 
 case "$1" in
     "get"|"push")
-        TMPDIR=$(mktemp -d)
         nm_$1
-        ret=$?
-        rm -rf "$TMPDIR"
-        exit $ret
+        exit $?
         ;;
     *)
         echo "Usage: $(basename $0) get|push"
