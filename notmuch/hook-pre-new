@@ -1,0 +1,35 @@
+#!/bin/zsh
+
+. ~/.config/notmuch/hook-common.zsh
+
+awesome_begin_update
+
+# Removes messages with the "deleted" tag
+(( $(notmuch count tag:deleted) > 0 )) && (notmuch search --output=files tag:deleted | xargs -rd'\n' rm)
+
+MAXLOGS=50
+ret=0
+
+# Is a recent backup available?
+bakfile=$CONFIGDIR/bak/db-$(date +"%Y%m%d").xz
+if [ ! -e "$bakfile" ]; then
+    echo "Starting backup..."
+    
+    lastbak=$(ls -t "$CONFIGDIR"/bak/db-*.xz | head -n1)
+    (($CONFIGDIR/notmuch-incr-dump "$lastbak" | xz > "$bakfile") || (echo "Backup failed." && ret=1)) &
+fi
+
+# Rotate offlineimap logs
+[[ -e "$CONFIGDIR/log/mail.$MAXLOGS.log" ]] && rm "$CONFIGDIR/log/mail.$MAXLOGS.log"
+for ((i=$MAXLOGS-1; i >= 0; i--)); do
+    j=$(( $i+1 ))
+    [[ -e "$CONFIGDIR/log/mail.$i.log" ]] && mv "$CONFIGDIR/log/mail.$i.log" "$CONFIGDIR/log/mail.$j.log"
+done
+
+echo "Fetching mail..."
+timeout 4m offlineimap -o 2> "$CONFIGDIR/log/mail.0.log" || (echo "Fetch mail failed." && ret=1)
+
+# Remove backups older than a month
+find "$CONFIGDIR/bak" -name 'db-*.xz' -and -mtime +30 -exec rm \{\} +
+
+exit $ret
