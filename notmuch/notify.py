@@ -16,7 +16,7 @@ MAX_FROM_LEN = 35
 MAX_SUBJ_LEN = 70
 
 db = notmuch.Database(mode=notmuch.Database.MODE.READ_ONLY)
-q = notmuch.Query(db, "tag:unread")
+q = notmuch.Query(db, "tag:unread or tag:todo")
 q.set_sort(notmuch.Query.SORT.OLDEST_FIRST)
 
 # Read data about the new messages
@@ -27,7 +27,9 @@ for thr in q.search_threads():
     from_ = unicode(thr.get_authors())
     subj_ = unicode(thr.get_subject())
     tags = list(thr.get_tags())
-    tags.remove("unread")
+    for tag in ("unread", "todo"):
+        try: tags.remove(tag)
+        except ValueError: pass
 
     from_ = from_.split(u"|", 1)[0]
 
