@@ -27,7 +27,7 @@ for ((i=$MAXLOGS-1; i >= 0; i--)); do
 done
 
 echo "Fetching mail..."
-timeout 4m offlineimap -o 2> "$CONFIGDIR/log/mail.0.log" || (echo "Fetch mail failed." && ret=1)
+timeout 4m offlineimap -o > "$CONFIGDIR/log/mail.0.log" || (echo "Fetch mail failed." && ret=1)
 
 # Remove backups older than a month
 find "$CONFIGDIR/bak" -name 'db-*.xz' -and -mtime +30 -exec rm \{\} +
