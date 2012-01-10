@@ -4,11 +4,8 @@
 
 ret=0
 
-# Autotag new messages
-nosync $CONFIGDIR/autotag.py || (echo "Autotag failed." && ret=1)
-
-# Sync messages with remote server
-nosync $CONFIGDIR/nm-sync || (echo "Sync failed." && ret=1)
+# Sync messages with remote server and autotag
+nosync $CONFIGDIR/nm-sync || (echo "Sync/autotag failed." && ret=1)
 
 awesome_end_update 
 dbus-send --session --dest="org.gnu.Emacs" "/org/gnu/Emacs" "org.gnu.Emacs.NotmuchNotify"
