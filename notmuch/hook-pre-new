@@ -15,8 +15,7 @@ bakfile=$CONFIGDIR/bak/db-$(date +"%Y%m%d").xz
 if [ ! -e "$bakfile" ]; then
     echo "Starting backup..."
     
-    lastbak=$(ls -t "$CONFIGDIR"/bak/db-*.xz | head -n1)
-    (($CONFIGDIR/notmuch-incr-dump "$lastbak" | xz > "$bakfile") || (echo "Backup failed." && ret=1)) &
+    ((notmuch dump | xz > "$bakfile") || (echo "Backup failed." && ret=1)) &
 fi
 
 # Rotate offlineimap logs
@@ -28,6 +27,8 @@ done
 
 echo "Fetching mail..."
 timeout 4m offlineimap -o > "$CONFIGDIR/log/mail.0.log" || (echo "Fetch mail failed." && ret=1)
+
+wait
 
 # Remove backups older than a month
 find "$CONFIGDIR/bak" -name 'db-*.xz' -and -mtime +30 -exec rm \{\} +
