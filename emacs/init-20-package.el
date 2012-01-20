@@ -9,7 +9,7 @@
 (package-initialize)
 
 ;; Packages
-(setq schnouki/packages '(deft haskell-mode ioccur pymacs python-mode
+(setq schnouki/packages '(deft dtrt-indent haskell-mode ioccur pymacs python-mode
 			  solarized-theme zenburn-theme))
 (let ((refreshed nil))
   (dolist (package schnouki/packages)
