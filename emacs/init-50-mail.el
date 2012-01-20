@@ -11,10 +11,7 @@
       message-send-mail-partially-limit nil
       mail-specify-envelope-from t
       mail-envelope-from 'header
-      message-sendmail-envelope-from 'header
-
-      mm-text-html-renderer 'gnus-w3m
-      gnus-inhibit-images t)
+      message-sendmail-envelope-from 'header)
 
 ;; Load notmuch
 (add-to-list 'load-path "~/dev/notmuch/emacs")
@@ -208,9 +205,8 @@ in the current buffer."
 	(set-buffer-modified-p nil)
 	(if (yes-or-no-p (concat "Really flag this as " type "?"))
 	    (message-send-and-exit)
-	  (progn
-	    (message-kill-buffer)
-	    (delete-frame)))))
+	  (message-kill-buffer))
+	(delete-frame)))
 
      (defun schnouki/notmuch-signal-spam ()
        (interactive)
@@ -247,7 +243,7 @@ in the current buffer."
       ;; If the width changed, we need to redisplay notmuch-hello...
       (when (not (= winw (window-width)))
 	(notmuch-hello-update)))))
-(add-hook 'notmuch-hello-hook 'schnouki/org-agenda-in-notmuch-hello)
+(add-hook 'notmuch-hello-refresh-hook 'schnouki/org-agenda-in-notmuch-hello)
 (add-hook 'notmuch-search-hook 'delete-other-windows)
 
 ;; Choose signature according to the From header
