@@ -10,6 +10,7 @@
 !fonts.conf
 !mimeo.conf
 !gpgdiff
+!gtk-3.0/settings.ini
 !gtkrc-2.0
 !gtkrc-theme-nox
 !gtkrc-odin
@@ -24,7 +25,6 @@
 !ddns
 ddns/key
 !emacs
-!gtk-3.0
 !mozilla
 !notmuch
 !roxterm.sourceforge.net

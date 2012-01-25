@@ -1,6 +1,7 @@
 # GUI theme
 #include "gtkrc-theme-nox"
-include "/usr/share/themes/Sammy/gtk-2.0/gtkrc"
+#include "/usr/share/themes/Sammy/gtk-2.0/gtkrc"
+include "/usr/share/themes/Zukitwo-Dark/gtk-2.0/gtkrc"
 
 # Misc stuff
 gtk-can-change-accels = 1
