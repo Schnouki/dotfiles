@@ -64,7 +64,10 @@
       notmuch-crypto-process-mime t
       notmuch-mua-compose-in 'new-frame
       message-kill-buffer-on-exit t
-      notmuch-thousands-separator " ")
+      notmuch-thousands-separator " "
+
+      message-citation-line-function 'message-insert-formatted-citation-line
+      message-citation-line-format "Le %e %B %Y à %-H:%M %Z, %N a écrit :")
 
 ;; Add some features to message-mode
 (add-hook 'message-setup-hook '(lambda () (footnote-mode t)))
