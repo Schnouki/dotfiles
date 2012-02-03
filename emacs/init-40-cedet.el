@@ -2,10 +2,7 @@
 ;; CEDET 
 ;; -----------------------------------------------------------------------------
 
-(require 'cedet)
-
-;; Project management - EDE package
-(global-ede-mode t)
+;; (require 'cedet)
 
 ;; Semantic
 (require 'semantic)
@@ -63,40 +60,3 @@
 	"/usr/lib/python2.7/site-packages/"
 	"/usr/lib/python3.2/"
 	"/usr/lib/python3.2/site-packages/"))
-
-;; -----------------------------------------------------------------------------
-;; ECB -- Emacs Code Browser 
-;; -----------------------------------------------------------------------------
-(add-to-list 'load-path "/usr/share/emacs/site-lisp/ecb")
-(require 'ecb)
-
-(setq ecb-layout-name "left6")
-
-;; -----------------------------------------------------------------------------
-;; Projects 
-;; -----------------------------------------------------------------------------
-(ede-cpp-root-project "OpenNL"
-                :name "OpenNL project"
-                :file "~/Recherche/ALICE/OpenNL/opennl/CMakeLists.txt"
-                :include-path '("/src"))
-
-(ede-cpp-root-project "Spop"
-                :name "Spop project"
-                :file "~/dev/spop/CMakeLists.txt"
-                :include-path '("/src" "/plugin")
-		:system-include-path '("/usr/include/dbus-1.0"
-				       "/usr/include/glib-2.0"
-				       "/usr/include/json-glib-1.0"
-				       "/usr/include/libsoup-2.4"))
-
-(ede-cpp-root-project "Gnome Commander"
-		:name "Gnome Commander project"
-		:file "~/dev/gcmd/autogen.sh"
-		:include-path '("/"
-				"/libgcmd"
-				"/src"
-				"/src/dialogs"
-				"/src/interviewer"
-				"/src/tags")
-		:system-include-path '("/usr/include/gtk-2.0"
-				       "/usr/include/libgnomeui-2.0"))
