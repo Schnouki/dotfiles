@@ -212,8 +212,9 @@ in the current buffer."
 	(set-buffer-modified-p nil)
 	(if (yes-or-no-p (concat "Really flag this as " type "?"))
 	    (message-send-and-exit)
-	  (message-kill-buffer))
-	(delete-frame)))
+	  (progn
+	    (message-kill-buffer)
+	    (delete-frame)))))
 
      (defun schnouki/notmuch-signal-spam ()
        (interactive)
