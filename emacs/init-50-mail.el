@@ -320,9 +320,10 @@ in the current buffer."
 	 (save-restriction
 	   (when (get-buffer "*notmuch-hello*")
 	     (notmuch-hello-update t)))))
-     (dbus-register-method :session dbus-service-emacs dbus-path-emacs
-			   dbus-service-emacs "NotmuchNotify"
-			   'schnouki/notmuch-dbus-notify)))
+     (ignore-errors
+       (dbus-register-method :session dbus-service-emacs dbus-path-emacs
+			     dbus-service-emacs "NotmuchNotify"
+			     'schnouki/notmuch-dbus-notify))))
 
 ;; Use ido to read filename when attaching a file
 (eval-after-load 'mml
