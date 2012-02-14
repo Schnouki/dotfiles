@@ -9,8 +9,8 @@
 (package-initialize)
 
 ;; Packages
-(setq schnouki/packages '(deft dtrt-indent haskell-mode ioccur pymacs python-mode
-			  solarized-theme zenburn-theme znc))
+(setq schnouki/packages '(coffee-mode deft dtrt-indent haskell-mode ioccur mediawiki
+			  pymacs python-mode solarized-theme zenburn-theme znc))
 (let ((refreshed nil))
   (dolist (package schnouki/packages)
     (unless (package-installed-p package)
