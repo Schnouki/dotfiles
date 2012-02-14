@@ -21,14 +21,16 @@ bindkey '[8~' end-of-line
 bindkey '[A'  up-line-or-history
 bindkey '[B'  down-line-or-history
 
-bindkey '[C'  forward-char 
+bindkey '[C'  forward-char
 bindkey '[D'  backward-char
 
 #bindkey ''    backward-delete-char
 bindkey '[3~' delete-char
 
-bindkey '0d'  backward-word
-bindkey '0c'  forward-word
+bindkey '0c'   forward-word
+bindkey '[C' forward-word
+bindkey '0d'   backward-word
+bindkey '[D' backward-word
 
 bindkey ''    backward-kill-word
 
