@@ -85,43 +85,10 @@
 		(format-time-string "%s" now))))
 	 (notmuch-search-filter filter)))
      
-     (defun notmuch-search-mark-read-and-archive-thread ()
+     (defun schnouki/notmuch-search-archive-thread ()
        (interactive)
-       (notmuch-search-remove-tag "inbox")
-       (notmuch-search-remove-tag "unread")
-       (forward-line))
-
-     (defun notmuch-show-mark-read-and-archive-thread ()
-       "Mark as read and archive each message in thread, then show next thread from search.
-
-Mark as read and archive each message currently shown by removing
-the \"unread\" and \"inbox\" tags from each. Then kill this
-buffer and show the next thread from the search from which this
-thread was originally shown.
-
-Note: This command is safe from any race condition of new
-messages being delivered to the same thread. It does not mark
-read and archive the entire thread, but only the messages shown
-in the current buffer."
-       (interactive)
-       (goto-char (point-min))
-       (loop do (progn (notmuch-show-remove-tag "inbox")
-		       (notmuch-show-remove-tag "unread"))
-	     until (not (notmuch-show-goto-message-next)))
-       ;; Move to the next item in the search results, if any.
-       (let ((parent-buffer notmuch-show-parent-buffer))
-	 (kill-this-buffer)
-	 (if parent-buffer
-	     (progn
-	       (switch-to-buffer parent-buffer)
-	       (forward-line)
-	       (notmuch-search-show-thread)))))
-
-     (defun notmuch-show-mark-read-and-archive-thread-then-exit ()
-       "Mark read and archive each message in thread, then exit back to search results."
-       (interactive)
-       (notmuch-show-mark-read-and-archive-thread)
-       (kill-this-buffer))
+       (notmuch-search-tag-thread "-inbox" "-unread")
+       (notmuch-search-next-thread))
 
      (defun schnouki/notmuch-view-html ()
        "Open the HTML parts of a mail in a web browser."
@@ -151,13 +118,12 @@ in the current buffer."
        (local-set-key "rs" 'notmuch-show-reply-sender)
        (local-set-key "SH" 'schnouki/notmuch-signal-ham)
        (local-set-key "SS" 'schnouki/notmuch-signal-spam)
-       (local-set-key "W" 'schnouki/notmuch-show-verify)
-       (local-set-key "z" 'notmuch-show-mark-read-and-archive-thread-then-exit))
+       (local-set-key "W" 'schnouki/notmuch-show-verify))
 
      (defun schnouki/notmuch-search-keys ()
        (interactive)
-       (local-set-key "d" 'notmuch-search-filter-by-date)
-       (local-set-key "z" 'notmuch-search-mark-read-and-archive-thread))
+       (local-set-key "a" 'schnouki/notmuch-search-archive-thread)
+       (local-set-key "d" 'notmuch-search-filter-by-date))
 
      (add-hook 'notmuch-show-hook 'schnouki/notmuch-show-keys)
      (add-hook 'notmuch-search-hook 'schnouki/notmuch-search-keys)
