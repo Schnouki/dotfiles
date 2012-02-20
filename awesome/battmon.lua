@@ -105,8 +105,15 @@ function battery_mon()
          local timestr = string.format("%d:%02d", hour, min)
 
          local time_color = "lightblue"
-         if (time <= .25) then time_color = "red"
-         elseif (time <= .5) then time_color = "orange" end
+         if state == 1 then
+            -- Charge
+            if (time <= .25) then time_color = "green"
+            elseif (time >= 1) then time_color = "yellow" end
+         else
+            -- Décharge
+            if (time <= .25) then time_color = "red"
+            elseif (time <= .5) then time_color = "orange" end
+         end
 
          status = status .. col(time_color, " (" .. timestr .. ")")
       end
