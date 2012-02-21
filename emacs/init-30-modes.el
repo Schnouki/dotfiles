@@ -3,13 +3,9 @@
 ;; -----------------------------------------------------------------------------
 
 ;; HideShow minor mode for common major modes
-(add-hook 'c-mode-common-hook   'hs-minor-mode)
-(add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)
-(add-hook 'java-mode-hook       'hs-minor-mode)
-(add-hook 'lisp-mode-hook       'hs-minor-mode)
-(add-hook 'lua-mode             'hs-minor-mode)
-(add-hook 'perl-mode-hook       'hs-minor-mode)
-(add-hook 'sh-mode-hook         'hs-minor-mode)
+(dolist (hook '(c-mode-common-hook emacs-lisp-mode-hook java-mode-hook lisp-mode-hook
+		lua-mode perl-mode-hook python-mode sh-mode-hook))
+  (add-hook hook 'hs-minor-mode))
 
 ;; Prepare various major modes
 (load "auctex.el" nil t t)
@@ -17,38 +13,36 @@
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
 
 (autoload 'lua-mode "lua-mode" "Lua mode." t)
-(setq auto-mode-alist (append '(("\\.lua$" . lua-mode)) auto-mode-alist))
+(add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
 (folding-add-to-marks-list 'lua-mode "-- {{{" "-- }}}" nil t)
 
 (autoload 'python-mode "python-mode" "Python mode." t)
-(setq auto-mode-alist (append '(("\\.py$" . python-mode)) auto-mode-alist))
-(add-hook 'python-mode 'hs-minor-mode)
+(add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
 
 (autoload 'php-mode "php-mode.el" "Php mode." t)
-(setq auto-mode-alist (append '(("\\.php[345]?$" . php-mode)) auto-mode-alist))
+(add-to-list 'auto-mode-alist '("\\.php[345]?$" . php-mode))
 
 (autoload 'yaml-mode "yaml-mode.el" "Yaml mode." t)
-(setq auto-mode-alist (append '(("\\.ya?ml$" . yaml-mode)) auto-mode-alist))
+(add-to-list 'auto-mode-alist '("\\.ya?ml$" . yaml-mode))
 
 (autoload 'markdown-mode "markdown-mode.el" "Markdown mode." t)
-(setq auto-mode-alist (append '(("\\.md$" . markdown-mode) ("\\.markdown$" . markdown-mode)) auto-mode-alist))
+(dolist (ext '("md" "mdwn" "markdown"))
+  (add-to-list 'auto-mode-alist (cons (concat "\\." ext "$") 'markdown-mode)))
 (add-hook 'markdown-mode-hook '(lambda () (setq markdown-command "~/.config/emacs/markdown.sh")))
 
 (autoload 'adoc-mode "adoc-mode.el" "AsciiDoc mode." t)
-(setq auto-mode-alist (append '(("\\.adoc?$" . adoc-mode)) auto-mode-alist))
+(add-to-list 'auto-mode-alist '("\\.adoc?$" . adoc-mode))
 
 (autoload 'jinja-mode "jinja.el" "Jinja mode." t)
+(add-to-list 'auto-mode-alist '("\\.j2$" . jinja-mode))
 
 (autoload 'cuda-mode "cuda-mode.el" "Cuda mode." t)
-(setq auto-mode-alist (append '(("\\.cu$" . cuda-mode)) auto-mode-alist))
+(add-to-list 'auto-mode-alist '("\\.cu$" . cuda-mode))
 (folding-add-to-marks-list 'cuda-mode "// {{{" "// }}}" nil t)
 
 (autoload 'cmake-mode "cmake-mode.el" "CMake mode." t)
-(setq auto-mode-alist
-	  (append
-	   '(("CMakeLists\\.txt\\'" . cmake-mode))
-	   '(("\\.cmake\\'" . cmake-mode))
-	   auto-mode-alist))
+(dolist (name '("CMakeLists\\.txt" "\\.cmake$"))
+  (add-to-list 'auto-mode-alist (cons name 'cmake-mode)))
 
 ;; pkgbuild-mode
 (autoload 'pkgbuild-mode "pkgbuild-mode.el" "PKGBUILD mode." t)
@@ -57,17 +51,18 @@
 ;; gnuplot-mode
 (autoload 'gnuplot-mode "gnuplot" "gnuplot major mode" t)
 (autoload 'gnuplot-make-buffer "gnuplot" "open a buffer in gnuplot mode" t)
-(setq auto-mode-alist (append '(("\\.gp$" . gnuplot-mode)) auto-mode-alist))
+(add-to-list 'auto-mode-alist '("\\.gp$" . gnuplot-mode))
 
 ;; Golbarg, the most awesome blog engine ever
-(require 'golbarg)
-(setq golbarg-posts-dir "~/site/schnouki.net/posts")
-(setq golbarg-drafts-dir "~/site/schnouki.net/drafts")
+(autoload 'golbarg-mode "golbarg.el" "Golbarg mode." t)
+(autoload 'golbarg-new-draft "golbarg.el" "New Golbarg draft." t)
+(setq golbarg-posts-dir "~/site/schnouki.net/posts"
+      golbarg-drafts-dir "~/site/schnouki.net/drafts")
 (global-set-key (kbd "C-! g") 'golbarg-new-draft)
 (global-set-key (kbd "C-ç g") 'golbarg-new-draft)
 (global-set-key (kbd "C-! M-g") '(lambda () (interactive) (find-file golbarg-drafts-dir)))
 (global-set-key (kbd "C-ç M-g") '(lambda () (interactive) (find-file golbarg-drafts-dir)))
-(setq auto-mode-alist (append `((,(concat "^" (expand-file-name "~/site/schnouki.net/") "/.+") . golbarg-mode)) auto-mode-alist))
+(add-to-list 'auto-mode-alist (cons (concat "^" (expand-file-name "~/site/schnouki.net") "/.+") 'golbarg-mode))
 (add-hook 'golbarg-mode-hook 
 	  '(lambda ()
 	     (turn-on-auto-fill)
