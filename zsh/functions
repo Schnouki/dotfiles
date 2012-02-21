@@ -16,59 +16,6 @@ function upload_zsh_config() {
     popd &>/dev/null
 }
 
-# Wrappers for /etc/{rc,init}.d scripts -- from http://bbs.archlinux.org/viewtopic.php?id=84525
-function svstart() {
-    until [ -z $1 ]; do
-        if [ -f "/etc/rc.d/$1" ]; then
-            sudo /etc/rc.d/$1 start
-        elif [ -f "/etc/init.d/$1" ]; then
-            sudo /etc/init.d/$1 start
-        else
-            echo "No such daemon:  $1"
-        fi
-        shift
-    done
-}
-function svstop() {
-    until [ -z $1 ]; do
-        if [ -f "/etc/rc.d/$1" ]; then
-            sudo /etc/rc.d/$1 stop
-        elif [ -f "/etc/init.d/$1" ]; then
-            sudo /etc/init.d/$1 stop
-        else
-            echo "No such daemon:  $1"
-        fi
-        shift
-    done
-}
-function svrestart() {
-    until [ -z $1 ]; do
-        if [ -f "/etc/rc.d/$1" ]; then
-            sudo /etc/rc.d/$1 restart
-        elif [ -f "/etc/init.d/$1" ]; then
-            sudo /etc/init.d/$1 restart
-        else
-            echo "No such daemon:  $1"
-        fi
-        shift
-    done
-}
-
-function svreload() {
-    until [ -z $1 ]; do
-        if [ -f "/etc/rc.d/$1" ]; then
-            daemon="/etc/rc.d/$1"
-        elif [ -f "/etc/init.d/$1" ]; then
-            daemon="/etc/init.d/$1"
-        else
-            echo "No such daemon:  $1"
-            exit 1
-        fi
-        grep -q 'reload)' $1 && $1 reload || $1 restart
-        shift
-    done
-}
-
 function pacQ() {
     local tab align
     tab=()
