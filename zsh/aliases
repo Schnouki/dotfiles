@@ -41,3 +41,21 @@ alias go_work="sudo netcfg -d freebox; my-s2ram && sleep 15 && disper -e && whil
 
 # http://www.mail-archive.com/screen-users@gnu.org/msg01271.html
 alias raw_keys="tput smkx; cat; tput rmkx"
+
+# Pacman
+alias filter_pacman_qt="awk '
+BEGIN {
+    FS=\": \"
+}
+
+/^Name/ {
+    NAME=\$2
+}
+/^Version/ {
+    VERSION=\$2
+}
+/^Description/ {
+    print \"\033[1;37m\" NAME \" \033[1;33m\" VERSION \"\033[0m: \" \$2
+}'"
+alias pac_unreq="LC_ALL=C pacman -Qti | filter_pacman_qt"
+alias pac_unreq_norepo="LC_ALL=C pacman -Qtim | filter_pacman_qt"
