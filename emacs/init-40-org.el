@@ -2,7 +2,6 @@
 ;; org-mode
 ;; -----------------------------------------------------------------------------
 
-(require 'org-install)
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 (add-hook 'org-mode-hook
           (lambda ()
@@ -142,13 +141,13 @@
   (ba/org-adjust-tags-column-maybe)
   (set-buffer-modified-p nil))
 
-; automatically align tags on right-hand side
-(add-hook 'window-configuration-change-hook
-          'ba/org-adjust-tags-column-maybe)
-(add-hook 'before-save-hook 'ba/org-adjust-tags-column-before-save)
-(add-hook 'after-save-hook 'ba/org-adjust-tags-column-after-save)
-(add-hook 'org-agenda-mode-hook '(lambda ()
-				   (setq org-agenda-tags-column (- (window-width)))))
+;; ; automatically align tags on right-hand side
+;; (add-hook 'window-configuration-change-hook
+;; 	  'ba/org-adjust-tags-column-maybe)
+;; (add-hook 'before-save-hook 'ba/org-adjust-tags-column-before-save)
+;; (add-hook 'after-save-hook 'ba/org-adjust-tags-column-after-save)
+;; (add-hook 'org-agenda-mode-hook '(lambda ()
+;; 				   (setq org-agenda-tags-column (- (window-width))))))
 
 ;; Deft (yep, it's not org...)
 (setq deft-directory "~/Dropbox/deft"
