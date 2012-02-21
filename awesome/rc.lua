@@ -91,6 +91,8 @@ myawesomemenu = {
 gamemenu = {
    { "battle for wesnoth", "wesnoth", image("/usr/share/icons/wesnoth-icon.png") },
    { "frozen bubble", "frozen-bubble", image("/usr/share/pixmaps/frozen-bubble.png") },
+   { "gplanarity", "gplanarity", image("/usr/share/pixmaps/gplanarity.png") },
+   { "hex-a-hop", "hex-a-hop", image("/usr/share/hex-a-hop/icon.bmp") },
    { "kildclient", "kildclient", image("/usr/share/pixmaps/kildclient.png") },
    { "kobo deluxe", "kobodl", image("/usr/share/pixmaps/kobo-icon.xpm") },
    { "minecraft", "minecraft", image("/usr/share/pixmaps/minecraft.png") },
