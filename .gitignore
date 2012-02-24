@@ -8,6 +8,7 @@
 # Dotfiles
 !ackrc
 !fonts.conf
+!globalrc
 !mimeo.conf
 !gpgdiff
 !gtk-3.0/settings.ini
