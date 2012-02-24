@@ -37,14 +37,16 @@
       zenburn-blue-5   "#366060"
       zenburn-magenta  "#dc8cc3")
 
+;; Changes to "global" faces
+(set-face-background 'highlight zenburn-bg+1)
+
+;; notmuch
 (setq notmuch-search-line-faces '(("delete"  . '(:background "#3b2b2b"))
 				  ("draft"   . '(:slant italic))
 				  ("flagged" . '(:background "#4b2f4b"))
 				  ("sent"    . '(:weight bold))
 				  ("todo"    . '(:background "#2f2f4b"))
 				  ("unread"  . '(:background "#2b3b2b"))))
-
-;; notmuch
 (eval-after-load 'notmuch
   '(progn
      (set-face-foreground 'notmuch-search-date                 zenburn-yellow)
@@ -174,11 +176,6 @@
   '(progn
      (set-face-attribute 'show-paren-match    nil :weight 'normal :foreground nil :background zenburn-blue-5)
      (set-face-attribute 'show-paren-mismatch nil :weight 'bold   :foreground nil :background "#6c3333")))
-
-;; hl-line-mode
-(eval-after-load 'hl-line
-  '(progn
-     (set-face-background 'hl-line zenburn-bg+1)))
 
 ;; message-mode
 (eval-after-load 'message

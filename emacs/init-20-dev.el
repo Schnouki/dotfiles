@@ -1,11 +1,14 @@
 ;; -----------------------------------------------------------------------------
-;; Development 
+;; Development
 ;; -----------------------------------------------------------------------------
 
 ;; Tabs and indentation
 (setq-default c-basic-offset 4
 	      c-indent-level 4
 	      indent-tabs-mode nil) ;; No tabs at all!
+
+;; No trailing whitespaces
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;; Default parameters for emacs-lisp
 (defun schnouki/emacs-lisp-default-indent ()
@@ -95,3 +98,12 @@
 ;; http://clisp.cvs.sourceforge.net/*checkout*/clisp/clisp/emacs/clhs.el
 ;(require 'clhs)
 ;(global-set-key (kbd "C-h M-f") 'common-lisp-hyperspec)
+
+;; Auto-Complete
+(add-to-list 'load-path "/usr/share/emacs/site-lisp/auto-complete")
+(if (require 'auto-complete-config)
+    (progn
+      (add-to-list 'ac-dictionary-directories "/usr/share/emacs/site-lisp/auto-complete/ac-dict")
+      (ac-config-default)
+      (add-to-list 'ac-sources 'ac-source-gtags))
+  (message "auto-complete is not installed!"))

@@ -2,11 +2,6 @@
 ;; Major modes
 ;; -----------------------------------------------------------------------------
 
-;; HideShow minor mode for common major modes
-(dolist (hook '(c-mode-common-hook emacs-lisp-mode-hook java-mode-hook lisp-mode-hook
-		lua-mode perl-mode-hook python-mode sh-mode-hook))
-  (add-hook hook 'hs-minor-mode))
-
 ;; Prepare various major modes
 (load "auctex.el" nil t t)
 (load "preview-latex.el" nil t t)
@@ -18,6 +13,8 @@
 
 (autoload 'python-mode "python-mode" "Python mode." t)
 (add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
+(folding-add-to-marks-list 'python2-mode "# {{{"  "# }}}" nil t)
+(folding-add-to-marks-list 'python3-mode "# {{{"  "# }}}" nil t)
 
 (autoload 'php-mode "php-mode.el" "Php mode." t)
 (add-to-list 'auto-mode-alist '("\\.php[345]?$" . php-mode))
@@ -63,12 +60,21 @@
 (global-set-key (kbd "C-! M-g") '(lambda () (interactive) (find-file golbarg-drafts-dir)))
 (global-set-key (kbd "C-ç M-g") '(lambda () (interactive) (find-file golbarg-drafts-dir)))
 (add-to-list 'auto-mode-alist (cons (concat "^" (expand-file-name "~/site/schnouki.net") "/.+") 'golbarg-mode))
-(add-hook 'golbarg-mode-hook 
+(add-hook 'golbarg-mode-hook
 	  '(lambda ()
 	     (turn-on-auto-fill)
 	     (ispell-change-dictionary "american")
 	     (flyspell-mode)
 	     (setq compile-command "make -C ~/site/schnouki.net")))
+
+;; -----------------------------------------------------------------------------
+;; Minor modes
+;; -----------------------------------------------------------------------------
+
+;; HideShow minor mode for common major modes
+(dolist (hook '(c-mode-common-hook emacs-lisp-mode-hook java-mode-hook lisp-mode-hook
+		lua-mode perl-mode-hook python-mode sh-mode-hook))
+  (add-hook hook 'hs-minor-mode))
 
 ;; smerge-mode, as suggested in the doc
 (autoload 'smerge-mode "smerge-mode" nil t)
@@ -87,3 +93,10 @@
   (doxymacs-mode t)
   (doxymacs-font-lock))
 (add-hook 'c-mode-common-hook 'doxymacs-mode-and-fontify)
+
+;; pretty-lambda
+(add-to-list 'pretty-lambda-auto-modes 'python-mode)
+(pretty-lambda-for-modes nil)
+
+;; Insert pairs of matching elements (parenthesis, quotes, braces)
+(electric-pair-mode)

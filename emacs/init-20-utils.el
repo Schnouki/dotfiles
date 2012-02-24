@@ -11,7 +11,7 @@
 
 ;; Switch to scratch buffer, creating it if necessary
 ;; http://stackoverflow.com/questions/234963/re-open-scratch-buffer-in-emacs/776052#776052
-(defun schnouki/goto-scratch (&optional force-new) 
+(defun schnouki/goto-scratch (&optional force-new)
   "Switch to scratch buffer, creating it if necessary. Calling
 this function with a prefix forces the creation of a new buffer."
   (interactive "P")
@@ -67,7 +67,7 @@ this function with a prefix forces the creation of a new buffer."
 	 (h (floor secs 3600))
 	 (m (floor (mod secs 3600) 60))
 	 (s (floor (mod secs 60))))
-    (concat 
+    (concat
      (if (> h 0) (concat (number-to-string h) "h" (if (or (> m 0) (> s 0)) " ")))
      (if (> m 0) (concat (number-to-string m) "m" (if (> s 0) " ")))
      (if (> s 0) (concat (number-to-string s) "s")))))
@@ -82,16 +82,22 @@ Return the index of the matching item, or nil if not found."
       (setq count (1+ count)))
     (if (= count len) nil count)))
 
-;; Remove *blabla* buffers, except those in the immortal-star-buffers list
-(setq schnouki/immortal-star-buffers '("*scratch*" "*OfflineIMAP*"))
+;; Remove *blabla* buffers, except those that match a regexp in the
+;; immortal-star-buffers list or a major mode in the immortal-modes list.
+(setq schnouki/immortal-star-buffers '("^\\*scratch\\*")
+      schnouki/immortal-modes        '(message-mode notmuch-hello-mode notmuch-search-mode
+				       notmuch-show-mode org-agenda-mode))
 (defun schnouki/kill-star-buffers ()
   "Remove most star-buffers (`*Messages*', `*Compilation', ...) that are not in the `schnouki/immortal-star-buffers' list."
   (interactive)
   (let ((count 0)
-	buf-name)
+	buf-name buf-mode)
     (dolist (buf (buffer-list))
-      (setq buf-name (buffer-name buf))
-      (when (and (string-match "^\\*.+$" (buffer-name buf)) (not (string-position buf-name schnouki/immortal-star-buffers)))
+      (setq buf-name (buffer-name buf)
+	    buf-mode (with-current-buffer buf major-mode))
+      (when (and (string-match "^\\*.+$" buf-name)
+		 (notany '(lambda (re) (string-match re buf-name)) schnouki/immortal-star-buffers)
+		 (not (memq buf-mode schnouki/immortal-modes)))
 	(kill-buffer buf)
 	(setq count (1+ count))))
     (message (concat (int-to-string count) " buffers killed"))))
@@ -102,6 +108,5 @@ Return the index of the matching item, or nil if not found."
   '(progn
      ;; Lighter displayed in mode line
      (setq undo-tree-mode-lighter " UT")
-
      ;; ...and enable!
      (global-undo-tree-mode)))
