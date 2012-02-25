@@ -101,7 +101,7 @@
 
 ;; Auto-Complete
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/auto-complete")
-(if (require 'auto-complete-config)
+(if (require 'auto-complete-config nil t)
     (progn
       (add-to-list 'ac-dictionary-directories "/usr/share/emacs/site-lisp/auto-complete/ac-dict")
       (ac-config-default)
