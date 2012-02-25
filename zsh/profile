@@ -39,6 +39,19 @@ colors
 # about rxvt-256color...
 eval `TERM=xterm-256color dircolors -b`
 
+# Add some more colors!
+function _add_lscolors() {
+    local color ext mimetype
+    mimetype=shift; color=shift
+    for ext in $(grep "$mimetype" /etc/mime.types | cut -f 2-); do
+        LS_COLORS="$LS_COLORS:*.$ext=$color"
+    done
+    export LS_COLORS
+}
+_add_lscolors "audio/" "00;36"
+_add_lscolors "image/" "01;35"
+_add_lscolors "video/" "01;35"
+
 ##### Prompt
 autoload -U promptinit
 promptinit
@@ -74,7 +87,7 @@ else
         case $TERM in
             xterm*|rxvt*|Eterm|screen) print -Pn "\e]0;%n@%m: %~\a" ;;
         esac
-        
+
         # Update VCS prompt (without telling stuff like "fatal: This operation
         # must be run in a work tree" if we are in a .git dir)
         vcs_info 2>/dev/null
