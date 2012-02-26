@@ -12,6 +12,7 @@ tramp
 image-dired
 abbrev_defs
 el-get
+ac-comphist.dat
 
 # Symlinks
 golbarg.el

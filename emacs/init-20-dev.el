@@ -105,5 +105,8 @@
     (progn
       (add-to-list 'ac-dictionary-directories "/usr/share/emacs/site-lisp/auto-complete/ac-dict")
       (ac-config-default)
-      (add-to-list 'ac-sources 'ac-source-gtags))
+      (add-to-list 'ac-sources 'ac-source-gtags)
+      ;(require 'ac-python)
+      (dolist (mode '(python2-mode python3-mode))
+	(add-to-list 'ac-modes mode)))
   (message "auto-complete is not installed!"))
