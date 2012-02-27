@@ -7,7 +7,7 @@
 
 (setq el-get-dir "~/.config/emacs/el-get"
       el-get-recipe-path '("~/.config/emacs/el-get/el-get/recipes")
-      el-get-sources '(doxymacs flyguess folding verbiste))
+      el-get-sources '(doxymacs flyguess verbiste))
 
 (el-get)
 
