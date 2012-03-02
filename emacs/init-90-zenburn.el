@@ -192,3 +192,22 @@
        (dolist (item faces)
 	 (set-face-foreground (car item) (cadr item))
 	 (set-face-bold-p (car item) (caddr item))))))
+
+;; folding
+(eval-after-load 'folding
+   '(progn
+      ;; (dolist (face '(schnouki/folding-begin-face schnouki/folding-end-face))
+      ;;   (copy-face font-lock-reference-face face)
+      ;;   (set-face-foreground face zenburn-magenta)) ;;green+2))
+      ;; (setq folding-font-lock-begin-mark 'schnouki/folding-begin-face
+      ;; 	   folding-font-lock-end-mark   'schnouki/folding-end-face)
+      ;; (set-face-foreground 'folding-font-lock-support zenburn-magenta)
+      (defface folding-header-line `((((class color) (min-colors 89))
+				      (:foreground ,zenburn-green+4
+						   :background ,zenburn-bg-1
+						   :box (:line-width -1 :style released-button))))
+	"Face for folding headers")
+      (defvar folding-header-line-face 'folding-header-line)
+      (setq folding-font-lock-begin-mark 'folding-header-line-face
+	    folding-font-lock-end-mark   'folding-header-line-face)
+))

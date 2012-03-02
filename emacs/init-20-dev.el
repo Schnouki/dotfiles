@@ -15,6 +15,9 @@
   (setq indent-tabs-mode t))
 (add-hook 'emacs-lisp-mode-hook 'schnouki/emacs-lisp-default-indent)
 
+;; Code folding
+(require 'folding)
+
 ;; Shorter key bindings for folding/hideshow
 (dolist (key (list (kbd "C-! :") (kbd "C-ç f")))
   (global-set-key key '(lambda () (interactive)
