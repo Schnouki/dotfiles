@@ -82,6 +82,7 @@ end
 -- {{{ Menu
 -- Create a laucher widget and a main menu
 myawesomemenu = {
+   { "change wallpaper", beautiful.wallpaper_cmd[1] },
    { "manual", terminal .. " -e man awesome" },
    { "edit config", editor_cmd .. " " .. awesome.conffile },
    { "restart", awesome.restart },
@@ -275,14 +276,14 @@ function win_info ()
    instance = c.instance
    role     = c.role
    type     = c.type
- 
+
    -- We don't want to error on nil.
    if title    == nil then title    = markup.fg.focus('nil') end
    if class    == nil then class    = markup.fg.focus('nil') end
    if instance == nil then instance = markup.fg.focus('nil') end
    if role     == nil then role     = markup.fg.focus('nil') end
    if type     == nil then type     = markup.fg.focus('nil') end
-   
+
    naughty.notify({
       text = markup.fg.focus('      Role: ') .. role  .. '\n' ..
              markup.fg.focus('      Type: ') .. type  .. '\n' ..
@@ -577,7 +578,7 @@ clientbuttons = awful.util.table.join(
     awful.button({ modkey }, 3, awful.mouse.client.resize))
 
 -- Set keys
-for k, v in pairs(persokeys) do 
+for k, v in pairs(persokeys) do
    table.foreach(v, function(_, kk) table.insert(globalkeys, kk) end)
 end
 for k, v in pairs(persoclientkeys) do
