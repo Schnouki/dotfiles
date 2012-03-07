@@ -32,7 +32,7 @@
 (autoload 'markdown-mode "markdown-mode.el" "Markdown mode." t)
 (dolist (ext '("md" "mdwn" "markdown"))
   (add-to-list 'auto-mode-alist (cons (concat "\\." ext "$") 'markdown-mode)))
-(add-hook 'markdown-mode-hook '(lambda () (setq markdown-command "~/.config/emacs/markdown.sh")))
+(add-hook 'markdown-mode-hook '(lambda () (setq markdown-command "~/.config/emacs/markdown")))
 
 (autoload 'adoc-mode "adoc-mode.el" "AsciiDoc mode." t)
 (add-to-list 'auto-mode-alist '("\\.adoc?$" . adoc-mode))

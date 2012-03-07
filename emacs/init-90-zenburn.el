@@ -209,5 +209,4 @@
 	"Face for folding headers")
       (defvar folding-header-line-face 'folding-header-line)
       (setq folding-font-lock-begin-mark 'folding-header-line-face
-	    folding-font-lock-end-mark   'folding-header-line-face)
-))
+	    folding-font-lock-end-mark   'folding-header-line-face)))

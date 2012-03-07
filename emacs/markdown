@@ -1,0 +1,6 @@
+#!/usr/bin/env python3
+
+import markdown
+
+md = markdown.Markdown(extensions=["extra"])
+md.convertFile()
