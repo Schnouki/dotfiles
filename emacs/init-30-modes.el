@@ -57,6 +57,10 @@
 (autoload 'gnuplot-make-buffer "gnuplot" "open a buffer in gnuplot mode" t)
 (add-to-list 'auto-mode-alist '("\\.gp$" . gnuplot-mode))
 
+;; plantuml-mode
+;; nothing into auto-mode-alist, just an autoload for the mode itself...
+(autoload 'plantuml-mode "plantuml-mode" "PlantUML major mode" t)
+
 ;; Golbarg, the most awesome blog engine ever
 (autoload 'golbarg-mode "golbarg.el" "Golbarg mode." t)
 (autoload 'golbarg-new-draft "golbarg.el" "New Golbarg draft." t)
