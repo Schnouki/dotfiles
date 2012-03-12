@@ -32,7 +32,7 @@
 ;; - crypto stuff
 (setq notmuch-saved-searches '(("home"        . "tag:inbox or tag:todo or tag:unread")
 			       ("unread"      . "tag:unread")
-			       ("inbox"       . "tag:inbox")			       
+			       ("inbox"       . "tag:inbox")
 			       ("flagged"     . "tag:flagged")
 			       ("todo"        . "tag:todo")
 			       ("notes"       . "tag:notes")
@@ -84,7 +84,7 @@
 		(format-time-string "%s.." beg)
 		(format-time-string "%s" now))))
 	 (notmuch-search-filter filter)))
-     
+
      (defun schnouki/notmuch-search-archive-thread ()
        (interactive)
        (notmuch-search-tag-thread "-inbox" "-unread")
@@ -192,33 +192,6 @@
 
      ;; Display the hl-line correctly in notmuch-search
      (add-hook 'notmuch-search-hook '(lambda () (overlay-put global-hl-line-overlay 'priority 1)))))
-
-;; Display Org agenda in notmuch-hello
-(defun schnouki/org-agenda-in-notmuch-hello ()
-  (interactive)
-  (when (string= (buffer-name (window-buffer (selected-window))) "*notmuch-hello*")
-    (let ((winw (window-width)))
-      (save-selected-window
-	;; Restore sane layout
-	(delete-other-windows)
-
-	;; Displaya genda
-	(org-agenda-list)
-
-	;; Split agenda window and display todo list
-	(select-window (if (window-full-width-p)
-			   (split-window-horizontally)
-			 (split-window-vertically)))
-	(schnouki/org-visit-todo-list-buffer)
-
-	;; Adjust window size
-	(fit-window-to-buffer))
-
-      ;; If the width changed, we need to redisplay notmuch-hello...
-      (when (not (= winw (window-width)))
-	(notmuch-hello-update)))))
-(add-hook 'notmuch-hello-refresh-hook 'schnouki/org-agenda-in-notmuch-hello)
-(add-hook 'notmuch-search-hook 'delete-other-windows)
 
 ;; Choose signature according to the From header
 (defun schnouki/choose-signature ()

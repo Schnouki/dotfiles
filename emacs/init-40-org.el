@@ -45,9 +45,17 @@
 	("pd" "Priorité basse"      tags-todo "+PRIORITY=\"D\"")
 	("pe" "Priorité très basse" tags-todo "+PRIORITY=\"E\"")))
 
-(defun schnouki/org-visit-todo-list-buffer ()
+(defun schnouki/org-agenda-and-todo-list ()
+  "Display agenda and todo list in the current window"
   (interactive)
-  (find-file (concat org-directory "todo.org")))
+  (delete-other-windows)
+
+  ;; First display todo-list
+  (find-file (concat org-directory "todo.org"))
+
+  ;; Then display agenda
+  (org-agenda-list)
+  (fit-window-to-buffer nil nil 20))
 
 ;; Keyboard shortcuts
 (global-set-key (kbd "C-! l") 'org-store-link)
@@ -56,8 +64,8 @@
 (global-set-key (kbd "C-ç a") 'org-agenda)
 (global-set-key (kbd "C-! b") 'org-iswitchb)
 (global-set-key (kbd "C-ç b") 'org-iswitchb)
-(global-set-key (kbd "C-! t") 'schnouki/org-visit-todo-list-buffer)
-(global-set-key (kbd "C-ç t") 'schnouki/org-visit-todo-list-buffer)
+(global-set-key (kbd "C-! t") 'schnouki/org-agenda-and-todo-list)
+(global-set-key (kbd "C-ç t") 'schnouki/org-agenda-and-todo-list)
 
 ;; Capture
 (global-set-key (kbd "C-! r") 'org-capture)
@@ -94,7 +102,7 @@
 (global-set-key (kbd "C-! s") 'schnouki/org-sort-todo-list)
 (global-set-key (kbd "C-ç s") 'schnouki/org-sort-todo-list)
 
-;; Dynamically adjust tag position 
+;; Dynamically adjust tag position
 ;; http://orgmode.org/worg/org-hacks.php#sec-13
 (setq ba/org-adjust-tags-column t)
 (setq schnouki/org-show-ellipsis-when-adjusting-tags t)
