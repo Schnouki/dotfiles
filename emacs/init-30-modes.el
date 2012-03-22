@@ -108,6 +108,3 @@
 ;; pretty-lambda
 (add-to-list 'pretty-lambda-auto-modes 'python-mode)
 (pretty-lambda-for-modes nil)
-
-;; Insert pairs of matching elements (parenthesis, quotes, braces)
-(electric-pair-mode)
