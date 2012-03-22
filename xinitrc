@@ -50,6 +50,7 @@ export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=gasp'
 dropboxd &
 gnote &
 qnotero &
+jamd &
 #gajim &
 #thunderbird &
 #firefox &
