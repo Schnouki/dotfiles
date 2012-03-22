@@ -91,14 +91,7 @@
     (org-sort-entries nil ?a)
     (org-sort-entries nil ?f 'schnouki/org-sort-by-todo-keywords)
     (org-sort-entries nil ?p))
-  (org-overview)
-  (org-content)
-  (save-excursion
-    (goto-char (point-max))
-    (while (re-search-backward org-todo-regexp nil t)
-      (progn
-	(goto-char (match-beginning 0))
-	(hide-subtree)))))
+  (org-overview))
 (global-set-key (kbd "C-! s") 'schnouki/org-sort-todo-list)
 (global-set-key (kbd "C-ç s") 'schnouki/org-sort-todo-list)
 
