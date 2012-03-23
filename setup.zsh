@@ -1,4 +1,5 @@
 #!/bin/zsh
 
-# Setup ~/.zshrc
-setup_file_symlink "zsh/zshrc" ".zshrc"
+# Setup ~/.zshenv and ~/.zshrc
+setup_file_symlink "zsh/profile" ".zshenv"
+setup_file_symlink "zsh/zshrc"   ".zshrc"

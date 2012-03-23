@@ -10,9 +10,13 @@ function reload_local_completion() {
 function upload_zsh_config() {
     local dest=$1
     [[ -z "$dest" ]] && echo "Usage: $0 remote_ssh_host" && return 1
-    
+
     pushd $HOME &>/dev/null
-    tar cj .config/zsh | ssh -axo "ClearAllForwardings yes" "$dest" "cat | tar xj && rm -f .zshrc && ln .config/zsh/zshrc .zshrc && echo \"zsh config updated on \$(hostname)\""
+    tar cj .config/zsh | ssh -axo "ClearAllForwardings yes" "$dest" \
+        "cat | tar xj && \
+         rm -f .zshenv && ln -s .config/zsh/profile .zshenv && \
+         rm -f .zshrc  && ln -s .config/zsh/zshrc   .zshrc  && \
+         echo \"zsh config updated on \$(hostname)\""
     popd &>/dev/null
 }
 
@@ -58,11 +62,11 @@ function graphite_build_module() {
         echo "== Cores: $cores"
         echo "=============================="
         sleep 1
-        
+
         # Nettoyage et préparation
         [[ "$type" == "full" ]] && ([[ -e "build" ]] && rm -rf build)
         [[ ! -e "build" ]] && sh ./configure.sh
-        
+
         # Compilation
         cd build/Linux-$mode && make -j$(( $cores + 1))
 

@@ -1,6 +1,5 @@
 # -*- mode: sh; -*-
 
-. ~/.config/zsh/profile
 . ~/.config/zsh/aliases
 . ~/.config/zsh/functions
 . ~/.config/zsh/keys
