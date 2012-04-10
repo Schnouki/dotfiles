@@ -63,8 +63,8 @@ if [[ $TERM == "dumb" ]]; then    # in emacs
     unsetopt zle
     unsetopt prompt_cr
     unsetopt prompt_subst
-    unfunction precmd
-    unfunction preexec
+    unfunction precmd  &>/dev/null
+    unfunction preexec &>/dev/null
 else
     # VCS info in the right prompt, based on http://kriener.org/articles/2009/06/04/zsh-prompt-magic
     autoload -Uz vcs_info
