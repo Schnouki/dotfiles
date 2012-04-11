@@ -33,7 +33,7 @@ URxvt.termName:    rxvt-256color
 URxvt.transparent: true
 URxvt.shading:     20
 URxvt.fading:      15
-URxvt.font:        xft:Mono:pixelsize=12.5
+URxvt.font:        xft:Mono:pixelsize=12.5, xft:Kochi Gothic:antialias=false, xft:Code2000:antialias=false
 
 URxvt.saveLines:         4096
 URxvt.scrollBar:         false
