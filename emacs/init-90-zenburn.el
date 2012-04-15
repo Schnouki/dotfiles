@@ -41,7 +41,7 @@
 (set-face-background 'highlight zenburn-bg+1)
 
 ;; notmuch
-(setq notmuch-search-line-faces '(("delete"  . '(:background "#3b2b2b"))
+(setq notmuch-search-line-faces '(("deleted" . '(:strike-through t))
 				  ("draft"   . '(:slant italic))
 				  ("flagged" . '(:background "#4b2f4b"))
 				  ("sent"    . '(:weight bold))
