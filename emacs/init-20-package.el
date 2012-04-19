@@ -9,8 +9,8 @@
 (package-initialize)
 
 ;; Packages
-(setq schnouki/packages '(anything anything-match-plugin coffee-mode color-theme deft
-			  dtrt-indent haskell-mode ioccur lua-mode magit magithub
+(setq schnouki/packages '(ace-jump-mode anything anything-match-plugin coffee-mode color-theme
+			  deft dtrt-indent haskell-mode ioccur lua-mode magit magithub
 			  markdown-mode mediawiki php-mode pretty-lambdada python-pep8
 			  solarized-theme undo-tree yaml-mode zenburn-theme znc))
 (let ((refreshed nil))
