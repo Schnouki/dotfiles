@@ -11,6 +11,8 @@
 (add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
 (folding-add-to-marks-list 'lua-mode "-- {{{" "-- }}}" nil t)
 
+(folding-add-to-marks-list 'go-mode "// {{{" "// }}}" nil t)
+
 (autoload 'python-mode "python-mode" "Python mode." t)
 (autoload 'python2-mode "python-mode" "Python2 mode." t)
 (autoload 'python3-mode "python-mode" "Python3 mode." t)
