@@ -6,9 +6,6 @@ Xft.hinting: 1
 Xft.antialias: 1
 Xft.rgba: rgb
 
-XBomb.*font: lucidasans-12
-XBomb.*grid.font: lucidasans-bold-14
-
 ! Tango colors for urxvt
 URxvt.foreground: #C0C0C0
 URxvt.background: #171717
@@ -67,5 +64,28 @@ URxvt.keysym.4-1-Right:   perl:tabbedex:next_tab
 URxvt.keysym.4-1-Up:      perl:tabbedex:rename_tab
 URxvt.keysym.4-1-C-Left:  perl:tabbedex:move_tab_left
 URxvt.keysym.4-1-C-Right: perl:tabbedex:move_tab_right
+
+! Something similar for XTerm, just in case...
+XTerm*foreground: #C0C0C0
+XTerm*background: #171717
+XTerm*color0:     #2E3436
+XTerm*color1:     #CC0000
+XTerm*color2:     #4E9A06
+XTerm*color3:     #C4A000
+XTerm*color4:     #3465A4
+XTerm*color5:     #75507B
+XTerm*color6:     #06989A
+XTerm*color7:     #D3D7CF
+XTerm*color8:     #555753
+XTerm*color9:     #EF2929
+XTerm*color10:    #8AE234
+XTerm*color11:    #FCE94F
+XTerm*color12:    #729FCF
+XTerm*color13:    #AD7FA8
+XTerm*color14:    #34E2E2
+XTerm*color15:    #EEEEEC
+
+XTerm*faceName: DejaVu Sans Mono
+XTerm*faceSize: 12.5
 
 !(call-process-shell-command "xrdb -load ~/.Xdefaults")
