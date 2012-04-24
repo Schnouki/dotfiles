@@ -19,6 +19,5 @@
 (defun schnouki/latex-auto-fill ()
   (turn-on-auto-fill)
   (set-fill-column 80)
-  (setq default-justification 'full))
+  (setq default-justification 'left))
 (add-hook 'LaTeX-mode-hook 'schnouki/latex-auto-fill)
-
