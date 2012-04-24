@@ -609,7 +609,7 @@ awful.rules.rules = {
                      focus = true,
                      keys = clientkeys,
                      buttons = clientbuttons } },
-    { rule_any = { class = { "MPlayer", "Smplayer", "Vlc", "Xfmedia", "xine" } },
+    { rule_any = { class = { "Gmpc", "MPlayer", "Smplayer", "Vlc", "Xfmedia", "xine" } },
       properties = { floating = true } },
     { rule_any = { class = { "pinentry" }, instance = { "pinentry-gtk-2" } },
       properties = { floating = true } },
