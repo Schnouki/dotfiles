@@ -28,6 +28,7 @@ __pycache__/
 ddns/key
 !emacs
 !mozilla
+!mpDris2
 !notmuch
 !roxterm.sourceforge.net
 !urxvt

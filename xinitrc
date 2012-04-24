@@ -51,6 +51,7 @@ dropboxd &
 gnote &
 qnotero &
 jamd &
+mpd && mpDris2 &>/dev/null &
 #gajim &
 #thunderbird &
 #firefox &

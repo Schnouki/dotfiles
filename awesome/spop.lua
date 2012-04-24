@@ -1,1 +1,0 @@
-/home/schnouki/dev/spop/awesome/spop.lua

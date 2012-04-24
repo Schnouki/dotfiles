@@ -331,18 +331,12 @@ else
    function tb_mails_updating(u) end
 end
 
--- Spop status
-require("spop")
-spop.init("localhost", 6602)
-tb_spop = widget({ type = "textbox" })
-tb_spop.text = " [spop] "
-tb_spop:buttons(awful.util.table.join(
-   awful.button({ }, 1, function () awful.util.spawn("dspop") end)
-))
+-- Media player control
+require("mpris2")
+mpris2.init()
 -- }}}
 
 -- {{{ Raccourcis claviers persos
-
 persokeys = {
    -- Volume
    awful.key({ }, "XF86AudioRaiseVolume", function () volume_upd(pb_vol, volume_plus())  end),
@@ -376,18 +370,18 @@ persokeys = {
    awful.key({ }, "XF86Launch1",      function () awful.util.spawn(editor_cmd) end),
    awful.key({ modkey }, "KP_Insert", function () awful.util.spawn(editor_cmd) end),
 
-   -- Spop
-   awful.key({ }, "XF86AudioStop", spop.stop),
-   awful.key({ }, "XF86AudioPlay", spop.toggle),
-   awful.key({ }, "XF86AudioPrev", spop.prev),
-   awful.key({ }, "XF86AudioNext", spop.next),
+   -- Media player
+   awful.key({ }, "XF86AudioStop", mpris2.stop),
+   awful.key({ }, "XF86AudioPlay", mpris2.playpause),
+   awful.key({ }, "XF86AudioPrev", mpris2.prev),
+   awful.key({ }, "XF86AudioNext", mpris2.next),
 
-   awful.key({ modkey, "Control" }, "Up",    spop.stop),
-   awful.key({ modkey, "Control" }, "Down",  spop.toggle),
-   awful.key({ modkey, "Control" }, "Left",  spop.prev),
-   awful.key({ modkey, "Control" }, "Right", spop.next),
+   awful.key({ modkey, "Control" }, "Up",    mpris2.stop),
+   awful.key({ modkey, "Control" }, "Down",  mpris2.playpause),
+   awful.key({ modkey, "Control" }, "Left",  mpris2.prev),
+   awful.key({ modkey, "Control" }, "Right", mpris2.next),
 
-   awful.key({ modkey, "Control", "Mod1" }, "Down", spop.cycle),
+   awful.key({ modkey, "Shift"   }, "i", mpris2.info),
 }
 
 persoclientkeys = {
@@ -396,7 +390,6 @@ persoclientkeys = {
    awful.key({ modkey, "Shift"   }, "s", function (c) c.ontop = not c.ontop end),
    awful.key({ modkey            }, "i", win_info),
 }
-
 -- }}}
 
 -- {{{ Wibox creation
@@ -437,7 +430,6 @@ for s = 1, screen.count() do
         tb_net,
         tb_nv,
         tb_mails,
-        tb_spop,
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
     }
