@@ -1,28 +1,7 @@
 # -*- mode: sh; -*-
 
 ##### Environment variables
-# Paths
-export PATH=$HOME/bin:$HOME/.cabal/bin:$PATH
-export XDG_DATA_HOME=$HOME/.local/share
-export XDG_CONFIG_HOME=$HOME/.config
-export XDG_CACHE_HOME=$HOME/.cache
-
-# Programs
-export EDITOR="emacsclient -c -a \"\""
-export BROWSER=chromium
-
-# Program-specifig options
-export GREP_OPTIONS="--exclude=*.svn-base --exclude-dir=.svn"
-export ACKRC="$XDG_CONFIG_HOME/ackrc"
-
-# Go
-export GOROOT=$HOME/go
-export GOARCH=amd64
-export GOOS=linux
-export PATH=$HOME/go/bin:$PATH
-
-# 256-color terminal
-[[ $TERM == "xterm" ]] && export TERM="xterm-256color"
+. ~/.config/zsh/env
 
 ##### History
 export HISTFILE=~/.histfile
@@ -138,4 +117,8 @@ setopt extendedglob
 # Don't send "HUP" to running jobs when logging out
 unsetopt hup
 
+# zmv is awesome
 autoload -Uz zmv
+
+##### Tell other scripts this one has been loaded
+export PROFILE_LOADED=1
