@@ -332,8 +332,11 @@ else
 end
 
 -- Media player control
-require("mpris2")
-mpris2.init()
+function mpris2(command)
+   return function()
+      os.execute("~/bin/mpris2-control " .. command .. " &")
+   end
+end
 -- }}}
 
 -- {{{ Raccourcis claviers persos
@@ -371,17 +374,17 @@ persokeys = {
    awful.key({ modkey }, "KP_Insert", function () awful.util.spawn(editor_cmd) end),
 
    -- Media player
-   awful.key({ }, "XF86AudioStop", mpris2.stop),
-   awful.key({ }, "XF86AudioPlay", mpris2.playpause),
-   awful.key({ }, "XF86AudioPrev", mpris2.prev),
-   awful.key({ }, "XF86AudioNext", mpris2.next),
+   awful.key({ }, "XF86AudioStop", mpris2("stop")),
+   awful.key({ }, "XF86AudioPlay", mpris2("playpause")),
+   awful.key({ }, "XF86AudioPrev", mpris2("prev")),
+   awful.key({ }, "XF86AudioNext", mpris2("next")),
 
-   awful.key({ modkey, "Control" }, "Up",    mpris2.stop),
-   awful.key({ modkey, "Control" }, "Down",  mpris2.playpause),
-   awful.key({ modkey, "Control" }, "Left",  mpris2.prev),
-   awful.key({ modkey, "Control" }, "Right", mpris2.next),
+   awful.key({ modkey, "Control" }, "Up",    mpris2("stop")),
+   awful.key({ modkey, "Control" }, "Down",  mpris2("playpause")),
+   awful.key({ modkey, "Control" }, "Left",  mpris2("prev")),
+   awful.key({ modkey, "Control" }, "Right", mpris2("next")),
 
-   awful.key({ modkey, "Shift"   }, "i", mpris2.info),
+   awful.key({ modkey, "Shift"   }, "i", mpris2("info")),
 }
 
 persoclientkeys = {

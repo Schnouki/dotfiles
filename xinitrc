@@ -51,6 +51,7 @@ dropboxd &
 gnote &
 qnotero &
 jamd &
+mpris2-info &
 mpd && mpDris2 &>/dev/null &
 #gajim &
 #thunderbird &
