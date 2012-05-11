@@ -74,6 +74,41 @@
 ;; Default scaling for preview-latex
 (setq preview-scale 1.4)
 
+;; SyncTeX (http://www.emacswiki.org/emacs/AUCTeX#toc19)
+(defun synctex/un-urlify (fname-or-url)
+  "A trivial function that replaces a prefix of file:/// with just /."
+  (if (string= (substring fname-or-url 0 8) "file:///")
+      (substring fname-or-url 7)
+    fname-or-url))
+
+(defun synctex/evince-sync (file linecol &rest ignored)
+  (let* ((fname (url-unhex-string (synctex/un-urlify file)))
+         (buf (find-buffer-visiting fname))
+         (line (car linecol))
+         (col (cadr linecol)))
+    (if (null buf)
+        (message "[Synctex]: %s is not opened..." fname)
+      (switch-to-buffer buf)
+      (goto-line (car linecol))
+      (unless (= col -1)
+        (move-to-column col)))))
+
+(defvar *dbus-evince-signal* nil)
+
+(defun synctex/enable-evince-sync ()
+  (require 'dbus)
+  (when (and
+         (eq window-system 'x)
+         (fboundp 'dbus-register-signal))
+    (unless *dbus-evince-signal*
+      (setf *dbus-evince-signal*
+            (dbus-register-signal
+             :session nil "/org/gnome/evince/Window/0"
+             "org.gnome.evince.Window" "SyncSource"
+             'synctex/evince-sync)))))
+
+(add-hook 'LaTeX-mode-hook 'synctex/enable-evince-sync)
+
 ;; Compilation: scroll the *compilation* buffer window as output appears, but
 ;; stop scrolling at the first error
 (setq compilation-scroll-output t
