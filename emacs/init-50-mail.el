@@ -11,7 +11,8 @@
       message-send-mail-partially-limit nil
       mail-specify-envelope-from t
       mail-envelope-from 'header
-      message-sendmail-envelope-from 'header)
+      message-sendmail-envelope-from 'header
+      gnus-inhibit-images nil)
 
 ;; Load notmuch
 (add-to-list 'load-path "~/dev/notmuch/emacs")
