@@ -614,7 +614,7 @@ awful.rules.rules = {
       properties = { floating = true } },
     { rule_any = { name = { "Gnuplot (window id : 0)", "R Graphics: Device 2 (ACTIVE)" } },
       properties = { floating = true } },
-    { rule_any = { class = { "Gtetrinet" }, name = { "Minecraft" } },
+    { rule_any = { class = { "Gtetrinet", "Gplanarity" }, name = { "Minecraft" } },
       properties = { floating = true } },
     { rule = { class = "Firefox" },
       except = { instance = "Navigator" },
