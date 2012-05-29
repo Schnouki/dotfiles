@@ -124,7 +124,8 @@
      (defun schnouki/notmuch-search-keys ()
        (interactive)
        (local-set-key "a" 'schnouki/notmuch-search-archive-thread)
-       (local-set-key "d" 'notmuch-search-filter-by-date))
+       (local-set-key "d" 'notmuch-search-filter-by-date)
+       (local-set-key (kbd "M-RET") 'schnouki/notmuch-search-show-thread-inhibit-images))
 
      (add-hook 'notmuch-show-hook 'schnouki/notmuch-show-keys)
      (add-hook 'notmuch-search-hook 'schnouki/notmuch-search-keys)
@@ -168,10 +169,10 @@
 			       (list 'insert body)
 			     (list 'insert-buffer (current-buffer))))))
 
-     (defun schnouki/notmuch-signal-spamham (type)
+     (defun schnouki/notmuch-signal-spamham (type &rest to)
        (with-current-notmuch-show-message
 	(notmuch-mua-forward-message)
-	(message-replace-header "To" (concat "sa-" type "@schnouki.net"))
+	(message-replace-header "To" (mapconcat 'identity to ", "))
 	(message-remove-header "Fcc")
 	(message-sort-headers)
 	(message-hide-headers)
@@ -183,13 +184,10 @@
 	    (message-kill-buffer)
 	    (delete-frame)))))
 
-     (defun schnouki/notmuch-signal-spam ()
+     (defun schnouki/notmuch-search-show-thread-inhibit-images ()
        (interactive)
-       (schnouki/notmuch-signal-spamham "spam"))
-
-     (defun schnouki/notmuch-signal-ham ()
-       (interactive)
-       (schnouki/notmuch-signal-spamham "ham"))
+       (let ((gnus-inhibit-images t))
+	 (notmuch-search-show-thread)))
 
      ;; Display the hl-line correctly in notmuch-search
      (add-hook 'notmuch-search-hook '(lambda () (overlay-put global-hl-line-overlay 'priority 1)))))
