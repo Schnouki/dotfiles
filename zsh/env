@@ -12,6 +12,7 @@
 path=(
     $HOME/bin
     $HOME/.cabal/bin
+    $HOME/.local/bin
     $HOME/go/bin
     $path
 )
