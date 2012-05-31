@@ -6,9 +6,10 @@ require("awful.rules")
 require("beautiful")
 -- Notification library
 require("naughty")
-
--- Eminent dynamic taggign
+-- Eminent dynamic tagging
 require("eminent")
+-- Markup functions
+require("markup")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -234,6 +235,9 @@ end
 -- }}}
 
 -- {{{ Widgets perso
+separator = widget({ type = "imagebox" })
+separator.image = image(config_dir .. "/icons/separator.png")
+
 require("netmon")
 netmon.init()
 tb_net = widget({ type = "textbox" })
@@ -247,6 +251,7 @@ if gethost() == "thor" then
    require("nvtemp")
    nvtemp.init()
 
+   sep_nv = separator
    icon_nv = widget({ type = "imagebox" })
    icon_nv.image = image(config_dir .. "/icons/temp.png")
    tb_nv = widget({ type = "textbox" })
@@ -277,7 +282,6 @@ pb_vol.widget:buttons(awful.util.table.join(
 
 -- Afficher des infos sur le client qui a le focus
 -- d'après http://github.com/MajicOne/awesome-configs/blob/master/rc.lua
-require('markup')
 function win_info ()
    local c = client.focus
 
@@ -318,7 +322,7 @@ if f then
    tb_mails_color_updating = "#ac7373" -- red-2
    tb_mails_color = tb_mails_color_normal
    function tb_mails_set_count(n)
-      local s = markup.fg.color(tb_mails_color, " ✉ " .. n)
+      local s = markup.fg.color(tb_mails_color, "✉ " .. n)
       if n > 0 then
          s = markup.bold(s)
       end
@@ -430,7 +434,7 @@ for s = 1, screen.count() do
                                           end, mytasklist.buttons)
 
     -- Create the wibox
-    mywibox[s] = awful.wibox({ position = "top", screen = s, ontop = nil })
+    mywibox[s] = awful.wibox({ position = "top", height = "18", screen = s, ontop = nil })
     -- Add widgets to the wibox - order matters
     mywibox[s].widgets = {
         {
@@ -442,13 +446,18 @@ for s = 1, screen.count() do
         mylayoutbox[s],
         mytextclock,
         mytextclock_icon,
+        separator,
         s == 1 and mysystray or nil,
+        s == 1 and separator or nil,
         pb_vol.widget,
         tb_batt,
         tb_net,
+        separator,
         tb_nv,
         icon_nv,
+        sep_nv,
         tb_mails,
+        separator,
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
     }
