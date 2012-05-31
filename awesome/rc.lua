@@ -248,20 +248,16 @@ tb_batt = widget({ type = "textbox" })
 tb_batt.text = " " .. battery_mon() .. " "
 
 require("volumebar")
-pb_vol = widget({ type = "progressbar" }) -- TODO: migrer à awful.widget.progressbar...
-pb_vol.width = 10
-pb_vol.height = 1
-pb_vol.border_padding = 0
-pb_vol.ticks_count = 0
-pb_vol.vertical = true
-pb_vol:bar_properties_set("vol", {
-       ["bg"]           = "#000000",
-       ["fg_off"]       = "#000000",
-       ["border_color"] = "#000000"
-})
+pb_vol = awful.widget.progressbar()
+pb_vol:set_width(10)
+pb_vol:set_height(18)
+pb_vol:set_vertical(true)
+pb_vol:set_background_color("#000000")
+pb_vol:set_border_color("#000000")
+pb_vol:set_max_value(100)
 volume_upd(pb_vol, volume_get())
 
-pb_vol:buttons(awful.util.table.join(
+pb_vol.widget:buttons(awful.util.table.join(
        awful.button({ }, 1, function () volume_upd(pb_vol, volume_plus() ) end),
        awful.button({ }, 4, function () volume_upd(pb_vol, volume_plus() ) end),
        awful.button({ }, 3, function () volume_upd(pb_vol, volume_minus()) end),
@@ -437,7 +433,7 @@ for s = 1, screen.count() do
         mytextclock,
         mytextclock_icon,
         s == 1 and mysystray or nil,
-        pb_vol,
+        pb_vol.widget,
         tb_batt,
         tb_net,
         tb_nv,

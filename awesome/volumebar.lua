@@ -136,6 +136,6 @@ function volume_upd(widget, vol)
 		end
 	end
 
-	widget:bar_data_add("vol", vol)
-	widget:bar_properties_set("vol", {["fg"] = col})
+        widget:set_value(vol)
+        widget:set_color(col)
 end
