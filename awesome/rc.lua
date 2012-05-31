@@ -8,6 +8,8 @@ require("beautiful")
 require("naughty")
 -- Eminent dynamic tagging
 require("eminent")
+-- Vicious widgets
+require("vicious")
 -- Markup functions
 require("markup")
 
@@ -355,6 +357,27 @@ function mpris2(command)
       os.execute("~/bin/mpris2-control " .. command .. " &")
    end
 end
+
+-- Vicious widgets
+cpuicon = widget({ type = "imagebox" })
+cpuicon.image = image(config_dir .. "/icons/cpu.png")
+cpuwidget = awful.widget.graph()
+cpuwidget:set_width(50)
+cpuwidget:set_background_color("#000000")
+cpuwidget:set_border_color("#000000")
+cpuwidget:set_gradient_colors({ "#66CC66", "#CCCC66", "#CC6666" })
+cpuwidget:set_gradient_angle(180)
+vicious.register(cpuwidget, vicious.widgets.cpu, "$1", 3)
+
+memicon = widget({ type = "imagebox" })
+memicon.image = image(config_dir .. "/icons/mem.png")
+memwidget = awful.widget.graph()
+memwidget:set_width(50)
+memwidget:set_background_color("#000000")
+memwidget:set_border_color("#000000")
+memwidget:set_gradient_colors({ "#66CC66", "#CCCC66", "#CC6666" })
+memwidget:set_gradient_angle(180)
+vicious.register(memwidget, vicious.widgets.mem, "$1", 3)
 -- }}}
 
 -- {{{ Raccourcis claviers persos
@@ -452,6 +475,11 @@ for s = 1, screen.count() do
         pb_vol.widget,
         tb_batt,
         tb_net,
+        separator,
+        memwidget.widget,
+        memicon,
+        cpuwidget.widget,
+        cpuicon,
         separator,
         tb_nv,
         icon_nv,
