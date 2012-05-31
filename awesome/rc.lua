@@ -7,6 +7,9 @@ require("beautiful")
 -- Notification library
 require("naughty")
 
+-- Eminent dynamic taggign
+require("eminent")
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
