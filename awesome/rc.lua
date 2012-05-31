@@ -351,11 +351,11 @@ persokeys = {
    awful.key({ modkey }, "KP_Delete", function () volume_upd(pb_vol, volume_mute())  end),
 
    -- F2 - verrouiller l'écran
-   awful.key({ }, "XF86ScreenSaver",      function () os.execute("xscreensaver-command -lock") end),
-   awful.key({ modkey, "Control" }, "F2", function () os.execute("xscreensaver-command -lock") end),
+   awful.key({ }, "XF86ScreenSaver",      function () awful.util.spawn("xscreensaver-command -lock") end),
+   awful.key({ modkey, "Control" }, "F2", function () awful.util.spawn("xscreensaver-command -lock") end),
    -- F3 - éteindre l'écran
-   awful.key({ }, "XF86Battery",          function () os.execute("xset dpms force suspend") end),
-   awful.key({ modkey, "Control" }, "F3", function () os.execute("xset dpms force suspend") end),
+   awful.key({ }, "XF86Battery",          function () awful.util.spawn("xset dpms force suspend") end),
+   awful.key({ modkey, "Control" }, "F3", function () awful.util.spawn("xset dpms force suspend") end),
    -- F4 - mettre l'ordi en veille
    awful.key({ }, "XF86Sleep",            function () awful.util.spawn("my-s2ram") end),
    awful.key({ modkey, "Control" }, "F4", function () awful.util.spawn("my-s2ram") end),
@@ -693,4 +693,12 @@ mytimer300:add_signal("timeout", function ()
     awful.util.spawn(beautiful.wallpaper_cmd[1])
 end)
 mytimer300:start()
+-- }}}
+
+-- {{{ Disable startup-notification
+-- http://awesome.naquadah.org/wiki/Disable_startup-notification_globally
+local oldspawn = awful.util.spawn
+awful.util.spawn = function (s)
+  oldspawn(s, false)
+end
 -- }}}
