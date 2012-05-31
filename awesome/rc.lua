@@ -39,7 +39,8 @@ os.setlocale("C", "numeric")
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
-beautiful.init("/home/schnouki/.config/awesome/themes/schnouki-zenburn.lua")
+config_dir = awful.util.getdir("config")
+beautiful.init(config_dir .. "/themes/schnouki-zenburn.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "urxvt"
@@ -111,8 +112,8 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
                                     { "gajim", "gajim", image("/usr/share/icons/hicolor/64x64/apps/gajim.png") },
                                     { "firefox", "firefox-beta-bin", image("/usr/share/pixmaps/firefox-beta-bin-icon.png") },
                                     { "chromium", "chromium", image("/usr/share/icons/hicolor/16x16/apps/chromium.png") },
-                                    { "shotwell", "shotwell", image("/home/schnouki/.config/awesome/icons/shotwell.png") },
-                                    { "spotify", "spotify", image("/home/schnouki/.config/awesome/icons/spotify.png") },
+                                    { "shotwell", "shotwell", image(config_dir .. "/icons/shotwell.png") },
+                                    { "spotify", "spotify", image(config_dir .. "/icons/spotify.png") },
                                     { "libre office", "soffice", image("/usr/share/icons/hicolor/16x16/apps/libreoffice-writer.png") },
                                     { "acroread", "acroread", image("/usr/share/pixmaps/acroread.png") },
                                     { "gcmd", "gnome-commander", image("/usr/share/pixmaps/gnome-commander.png") },
@@ -127,7 +128,9 @@ mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
 -- {{{ Wibox
 -- {{{ Default stuff
 -- Create a textclock widget
-mytextclock = awful.widget.textclock({ align = "right" }, " ⌚ %H:%M")
+mytextclock_icon = widget({ type = "imagebox" })
+mytextclock_icon.image = image(config_dir .. "/icons/time.png")
+mytextclock = awful.widget.textclock({ align = "right" }, "%H:%M")
 mytextclock_t = awful.tooltip({ objects = { mytextclock },
                                 timer_function = function() return os.date("%A %e %B %Y\n%T") end })
 
@@ -429,6 +432,7 @@ for s = 1, screen.count() do
         },
         mylayoutbox[s],
         mytextclock,
+        mytextclock_icon,
         s == 1 and mysystray or nil,
         pb_vol,
         tb_batt,
