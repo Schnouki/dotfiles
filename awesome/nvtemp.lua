@@ -67,8 +67,8 @@ function format()
    f:close()
    query()
    if #s > 0 then
-      return "GPU: " .. string.sub(s, 1, -2) .. "°C"
+      return string.sub(s, 1, -2) .. "°C"
    else
-      return "GPU: n/a"
+      return "n/a"
    end
 end

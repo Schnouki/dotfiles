@@ -246,8 +246,11 @@ tb_net.text = " " .. netmon.netmon(nm_ifs, "8.8.8.8")
 if gethost() == "thor" then
    require("nvtemp")
    nvtemp.init()
+
+   icon_nv = widget({ type = "imagebox" })
+   icon_nv.image = image(config_dir .. "/icons/temp.png")
    tb_nv = widget({ type = "textbox" })
-   tb_nv.text = " GPU: ... "
+   tb_nv.text = "..."
 end
 
 require("battmon")
@@ -444,6 +447,7 @@ for s = 1, screen.count() do
         tb_batt,
         tb_net,
         tb_nv,
+        icon_nv,
         tb_mails,
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
@@ -689,7 +693,7 @@ mytimer5 = timer { timeout = 5 }
 mytimer5:add_signal("timeout", function ()
     tb_batt.text = " " .. battery_mon() .. " "
     volume_upd(pb_vol, volume_get())
-    if tb_nv then tb_nv.text = " " .. nvtemp.format() .. " " end
+    if tb_nv then tb_nv.text = nvtemp.format() end
 end)
 mytimer5:start()
 
