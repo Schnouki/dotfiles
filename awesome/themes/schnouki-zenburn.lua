@@ -13,6 +13,7 @@ theme.wallpaper_cmd = { "smartbg -d 1000 /home/schnouki/images/wallpapers" }
 
 -- {{{ Styles
 theme.font      = "DejaVu Sans 8"
+theme.taglist_font = "DejaVu Sans 10"
 
 -- {{{ Colors
 theme.fg_normal = "#DCDCCC"

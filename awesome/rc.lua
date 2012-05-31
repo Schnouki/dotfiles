@@ -61,25 +61,26 @@ modkey = "Mod4"
 -- Table of layouts to cover with awful.layout.inc, order matters.
 layouts =
 {
-    awful.layout.suit.tile,
-    awful.layout.suit.tile.bottom,
-    awful.layout.suit.fair,
-    awful.layout.suit.fair.horizontal,
-    awful.layout.suit.max,
-    awful.layout.suit.max.fullscreen,
-    awful.layout.suit.magnifier,
-    awful.layout.suit.floating,
-    awful.layout.suit.spiral,
-    awful.layout.suit.spiral.dwindle,
+    awful.layout.suit.tile,            --  1
+    awful.layout.suit.tile.bottom,     --  2
+    awful.layout.suit.fair,            --  3
+    awful.layout.suit.fair.horizontal, --  4
+    awful.layout.suit.max,             --  5
+    awful.layout.suit.max.fullscreen,  --  6
+    awful.layout.suit.magnifier,       --  7
+    awful.layout.suit.floating,        --  8
+    awful.layout.suit.spiral,          --  9
+    awful.layout.suit.spiral.dwindle,  -- 10
 }
 -- }}}
 
 -- {{{ Tags
 -- Define a tag table which hold all screen tags.
 tags = {}
-for s = 1, screen.count() do
+tags[1] = awful.tag({"‽", "✉", "✪", "➍", "➎", "➏", "➐", "☮", "♫"}, 1, layouts[1])
+for s = 2, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[1])
+    tags[s] = awful.tag({"➊", "➋", "➌", "➍", "➎", "➏", "➐", "➑", "➒" }, s, layouts[1])
 end
 -- }}}
 
