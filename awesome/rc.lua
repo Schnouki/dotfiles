@@ -82,6 +82,12 @@ for s = 2, screen.count() do
     -- Each screen has its own tag table.
     tags[s] = awful.tag({"➊", "➋", "➌", "➍", "➎", "➏", "➐", "➑", "➒" }, s, layouts[1])
 end
+
+-- Customize some tags
+awful.tag.setmwfact(0.72, tags[1][1])
+awful.tag.setmwfact(0.72, tags[1][2])
+awful.tag.setmwfact(0.65, tags[1][3])
+awful.tag.setmwfact(0.65, tags[1][8])
 -- }}}
 
 -- {{{ Menu
