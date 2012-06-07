@@ -13,6 +13,7 @@
 
 (folding-add-to-marks-list 'go-mode "// {{{" "// }}}" nil t)
 
+(defalias 'py-toggle-shells 'py-toggle-shell)
 (autoload 'python-mode "python-mode" "Python mode." t)
 (autoload 'python2-mode "python-mode" "Python2 mode." t)
 (autoload 'python3-mode "python-mode" "Python3 mode." t)
