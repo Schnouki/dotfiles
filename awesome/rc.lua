@@ -91,6 +91,11 @@ awful.tag.setmwfact(0.72, tags[1][1])
 awful.tag.setmwfact(0.72, tags[1][2])
 awful.tag.setmwfact(0.65, tags[1][3])
 awful.tag.setmwfact(0.65, tags[1][8])
+
+-- Set last tag of each screen to floating
+for s = 1, screen.count() do
+   awful.layout.set(layouts[8], tags[s][9])
+end
 -- }}}
 
 -- {{{ Menu
@@ -663,7 +668,7 @@ awful.rules.rules = {
       properties = { floating = true } },
     { rule_any = { class = { "Gimp", "XVroot" } },
       properties = { floating = true } },
-    { rule_any = { class = { "Galculator", "Gnote", "Virtualbox", "Wine" } },
+    { rule_any = { class = { "Galculator", "Gnote", "VirtualBox", "Wine" } },
       properties = { floating = true } },
     { rule_any = { name = { "Gnuplot (window id : 0)", "R Graphics: Device 2 (ACTIVE)" } },
       properties = { floating = true } },
