@@ -320,6 +320,9 @@ function win_info ()
    })
 end
 
+-- Localiser le pointeur de la souris
+mymousefinder = awful.mouse.finder()
+
 -- Widget with number of unread mails if notmuch is available
 local f = io.open("/usr/bin/notmuch")
 if f then
@@ -418,6 +421,9 @@ persokeys = {
    -- Éditeur de texte avec la touche ThinkVantage
    awful.key({ }, "XF86Launch1",      function () awful.util.spawn(editor_cmd) end),
    awful.key({ modkey }, "KP_Insert", function () awful.util.spawn(editor_cmd) end),
+
+   -- Localiser le pointeur
+   awful.key({ modkey, "Shift" }, "f", function() mymousefinder:find() end),
 
    -- Media player
    awful.key({ }, "XF86AudioStop", mpris2("stop")),
