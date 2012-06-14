@@ -10,6 +10,7 @@ require("naughty")
 require("eminent")
 -- Vicious widgets
 require("vicious")
+require("vicious.contrib")
 -- Markup functions
 require("markup")
 
@@ -269,24 +270,6 @@ require("battmon")
 tb_batt = widget({ type = "textbox" })
 tb_batt.text = " " .. battery_mon() .. " "
 
-require("volumebar")
-pb_vol = awful.widget.progressbar()
-pb_vol:set_width(10)
-pb_vol:set_height(18)
-pb_vol:set_vertical(true)
-pb_vol:set_background_color("#000000")
-pb_vol:set_border_color("#000000")
-pb_vol:set_max_value(100)
-volume_upd(pb_vol, volume_get())
-
-pb_vol.widget:buttons(awful.util.table.join(
-       awful.button({ }, 1, function () volume_upd(pb_vol, volume_plus() ) end),
-       awful.button({ }, 4, function () volume_upd(pb_vol, volume_plus() ) end),
-       awful.button({ }, 3, function () volume_upd(pb_vol, volume_minus()) end),
-       awful.button({ }, 5, function () volume_upd(pb_vol, volume_minus()) end),
-       awful.button({ }, 2, function () volume_upd(pb_vol, volume_mute() ) end)
-))
-
 -- Afficher des infos sur le client qui a le focus
 -- d'après http://github.com/MajicOne/awesome-configs/blob/master/rc.lua
 function win_info ()
@@ -386,18 +369,48 @@ memwidget:set_border_color("#000000")
 memwidget:set_gradient_colors({ "#66CC66", "#CCCC66", "#CC6666" })
 memwidget:set_gradient_angle(180)
 vicious.register(memwidget, vicious.widgets.mem, "$1", 3)
+
+volbar = awful.widget.progressbar()
+volbar:set_width(10)
+volbar:set_height(18)
+volbar:set_vertical(true)
+volbar:set_background_color("#000000")
+volbar:set_border_color("#000000")
+vicious.register(volbar, vicious.contrib.pulse,
+                 function (widget, args)
+                    local col = "#6666cc"
+                    local vol = args[1]
+                    if args[2] == "off" then
+                       col = "#666666"
+                       vol = 100
+                    end
+                    widget:set_color(col)
+                    return vol
+                 end, 5)
+
+function volume_up()   vicious.contrib.pulse.add( 5)  vicious.force({volbar}) end
+function volume_down() vicious.contrib.pulse.add(-5)  vicious.force({volbar}) end
+function volume_mute() vicious.contrib.pulse.toggle() vicious.force({volbar}) end
+
+volbar.widget:buttons(awful.util.table.join(
+       awful.button({ }, 1, function () awful.util.spawn("pavucontrol") end),
+       awful.button({ }, 4, volume_up),
+       awful.button({ }, 5, volume_down),
+       awful.button({ }, 2, volume_mute)
+))
+
 -- }}}
 
 -- {{{ Raccourcis claviers persos
 persokeys = {
    -- Volume
-   awful.key({ }, "XF86AudioRaiseVolume", function () volume_upd(pb_vol, volume_plus())  end),
-   awful.key({ }, "XF86AudioLowerVolume", function () volume_upd(pb_vol, volume_minus()) end),
-   awful.key({ }, "XF86AudioMute",        function () volume_upd(pb_vol, volume_mute())  end),
+   awful.key({ }, "XF86AudioRaiseVolume", volume_up),
+   awful.key({ }, "XF86AudioLowerVolume", volume_down),
+   awful.key({ }, "XF86AudioMute",        volume_mute),
 
-   awful.key({ modkey }, "Up",        function () volume_upd(pb_vol, volume_plus())  end),
-   awful.key({ modkey }, "Down",      function () volume_upd(pb_vol, volume_minus()) end),
-   awful.key({ modkey }, "KP_Delete", function () volume_upd(pb_vol, volume_mute())  end),
+   awful.key({ modkey }, "Up",        volume_up),
+   awful.key({ modkey }, "Down",      volume_down),
+   awful.key({ modkey }, "KP_Delete", volume_mute),
 
    -- F2 - verrouiller l'écran
    awful.key({ }, "XF86ScreenSaver",      function () awful.util.spawn("xscreensaver-command -lock") end),
@@ -483,7 +496,7 @@ for s = 1, screen.count() do
         separator,
         s == 1 and mysystray or nil,
         s == 1 and separator or nil,
-        pb_vol.widget,
+        volbar.widget,
         tb_batt,
         tb_net,
         separator,
@@ -691,6 +704,9 @@ awful.rules.rules = {
       properties = { floating=true, tag = tags[1][9] } },
     { rule = { class = "Audacious" },
       properties = { floating = true, ontop = true, sticky = true } },
+    { rule = { class = "Pavucontrol" },
+      properties = { floating = true },
+      callback = awful.placement.centered },
     { rule = { class = nil, instance = nil },
       callback = handle_graphite },
 }
@@ -740,7 +756,6 @@ client.add_signal("unfocus", function(c) c.border_color = beautiful.border_norma
 mytimer5 = timer { timeout = 5 }
 mytimer5:add_signal("timeout", function ()
     tb_batt.text = " " .. battery_mon() .. " "
-    volume_upd(pb_vol, volume_get())
     if tb_nv then tb_nv.text = nvtemp.format() end
 end)
 mytimer5:start()
