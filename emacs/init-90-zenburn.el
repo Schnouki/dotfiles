@@ -174,8 +174,8 @@
 ;; show-paren-mode
 (eval-after-load 'paren
   '(progn
-     (set-face-attribute 'show-paren-match    nil :weight 'normal :foreground nil :background zenburn-blue-5)
-     (set-face-attribute 'show-paren-mismatch nil :weight 'bold   :foreground nil :background "#6c3333")))
+     (set-face-attribute 'show-paren-match    nil :weight 'bold :foreground nil :background zenburn-bg-1)
+     (set-face-attribute 'show-paren-mismatch nil :weight 'bold :foreground zenburn-red :background "#3c1313")))
 
 ;; message-mode
 (eval-after-load 'message
@@ -196,12 +196,6 @@
 ;; folding
 (eval-after-load 'folding
    '(progn
-      ;; (dolist (face '(schnouki/folding-begin-face schnouki/folding-end-face))
-      ;;   (copy-face font-lock-reference-face face)
-      ;;   (set-face-foreground face zenburn-magenta)) ;;green+2))
-      ;; (setq folding-font-lock-begin-mark 'schnouki/folding-begin-face
-      ;; 	   folding-font-lock-end-mark   'schnouki/folding-end-face)
-      ;; (set-face-foreground 'folding-font-lock-support zenburn-magenta)
       (defface folding-header-line `((((class color) (min-colors 89))
 				      (:foreground ,zenburn-green+4
 						   :background ,zenburn-bg-1
