@@ -696,6 +696,8 @@ awful.rules.rules = {
     { rule = { class = "Firefox" },
       except = { instance = "Navigator" },
       properties = { floating = true } },
+    { rule = { class = "Plugin-container" },
+      properties = { floating = true } },
     { rule = { class = "Gajim.py", role = "roster" },
       properties = { tag = tags[1][1] } },
     { rule = { class = "Gajim.py", role = "messages" },
