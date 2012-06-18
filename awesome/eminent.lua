@@ -66,39 +66,6 @@ awful.tag.new = function (names, screen, layout)
     return orig.new(names, screen, layout)
 end
 
--- View tag by relative index
-awful.tag.viewidx = function (i, screen)
-    -- Hide tags
-    local s = screen and screen.index or capi.mouse.screen
-    local ctags = capi.screen[s]:tags()
-    local tags = gettags(s)
-    local sel = awful.tag.selected()
-
-    -- Check if we should "create" a new tag
-    local selidx = awful.util.table.hasitem(tags, sel)
-    local tagidx = awful.util.table.hasitem(ctags, sel)
-
-    -- Create a new tag if needed
-    if selidx == #tags and i == 1 and #sel:clients() > 0 then
-        -- Deselect all
-        awful.tag.viewnone(s)
-
-        if #ctags >= tagidx+1 then
-            -- Focus next
-            ctags[tagidx+1].selected = true
-        else
-            -- Create new
-            local tag = capi.tag { name = ""..(tagidx+1) }
-            tag.screen = s
-            tag.selected = true
-            awful.tag.setproperty(tag, "layout", deflayout)
-        end
-    else
-        -- Call original
-        orig.viewidx(i, screen)
-    end
-end
-
 -- Taglist label functions
 awful.widget.taglist.label.all = function (t, args)
     if t.selected or #t:clients() > 0 then
