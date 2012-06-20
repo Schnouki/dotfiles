@@ -42,10 +42,10 @@
 
 ;; notmuch
 (setq notmuch-search-line-faces '(("deleted" . '(:strike-through t))
-				  ("draft"   . '(:slant italic))
+				  ("draft"   . '(:slant italic :background "#2b2b2b"))
 				  ("flagged" . '(:background "#4b2f4b"))
-				  ("sent"    . '(:weight bold))
-				  ("todo"    . '(:background "#2f2f4b"))
+				  ("sent"    . '(:slant italic))
+				  ("todo"    . '(:weight bold))
 				  ("unread"  . '(:background "#2b3b2b"))))
 (eval-after-load 'notmuch
   '(progn
