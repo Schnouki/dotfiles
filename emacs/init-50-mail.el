@@ -105,11 +105,6 @@
 					  (bury-buffer)))))
 	   mm-handle))))
 
-     (defun schnouki/notmuch-show-verify ()
-       "Verify the PGP signature of the current mail."
-       (interactive)
-       (shell-command (concat "~/.config/notmuch/verify " (notmuch-show-get-filename)) "*Notmuch verify*"))
-
      (defun schnouki/notmuch-show-keys ()
        (interactive)
        (local-set-key "H" 'schnouki/notmuch-view-html)
@@ -118,8 +113,7 @@
        (local-set-key "ra" 'notmuch-show-reply)
        (local-set-key "rs" 'notmuch-show-reply-sender)
        (local-set-key "SH" 'schnouki/notmuch-signal-ham)
-       (local-set-key "SS" 'schnouki/notmuch-signal-spam)
-       (local-set-key "W" 'schnouki/notmuch-show-verify))
+       (local-set-key "SS" 'schnouki/notmuch-signal-spam))
 
      (defun schnouki/notmuch-search-keys ()
        (interactive)
