@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Texte en gras
+# key: bf
+# --
+\textbf{$1}$0

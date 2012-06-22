@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Texte en italique
+# key: it
+# --
+\textit{$1}$0
