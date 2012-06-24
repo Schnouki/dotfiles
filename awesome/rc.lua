@@ -701,7 +701,7 @@ awful.rules.rules = {
       properties = { floating=true, tag = tags[1][9] } },
     { rule = { class = "Audacious" },
       properties = { floating = true, ontop = true, sticky = true } },
-    { rule = { class = "Pavucontrol" },
+    { rule_any = { class = {"Arandr", "Pavucontrol" } },
       properties = { floating = true },
       callback = awful.placement.centered },
     { rule = { class = nil, instance = nil },
