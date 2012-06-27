@@ -61,6 +61,19 @@
 ;; Use "initials" completion style
 (add-to-list 'completion-styles 'initials t)
 
+;; Set justification with C-x M-f
+(global-set-key (kbd "C-x M-f") 'set-justification)
+
+;; Avoid sentences that end with 2 spaces (American style).
+;; TODO: change this automatically according to the current dictionary
+(setq sentence-end-double-space nil)
+
+;; Avoid breaking lines at '(' or ':' characters
+(add-hook 'fill-no-break-predicate 'fill-french-nobreak-p)
+
+;; Justify at 80 columns
+(setq-default fill-column 80)
+
 ;; Display matching parenthesis
 ;; http://emacs-fu.blogspot.com/2009/01/balancing-your-parentheses.html
 (require 'paren)
@@ -85,7 +98,6 @@
     (if (not (null matching-text))
 	(message matching-text))))
 
-
 ;; Highlight current line
 ;; http://www.emacsblog.org/2007/04/09/highlight-the-current-line/
 (global-hl-line-mode 1)
@@ -100,7 +112,6 @@
     (delete-selection-mode 1)
     (setq x-select-enable-clipboard t
 	  x-select-enable-primary   t)))
-
 
 ;; Highlight current region
 (transient-mark-mode t)
