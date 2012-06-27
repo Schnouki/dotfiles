@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: Figure
+# key: figure
+# --
+\begin{figure}${1:[${2:h}]}${3:
+  \centering}
+  \includegraphics${10:[$11]}{$4}${5:
+  \caption{$6}}${7:
+  \label{$8}}
+\end{figure}
+$0
