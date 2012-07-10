@@ -117,6 +117,7 @@ gamemenu = {
    { "kildclient", "kildclient", image("/usr/share/pixmaps/kildclient.png") },
    { "kobo deluxe", "kobodl", image("/usr/share/pixmaps/kobo-icon.xpm") },
    { "minecraft", "minecraft", image("/usr/share/pixmaps/minecraft.png") },
+   { "naev", "naev", image("/usr/share/pixmaps/naev.png") },
 }
 
 utilsmenu = {
