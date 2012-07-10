@@ -1,0 +1,37 @@
+# -*- mode: snippet -*-
+# name: Modèle de lettre
+# key: lettre
+# expand-env: ((yas/indent-line 'fixed))
+# --
+\documentclass[11pt]{lettre}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[frenchb]{babel}
+
+\begin{document}
+\begin{letter}{\textbf{${1:Nom du destinataire}} \\\\ ${2:Adresse du destinataire}}
+\makeatletter
+\def\toaddress@let@vpos{70}%
+\def\fromlieu@let@vpos{20}%
+\makeatother
+
+\name{${3:Nom de l'expéditeur}}
+\address{\textbf{$3} \\\\ ${4:Adresse de l'expéditeur}}
+\lieu{${5:Ville}}
+\telephone{${6:Téléphone}}
+\nofax
+
+\def\concname{\bfseries Objet :~}
+\conc{${7:Objet}}
+
+\opening{${8:Madame, Monsieur,}}
+
+$0
+
+\closing{Dans l'attente d'une réponse de votre part, je vous prie d'agréer,
+  Madame, Monsieur, l'expression de mes sentiments distingués.}
+
+\end{letter}
+\end{document}
