@@ -13,3 +13,4 @@
 
 # Custom types
 --type-set=cuda=.cu
+--type-set=coffee=.coffee
