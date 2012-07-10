@@ -7,7 +7,7 @@ ret=0
 # Autotag new messages
 nosync $CONFIGDIR/autotag.py || (echo "Autotag failed." && ret=1)
 
-awesome_end_update 
+awesome_end_update
 dbus-send --session --dest="org.gnu.Emacs" "/org/gnu/Emacs" "org.gnu.Emacs.NotmuchNotify"
 $CONFIGDIR/notify.py
 
