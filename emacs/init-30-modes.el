@@ -68,12 +68,13 @@
 (autoload 'golbarg-mode "golbarg.el" "Golbarg mode." t)
 (autoload 'golbarg-new-draft "golbarg.el" "New Golbarg draft." t)
 (setq golbarg-posts-dir "~/site/schnouki.net/posts"
-      golbarg-drafts-dir "~/site/schnouki.net/drafts")
+      golbarg-drafts-dir "~/Dropbox/blog-drafts")
 (global-set-key (kbd "C-! g") 'golbarg-new-draft)
 (global-set-key (kbd "C-ç g") 'golbarg-new-draft)
 (global-set-key (kbd "C-! M-g") '(lambda () (interactive) (find-file golbarg-drafts-dir)))
 (global-set-key (kbd "C-ç M-g") '(lambda () (interactive) (find-file golbarg-drafts-dir)))
-(add-to-list 'auto-mode-alist (cons (concat "^" (expand-file-name "~/site/schnouki.net") "/.+") 'golbarg-mode))
+(add-to-list 'auto-mode-alist (cons (concat "^" (expand-file-name golbarg-posts-dir)  "/.+") 'golbarg-mode))
+(add-to-list 'auto-mode-alist (cons (concat "^" (expand-file-name golbarg-drafts-dir) "/.+") 'golbarg-mode))
 (add-hook 'golbarg-mode-hook
 	  '(lambda ()
 	     (turn-on-auto-fill)
