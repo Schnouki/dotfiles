@@ -10,3 +10,5 @@ unset PROFILE_LOADED
 . ~/.config/zsh/aliases
 . ~/.config/zsh/functions
 . ~/.config/zsh/keys
+
+. /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
