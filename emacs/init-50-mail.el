@@ -76,6 +76,18 @@
 ;; Useful key bindings in notmuch buffers
 (eval-after-load 'notmuch
   '(progn
+     (define-key 'notmuch-show-mode-map "H" 'schnouki/notmuch-view-html)
+     (define-key 'notmuch-show-mode-map "r" nil)
+     (define-key 'notmuch-show-mode-map "R" nil)
+     (define-key 'notmuch-show-mode-map "ra" 'notmuch-show-reply)
+     (define-key 'notmuch-show-mode-map "rs" 'notmuch-show-reply-sender)
+     (define-key 'notmuch-show-mode-map "SH" 'schnouki/notmuch-signal-ham)
+     (define-key 'notmuch-show-mode-map "SS" 'schnouki/notmuch-signal-spam)
+
+     (define-key 'notmuch-search-mode-map "a" 'schnouki/notmuch-search-archive-thread)
+     (define-key 'notmuch-search-mode-map "d" 'notmuch-search-filter-by-date)
+     (define-key 'notmuch-search-mode-map (kbd "C-RET") 'schnouki/notmuch-search-show-thread-inhibit-images)
+
      (defun notmuch-search-filter-by-date (days)
        (interactive "NNumber of days to display: ")
        (let* ((now (current-time))
@@ -104,25 +116,6 @@
 					  (browse-url-of-buffer)
 					  (bury-buffer)))))
 	   mm-handle))))
-
-     (defun schnouki/notmuch-show-keys ()
-       (interactive)
-       (local-set-key "H" 'schnouki/notmuch-view-html)
-       (local-unset-key "r")
-       (local-unset-key "R")
-       (local-set-key "ra" 'notmuch-show-reply)
-       (local-set-key "rs" 'notmuch-show-reply-sender)
-       (local-set-key "SH" 'schnouki/notmuch-signal-ham)
-       (local-set-key "SS" 'schnouki/notmuch-signal-spam))
-
-     (defun schnouki/notmuch-search-keys ()
-       (interactive)
-       (local-set-key "a" 'schnouki/notmuch-search-archive-thread)
-       (local-set-key "d" 'notmuch-search-filter-by-date)
-       (local-set-key (kbd "M-RET") 'schnouki/notmuch-search-show-thread-inhibit-images))
-
-     (add-hook 'notmuch-show-hook 'schnouki/notmuch-show-keys)
-     (add-hook 'notmuch-search-hook 'schnouki/notmuch-search-keys)
 
      ;; Custom version of notmuch address expansion. Just a little bit different.
      (defun notmuch-address-expand-name ()
