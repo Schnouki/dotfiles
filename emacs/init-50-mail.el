@@ -76,6 +76,9 @@
 ;; Useful key bindings in notmuch buffers
 (eval-after-load 'notmuch
   '(progn
+     (load "~/dev/notmuch/contrib/notmuch-pick/notmuch-pick.el")
+     (notmuch-pick-init)
+
      (define-key 'notmuch-show-mode-map "H" 'schnouki/notmuch-view-html)
      (define-key 'notmuch-show-mode-map "r" nil)
      (define-key 'notmuch-show-mode-map "R" nil)
