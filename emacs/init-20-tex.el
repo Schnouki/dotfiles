@@ -5,6 +5,7 @@
 ;; Basic settings
 (setq TeX-auto-save t
       TeX-parse-self t
+      TeX-save-query nil
       TeX-PDF-mode t)
 (setq-default TeX-master nil)
 
@@ -61,7 +62,8 @@
                 '("DVI to PDF" "dvipdfmx %d" TeX-run-command t t) t))
 
 ;; Default scaling for preview-latex
-(setq preview-scale 1.4)
+(setq-default preview-scale 1.4
+	      preview-scale-function '(lambda () (* (/ 10.0 (preview-document-pt)) preview-scale)))
 
 ;; SyncTeX (http://www.emacswiki.org/emacs/AUCTeX#toc19)
 (defun synctex/un-urlify (fname-or-url)
