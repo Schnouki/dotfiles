@@ -451,13 +451,19 @@ persokeys = {
    awful.key({ modkey, "Control" }, "Right", mpris2("next")),
 
    awful.key({ modkey, "Shift"   }, "i", mpris2("info")),
+
+   -- TypeMatrix bépo
+   awful.key({ modkey            }, "i", awful.tag.history.restore), -- "desktop" key
+   awful.key({                   }, "XF86Calculator", function () awful.tag.viewonly(tags[1][1]) end),
+   awful.key({                   }, "XF86Mail",       function () awful.tag.viewonly(tags[1][2]) end),
+   awful.key({                   }, "XF86HomePage",   function () awful.tag.viewonly(tags[1][3]) end),
 }
 
 persoclientkeys = {
    awful.key({ modkey, "Shift"   }, "t", function (c) if c.titlebar then awful.titlebar.remove(c) else awful.titlebar.add(c, { modkey = modkey }) end end),
    awful.key({ modkey            }, "s", function (c) c.sticky = not c.sticky end),
    awful.key({ modkey, "Shift"   }, "s", function (c) c.ontop = not c.ontop end),
-   awful.key({ modkey            }, "i", win_info),
+   awful.key({ modkey, "Control" }, "i", win_info),
 }
 -- }}}
 

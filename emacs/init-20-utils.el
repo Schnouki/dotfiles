@@ -112,6 +112,8 @@ Return the index of the matching item, or nil if not found."
 
 ;; ace-jump (reminder: C-x C-SPC to pop-global-mark)
 (global-set-key (kbd "C-;") 'ace-jump-mode)
+(global-set-key (kbd "C-'") 'ace-jump-mode)
+
 ;; http://irreal.org/blog/?p=760
 (add-hook 'ace-jump-mode-before-jump-hook
 	  (lambda () (push-mark (point) t))) ;until it's fixed in Maramalade
