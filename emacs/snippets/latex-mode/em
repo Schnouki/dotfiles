@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
 # name: Texte mis en valeur
-# key: emph
+# key: em
 # --
 \emph{$1}$0
