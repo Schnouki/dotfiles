@@ -57,12 +57,8 @@
 ;	(concat (substring ediff-diff-ok-lines-regexp 0 -2) "\\|.*Pas de fin de ligne\\)")))
 
 ;; Auto-Complete
-(add-to-list 'load-path "/usr/share/emacs/site-lisp/auto-complete")
-(if (require 'auto-complete-config nil t)
-    (progn
-      (add-to-list 'ac-dictionary-directories "/usr/share/emacs/site-lisp/auto-complete/ac-dict")
-      (ac-config-default)
-      (add-to-list 'ac-sources 'ac-source-gtags)
-      (dolist (mode '(python2-mode python3-mode))
-	(add-to-list 'ac-modes mode)))
-  (message "auto-complete is not installed!"))
+(require 'auto-complete-config)
+(ac-config-default)
+(add-to-list 'ac-sources 'ac-source-gtags)
+(dolist (mode '(python2-mode python3-mode))
+  (add-to-list 'ac-modes mode))
