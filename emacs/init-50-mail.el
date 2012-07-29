@@ -89,7 +89,7 @@
 
      (define-key 'notmuch-search-mode-map "a" 'schnouki/notmuch-search-archive-thread)
      (define-key 'notmuch-search-mode-map "d" 'notmuch-search-filter-by-date)
-     (define-key 'notmuch-search-mode-map (kbd "C-RET") 'schnouki/notmuch-search-show-thread-inhibit-images)
+     (define-key 'notmuch-search-mode-map (kbd "C-<return>") 'schnouki/notmuch-search-show-thread-inhibit-images)
 
      (defun notmuch-search-filter-by-date (days)
        (interactive "NNumber of days to display: ")
