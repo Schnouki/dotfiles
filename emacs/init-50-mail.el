@@ -103,7 +103,8 @@
 
      (defun schnouki/notmuch-search-archive-thread ()
        (interactive)
-       (notmuch-search-tag '("-inbox" "-unread")))
+       (notmuch-search-tag '("-inbox" "-unread"))
+       (notmuch-search-next-thread))
 
      (defun schnouki/notmuch-view-html ()
        "Open the HTML parts of a mail in a web browser."
