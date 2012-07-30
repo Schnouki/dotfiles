@@ -433,8 +433,9 @@ persokeys = {
    awful.key({ }, "Print", function () awful.util.spawn("twitscreen") end),
 
    -- Éditeur de texte avec la touche ThinkVantage
-   awful.key({ }, "XF86Launch1",      function () awful.util.spawn(editor_cmd) end),
-   awful.key({ modkey }, "KP_Insert", function () awful.util.spawn(editor_cmd) end),
+   awful.key({                 }, "XF86Launch1", function () awful.util.spawn(editor_cmd) end),
+   awful.key({ modkey          }, "KP_Insert",   function () awful.util.spawn(editor_cmd) end),
+   awful.key({ modkey, "Shift" }, "Return",      function () awful.util.spawn(editor_cmd) end),
 
    -- Localiser le pointeur
    awful.key({ modkey, "Shift" }, "f", function() mymousefinder:find() end),
@@ -689,7 +690,7 @@ awful.rules.rules = {
                      keys = clientkeys,
                      buttons = clientbuttons } },
     -- Simple rules for floating windows
-    { rule_any = { class = { "Galculator", "Gimp", "Gmpc", "Gnote", "MPlayer", "mplayer2",
+    { rule_any = { class = { "Galculator", "Gimp", "Gmpc", "Gnote", "Klavaro", "MPlayer", "mplayer2",
                              "pinentry", "Plugin-container", "Smplayer", "VirtualBox", "Vlc",
                              "Wine", "Xfmedia", "xine", "XVroot" },
                    instance = { "pinentry-gtk-2" },
