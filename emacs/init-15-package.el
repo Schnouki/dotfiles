@@ -14,9 +14,9 @@
 ;; Packages
 (setq schnouki/packages '(ace-jump-mode anything anything-match-plugin auto-complete coffee-mode
 			  color-theme deft dtrt-indent go-mode haskell-mode ioccur lua-mode magit
-			  magithub markdown-mode mediawiki melpa php-mode pretty-lambdada
-			  python-pep8 rainbow-delimiters rainbow-mode solarized-theme unbound
-			  undo-tree yaml-mode yasnippet zenburn-theme znc))
+			  magithub markdown-mode mediawiki melpa php-mode pkgbuild-mode
+			  pretty-lambdada python-pep8 rainbow-delimiters rainbow-mode
+			  solarized-theme unbound undo-tree yaml-mode yasnippet zenburn-theme znc))
 (let ((refreshed nil))
   (dolist (package schnouki/packages)
     (unless (package-installed-p package)
