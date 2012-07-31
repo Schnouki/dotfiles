@@ -458,6 +458,8 @@ persokeys = {
    awful.key({                   }, "XF86Calculator", function () awful.tag.viewonly(tags[1][1]) end),
    awful.key({                   }, "XF86Mail",       function () awful.tag.viewonly(tags[1][2]) end),
    awful.key({                   }, "XF86HomePage",   function () awful.tag.viewonly(tags[1][3]) end),
+   awful.key({         "Shift"   }, "XF86HomePage",   function () awful.tag.viewonly(tags[1][8]) end),
+   awful.key({                   }, "XF86AudioPause", function () awful.tag.viewonly(tags[1][9]) end), -- Shift+Play
 }
 
 persoclientkeys = {
