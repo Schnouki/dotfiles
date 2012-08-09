@@ -35,14 +35,14 @@
 
 ;; Compilation: scroll the *compilation* buffer window as output appears, but
 ;; stop scrolling at the first error
-(setq compilation-scroll-output t
-      compilation-window-height 8)
+(setq compilation-scroll-output 'first-error
+      compilation-window-height nil)
 
 ;; Compilation: close the window when successful
 ;; from http://www.emacswiki.org/emacs/ModeCompile
 (defun compilation-exit-autoclose (status code msg)
   ;; If M-x compile exists with a 0
-  (when (and (eq status 'exit) (zerop code))
+  (when (and (eq status 'exit) (zerop code) (not (string= mode-name "Ack")))
     ;; then bury the *compilation* buffer, so that C-x b doesn't go there
     (bury-buffer)
     ;; and delete the *compilation* window
