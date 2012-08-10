@@ -21,6 +21,11 @@
   (setq default-justification 'left))
 (add-hook 'LaTeX-mode-hook 'schnouki/latex-auto-fill)
 
+;; Fill for BibTeX
+(setq bibtex-align-at-equal-sign t)
+(add-hook 'bibtex-mode-hook (lambda () (set-fill-column 120)))
+(set-fill-column 80)
+
 ;; Compilation command
 (add-hook 'LaTeX-mode-hook (lambda () (setq compile-command "latexmk -pdf")))
 
