@@ -13,18 +13,8 @@
 
 (folding-add-to-marks-list 'go-mode "// {{{" "// }}}" nil t)
 
-(defalias 'py-toggle-shells 'py-toggle-shell)
-(autoload 'python-mode "python-mode" "Python mode." t)
-(autoload 'python2-mode "python-mode" "Python2 mode." t)
-(autoload 'python3-mode "python-mode" "Python3 mode." t)
+(autoload 'python-mode "python" "Python mode." t)
 (add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
-(folding-add-to-marks-list 'python2-mode "# {{{"  "# }}}" nil t)
-(folding-add-to-marks-list 'python3-mode "# {{{"  "# }}}" nil t)
-(setq py-outline-minor-mode-p nil
-      py-hide-show-minor-mode-p t)
-(let ((settings (cdr (assq 'python-mode hs-special-modes-alist))))
-  (dolist (mode '(python2-mode python3-mode))
-    (add-to-list 'hs-special-modes-alist (cons mode settings))))
 
 (autoload 'php-mode "php-mode.el" "Php mode." t)
 (add-to-list 'auto-mode-alist '("\\.php[345]?$" . php-mode))
