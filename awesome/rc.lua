@@ -250,8 +250,11 @@ separator.image = image(config_dir .. "/icons/separator.png")
 require("netmon")
 netmon.init()
 tb_net = widget({ type = "textbox" })
-nm_ifs = { ["E"] = "eth0" }
-if gethost() == "odin" then
+nm_ifs = {}
+if gethost() == "thor" then
+   nm_ifs["E"] = "lan"
+elseif gethost() == "odin" then
+   nm_ifs["E"] = "eth0"
    nm_ifs["W"] = "wlan0"
 end
 tb_net.text = " " .. netmon.netmon(nm_ifs, "8.8.8.8")
