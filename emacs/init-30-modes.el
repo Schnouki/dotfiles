@@ -16,6 +16,11 @@
 (autoload 'python-mode "python" "Python mode." t)
 (add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
 
+(add-hook 'coffee-mode-hook
+	  '(lambda ()
+	     (setq tab-width 4)
+	     (local-set-key (kbd "C-c C-c") 'coffee-compile-buffer)))
+
 (autoload 'php-mode "php-mode.el" "Php mode." t)
 (add-to-list 'auto-mode-alist '("\\.php[345]?$" . php-mode))
 
@@ -71,7 +76,7 @@
 	     (turn-on-auto-fill)
 	     (ispell-change-dictionary "american")
 	     (flyspell-mode)
-	     (setq compile-command "make -C ~/site/schnouki.net")))
+	     (set (make-local-variable 'compile-command) "make -C ~/site/schnouki.net")))
 
 ;; -----------------------------------------------------------------------------
 ;; Minor modes
