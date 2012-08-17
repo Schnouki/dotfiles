@@ -117,3 +117,13 @@ Return the index of the matching item, or nil if not found."
 ;; http://irreal.org/blog/?p=760
 (add-hook 'ace-jump-mode-before-jump-hook
 	  (lambda () (push-mark (point) t))) ;until it's fixed in Maramalade
+
+;; Google Translate
+(autoload 'google-translate-query-translate "google-translate" nil t)
+(global-set-key (kbd "C-! w") 'google-translate-query-translate)
+(setq google-translate-default-source-language "en"
+      google-translate-default-target-language "fr"
+      google-translate-enable-ido-completion t)
+
+;; NSFW
+(autoload 'sudoku "sudoku" nil t)
