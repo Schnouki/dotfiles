@@ -17,7 +17,6 @@ __pycache__/
 !gtkrc-theme-nox
 !gtkrc-odin
 !gtkrc-thor
-!.keysnail.js
 !Xdefaults
 !xinitrc
 !*.gpg
@@ -30,6 +29,5 @@ ddns/key
 !mozilla
 !mpDris2
 !notmuch
-!roxterm.sourceforge.net
 !urxvt
 !zsh
