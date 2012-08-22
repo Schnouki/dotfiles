@@ -53,7 +53,6 @@ qnotero &
 jamd &
 mpris2-info &
 mpd && mpDris2 &>/dev/null &
-urxvtd -q -o -f
 #gajim &
 #thunderbird &
 #firefox &
