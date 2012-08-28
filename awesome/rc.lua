@@ -422,9 +422,6 @@ persokeys = {
    -- F3 - éteindre l'écran
    awful.key({ }, "XF86Battery",          function () awful.util.spawn("xset dpms force suspend") end),
    awful.key({ modkey, "Control" }, "F3", function () awful.util.spawn("xset dpms force suspend") end),
-   -- F4 - mettre l'ordi en veille
-   awful.key({ }, "XF86Sleep",            function () awful.util.spawn("my-s2ram") end),
-   awful.key({ modkey, "Control" }, "F4", function () awful.util.spawn("my-s2ram") end),
    -- F7 - écran externe
    awful.key({ }, "XF86Display",     function () awful.util.spawn("gdisper") end),
 
