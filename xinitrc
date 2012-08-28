@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # Fuck Xorg -- https://bugs.freedesktop.org/show_bug.cgi?id=23705
 [[ $(hostname) == "odin" ]] && xrandr --fbmm `xrandr | sed -n '/ connected / {s/.* \([0-9]\+\)mm x \([0-9]\+\)mm/\1x\2/p;q}'`
