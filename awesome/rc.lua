@@ -9,8 +9,8 @@ require("naughty")
 -- Eminent dynamic tagging
 require("eminent")
 -- Vicious widgets
-require("vicious")
-require("vicious.contrib")
+vicious = require("vicious")
+vicious.contrib = require("vicious.contrib")
 -- Markup functions
 require("markup")
 
