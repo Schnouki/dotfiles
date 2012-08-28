@@ -15,6 +15,8 @@
 
 (autoload 'python-mode "python" "Python mode." t)
 (add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
+(defalias 'python2-mode 'python-mode)
+(defalias 'python3-mode 'python-mode)
 
 (add-hook 'coffee-mode-hook
 	  '(lambda ()
