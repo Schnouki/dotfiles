@@ -118,6 +118,11 @@ Return the index of the matching item, or nil if not found."
 (add-hook 'ace-jump-mode-before-jump-hook
 	  (lambda () (push-mark (point) t))) ;until it's fixed in Maramalade
 
+;; ioccur - incremental search of lines in current buffer matching input
+(add-to-list 'desktop-globals-to-save 'ioccur-history)
+(global-set-key (kbd "C-! C-s") 'ioccur)
+(global-set-key (kbd "C-! M-s") 'ioccur-find-buffer-matching)
+
 ;; Google Translate
 (autoload 'google-translate-query-translate "google-translate" nil t)
 (global-set-key (kbd "C-! w") 'google-translate-query-translate)
