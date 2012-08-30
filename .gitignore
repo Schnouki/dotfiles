@@ -8,6 +8,7 @@ __pycache__/
 
 # Dotfiles
 !ackrc
+!ctags
 !fonts.conf
 !globalrc
 !mimeo.conf

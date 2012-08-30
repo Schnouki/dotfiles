@@ -120,3 +120,4 @@
     )
   )
 (add-hook 'prog-mode-hook (lambda () (ctags-update-minor-mode t)))
+;; See also: https://gist.github.com/2901380
