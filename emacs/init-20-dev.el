@@ -102,3 +102,21 @@
 (add-to-list 'ac-sources 'ac-source-gtags)
 (dolist (mode '(python2-mode python3-mode))
   (add-to-list 'ac-modes mode))
+
+;; Exuberant ctags
+(require 'ctags-update)
+;;(setq ctags-update-lighter " CU")
+(define-minor-mode ctags-update-minor-mode
+  "auto update TAGS using `exuberant-ctags' in parent directory."
+  :lighter ""
+  :keymap ctags-update-minor-mode-map
+  :group 'etags
+  (if ctags-update-minor-mode
+      (progn
+        (add-hook 'after-save-hook 'ctags-update)
+        (run-hooks 'ctags-update-minor-mode-hook)
+        )
+    (remove-hook 'after-save-hook 'ctags-update)
+    )
+  )
+(add-hook 'prog-mode-hook (lambda () (ctags-update-minor-mode t)))

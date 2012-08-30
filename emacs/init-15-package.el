@@ -13,7 +13,7 @@
 
 ;; Packages
 (setq schnouki/packages '(ace-jump-mode ack-and-a-half anything anything-match-plugin auto-complete
-			  coffee-mode color-theme
+			  coffee-mode color-theme ctags-update
 			  deft dtrt-indent
 			  go-mode google-translate
 			  haskell-mode hideshowvis
