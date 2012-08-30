@@ -14,8 +14,8 @@
 ;; Packages
 (setq schnouki/packages '(ace-jump-mode ack-and-a-half anything anything-match-plugin auto-complete
 			  coffee-mode color-theme deft dtrt-indent go-mode google-translate
-			  haskell-mode ioccur lua-mode magit magithub markdown-mode mediawiki melpa
-			  php-mode pkgbuild-mode pretty-lambdada python python-pep8
+			  haskell-mode hideshowvis ioccur lua-mode magit magithub markdown-mode
+			  mediawiki melpa php-mode pkgbuild-mode pretty-lambdada python python-pep8
 			  rainbow-delimiters rainbow-mode solarized-theme sudoku unbound undo-tree
 			  yaml-mode yasnippet zenburn-theme znc))
 (let ((refreshed nil))

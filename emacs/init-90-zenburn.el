@@ -204,3 +204,10 @@
       (defvar folding-header-line-face 'folding-header-line)
       (setq folding-font-lock-begin-mark 'folding-header-line-face
 	    folding-font-lock-end-mark   'folding-header-line-face)))
+
+;; hideshowvis
+(eval-after-load 'hideshowvis
+  '(progn
+     (set-face-attribute 'hideshowvis-hidable-face nil :foreground zenburn-green+3 :box nil)
+     (set-face-attribute 'hs-fringe-face           nil :foreground zenburn-green+3 :box nil)
+     (set-face-attribute 'hs-face                  nil :foreground zenburn-green+3 :background zenburn-bg-1 :box (list :style 'pressed-button))))
