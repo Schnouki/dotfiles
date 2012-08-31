@@ -262,3 +262,7 @@
 			      (ido-read-file-name prompt dir default-fn mustmatch)))
 	 ad-do-it))
      (ad-activate 'mml-minibuffer-read-file)))
+
+;; Don't try to display PDFs inline when they have a wrong MIME type
+(eval-after-load 'mm-decode
+  '(add-to-list 'mm-inline-media-tests '("text/pdf" ignore ignore)))
