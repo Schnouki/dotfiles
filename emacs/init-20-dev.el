@@ -105,19 +105,6 @@
 
 ;; Exuberant ctags
 (require 'ctags-update)
-;;(setq ctags-update-lighter " CU")
-(define-minor-mode ctags-update-minor-mode
-  "auto update TAGS using `exuberant-ctags' in parent directory."
-  :lighter ""
-  :keymap ctags-update-minor-mode-map
-  :group 'etags
-  (if ctags-update-minor-mode
-      (progn
-        (add-hook 'after-save-hook 'ctags-update)
-        (run-hooks 'ctags-update-minor-mode-hook)
-        )
-    (remove-hook 'after-save-hook 'ctags-update)
-    )
-  )
-(add-hook 'prog-mode-hook (lambda () (ctags-update-minor-mode t)))
+(setq ctags-update-lighter " CU")
+(add-hook 'prog-mode-hook (lambda () (ctags-auto-update-mode t)))
 ;; See also: https://gist.github.com/2901380
