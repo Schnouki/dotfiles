@@ -108,3 +108,8 @@
 (setq ctags-update-lighter " CU")
 (add-hook 'prog-mode-hook (lambda () (ctags-auto-update-mode t)))
 ;; See also: https://gist.github.com/2901380
+
+;; Fixmee
+(require 'fixmee)
+(setq button-lock-mode-lighter "")
+(global-fixmee-mode 1)
