@@ -105,6 +105,3 @@
 ;; pretty-lambda
 (add-to-list 'pretty-lambda-auto-modes 'python-mode)
 (pretty-lambda-for-modes nil)
-
-;; rainbow-delimiters for nested parentheses/brackets/braces
-(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
