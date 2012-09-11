@@ -91,6 +91,7 @@
 
 ;; smerge-mode, as suggested in the doc
 (autoload 'smerge-mode "smerge-mode" nil t)
+(setq smerge-command-prefix (kbd "C-c '"))
 (defun sm-try-smerge ()
   (save-excursion
     (goto-char (point-min))
