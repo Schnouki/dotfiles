@@ -10,38 +10,23 @@
 
 bindkey 'OH'  beginning-of-line
 bindkey '[H'  beginning-of-line
-bindkey '[1~' beginning-of-line
-bindkey '[7~' beginning-of-line
 
 bindkey 'OF'  end-of-line
 bindkey '[F'  end-of-line
-bindkey '[4~' end-of-line
-bindkey '[8~' end-of-line
 
-bindkey '[A'  up-line-or-history
-bindkey '[B'  down-line-or-history
-
-bindkey '[C'  forward-char
-bindkey '[D'  backward-char
-
-#bindkey ''    backward-delete-char
+bindkey '[2~' overwrite-mode
 bindkey '[3~' delete-char
 
-bindkey '0c'   forward-word
-bindkey '[C' forward-word
-bindkey '0d'   backward-word
-bindkey '[D' backward-word
+# # Ctrl+left/right to move one word backward/forward
+bindkey '[1;5C' forward-word
+bindkey '[1;5D' backward-word
 
-bindkey ''    backward-kill-word
-
-#bindkey '[2~' overwrite-mode
-
-# Ctrl+arrow or PgUp/PgDown to search in history
+# # Ctrl+up/down or PgUp/PgDown to search in history
 bindkey '[1;5A' history-search-backward
+bindkey '[5~'   history-search-backward
+
 bindkey '[1;5B' history-search-forward
+bindkey '[6~'   history-search-forward
 
-bindkey '[5~' history-search-backward
-bindkey '[6~' history-search-forward
-
-# Completion in the middle of a word
-bindkey '	' expand-or-complete-prefix
+# # Completion in the middle of a word
+# bindkey '	' expand-or-complete-prefix
