@@ -1,0 +1,72 @@
+[global_config]
+  handle_size = 0
+  enabled_plugins = ,
+  dbus = True
+  focus = mouse
+  title_transmit_fg_color = "#e0e0e0"
+  title_transmit_bg_color = "#a00000"
+  title_inactive_bg_color = "#a0a0a0"
+[keybindings]
+  cycle_prev = None
+  close_window = None
+  group_tab = None
+  move_tab_right = None
+  resize_left = None
+  reset_clear = None
+  go_right = <Alt><Super>Right
+  new_tab = <Ctrl><Alt><Super>Down
+  resize_right = None
+  resize_down = None
+  toggle_zoom = None
+  scaled_zoom = None
+  group_all = None
+  full_screen = None
+  prev_tab = <Ctrl><Alt><Super>Left
+  split_vert = <Alt><Super>e
+  ungroup_all = None
+  ungroup_tab = None
+  paste = None
+  cycle_next = None
+  close_term = None
+  new_terminator = None
+  go_left = <Alt><Super>Left
+  copy = None
+  hide_window = None
+  reset = None
+  search = <Alt><Super>f
+  go_up = <Alt><Super>Up
+  resize_up = None
+  next_tab = <Ctrl><Alt><Super>Right
+  split_horiz = <Alt><Super>o
+  go_down = <Alt><Super>Down
+  new_window = None
+  move_tab_left = None
+  toggle_scrollbar = None
+[profiles]
+  [[default]]
+    foreground_color = "#c0c0c0"
+    palette = "#000000:#cc0000:#4e9a06:#c4a000:#3465a4:#75507b:#06989a:#d3d7cf:#555753:#ef2929:#8ae234:#fce94f:#729fcf:#ad7fa8:#34e2e2:#eeeeec"
+    visible_bell = True
+    background_darkness = 0.9
+    urgent_bell = True
+    background_type = transparent
+    scrollbar_position = hidden
+    cursor_color = "#c0c0c0"
+    cursor_blink = False
+    backspace_binding = automatic
+    scroll_on_output = False
+    delete_binding = automatic
+    scroll_on_keystroke = False
+    copy_on_selection = True
+    background_color = "#171717"
+    scrollback_lines = 2000
+[layouts]
+  [[default]]
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+      profile = default
+    [[[window0]]]
+      type = Window
+      parent = ""
+[plugins]

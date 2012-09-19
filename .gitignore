@@ -30,5 +30,6 @@ ddns/key
 !mozilla
 !mpDris2
 !notmuch
+!terminator
 !urxvt
 !zsh
