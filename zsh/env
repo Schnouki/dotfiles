@@ -12,8 +12,8 @@
 path=(
     $HOME/bin
     $HOME/.cabal/bin
+    $HOME/.go/bin
     $HOME/.local/bin
-    $HOME/go/bin
     $path
 )
 typeset -U path
@@ -31,7 +31,7 @@ export GREP_OPTIONS="--exclude=*.svn-base --exclude-dir=.svn"
 export ACKRC="$XDG_CONFIG_HOME/ackrc"
 
 # Go
-export GOROOT=$HOME/go
+export GOPATH=$HOME/.go
 export GOARCH=amd64
 export GOOS=linux
 
