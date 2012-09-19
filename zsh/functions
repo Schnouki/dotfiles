@@ -2,9 +2,12 @@
 
 function reload_local_completion() {
     local f
-    f=(~/.config/zsh/completion/*(.))
+    f=(~/.config/zsh/completion/_*(.))
     unfunction $f:t 2> /dev/null
     autoload -U $f:t
+    for f in ~/.config/zsh/completion/*.zsh(.); do
+        source $f
+    done
 }
 
 function upload_zsh_config() {
