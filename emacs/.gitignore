@@ -5,6 +5,7 @@ auto-save-list
 .org-id-locations
 ede-projects.el
 elpa/
+var/
 places
 server
 url
