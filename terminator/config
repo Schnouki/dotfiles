@@ -1,5 +1,5 @@
 [global_config]
-  handle_size = 0
+  handle_size = 1
   enabled_plugins = ,
   dbus = True
   focus = mouse
