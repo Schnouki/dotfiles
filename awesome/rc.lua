@@ -118,12 +118,14 @@ gamemenu = {
    { "kobo deluxe", "kobodl", image("/usr/share/pixmaps/kobo-icon.xpm") },
    { "minecraft", "minecraft", image("/usr/share/pixmaps/minecraft.png") },
    { "naev", "naev", image("/usr/share/pixmaps/naev.png") },
+   { "torchlight", "torchlight", image("/usr/share/pixmaps/torchlight.png") },
 }
 
 utilsmenu = {
    { "galculator", "galculator", image("/usr/share/pixmaps/galculator.png") },
    { "gdmap", "gdmap", image("/usr/share/pixmaps/gdmap_icon.png") },
    { "gucharmap", "gucharmap", image("/usr/share/icons/gnome/16x16/apps/accessories-character-map.png") },
+   { "pavucontrol", "pavucontrol", image("/usr/share/icons/gnome/16x16/apps/multimedia-volume-control.png") },
 }
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
@@ -135,7 +137,6 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
                                     { "shotwell", "shotwell", image(config_dir .. "/icons/shotwell.png") },
                                     { "spotify", "spotify", image(config_dir .. "/icons/spotify.png") },
                                     { "libre office", "soffice", image("/usr/share/icons/hicolor/16x16/apps/libreoffice-writer.png") },
-                                    { "acroread", "acroread", image("/usr/share/pixmaps/acroread.png") },
                                     { "gcmd", "gnome-commander", image("/usr/share/pixmaps/gnome-commander.png") },
                                     { "open terminal", terminal }
                                   }
