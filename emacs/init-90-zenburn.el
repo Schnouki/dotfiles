@@ -38,7 +38,7 @@
       zenburn-magenta  "#dc8cc3")
 
 ;; Changes to "global" faces
-(set-face-background 'highlight zenburn-bg+1)
+(set-face-background 'hl-line zenburn-bg+1)
 
 ;; notmuch
 (setq notmuch-search-line-faces '(("deleted" . '(:strike-through t))

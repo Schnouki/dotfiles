@@ -180,7 +180,7 @@
 	 (notmuch-search-show-thread)))
 
      ;; Display the hl-line correctly in notmuch-search
-     (add-hook 'notmuch-search-hook '(lambda () (overlay-put global-hl-line-overlay 'priority 1)))))
+     (add-hook 'notmuch-search-hook '(lambda () (overlay-put global-hl-line-overlay 'priority 5)))))
 
 ;; Choose signature according to the From header
 (defun schnouki/choose-signature ()
