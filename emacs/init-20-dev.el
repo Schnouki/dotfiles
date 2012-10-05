@@ -100,7 +100,7 @@
 (require 'auto-complete-config)
 (ac-config-default)
 (add-to-list 'ac-sources 'ac-source-gtags)
-(dolist (mode '(python2-mode python3-mode))
+(dolist (mode '(python2-mode python3-mode coffee-mode))
   (add-to-list 'ac-modes mode))
 
 ;; Exuberant ctags

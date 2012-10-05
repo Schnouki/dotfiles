@@ -18,9 +18,11 @@
 (defalias 'python2-mode 'python-mode)
 (defalias 'python3-mode 'python-mode)
 
+(folding-add-to-marks-list 'coffee-mode "# {{{" "# }}}" nil t)
 (add-hook 'coffee-mode-hook
 	  '(lambda ()
-	     (setq tab-width 4)
+	     (setq tab-width 4
+		   coffee-tab-width 4)
 	     (local-set-key (kbd "C-c C-c") 'coffee-compile-buffer)))
 
 (autoload 'php-mode "php-mode.el" "Php mode." t)
