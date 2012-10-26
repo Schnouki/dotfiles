@@ -48,8 +48,6 @@ export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=gasp'
 
 # Useless apps to run at boot...
 dropboxd &
-gnote &
-qnotero &
 jamd &
 mpris2-info &
 mpd && mpDris2 &>/dev/null &
