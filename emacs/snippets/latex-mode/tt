@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Texte en fonte monospace
+# key: tt
+# --
+\texttt{$1}$0

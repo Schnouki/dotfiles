@@ -2,7 +2,7 @@
 # name: Figure
 # key: figure
 # --
-\begin{figure}${1:[${2:h}]}${3:
+\begin{figure}${1:[${2:htbp}]}${3:
   \centering}
   \includegraphics${10:[$11]}{$4}${5:
   \caption{$6}}${7:
