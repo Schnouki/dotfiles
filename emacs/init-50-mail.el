@@ -66,6 +66,7 @@
       notmuch-mua-compose-in 'new-frame
       message-kill-buffer-on-exit t
       notmuch-thousands-separator " "
+      notmuch-print-mechanism 'notmuch-print-muttprint/evince
 
       message-citation-line-function 'message-insert-formatted-citation-line
       message-citation-line-format "Le %e %B %Y à %-H:%M %Z, %N a écrit :")
