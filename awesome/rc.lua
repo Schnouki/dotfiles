@@ -470,7 +470,7 @@ persoclientkeys = {
    awful.key({ modkey, "Control" }, "i", win_info),
 }
 -- }}}
-
+-- }}}
 -- {{{ Wibox creation
 for s = 1, screen.count() do
     -- Create a promptbox for each screen
