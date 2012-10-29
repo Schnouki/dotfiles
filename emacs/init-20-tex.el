@@ -104,3 +104,9 @@
              'synctex/evince-sync)))))
 
 (add-hook 'LaTeX-mode-hook 'synctex/enable-evince-sync)
+
+;; Suppressions for chktex (used by flycheck-mode)
+(setq flycheck-checker-tex
+      '(:command
+	("checktex" "-v0" "-q" "-I" "-n1" "-n13" "-n19" source-inplace)
+	:modes (latex-mode plain-tex-mode)))

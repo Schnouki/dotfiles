@@ -16,7 +16,7 @@
 			  button-lock
 			  coffee-mode color-theme ctags-update
 			  deft dtrt-indent
-			  fixmee
+			  fixmee flycheck
 			  go-mode google-translate
 			  haskell-mode hideshowvis
 			  ioccur
