@@ -1,6 +1,6 @@
 # -*- mode: sh; -*-
 
-# Many keys for xterm, screen, rxvt, ...
+# Many keys for xterm, screen, tmux, rxvt, ...
 # Before I used $TERM to decide what was needed. But it's much easier that way.
 
 # Tip for (u)rxvt users: if $TERM is set to rxvt-unicode or something like this,
@@ -10,16 +10,21 @@
 
 bindkey 'OH'  beginning-of-line
 bindkey '[H'  beginning-of-line
+bindkey '[1~' beginning-of-line
 
 bindkey 'OF'  end-of-line
 bindkey '[F'  end-of-line
+bindkey '[4~' end-of-line
 
 bindkey '[2~' overwrite-mode
 bindkey '[3~' delete-char
 
 # # Ctrl+left/right to move one word backward/forward
 bindkey '[1;5C' forward-word
+bindkey 'OC'    forward-word
+
 bindkey '[1;5D' backward-word
+bindkey 'OD'    backward-word
 
 # # Ctrl+up/down or PgUp/PgDown to search in history
 bindkey '[1;5A' history-search-backward

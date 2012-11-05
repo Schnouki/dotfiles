@@ -25,18 +25,35 @@ function init()
    end
 end
 
+local function add_entry(action, data)
+   if statsfile and data then
+      data.action = action
+      data.timestamp = os.time()
+      local msg = yaml.dump(data)
+      statsfile:write(msg)
+      statsfile:flush()
+   end
+end
+
 function focus(c)
-   if statsfile and c then
+   if c then
       local data = {
-         timestamp = os.time(),
+         action = action,
          name = c.name,
          class = c.class,
          instance = c.instance,
          role = c.role,
          type = c.type,
       }
-      local msg = yaml.dump(data)
-      statsfile:write(msg)
-      statsfile:flush()
+      add_entry("focus", data)
+   end
+end
+
+function idle(ms)
+   if ms >= 5*1000*60 then
+      local data = {
+         idle_time = ms,
+      }
+      add_entry("idle", data)
    end
 end
