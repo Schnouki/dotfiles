@@ -3,7 +3,7 @@ local yaml = require("yaml")
 
 module("clistats")
 
-local statsfile
+local last_action, statsfile
 
 local function fail(msg)
    naughty.notify({ preset = naughty.config.presets.critical,
@@ -32,6 +32,7 @@ local function add_entry(action, data)
       local msg = yaml.dump(data)
       statsfile:write(msg)
       statsfile:flush()
+      last_action = action
    end
 end
 
@@ -50,7 +51,7 @@ function focus(c)
 end
 
 function idle(ms)
-   if ms >= 5*1000*60 then
+   if ms >= 5*1000*60 and last_action ~= "idle" then
       local data = {
          idle_time = ms,
       }
