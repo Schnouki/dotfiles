@@ -214,6 +214,10 @@ function gethost()
    return string.gsub(n, "\n$", "")
 end
 
+-- Focused client logging for stats
+require("clistats")
+clistats.init()
+
 -- {{{ Window management
 -- Gestion de la titlebar
 function handle_titlebar(c)
@@ -728,10 +732,6 @@ no_titlebar_apps = {
 -- }}}
 
 -- {{{ Signals
--- Focused client logging for stats
-require("clistats")
-clistats.init()
-
 -- Signal function to execute when a new client appears.
 client.add_signal("manage", function (c, startup)
     -- Add a titlebar
