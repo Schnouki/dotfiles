@@ -218,6 +218,10 @@ end
 require("clistats")
 clistats.init()
 
+-- Personal helper library for things written in C
+package.cpath = config_dir .. "/?.so;" .. package.cpath
+require("lousy")
+
 -- {{{ Window management
 -- Gestion de la titlebar
 function handle_titlebar(c)
@@ -779,6 +783,8 @@ mytimer15 = timer { timeout = 15 }
 mytimer15:add_signal("timeout", function ()
     tb_net.text = " " .. netmon.netmon(nm_ifs, "8.8.8.8")
     tb_mails_update()
+
+    clistats.idle(lousy.idle())
 end)
 mytimer15:start()
 

@@ -48,3 +48,12 @@ function focus(c)
       add_entry("focus", data)
    end
 end
+
+function idle(ms)
+   if ms >= 5*1000*60 then
+      local data = {
+         idle_time = ms,
+      }
+      add_entry("idle", data)
+   end
+end
