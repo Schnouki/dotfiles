@@ -143,6 +143,12 @@
   )
 (add-hook 'ediff-load-hook 'schnouki/zenburn-for-ediff)
 
+;; smerge minor mode
+(eval-after-load 'smerge
+  '(progn
+     (set-face-background 'smerge-refined-change zenburn-bg+2)
+     ))
+
 (defun schnouki/zenburn-for-golbarg ()
   (set-face-background golbarg-header-face zenburn-bg-1))
 (add-hook 'golbarg-mode-hook 'schnouki/zenburn-for-golbarg)
