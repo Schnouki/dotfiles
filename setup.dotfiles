@@ -6,7 +6,7 @@ for F in hook.*; do
 done
 
 # Setup dotfiles
-for F in ctags globalrc fonts.conf Xdefaults xinitrc; do
+for F in ctags globalrc Xdefaults xinitrc; do
     setup_file_symlink "$F" ".$F"
 done
 
@@ -16,7 +16,7 @@ setup_decrypt "gpg.conf.gpg" ".gnupg/gpg.conf"
 setup_decrypt "msmtprc.gpg" ".msmtprc"
 
 # Setup encrypted tarballs
-setup_decrypt_tarball "weechat.tar.gpg"
+# (none at the moment :))
 
 # Load Xdefaults
 if [ "$DISPLAY" ]; then

@@ -27,6 +27,7 @@ __pycache__/
 !ddns
 ddns/key
 !emacs
+!fontconfig
 !mozilla
 !mpDris2
 !notmuch
