@@ -77,7 +77,10 @@ fi
 # Load custom scripts (but not as root, or compinit will complain about "insecure directories and files")
 if [[ $UID -ne 0 ]]; then
     fpath=($HOME/.config/zsh/completion $fpath)
-    autoload -U $HOME/.config/zsh/completion/*(:t)
+    autoload -U $HOME/.config/zsh/completion/_*(.:t)
+    for f in $HOME/.config/zsh/completion/*.zsh(.); do
+        source $f
+    done
 fi
 
 # Now init the completion system
