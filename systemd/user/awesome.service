@@ -1,0 +1,9 @@
+[Unit]
+Description=Awesome WM
+
+[Service]
+ExecStart=/usr/bin/awesome
+Restart=always
+
+[Install]
+WantedBy=default.target

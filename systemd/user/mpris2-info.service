@@ -1,0 +1,10 @@
+[Unit]
+Description=MPRIS2 notifications service
+Wants=dbus.service
+After=dbus.service
+
+[Service]
+ExecStart=/home/schnouki/bin/mpris2-info
+
+[Install]
+WantedBy=default.target

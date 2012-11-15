@@ -1,0 +1,9 @@
+[Unit]
+Description=Allow root to use this display
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/xhost +local:root
+
+[Install]
+WantedBy=default.target

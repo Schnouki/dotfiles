@@ -1,0 +1,11 @@
+[Unit]
+Description=Just Another Mounter Daemon
+Wants=dbus.service
+After=dbus.service
+
+[Service]
+ExecStart=/home/schnouki/bin/jamd
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

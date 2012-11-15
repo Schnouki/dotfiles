@@ -1,0 +1,9 @@
+[Unit]
+ConditionPathExists=%h/.Xmodmap
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/xmodmap %h/.Xmodmap
+
+[Install]
+WantedBy=default.target

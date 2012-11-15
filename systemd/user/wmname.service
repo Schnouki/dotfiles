@@ -1,0 +1,6 @@
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/wmname LG3D
+
+[Install]
+WantedBy=default.target

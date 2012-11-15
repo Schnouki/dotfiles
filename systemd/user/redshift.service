@@ -1,0 +1,8 @@
+[Unit]
+Description=Redshift color temperature manager
+
+[Service]
+ExecStart=/usr/bin/gtk-redshift -l 48.7:6.2 -t 6500:4000
+
+[Install]
+WantedBy=default.target
