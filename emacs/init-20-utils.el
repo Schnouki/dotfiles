@@ -132,3 +132,9 @@ Return the index of the matching item, or nil if not found."
 
 ;; NSFW
 (autoload 'sudoku "sudoku" nil t)
+
+;; Deft
+(setq deft-directory "~/Dropbox/deft"
+      deft-extension "md"
+      deft-text-mode 'markdown-mode)
+(global-set-key (kbd "C-! d") 'deft)
