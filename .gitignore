@@ -18,7 +18,7 @@ __pycache__/
 !gtkrc-theme-nox
 !gtkrc-odin
 !gtkrc-thor
-!Xdefaults
+!Xresources
 !xinitrc
 !*.gpg
 
