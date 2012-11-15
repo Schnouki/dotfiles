@@ -39,7 +39,7 @@ function netmon(ifnames, host)
       local this_if
       if if_status then
          if net_up then
-            this_if = col("green", k)
+            this_if = col("#00FF00", k)
          else
             this_if = col("yellow", k)
          end

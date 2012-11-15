@@ -13,7 +13,7 @@ function query()
 end
 
 function format_temp_gpu(temp)
-   local color = "green"
+   local color = "#00FF00"
    if temp >= 80 then
       color = "red"
    elseif temp >= 65 then
@@ -23,7 +23,7 @@ function format_temp_gpu(temp)
 end
 
 function format_temp_board(temp)
-   local color = "green"
+   local color = "#00FF00"
    if temp >= 65 then
       color = "red"
    elseif temp >= 50 then
