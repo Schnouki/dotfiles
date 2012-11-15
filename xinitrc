@@ -7,9 +7,7 @@
 export GTK2_RC_FILES="$HOME/.config/gtkrc-2.0:$HOME/.config/gtkrc-$(hostname):/etc/gtk-2.0/gtkrc"
 
 # Correct keyboard layout
-if [ -f "$HOME/.Xmodmap" ]; then
-	xmodmap "$HOME/.Xmodmap"
-fi
+[[ -f ~/.Xmodmap ]] && xmodmap ~/.Xmodmap
 
 # Allow root to use this display (hello sudo!)
 # (Also add DISPLAY and GTK2_RC_FILES to env_keep in /etc/sudoers)
@@ -40,8 +38,8 @@ fi
 wmname LG3D
 
 # Tell Java to anti-alias fonts
-# https://wiki.archlinux.org/index.php/Java_Runtime_Environment_Fonts
-export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=gasp'
+# https://wiki.archlinux.org/index.php/Java#Tips_and_tricks
+export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
 
 # Emacs daemon
 [[ -S "/tmp/emacs$UID/server" ]] || (emacs --daemon &)
