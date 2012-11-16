@@ -455,6 +455,7 @@ persokeys = {
    awful.key({ modkey, "Control" }, "Left",  mpris2("prev")),
    awful.key({ modkey, "Control" }, "Right", mpris2("next")),
 
+   awful.key({ modkey, "Shift"   }, "d", function () awful.util.spawn("dspop") end),
    awful.key({ modkey, "Shift"   }, "i", mpris2("info")),
 
    -- TypeMatrix bépo
