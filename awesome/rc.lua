@@ -77,7 +77,6 @@ layouts =
     awful.layout.suit.spiral.dwindle,  -- 10
 }
 -- }}}
-
 -- {{{ Tags
 -- Define a tag table which hold all screen tags.
 tags = {}
@@ -98,7 +97,6 @@ for s = 1, screen.count() do
    awful.layout.set(layouts[8], tags[s][9])
 end
 -- }}}
-
 -- {{{ Menu
 -- Create a laucher widget and a main menu
 myawesomemenu = {
@@ -145,9 +143,8 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
 mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
                                      menu = mymainmenu })
 -- }}}
-
 -- {{{ Wibox
--- {{{ Default stuff
+-- {{{   Default stuff
 -- Create a textclock widget
 mytextclock_icon = widget({ type = "imagebox" })
 mytextclock_icon.image = image(config_dir .. "/icons/time.png")
@@ -205,7 +202,7 @@ mytasklist.buttons = awful.util.table.join(
                                           end))
 
 -- }}}
--- {{{ Personal stuff
+-- {{{   Personal stuff
 -- Fonctions perso
 function gethost()
    local f = io.popen("/bin/hostname")
@@ -222,7 +219,7 @@ clistats.init()
 package.cpath = config_dir .. "/?.so;" .. package.cpath
 require("lousy")
 
--- {{{ Window management
+-- {{{     Window management
 -- Gestion de la titlebar
 function handle_titlebar(c)
    if awful.client.floating.get(c) then
@@ -251,8 +248,7 @@ function new_transient(c)
    end
 end
 -- }}}
-
--- {{{ Widgets perso
+-- {{{     Widgets perso
 separator = widget({ type = "imagebox" })
 separator.image = image(config_dir .. "/icons/separator.png")
 
@@ -413,8 +409,7 @@ volbar.widget:buttons(awful.util.table.join(
 ))
 
 -- }}}
-
--- {{{ Raccourcis claviers persos
+-- {{{     Raccourcis claviers persos
 persokeys = {
    -- Volume
    awful.key({ }, "XF86AudioRaiseVolume", volume_up),
@@ -479,7 +474,7 @@ persoclientkeys = {
 }
 -- }}}
 -- }}}
--- {{{ Wibox creation
+-- {{{   Wibox creation
 for s = 1, screen.count() do
     -- Create a promptbox for each screen
     mypromptbox[s] = awful.widget.prompt({ layout = awful.widget.layout.horizontal.leftright })
@@ -542,7 +537,6 @@ root.buttons(awful.util.table.join(
     awful.button({ }, 4, awful.tag.viewprev)
 ))
 -- }}}
-
 -- {{{ Key bindings
 globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
@@ -677,7 +671,6 @@ for k, v in pairs(persoclientkeys) do
 end
 root.keys(globalkeys)
 -- }}}
-
 -- {{{ Rules
 -- Special rules for special windows
 function handle_graphite(c)
@@ -734,7 +727,6 @@ no_titlebar_apps = {
    ["Xitk"] = true,
 }
 -- }}}
-
 -- {{{ Signals
 -- Signal function to execute when a new client appears.
 client.add_signal("manage", function (c, startup)
@@ -770,7 +762,6 @@ client.add_signal("focus", function(c)
 end)
 client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
-
 -- {{{ Timers
 mytimer5 = timer { timeout = 5 }
 mytimer5:add_signal("timeout", function ()
@@ -794,7 +785,6 @@ mytimer300:add_signal("timeout", function ()
 end)
 mytimer300:start()
 -- }}}
-
 -- {{{ Disable startup-notification
 -- http://awesome.naquadah.org/wiki/Disable_startup-notification_globally
 local oldspawn = awful.util.spawn
