@@ -253,16 +253,14 @@ separator = widget({ type = "imagebox" })
 separator.image = image(config_dir .. "/icons/separator.png")
 
 require("netmon")
-netmon.init()
-tb_net = widget({ type = "textbox" })
-nm_ifs = {}
+ifaces = {}
 if gethost() == "thor" then
-   nm_ifs["E"] = "lan"
+   ifaces["E"] = "lan"
 elseif gethost() == "odin" then
-   nm_ifs["E"] = "eth0"
-   nm_ifs["W"] = "wlan0"
+   ifaces["E"] = "eth0"
+   ifaces["W"] = "wlan0"
 end
-tb_net.text = " " .. netmon.netmon(nm_ifs, "8.8.8.8")
+net_mon = netmon.new(ifaces, "8.8.8.8")
 
 if gethost() == "thor" then
    require("ipmon")
@@ -519,7 +517,7 @@ for s = 1, screen.count() do
         volbar.widget,
         tb_batt,
         ip_mon and ip_mon.widget or nil,
-        tb_net,
+        net_mon.widget,
         separator,
         memwidget.widget,
         memicon,
@@ -779,7 +777,7 @@ mytimer5:start()
 
 mytimer15 = timer { timeout = 15 }
 mytimer15:add_signal("timeout", function ()
-    tb_net.text = " " .. netmon.netmon(nm_ifs, "8.8.8.8")
+    net_mon:update()
     if ip_mon then ip_mon:update() end
     tb_mails_update()
 

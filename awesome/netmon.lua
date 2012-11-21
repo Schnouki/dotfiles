@@ -1,13 +1,31 @@
-local status_file
-local io, os, pairs = require("io"), require("os"), pairs
+local io, os, pairs, setmetatable = require("io"), require("os"), pairs, setmetatable
+local widget = require("widget")
 
 module("netmon")
 
-function init()
-   status_file = os.tmpname()
+-- {{{ Internals
+local status_files = {}
+
+local function last_ping_result(host)
+   if status_files[host] == nil then
+      return nil
+   else
+      local f = io.open(status_files[host])
+      local val = f:read("*a")
+      f:close()
+      return (#val > 0)
+   end
 end
 
-function if_up(ifname)
+local function new_ping(host)
+   if status_files[host] == nil then
+      status_files[host] = os.tmpname()
+   end
+   local cmd = "fping -a " .. host .. " >" .. status_files[host] .. " 2>/dev/null &"
+   os.execute(cmd)
+end
+
+local function if_up(ifname)
    local cmd = "ip -o -4 addr show dev " .. ifname
    local pipe = io.popen(cmd)
    local val = pipe:read("*a")
@@ -15,39 +33,46 @@ function if_up(ifname)
    return (#val > 0)
 end
 
-function last_ping_result()
-   local f = io.open(status_file)
-   local val = f:read("*a")
-   f:close()
-   return (#val > 0)
-end
-
-function new_ping(host)
-   local cmd = "fping -a " .. host .. " >" .. status_file .. " 2>/dev/null &"
-   os.execute(cmd)
-end
-
-function col(color, text)
+local function col(color, text)
    return "<span color=\"" .. color .. "\">" .. text .. "</span>"
 end
+-- }}}
+-- {{{ Class definition
+local NetMon = {}
 
-function netmon(ifnames, host)
+function NetMon:new(ifnames, host)
+   local o = { widget = widget({ type = "textbox" }),
+               ifnames = ifnames,
+               host = host }
+   setmetatable(o, self)
+   self.__index = self
+   return o
+end
+
+function NetMon:update()
    local s = ""
-   local net_up = last_ping_result()
-   for k, v in pairs(ifnames) do
-      local if_status = if_up(v)
-      local this_if
+   for k, iface in pairs(self.ifnames) do
+      local if_status = if_up(iface)
+      local if_color
       if if_status then
+         local net_up = last_ping_result(self.host)
+         new_ping(self.host)
          if net_up then
-            this_if = col("#00FF00", k)
+            if_color = "#afd8af" -- green+3
          else
-            this_if = col("yellow", k)
+            if_color = "#ac7373" -- red-2
          end
       else
-         this_if = col("#1E2320", k)
+         if_color = "#f0dfaf"    -- yellow
       end
-      s = s .. this_if
+      s = s .. col(if_color, k)
    end
-   new_ping(host)
-   return s
+   self.widget.text = s
+end
+-- }}}
+
+function new(ifnames, host)
+   local w = NetMon:new(ifnames, host)
+   w:update()
+   return w
 end
