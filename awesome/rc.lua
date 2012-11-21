@@ -265,6 +265,11 @@ end
 tb_net.text = " " .. netmon.netmon(nm_ifs, "8.8.8.8")
 
 if gethost() == "thor" then
+   require("ipmon")
+   ip_mon = ipmon.new({})
+end
+
+if gethost() == "thor" then
    require("nvtemp")
    nvtemp.init()
 
@@ -513,6 +518,7 @@ for s = 1, screen.count() do
         s == 1 and separator or nil,
         volbar.widget,
         tb_batt,
+        ip_mon and ip_mon.widget or nil,
         tb_net,
         separator,
         memwidget.widget,
@@ -774,6 +780,7 @@ mytimer5:start()
 mytimer15 = timer { timeout = 15 }
 mytimer15:add_signal("timeout", function ()
     tb_net.text = " " .. netmon.netmon(nm_ifs, "8.8.8.8")
+    if ip_mon then ip_mon:update() end
     tb_mails_update()
 
     clistats.idle(lousy.idle())
