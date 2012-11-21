@@ -121,6 +121,7 @@ gamemenu = {
 
 utilsmenu = {
    { "galculator", "galculator", image("/usr/share/icons/hicolor/48x48/apps/galculator.png") },
+   { "qalculate-gtk", "qalculate", image("/usr/share/pixmaps/qalculate.png") },
    { "gdmap", "gdmap", image("/usr/share/pixmaps/gdmap_icon.png") },
    { "gucharmap", "gucharmap", image("/usr/share/icons/gnome/16x16/apps/accessories-character-map.png") },
    { "pavucontrol", "pavucontrol", image("/usr/share/icons/gnome/16x16/apps/multimedia-volume-control.png") },
@@ -700,7 +701,7 @@ awful.rules.rules = {
                      buttons = clientbuttons } },
     -- Simple rules for floating windows
     { rule_any = { class = { "Galculator", "Gimp", "Gmpc", "Gnote", "Klavaro", "MPlayer", "mplayer2",
-                             "pinentry", "Plugin-container", "Smplayer", "VirtualBox", "Vlc",
+                             "pinentry", "Plugin-container", "Qalculate", "Smplayer", "VirtualBox", "Vlc",
                              "Wine", "Xfmedia", "xine", "XVroot" },
                    instance = { "pinentry-gtk-2" },
                    name = { "Gnuplot (window id : 0)", "Minecraft", "R Graphics: Device 2 (ACTIVE)" } },
