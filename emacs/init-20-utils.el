@@ -132,6 +132,7 @@ Return the index of the matching item, or nil if not found."
 
 ;; NSFW
 (autoload 'sudoku "sudoku" nil t)
+(setq sudoku-level "medium")
 
 ;; Deft
 (setq deft-directory "~/Dropbox/deft"
