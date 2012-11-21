@@ -120,7 +120,7 @@ gamemenu = {
 }
 
 utilsmenu = {
-   { "galculator", "galculator", image("/usr/share/pixmaps/galculator.png") },
+   { "galculator", "galculator", image("/usr/share/icons/hicolor/48x48/apps/galculator.png") },
    { "gdmap", "gdmap", image("/usr/share/pixmaps/gdmap_icon.png") },
    { "gucharmap", "gucharmap", image("/usr/share/icons/gnome/16x16/apps/accessories-character-map.png") },
    { "pavucontrol", "pavucontrol", image("/usr/share/icons/gnome/16x16/apps/multimedia-volume-control.png") },
