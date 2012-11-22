@@ -194,3 +194,7 @@
 ;; anything to select anything...
 (autoload 'anything "anything" nil t)
 (global-set-key (kbd "C-*") 'anything)
+
+;; Wait a very little bit before fontifying buffers
+;; http://tsengf.blogspot.fr/2012/11/slow-scrolling-speed-in-emacs.html
+(setq jit-lock-defer-time 0.05)
