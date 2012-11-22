@@ -281,8 +281,7 @@ if gethost() == "thor" then
 end
 
 require("battmon")
-tb_batt = widget({ type = "textbox" })
-tb_batt.text = " " .. battery_mon() .. " "
+batt_mon = battmon.new()
 
 -- Afficher des infos sur le client qui a le focus
 -- d'après http://github.com/MajicOne/awesome-configs/blob/master/rc.lua
@@ -517,7 +516,7 @@ for s = 1, screen.count() do
         s == 1 and mysystray or nil,
         s == 1 and separator or nil,
         volbar.widget,
-        tb_batt,
+        batt_mon.widget,
         ip_mon and ip_mon.widget or nil,
         net_mon.widget,
         separator,
@@ -770,7 +769,7 @@ client.add_signal("unfocus", function(c) c.border_color = beautiful.border_norma
 -- {{{ Timers
 mytimer5 = timer { timeout = 5 }
 mytimer5:add_signal("timeout", function ()
-    tb_batt.text = " " .. battery_mon() .. " "
+    batt_mon:update()
     if nvtemp_mon then nvtemp_mon:update() end
 end)
 mytimer5:start()
