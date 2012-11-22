@@ -3,6 +3,13 @@ local widget = require("widget")
 
 module("netmon")
 
+local colors = {
+   up      = "#afd8af", -- green+3,
+   no_ping = "#ac7373", -- red-2
+   unknown = "#f0dfaf", -- yellow
+   down    = "#1E2320"
+}
+
 -- {{{ Internals
 local status_files = {}
 
@@ -57,15 +64,17 @@ function NetMon:update()
       if if_status then
          local net_up = last_ping_result(self.host)
          new_ping(self.host)
-         if net_up then
-            if_color = "#afd8af" -- green+3
+         if net_up == nil then
+            if_color = "unknown"
+         elseif net_up then
+            if_color = "up"
          else
-            if_color = "#ac7373" -- red-2
+            if_color = "no_ping"
          end
       else
-         if_color = "#f0dfaf"    -- yellow
+         if_color = "down"
       end
-      s = s .. col(if_color, k)
+      s = s .. col(colors[if_color], k)
    end
    self.widget.text = s
 end
