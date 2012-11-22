@@ -17,7 +17,7 @@
 			  coffee-mode color-theme ctags-update
 			  deft dtrt-indent
 			  fixmee flycheck
-			  go-mode google-translate
+			  git-commit-mode gitignore-mode go-mode google-translate
 			  haskell-mode hideshowvis
 			  ioccur
 			  lua-mode
