@@ -270,13 +270,14 @@ end
 
 if gethost() == "thor" then
    require("nvtemp")
-   nvtemp.init()
+   nvtemp_mon = nvtemp.new()
 
-   sep_nv = separator
-   icon_nv = widget({ type = "imagebox" })
+   local icon_nv = widget({ type = "imagebox" })
    icon_nv.image = image(config_dir .. "/icons/temp.png")
-   tb_nv = widget({ type = "textbox" })
-   tb_nv.text = "..."
+
+   nv_w = { nvtemp_mon.widget, icon_nv, separator,
+            layout = awful.widget.layout.horizontal.rightleft
+   }
 end
 
 require("battmon")
@@ -525,9 +526,7 @@ for s = 1, screen.count() do
         cpuwidget.widget,
         cpuicon,
         separator,
-        tb_nv,
-        icon_nv,
-        sep_nv,
+        nv_w,
         tb_mails,
         separator,
         mytasklist[s],
@@ -772,7 +771,7 @@ client.add_signal("unfocus", function(c) c.border_color = beautiful.border_norma
 mytimer5 = timer { timeout = 5 }
 mytimer5:add_signal("timeout", function ()
     tb_batt.text = " " .. battery_mon() .. " "
-    if tb_nv then tb_nv.text = nvtemp.format() end
+    if nvtemp_mon then nvtemp_mon:update() end
 end)
 mytimer5:start()
 

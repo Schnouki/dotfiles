@@ -1,74 +1,84 @@
-local io, os, string, tonumber = require("io"), require("os"), require("string"), tonumber
-local status_file
+local io, os, string, ipairs, tonumber, setmetatable = require("io"), require("os"), require("string"), ipairs, tonumber, setmetatable
+local widget = require("widget")
 
 module("nvtemp")
 
-function init()
-   status_file = os.tmpname()
-end
+local colors = {
+   high = "#ac7373", -- red-2
+   med  = "#f0dfaf", -- yellow
+   low  = "#afd8af"  -- green+3
+}
 
-function query()
-   local cmd = "nvidia-smi -a > " .. status_file .. " &"
+-- {{{ Internals
+local status_file = os.tmpname()
+
+local function query_temp()
+   local cmd = "nvidia-smi -d TEMPERATURE -a > " .. status_file .. " &"
    os.execute(cmd)
 end
 
-function format_temp_gpu(temp)
-   local color = "#00FF00"
-   if temp >= 80 then
-      color = "red"
-   elseif temp >= 65 then
-      color = "yellow"
-   end
-   return '<span foreground="' .. color .. '">' .. temp .. '</span>:'
-end
-
-function format_temp_board(temp)
-   local color = "#00FF00"
-   if temp >= 65 then
-      color = "red"
-   elseif temp >= 50 then
-      color = "yellow"
-   end
-   return '<span foreground="' .. color .. '">' .. temp .. '</span>/'
-end
-
-function format()
-   local s = ""
+local function get_temps()
+   local temps = {}
    local f = io.open(status_file)
 
-   if not f then
-      query()
-      return "GPU: n/a"
-   end
+   if f then
+      local temp_section = false
+      local sect, name, temp
 
-   local temp_section = false
-   local sect, name, temp
-   for line in f:lines() do
-      -- Temperature section?
-      sect = string.match(line, "^    (%w+)")
-      if sect then
-         temp_section = (sect == "Temperature")
-      end
-
-      -- Temperatures?
-      if temp_section then
-         name, temp = string.match(line, "^%s+(%w+)%s+: (%d+)")
-         if name then
-            temp = tonumber(temp)
-            if name == "Gpu" then
-               s = s .. format_temp_gpu(temp)
-            elseif name == "Board" then
-               s = s .. format_temp_board(temp)
-            end
+      local temp
+      for line in f:lines() do
+         temp = string.match(line, "^%s+Gpu%s+: (%d+) C")
+         if temp then
+            temps[#temps + 1] = tonumber(temp)
          end
       end
    end
+   return temps
+end
 
-   f:close()
-   query()
-   if #s > 0 then
-      return string.sub(s, 1, -2) .. "°C"
+local function format_temp(temp)
+   local level
+   if temp >= 80 then
+      level = "high"
+   elseif temp >= 65 then
+      level = "med"
    else
-      return "n/a"
+      level = "low"
    end
+   return '<span foreground="' .. colors[level] .. '">' .. temp .. '</span>'
+end
+-- }}}
+-- {{{ Class definition
+local NVTempMon = {}
+
+function NVTempMon:new()
+   local o = { widget = widget({ type = "textbox" }) }
+   setmetatable(o, self)
+   self.__index = self
+   return o
+end
+
+function NVTempMon:update()
+   local s = ""
+   local temps = get_temps()
+   query_temp()
+
+   for i, temp in ipairs(temps) do
+      if i > 1 then s = s .. ":" end
+      s = s .. format_temp(temp)
+   end
+
+   if #s == 0 then
+      s = "n/a"
+   else
+      s = s .. "°C"
+   end
+   self.widget.text = s
+end
+-- }}}
+
+function new()
+   local w = NVTempMon:new()
+   w:update()
+   return w
 end
