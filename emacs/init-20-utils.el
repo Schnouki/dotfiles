@@ -139,3 +139,6 @@ Return the index of the matching item, or nil if not found."
       deft-extension "md"
       deft-text-mode 'markdown-mode)
 (global-set-key (kbd "C-! d") 'deft)
+(defadvice deft-auto-save (around keep-whitespace-on-deft-auto-save activate)
+  (flet ((delete-trailing-whitespace))
+    ad-do-it))
