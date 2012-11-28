@@ -17,12 +17,15 @@
 
 ;; Code folding
 (require 'folding)
+(folding-install)
+(folding-install-hooks)
+(defun schnouki/folding-check-folded ()
+  (assq major-mode folding-mode-marks-alist))
+(setq folding-check-folded-file-function 'schnouki/folding-check-folded)
 
 ;; Shorter key bindings for folding/hideshow
 (dolist (key (list (kbd "C-! :") (kbd "C-ç f")))
-  (global-set-key key '(lambda () (interactive)
-			 (unless folding-mode (folding-mode))
-			 (folding-toggle-show-hide))))
+  (global-set-key key 'folding-toggle-show-hide))
 (dolist (key (list (kbd "C-! !") (kbd "C-ç ç")))
   (global-set-key key '(lambda () (interactive)
 			 (unless hs-minor-mode (hs-minor-mode))
