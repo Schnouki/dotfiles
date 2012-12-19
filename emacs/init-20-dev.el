@@ -19,9 +19,6 @@
 (require 'folding)
 (folding-install)
 (folding-install-hooks)
-(defun schnouki/folding-check-folded ()
-  (assq major-mode folding-mode-marks-alist))
-(setq folding-check-folded-file-function 'schnouki/folding-check-folded)
 
 ;; Shorter key bindings for folding/hideshow
 (dolist (key (list (kbd "C-! :") (kbd "C-ç f")))
