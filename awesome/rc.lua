@@ -50,7 +50,7 @@ config_dir = awful.util.getdir("config")
 beautiful.init(config_dir .. "/themes/schnouki-zenburn.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "terminator"
+terminal = "urxvtcd"
 editor = "emacsclient -c -a \"\""
 -- editor_cmd = terminal .. " -e " .. editor
 editor_cmd = editor
