@@ -41,14 +41,14 @@ local orig = {
     viewidx = awful.tag.viewidx,
 
     taglist = awful.widget.taglist.new,
-    label = awful.widget.taglist.label.all,
+    filter = awful.widget.taglist.filter.all,
 }
 
 -- Return tags with stuff on them, mark others hidden
 function gettags(screen)
     local tags = {}
 
-    for k, t in ipairs(capi.screen[screen]:tags()) do
+    for k, t in ipairs(awful.tag.gettags(screen)) do
         if t.selected or #t:clients() > 0 then
             awful.tag.setproperty(t, "hide", false)
             table.insert(tags, t)
@@ -66,10 +66,10 @@ awful.tag.new = function (names, screen, layout)
     return orig.new(names, screen, layout)
 end
 
--- Taglist label functions
-awful.widget.taglist.label.all = function (t, args)
+-- Taglist filter functions
+awful.widget.taglist.filter.all = function (t, args)
     if t.selected or #t:clients() > 0 then
-        return orig.label(t, args)
+        return orig.filter(t, args)
     end
 end
 
@@ -78,15 +78,14 @@ end
 local function uc(c) gettags(c.screen) end
 local function ut(s, t) gettags(s.index) end
 
-capi.client.add_signal("unmanage", uc)
-capi.client.add_signal("new", function(c)
-    c:add_signal("property::screen", uc)
-    c:add_signal("tagged", uc)
-    c:add_signal("untagged", uc)
+capi.client.connect_signal("unmanage", uc)
+capi.client.connect_signal("new", function(c)
+    c:connect_signal("property::screen", uc)
+    c:connect_signal("tagged", uc)
+    c:connect_signal("untagged", uc)
 end)
 
 for screen=1, capi.screen.count() do
-    awful.tag.attached_add_signal(screen, "property::selected", uc)
-    capi.screen[screen]:add_signal("tag::attach", ut)
-    capi.screen[screen]:add_signal("tag::detach", ut)
+    awful.tag.attached_connect_signal(screen, "property::selected", uc)
+    capi.screen[screen]:connect_signal("tag::history::update", ut)
 end

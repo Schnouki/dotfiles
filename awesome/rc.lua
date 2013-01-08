@@ -13,7 +13,7 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 
 -- Eminent dynamic tagging
---require("eminent")
+require("eminent")
 -- Vicious widgets
 vicious = require("vicious")
 vicious.contrib = require("vicious.contrib")
