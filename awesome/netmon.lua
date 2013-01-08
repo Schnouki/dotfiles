@@ -1,5 +1,5 @@
 local io, os, pairs, setmetatable = require("io"), require("os"), pairs, setmetatable
-local widget = require("widget")
+local wibox = require("wibox")
 
 module("netmon")
 
@@ -48,7 +48,7 @@ end
 local NetMon = {}
 
 function NetMon:new(ifnames, host)
-   local o = { widget = widget({ type = "textbox" }),
+   local o = { widget = wibox.widget.textbox(),
                ifnames = ifnames,
                host = host }
    setmetatable(o, self)
@@ -76,7 +76,7 @@ function NetMon:update()
       end
       s = s .. col(colors[if_color], k)
    end
-   self.widget.text = s
+   self.widget:set_markup(s)
 end
 -- }}}
 

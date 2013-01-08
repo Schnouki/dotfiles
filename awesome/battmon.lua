@@ -1,5 +1,5 @@
 local io, math, string, setmetatable = require("io"), require("math"), require("string"), setmetatable
-local widget = require("widget")
+local wibox = require("wibox")
 
 module("battmon")
 
@@ -139,14 +139,15 @@ end
 local BattMon = {}
 
 function BattMon:new()
-   local o = { widget = widget({ type = "textbox" }) }
+   local o = { widget = wibox.widget.textbox() }
    setmetatable(o, self)
    self.__index = self
    return o
 end
 
 function BattMon:update()
-   self.widget.text = " " .. battery_mon() .. " "
+   local txt = " " .. battery_mon() .. " "
+   self.widget:set_markup(txt)
 end
 -- }}}
 
