@@ -168,10 +168,9 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- Create a textclock widget
 mytextclock_icon = wibox.widget.imagebox()
 mytextclock_icon:set_image(config_dir .. "/icons/time.png")
---mytextclock = awful.widget.textclock({ align = "right" }, "%H:%M")
---mytextclock_t = awful.tooltip({ objects = { mytextclock },
---                                timer_function = function() return os.date("%A %e %B %Y\n%T") end })
-mytextclock = awful.widget.textclock()
+mytextclock = awful.widget.textclock("%H:%M")
+mytextclock_t = awful.tooltip({ objects = { mytextclock },
+                                timer_function = function() return os.date("%A %e %B %Y\n%T") end })
 
 -- Create a wibox for each screen and add it
 mywibox = {}
