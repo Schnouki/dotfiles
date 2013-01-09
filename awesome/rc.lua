@@ -743,7 +743,7 @@ for k, v in pairs(persokeys) do
 end
 for k, v in pairs(persoclientkeys) do
    for _, vv in pairs(v) do
-      table.insert(globalkeys, vv)
+      table.insert(clientkeys, vv)
    end
 end
 root.keys(globalkeys)
