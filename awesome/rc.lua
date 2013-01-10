@@ -85,11 +85,30 @@ local layouts =
 -- }}}
 
 -- {{{ Wallpaper
-if beautiful.wallpaper then
-    for s = 1, screen.count() do
-        gears.wallpaper.maximized(beautiful.wallpaper, s, true)
-    end
+if beautiful.wallpaper_dir then
+   lfs = require("lfs")
 end
+
+function change_wallpapers()
+   if beautiful.wallpaper_dir then
+      -- List files in wallpaper dir
+      local wallpapers = {}
+      for fn in lfs.dir(beautiful.wallpaper_dir) do
+         local full_fn = beautiful.wallpaper_dir .. "/" .. fn
+         local mode = lfs.attributes(full_fn, "mode")
+         if mode == "file" then
+            table.insert(wallpapers, full_fn)
+         end
+      end
+
+      -- Set a random wallpaper on each screen
+      for s = 1, screen.count() do
+         local rnd = math.random(#wallpapers)
+         gears.wallpaper.fit(wallpapers[rnd], s)
+      end
+   end
+end
+change_wallpapers()
 -- }}}
 
 -- {{{ Tags
@@ -116,6 +135,7 @@ end
 -- {{{ Menu
 -- Create a laucher widget and a main menu
 myawesomemenu = {
+   { "change wallpaper", change_wallpapers },
    { "manual", terminal .. " -e man awesome" },
    { "edit config", editor_cmd .. " " .. awesome.conffile },
    { "restart", awesome.restart },
@@ -842,6 +862,10 @@ mytimer15:connect_signal("timeout", function ()
     --clistats.idle(lousy.idle())
 end)
 mytimer15:start()
+
+mytimer300 = timer { timeout = 300 }
+mytimer300:connect_signal("timeout", change_wallpapers)
+mytimer300:start()
 -- }}}
 -- {{{ Disable startup-notification
 -- http://awesome.naquadah.org/wiki/Disable_startup-notification_globally
