@@ -178,6 +178,8 @@ function wallpaper.fit(surf, s, background)
        scale = geom.height / h
     end
     cr:translate((geom.width - (w * scale)) / 2, (geom.height - (h * scale)) / 2)
+    cr:rectangle(0, 0, w * scale, h * scale)
+    cr:clip()
     cr:scale(scale, scale)
     cr:set_source_surface(surf, 0, 0)
     cr:paint()
