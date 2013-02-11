@@ -137,8 +137,9 @@ Return the index of the matching item, or nil if not found."
 
 ;; Deft
 (setq deft-directory "~/Dropbox/deft"
-      deft-extension "md"
-      deft-text-mode 'markdown-mode)
+      deft-extension "org"
+      deft-text-mode 'org-mode
+      deft-use-filename-as-title t)
 (global-set-key (kbd "C-! d") 'deft)
 (defadvice deft-auto-save (around keep-whitespace-on-deft-auto-save activate)
   (flet ((delete-trailing-whitespace))
