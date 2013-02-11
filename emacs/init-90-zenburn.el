@@ -146,7 +146,7 @@
 ;; smerge minor mode
 (eval-after-load 'smerge
   '(progn
-     (set-face-background 'smerge-refined-change zenburn-bg+2)
+     (set-face-background 'smerge-refined-change "#6f6f6f") ;;zenburn-bg+2)
      ))
 
 (defun schnouki/zenburn-for-golbarg ()
