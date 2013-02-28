@@ -14,7 +14,7 @@
 ;; Packages
 (setq schnouki/packages '(ace-jump-mode ack-and-a-half anything anything-match-plugin auto-complete
 			  button-lock
-			  coffee-mode color-theme ctags-update
+			  coffee-mode color-theme csharp-mode ctags-update
 			  deft dtrt-indent
 			  fixmee flycheck
 			  git-commit-mode gitignore-mode go-mode google-translate
@@ -27,7 +27,7 @@
 			  solarized-theme sudoku
 			  unbound undo-tree
 			  yaml-mode yasnippet
-			  zenburn-theme znc))
+			  zenburn-theme))
 (let ((refreshed nil))
   (dolist (package schnouki/packages)
     (unless (package-installed-p package)
