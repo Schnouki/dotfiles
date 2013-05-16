@@ -123,5 +123,9 @@ unsetopt hup
 # zmv is awesome
 autoload -Uz zmv
 
+# Reset WORDCHARS so it's easier to navigate between words.
+# Default value: export WORDCHARS='*?_-.[]~=/&;!#$%^(){}<>'
+export WORDCHARS=''
+
 ##### Tell other scripts this one has been loaded
 export PROFILE_LOADED=1
