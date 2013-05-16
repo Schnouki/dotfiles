@@ -18,13 +18,13 @@
 			  deft dtrt-indent
 			  fixmee flycheck
 			  git-commit-mode gitignore-mode go-mode google-translate
-			  haskell-mode hideshowvis
+			  haml-mode haskell-mode hideshowvis
 			  ioccur
 			  lua-mode
 			  magit magithub markdown-mode mediawiki melpa
 			  php-mode pkgbuild-mode pretty-lambdada python python-pep8
 			  rainbow-mode
-			  solarized-theme sudoku
+			  scss-mode sudoku
 			  unbound undo-tree
 			  yaml-mode yasnippet
 			  zenburn-theme))
