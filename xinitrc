@@ -10,9 +10,6 @@ export GTK2_RC_FILES="$HOME/.config/gtkrc-2.0:$HOME/.config/gtkrc-$(hostname):/e
 # https://wiki.archlinux.org/index.php/Java#Tips_and_tricks
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
 
-# VNC server
-x11vnc -o /var/log/x11vnc.log -forever -bg -localhost -solid black -avahi -unixpw schnouki
-
 # GPG agent
 gnupginf="$HOME/.gnupg/gpg-agent.info"
 if ( pgrep -u "${USER}" gpg-agent ); then
