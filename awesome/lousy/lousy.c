@@ -1,10 +1,17 @@
 #include <stdlib.h>
+#include <stdbool.h>
+
 #include <xcb/xcb.h>
+#include <xcb/xcb_util.h>
+#include <xcb/xproto.h>
+#include <xcb/randr.h>
 #include <xcb/screensaver.h>
 
 static xcb_connection_t* conn = NULL;
 static const xcb_setup_t* setup = NULL;
 static xcb_screen_t* scr = NULL;
+
+bool do_backlight(xcb_connection_t* conn, double* in_inc, double* out_get_cur, double* out_get_max);
 
 void init() {
     if (!conn)
@@ -29,4 +36,9 @@ uint32_t idle() {
     free(info);
 
     return ms_since_user_input;
+}
+
+void change_brightness(double delta) {
+    init();
+    do_backlight(conn, &delta, NULL, NULL);
 }

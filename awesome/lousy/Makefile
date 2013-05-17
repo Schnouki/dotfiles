@@ -1,9 +1,9 @@
-LDFLAGS += -lxcb -lxcb-screensaver
+LDFLAGS += -lxcb -lxcb-randr -lxcb-screensaver -lxcb-util
 CFLAGS  += -fPIC -O2
 
 all: lousy.so
 
-lousy.so: lousy_wrap.o lousy.o
+lousy.so: lousy_wrap.o lousy.o backlight.o
 	gcc -shared -o $@ $^ $(LDFLAGS)
 
 %.o: %.c

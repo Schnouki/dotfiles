@@ -3,3 +3,4 @@
 
 void init();
 uint32_t idle();
+void change_brightness(double delta);
