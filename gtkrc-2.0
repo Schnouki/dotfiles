@@ -1,5 +1,4 @@
 # GUI theme
-#include "gtkrc-theme-nox"
 include "/usr/share/themes/MediterraneanNight/gtk-2.0/gtkrc"
 
 # Misc stuff
