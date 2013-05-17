@@ -116,7 +116,13 @@ local function battery_mon()
          local time = energy_left / power_now -- Temps en *heures*
          local hour = math.floor(time)
          local min = math.floor((time - hour)*60)
-         local timestr = string.format("%d:%02d", hour, min)
+         local timestr
+         -- Infinity if hour or min is NaN
+         if hour ~= hour or min ~= min then
+            timestr = "∞"
+         else
+            timestr = string.format("%d:%02d", hour, min)
+         end
 
          local time_color = colors["ok"]
          if state == 1 then
