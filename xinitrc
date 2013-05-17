@@ -1,7 +1,8 @@
 #!/bin/zsh
 
 # Fuck Xorg -- https://bugs.freedesktop.org/show_bug.cgi?id=23705
-[[ $(hostname) == "odin" ]] && xrandr --fbmm `xrandr | sed -n '/ connected / {s/.* \([0-9]\+\)mm x \([0-9]\+\)mm/\1x\2/p;q}'`
+[[ $(hostname) == "odin" || $(hostname) == "baldr" ]] && \
+    xrandr --fbmm `xrandr | sed -n '/ connected / {s/.* \([0-9]\+\)mm x \([0-9]\+\)mm/\1x\2/p;q}'`
 
 # GTK-2.0 RC files
 export GTK2_RC_FILES="$HOME/.config/gtkrc-2.0:$HOME/.config/gtkrc-$(hostname):/etc/gtk-2.0/gtkrc"

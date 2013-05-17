@@ -16,6 +16,7 @@ __pycache__/
 !gtk-3.0/settings.ini
 !gtkrc-2.0
 !gtkrc-odin
+!gtkrc-baldr
 !Xresources
 !xinitrc
 !*.gpg
