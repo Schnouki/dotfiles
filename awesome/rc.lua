@@ -373,6 +373,9 @@ end
 require("battmon")
 batt_mon = battmon.new()
 
+require("locksmon")
+locks_mon = locksmon.new()
+
 -- Afficher des infos sur le client qui a le focus
 -- d'après http://github.com/MajicOne/awesome-configs/blob/master/rc.lua
 function win_info ()
@@ -524,6 +527,10 @@ persokeys = {
    -- F7 - écran externe
    awful.key({ }, "XF86Display",     function () awful.util.spawn("gdisper") end),
 
+   -- Caps Lock et Num Lock
+   awful.key({ }, "Num_Lock",  function() locks_mon:update() end),
+   awful.key({ }, "Caps_Lock", function() locks_mon:update() end),
+
    -- Touches tag suivant/précédent au-dessus du pavé numérique
    awful.key({ }, "XF86Back",     awful.tag.viewprev),
    awful.key({ }, "XF86Forward" , awful.tag.viewnext),
@@ -601,7 +608,7 @@ for s = 1, screen.count() do
        separator,
        tb_mails, nv_w, separator,
        cpuicon, cpuwidget, memicon, memwidget, separator,
-       net_mon.widget, ip_mon and ip_mon.widget or nil, batt_mon.widget, volbar, separator
+       net_mon.widget, ip_mon and ip_mon.widget or nil, batt_mon.widget, volbar, separator, locks_mon.widget
     }
 
     -- Widgets that are aligned to the right
