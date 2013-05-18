@@ -350,6 +350,9 @@ if gethost() == "thor" then
 elseif gethost() == "odin" then
    ifaces["E"] = "eth0"
    ifaces["W"] = "wlan0"
+elseif gethost() == "baldr" then
+   ifaces["E"] = "enp12s0"
+   ifaces["W"] = "wlp3s0"
 end
 net_mon = netmon.new(ifaces, "8.8.8.8")
 
