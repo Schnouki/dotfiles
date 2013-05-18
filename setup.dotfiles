@@ -11,6 +11,7 @@ for F in ctags globalrc Xresources xinitrc; do
 done
 
 # Setup encrypted dotfiles
+setup_decrypt "pws.yaml.gpg" ".config/pws.yaml"
 setup_decrypt "ssh.gpg" ".ssh/config"
 setup_decrypt "gpg.conf.gpg" ".gnupg/gpg.conf"
 setup_decrypt "msmtprc.gpg" ".msmtprc"
