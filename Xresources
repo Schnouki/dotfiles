@@ -30,7 +30,7 @@ URxvt.termName:    rxvt-256color
 URxvt.transparent: true
 URxvt.shading:     20
 URxvt.fading:      15
-URxvt.font:        xft:Mono:pixelsize=11, xft:Kochi Gothic:antialias=false, xft:Code2000:antialias=false
+URxvt.font:        xft:Mono:pixelsize=12.5, xft:Kochi Gothic:antialias=false, xft:Code2000:antialias=false
 
 URxvt.saveLines:         4096
 URxvt.scrollBar:         false
@@ -87,6 +87,6 @@ XTerm*color14:    #34E2E2
 XTerm*color15:    #EEEEEC
 
 XTerm*faceName: DejaVu Sans Mono
-XTerm*faceSize: 11
+XTerm*faceSize: 12.5
 
-!(call-process-shell-command "xrdb -load ~/.Xdefaults")
+!(call-process-shell-command "xrdb -load ~/.Xresources")
