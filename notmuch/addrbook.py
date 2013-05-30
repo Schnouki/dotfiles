@@ -18,13 +18,13 @@ try:
 except ImportError:
     import pickle
 
-from profilehooks import profile
+#from profilehooks import profile
 
 class AddrBook(object):
     def __init__(self, new=False):
         self._db = {}
         self._small_db = {}
-        
+
         if not new:
             with open(os.path.expanduser(_DBPATH), "rb") as f:
                 self._db = pickle.load(f)
@@ -111,7 +111,7 @@ class AddrBook(object):
                 if len(user) > 0:
                     full_addr = "%s <%s>" % (user, addr)
                 flat_db[full_addr] = addr
-            
+
         # Step 1: find matching entries
         needle = unicode(BeautifulSoup(needle)).lower()
         matches = filter(lambda s: s.lower().find(needle) >= 0, flat_db.iterkeys())
