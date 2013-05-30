@@ -15,7 +15,6 @@
       gnus-inhibit-images nil)
 
 ;; Load notmuch
-(add-to-list 'load-path "~/dev/notmuch/emacs")
 (autoload 'notmuch "notmuch" nil t)
 (autoload 'notmuch-mua-new-mail "notmuch" nil t)
 
@@ -48,6 +47,7 @@
 			       ("april"       . "(tag:april and tag:unread)")
 			       ("arch"        . "(tag:arch and tag:unread)")
 			       ("awesome"     . "(tag:awesome and tag:unread)")
+			       ("buddycloud"  . "(tag:buddycloud and tag:unread)")
 			       ("freedombox"  . "(tag:freedombox and tag:unread)")
 			       ("fsfe"        . "(tag:fsfe and tag:unread)")
 			       ("ldn"         . "(tag:ldn and tag:unread)")
@@ -59,7 +59,8 @@
 			       ("pympress"    . "(tag:pympress and tag:unread)")
 			       ("social"      . "(tag:social and tag:unread)")
 			       ("facebook"    . "(tag:facebook and tag:unread)")
-			       ("lwn"         . "(from:lwn.net and tag:unread)"))
+			       ("lwn"         . "(from:lwn.net and tag:unread)")
+			       ("pc inpact"   . "(from:pcinpact.com and tag:unread)"))
       notmuch-poll-script "~/.config/notmuch/mailsync"
       notmuch-address-command "~/.config/notmuch/addrbook.py"
       notmuch-crypto-process-mime t
