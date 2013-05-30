@@ -143,6 +143,7 @@ myawesomemenu = {
 }
 
 gamemenu = {
+   { "steam", "steam", "/usr/share/icons/hicolor/16x16/apps/steam.png" },
    { "battle for wesnoth", "wesnoth", "/usr/share/icons/wesnoth-icon.png" },
    { "frozen bubble", "frozen-bubble", ("/usr/share/pixmaps/frozen-bubble.png") },
    { "gplanarity", "gplanarity", ("/usr/share/pixmaps/gplanarity.png") },
@@ -807,7 +808,7 @@ awful.rules.rules = {
       properties = { tag = tags[1][1] } },
     { rule = { class = "Gajim.py", role = "messages" },
       callback = awful.client.setslave },
-    { rule_any = { instance = { "spotify.exe", "spotify" } },
+    { rule_any = { instance = { "spotify.exe", "spotify", "Steam" } },
       properties = { floating=true, tag = tags[1][9] } },
     { rule = { class = "Audacious" },
       properties = { floating = true, ontop = true, sticky = true } },
