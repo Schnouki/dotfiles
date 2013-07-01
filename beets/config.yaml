@@ -1,0 +1,21 @@
+directory: ~/Music
+library: ~/Music/.library
+plugins: bpd fetchart
+color: yes
+
+replace:
+  '[\\/]': _
+  '^\.': _
+  '[\x00-\x1f]': _
+  '[<>"\?\*\|]': ''
+  '\s*:\s+': ' - '
+  '\s+$': ''
+
+bpd:
+  host: 127.0.0.1
+  port: 6600
+
+paths:
+  default: $albumartist/$year - $album%aunique{}/$track $title
+  singleton: Non-Album/$artist/$title
+  comp: Compilations/$album%aunique{}/$track $title
