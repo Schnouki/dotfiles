@@ -522,6 +522,8 @@ persokeys = {
    awful.key({ }, "XF86MonBrightnessUp",   function () lousy.change_brightness( 10) end),
    awful.key({ }, "XF86MonBrightnessDown", function () lousy.change_brightness(-10) end),
 
+   -- F1 - mettre en veille
+   awful.key({ modkey, "Control" }, "F1", function () awful.util.spawn("gksudo systemctl suspend") end),
    -- F2 - verrouiller l'écran
    awful.key({ }, "XF86ScreenSaver",      function () awful.util.spawn("xscreensaver-command -lock") end),
    awful.key({ modkey, "Control" }, "F2", function () awful.util.spawn("xscreensaver-command -lock") end),
@@ -819,6 +821,7 @@ awful.rules.rules = {
 no_titlebar_apps = {
    ["gnome-commander"] = true,
    ["lt-gnome-commander"] = true,
+   ["Steam"] = true,
    ["Wine"] = true,
    ["xine"] = true,
    ["Xitk"] = true,
