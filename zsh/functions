@@ -34,50 +34,8 @@ function pacQ() {
     print -lr -- $align
 }
 
-function graphite_build_module() {
-    local autopushd=$(setopt | grep autopushd)
-    unsetopt autopushd
-
-    local mode="Debug"
-    local type="incr"
-    for arg ($@); do
-        case "$arg" in
-            Debug|Release) mode="$arg" ;;
-            incr|full) type="$arg" ;;
-            *) echo "Argument invalide: $arg"; return 1
-        esac
-    done
-
-    local orig_dir=$(pwd)
-    if [[ "$orig_dir" =~ "^/home/schnouki/Recherche/ALICE/(graphite|svn-git)/" ]]; then
-        # Trouver la racine...
-        while [[ ! -e "configure.sh" ]]; do cd ..; done
-
-        # Trouver le nombre de cœurs
-        local cores=2
-        which lstopo &>/dev/null && cores=$(lstopo --only core | wc -l)
-
-        # Message d'avertissement
-        echo "=============================="
-        echo "== Compilation: $(pwd)"
-        echo "== Mode: $mode"
-        echo "== Type: $type"
-        echo "== Cores: $cores"
-        echo "=============================="
-        sleep 1
-
-        # Nettoyage et préparation
-        [[ "$type" == "full" ]] && ([[ -e "build" ]] && rm -rf build)
-        [[ ! -e "build" ]] && sh ./configure.sh
-
-        # Compilation
-        cd build/Linux-$mode && make -j$(( $cores + 1))
-
-        # Retour à l'envoyeur
-        cd "$orig_dir"
-    else
-        echo "Pas dans un sous-dossier de Graphite"
-    fi
-
-    [[ ! -z "$autopushd" ]] && setopt autopushd
+function venv() {
+    local name=$1
+    cd ~/$name
+    source ~/.virtualenvs/${name}/bin/activate
 }
