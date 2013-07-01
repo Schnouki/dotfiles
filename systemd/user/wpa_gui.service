@@ -1,0 +1,8 @@
+[Unit]
+Description=WPA Graphical User Interface
+
+[Service]
+ExecStart=/usr/bin/wpa_gui -t
+
+[Install]
+WantedBy=default.target
