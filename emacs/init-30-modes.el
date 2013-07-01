@@ -18,6 +18,9 @@
 (defalias 'python2-mode 'python-mode)
 (defalias 'python3-mode 'python-mode)
 
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+(add-to-list 'interpreter-mode-alist '("node" . js2-mode))
+
 (folding-add-to-marks-list 'coffee-mode "# {{{" "# }}}" nil t)
 (add-hook 'coffee-mode-hook
 	  '(lambda ()

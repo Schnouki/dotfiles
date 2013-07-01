@@ -15,6 +15,10 @@
   (setq indent-tabs-mode t))
 (add-hook 'emacs-lisp-mode-hook 'schnouki/emacs-lisp-default-indent)
 
+;; elpy
+(setq virtualenv-root "~/.virtualenvs")
+(elpy-enable)
+
 ;; Code folding
 (require 'folding)
 (folding-install)
@@ -115,3 +119,6 @@
 (require 'fixmee)
 (setq button-lock-mode-lighter "")
 (global-fixmee-mode 1)
+
+;; SCSS
+(setq scss-compile-at-save nil)

@@ -86,7 +86,7 @@ Return the index of the matching item, or nil if not found."
 ;; immortal-star-buffers list or a major mode in the immortal-modes list.
 (setq schnouki/immortal-star-buffers '("^\\*scratch\\*")
       schnouki/immortal-modes        '(message-mode notmuch-hello-mode notmuch-search-mode
-				       notmuch-show-mode org-agenda-mode))
+				       notmuch-show-mode org-agenda-mode inferior-python-mode))
 (defun schnouki/kill-star-buffers ()
   "Remove most star-buffers (`*Messages*', `*Compilation', ...) that are not in the `schnouki/immortal-star-buffers' list."
   (interactive)
