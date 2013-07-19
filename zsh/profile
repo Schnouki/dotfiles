@@ -48,8 +48,8 @@ else
     # VCS info in the right prompt, based on http://kriener.org/articles/2009/06/04/zsh-prompt-magic
     autoload -Uz vcs_info
 
-    FMT_BRANCH="%{$fg[magenta]%}%s:%{$fg[blue]%}%b%B%{$fg[magenta]%}%u%c%%b%{$fg[default]%}"
-    FMT_ACTION="(%{$fg[blue]%}%a%{$fg[default]%})"
+    FMT_BRANCH="%F{magenta}%s:%F{blue}%b%B%F{magenta}%u%c%%b%F{default}"
+    FMT_ACTION="(%F{blue}%a%F{default})"
 
     zstyle ':vcs_info:*' check-for-changes true
     zstyle ':vcs_info:*' unstagedstr '*'
@@ -58,8 +58,19 @@ else
     zstyle ':vcs_info:*' formats       "${FMT_BRANCH} / "
     zstyle ':vcs_info:*' nvcsformats   ""
 
-    export PS1="%B%(!.%{$fg[red]%}.%{$fg[green]%})%n%{$fg[yellow]%}@%{$fg[white]%}%m %{$fg[yellow]%}%# %{$fg[default]%}%b"
-    export RPS1="%(?..%B%{$fg[red]%}%?%b%{$fg[default]%} / )"'${vcs_info_msg_0_}'"%{$fg[cyan]%}%28<...<%~%<<%{$fg[default]%} / %B%{$fg[cyan]%}%*%{$fg[default]%}%b"
+    PS1="%B" # Bold font
+    PS1+="%(!.%F{red}.%F{green})%n" # Username in green, or red if it's root
+    PS1+="%F{yellow}@%F{white}%m" # @hostname
+    PS1+=" %F{yellow}%# " # %/# sign
+    PS1+="%F{default}%b" # Restore normal font
+    export PS1
+
+    RPS1="%(?..%B%F{red}%?%b%F{default} / )" # Status code if red if not 0
+    RPS1+='${vcs_info_msg_0_}' # VCS info
+    RPS1+="%F{cyan}%28<...<%~%<<%F{default} / " # Path
+    RPS1+="%B%F{cyan}%*" # Time
+    RPS1+="%F{default}%b" # Restore normal font
+    export RPS1
 
     function precmd {
         # Terminal title
