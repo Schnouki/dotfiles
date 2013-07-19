@@ -76,6 +76,7 @@ else
     RPS1+="%B%F{cyan}%*" # Time
     RPS1+="%F{default}%b" # Restore normal font
     export RPS1
+    setopt transient_rprompt
 
     function precmd {
         # Terminal title
