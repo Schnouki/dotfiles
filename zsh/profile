@@ -65,13 +65,14 @@ else
     if [[ ! -z "$(who am i)" ]]; then
         PS1+="%(!..%(1000#..%F{yellow}@))%F{white}%m "
     fi
+
+    PS1+='%B%F{white}${ps1_path} ' # Path
     PS1+="%(!.%F{red}.%F{yellow})%# " # %/# sign in yellow or red (root)
     PS1+="%F{default}%b" # Restore normal font
     export PS1
 
     RPS1="%(?..%B%F{red}%?%b%F{default} / )" # Status code if red if not 0
     RPS1+='${vcs_info_msg_0_}' # VCS info
-    RPS1+="%F{cyan}%28<...<%~%<<%F{default} / " # Path
     RPS1+="%B%F{cyan}%*" # Time
     RPS1+="%F{default}%b" # Restore normal font
     export RPS1
@@ -85,6 +86,15 @@ else
         # Update VCS prompt (without telling stuff like "fatal: This operation
         # must be run in a work tree" if we are in a .git dir)
         vcs_info 2>/dev/null
+
+        # Path displayed in PS1 - collapse $HOME but not other variables
+        ps1_path="${PWD/#$HOME/~}"
+        # Collapse each dir(but the last) to its first letter
+        # From  http://git.io/ffi9_A, no idea how it works :)
+        if [[ ! "${ps1_path}" == "~" ]]; then
+            ps1_path="${${${(@j:/:M)${(@s:/:)ps1_path}##.#?}:h}%/}/${ps1_path:t}"
+        fi
+        export ps1_path
     }
 fi
 
