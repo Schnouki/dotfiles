@@ -67,6 +67,12 @@
 ;; nothing into auto-mode-alist, just an autoload for the mode itself...
 (autoload 'plantuml-mode "plantuml-mode" "PlantUML major mode" t)
 
+;; po-mode
+(autoload 'po-mode "po-mode" "Major mode for translators to edit PO files" t)
+(add-to-list 'auto-mode-alist '("\\.po\\'\\|\\.po\\." . po-mode))
+(autoload 'po-find-file-coding-system "po-compat")
+(modify-coding-system-alist 'file "\\.po\\'\\|\\.po\\." 'po-find-file-coding-system)
+
 ;; Golbarg, the most awesome blog engine ever
 (autoload 'golbarg-mode "golbarg.el" "Golbarg mode." t)
 (autoload 'golbarg-new-draft "golbarg.el" "New Golbarg draft." t)
