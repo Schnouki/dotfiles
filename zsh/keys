@@ -8,6 +8,8 @@
 # Just set it to xterm to solve everything. The easiest way to do this is to add
 # something similar to "URxvt.termName: xterm" in your ~/.Xdefaults.
 
+# TODO: use zkbd :)
+
 bindkey 'OH'  beginning-of-line
 bindkey '[H'  beginning-of-line
 bindkey '[1~' beginning-of-line
