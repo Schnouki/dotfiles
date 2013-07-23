@@ -61,8 +61,8 @@ else
     PS1="%B" # Bold font
     PS1+="%(!..%(1000#..%F{green}%n))" # Username in green if it's not UID 1000 or root
 
-    # Display hostname in PS1 if we're running on SSH
-    if [[ ! -z "$(who am i)" ]]; then
+    # Display hostname in PS1 if we're running on SSH or in tmux/screen
+    if [[ ! -z "$(who am i)" ]] || [[ "x$TERM" == "xscreen" ]]; then
         PS1+="%(!..%(1000#..%F{yellow}@))%F{white}%m "
     fi
 
