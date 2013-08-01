@@ -1,5 +1,10 @@
 #!/bin/zsh
 
+# Second screen
+xrandr | grep -q "VGA1 connected" && \
+    xrandr --output LVDS1 --auto --preferred \
+           --output VGA1  --auto --left-of LVDS1
+
 # Fuck Xorg -- https://bugs.freedesktop.org/show_bug.cgi?id=23705
 [[ $(hostname) == "odin" || $(hostname) == "baldr" ]] && \
     xrandr --fbmm `xrandr | sed -n '/ connected / {s/.* \([0-9]\+\)mm x \([0-9]\+\)mm/\1x\2/p;q}'`
