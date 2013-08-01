@@ -12,6 +12,10 @@
 (folding-add-to-marks-list 'lua-mode "-- {{{" "-- }}}" nil t)
 
 (folding-add-to-marks-list 'go-mode "// {{{" "// }}}" nil t)
+(defun schnouki/maybe-gofmt-before-save ()
+  (when (eq major-mode 'go-mode)
+    (gofmt-before-save)))
+(add-hook 'before-save-hook 'schnouki/maybe-gofmt-before-save)
 
 (autoload 'python-mode "python" "Python mode." t)
 (add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
