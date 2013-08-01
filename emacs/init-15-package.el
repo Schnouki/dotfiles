@@ -24,7 +24,7 @@
 			  ioccur indent-guide
 			  js2-mode js2-refactor
 			  lua-mode
-			  magit magithub markdown-mode mediawiki melpa
+			  magit magithub markdown-mode mediawiki melpa multiple-cursors
 			  php-mode pkgbuild-mode pretty-lambdada python python-pep8
 			  rainbow-mode
 			  scss-mode skewer-mode sudoku
