@@ -6,7 +6,7 @@
 (global-set-key (kbd "C-<") 'magit-status)
 (global-set-key (kbd "C-à") 'magit-status)
 
-(autoload 'magit-blame-mode "magit" nil t)
+(autoload 'magit-blame-mode "magit-blame" nil t)
 (global-set-key (kbd "C-c C-<") 'magit-blame-mode)
 (global-set-key (kbd "C-c C-à") 'magit-blame-mode)
 
