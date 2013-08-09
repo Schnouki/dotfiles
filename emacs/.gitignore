@@ -2,6 +2,7 @@ auto-save-list
 %backup%~
 .emacs.desktop
 .emacs.desktop.lock
+.mc-lists.el
 .org-id-locations
 ede-projects.el
 elpa/
