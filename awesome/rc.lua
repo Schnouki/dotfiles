@@ -142,17 +142,21 @@ myawesomemenu = {
    { "quit", awesome.quit }
 }
 
+steamdir = "/home/schnouki/.local/share/Steam/SteamApps/common/"
 gamemenu = {
    { "steam", "steam", "/usr/share/icons/hicolor/16x16/apps/steam.png" },
    { "battle for wesnoth", "wesnoth", "/usr/share/icons/wesnoth-icon.png" },
-   { "frozen bubble", "frozen-bubble", ("/usr/share/pixmaps/frozen-bubble.png") },
-   { "gplanarity", "gplanarity", ("/usr/share/pixmaps/gplanarity.png") },
-   { "hex-a-hop", "hex-a-hop", ("/usr/share/hex-a-hop/icon.bmp") },
-   { "kildclient", "kildclient", ("/usr/share/pixmaps/kildclient.png") },
-   { "kobo deluxe", "kobodl", ("/usr/share/pixmaps/kobo-icon.xpm") },
-   { "minecraft", "minecraft", ("/usr/share/pixmaps/minecraft.png") },
-   { "naev", "naev", ("/usr/share/pixmaps/naev.png") },
-   { "torchlight", "torchlight", ("/usr/share/pixmaps/torchlight.png") },
+   { "frozen bubble", "frozen-bubble", "/usr/share/pixmaps/frozen-bubble.png" },
+   { "gplanarity", "gplanarity", "/usr/share/pixmaps/gplanarity.png" },
+   { "half-life", steamdir .. "Half-Life/hl.sh", "/home/schnouki/.local/share/icons/hicolor/16x16/apps/steam_icon_70.png" },
+   { "hex-a-hop", "hex-a-hop", "/usr/share/hex-a-hop/icon.bmp" },
+   { "kerbal space program", "LC_ALL=C " .. steamdir .. "Kerbal Space Program/KSP.x86", steamdir .. "Kerbal Space Program/KSP_Data/Resources/UnityPlayer.png" },
+   { "kildclient", "kildclient", "/usr/share/pixmaps/kildclient.png" },
+   { "kobo deluxe", "kobodl", "/usr/share/pixmaps/kobo-icon.xpm" },
+   { "minecraft", "minecraft", "/usr/share/pixmaps/minecraft.png" },
+   { "naev", "naev", "/usr/share/pixmaps/naev.png" },
+   { "torchlight", "torchlight", "/usr/share/pixmaps/torchlight.png" },
+   { "world of goo", steamdir .. "World of Goo/WorldOfGoo", "/home/schnouki/.local/share/icons/hicolor/16x16/apps/steam_icon_22000.png" },
 }
 
 utilsmenu = {
