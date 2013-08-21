@@ -6,6 +6,7 @@ auto-save-list
 .org-id-locations
 ede-projects.el
 elpa/
+eshell/history
 var/
 places
 server
