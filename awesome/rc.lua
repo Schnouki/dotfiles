@@ -264,6 +264,19 @@ end
 package.cpath = config_dir .. "/?.so;" .. package.cpath
 require("lousy")
 
+-- Switch tag on next screen
+function get_next_screen()
+   local s = mouse.screen + 1
+   if s > screen.count() then s = 1 end
+   return s
+end
+function next_screen_viewnext()
+   awful.tag.viewnext(get_next_screen())
+end
+function next_screen_viewprev()
+   awful.tag.viewprev(get_next_screen())
+end
+
 -- {{{     Window management
 -- Gestion de la titlebar
 local all_titlebars = {}
@@ -544,6 +557,10 @@ persokeys = {
    -- Touches tag suivant/précédent au-dessus du pavé numérique
    awful.key({ }, "XF86Back",     awful.tag.viewprev),
    awful.key({ }, "XF86Forward" , awful.tag.viewnext),
+
+   -- Tag suivant/précédent sur l'autre écran avec PageUp/PageDown
+   awful.key({ modkey }, "Prior", next_screen_viewprev),
+   awful.key({ modkey }, "Next",  next_screen_viewnext),
 
    -- Impr. Écran
    awful.key({ }, "Print", function () awful.util.spawn("twitscreen") end),
