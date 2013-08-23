@@ -121,7 +121,7 @@ for s = 2, screen.count() do
 end
 
 -- Customize some tags
-awful.tag.setmwfact(0.72, tags[1][1])
+awful.tag.setmwfact(0.72, tags[screen.count()][1])
 awful.tag.setmwfact(0.72, tags[1][2])
 awful.tag.setmwfact(0.65, tags[1][3])
 awful.tag.setmwfact(0.65, tags[1][8])
@@ -264,12 +264,14 @@ end
 package.cpath = config_dir .. "/?.so;" .. package.cpath
 require("lousy")
 
--- Switch tag on next screen
+-- Screen helper
 function get_next_screen()
    local s = mouse.screen + 1
    if s > screen.count() then s = 1 end
    return s
 end
+
+-- Switch tag on next screen
 function next_screen_viewnext()
    awful.tag.viewnext(get_next_screen())
 end
@@ -829,7 +831,7 @@ awful.rules.rules = {
       except = { instance = "Navigator" },
       properties = { floating = true } },
     { rule = { class = "Gajim.py", role = "roster" },
-      properties = { tag = tags[1][1] } },
+      properties = { tag = tags[screen.count()][1] } },
     { rule = { class = "Gajim.py", role = "messages" },
       callback = awful.client.setslave },
     { rule_any = { instance = { "spotify.exe", "spotify", "Steam" } },
