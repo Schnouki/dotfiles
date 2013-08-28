@@ -100,18 +100,16 @@ else
 fi
 
 ##### Completion
-# Load custom scripts (but not as root, or compinit will complain about "insecure directories and files")
-if [[ $UID -ne 0 ]]; then
-    fpath=($HOME/.config/zsh/completion $fpath)
-    autoload -U $HOME/.config/zsh/completion/_*(.:t)
-    for f in $HOME/.config/zsh/completion/*.zsh(.); do
-        source $f
-    done
-fi
+# Load custom scripts
+fpath=($HOME/.config/zsh/completion $fpath)
+autoload -U $HOME/.config/zsh/completion/_*(.:t)
+for f in $HOME/.config/zsh/completion/*.zsh(.); do
+    source $f
+done
 
 # Now init the completion system
 autoload -Uz compinit
-compinit
+compinit -u
 zstyle :compinstall filename "$HOME/.zshrc"
 zstyle ':completion::complete:*' use-cache 1
 
