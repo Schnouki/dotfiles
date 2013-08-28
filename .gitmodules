@@ -1,3 +1,6 @@
 [submodule "urxvt/urxvt-tabbedex"]
 	path = urxvt/urxvt-tabbedex
 	url = git://github.com/stepb/urxvt-tabbedex.git
+[submodule "zsh/completion/virsh"]
+	path = zsh/completion/virsh
+	url = https://planetcyborg.de/git/repos/jplitza/zsh-virsh-autocomplete
