@@ -1,4 +1,4 @@
-LDFLAGS += -lxcb -lxcb-randr -lxcb-screensaver -lxcb-util
+LDFLAGS += -lxcb -lxcb-randr -lxcb-screensaver -lxcb-util -lxcb-xkb
 CFLAGS  += -fPIC -O2
 
 all: lousy.so

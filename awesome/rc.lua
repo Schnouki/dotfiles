@@ -553,8 +553,8 @@ persokeys = {
    awful.key({ }, "XF86Display",     function () awful.util.spawn("gdisper") end),
 
    -- Caps Lock et Num Lock
-   awful.key({ }, "Num_Lock",  function() locks_mon:update() end),
-   awful.key({ }, "Caps_Lock", function() locks_mon:update() end),
+   awful.key({ }, "Num_Lock",  function() locks_mon:update("Num_Lock")  end),
+   awful.key({ }, "Caps_Lock", function() locks_mon:update("Caps_Lock") end),
 
    -- Touches tag suivant/précédent au-dessus du pavé numérique
    awful.key({ }, "XF86Back",     awful.tag.viewprev),
