@@ -12,7 +12,7 @@
 (package-initialize)
 
 ;; Packages
-(setq schnouki/packages '(ac-js2 ace-jump-mode ack-and-a-half auto-complete
+(setq schnouki/packages '(ace-jump-mode ack-and-a-half auto-complete
 			  button-lock
 			  coffee-mode color-theme csharp-mode ctags-update
 			  deft dtrt-indent
@@ -22,12 +22,12 @@
 			  git-annex git-commit-mode gitignore-mode go-mode google-translate
 			  haml-mode haskell-mode hideshowvis
 			  ioccur indent-guide
-			  js2-mode js2-refactor
+			  js3
 			  lua-mode
 			  magit markdown-mode mediawiki melpa multiple-cursors mc-extras
 			  php-mode pkgbuild-mode pretty-lambdada python python-pep8
 			  rainbow-mode
-			  scss-mode skewer-mode sudoku
+			  scss-mode sudoku
 			  twittering-mode
 			  unbound undo-tree
 			  yaml-mode yasnippet
