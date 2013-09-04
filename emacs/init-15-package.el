@@ -19,12 +19,12 @@
 			  fixmee flymake flymake-coffee flymake-css flymake-go flymake-haml
 			  flymake-jshint flymake-jslint flymake-json flymake-lua
 			  flymake-python-pyflakes flymake-sass flymake-shell flymake-yaml
-			  git-commit-mode gitignore-mode go-mode google-translate
+			  git-annex git-commit-mode gitignore-mode go-mode google-translate
 			  haml-mode haskell-mode hideshowvis
 			  ioccur indent-guide
 			  js2-mode js2-refactor
 			  lua-mode
-			  magit magithub markdown-mode mediawiki melpa multiple-cursors
+			  magit markdown-mode mediawiki melpa multiple-cursors mc-extras
 			  php-mode pkgbuild-mode pretty-lambdada python python-pep8
 			  rainbow-mode
 			  scss-mode skewer-mode sudoku

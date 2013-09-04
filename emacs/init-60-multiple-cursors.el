@@ -3,6 +3,7 @@
 ;; -----------------------------------------------------------------------------
 
 (require 'multiple-cursors)
+(require 'mc-extras)
 
 (global-set-key (kbd "C-* l") 'mc/edit-lines)
 (global-set-key (kbd "C-* n") 'mc/mark-next-like-this)
@@ -16,3 +17,9 @@
 
 (global-unset-key (kbd "M-<down-mouse-1>"))
 (global-set-key (kbd "M-<mouse-1>") 'mc/add-cursor-on-click)
+
+(define-key mc/keymap (kbd "C-. C-d") 'mc/remove-current-cursor)
+(define-key mc/keymap (kbd "C-. d")   'mc/remove-duplicated-cursors)
+(define-key mc/keymap (kbd "C-. =")   'mc/compare-chars)
+(eval-after-load 'cua-base
+  '(define-key cua--rectangle-keymap (kbd "C-. C-,") 'mc/cua-rectangle-to-multiple-cursors))
