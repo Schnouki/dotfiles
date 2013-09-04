@@ -823,7 +823,7 @@ awful.rules.rules = {
     { rule_any = { class = { "Galculator", "Gimp", "Gmpc", "Gnote", "Klavaro", "MPlayer", "mplayer2",
                              "pinentry", "Plugin-container", "Qalculate", "Smplayer", "VirtualBox", "Vlc",
                              "Wine", "Xfmedia", "xine", "XVroot" },
-                   instance = { "pinentry-gtk-2" },
+                   instance = { "pinentry-gtk-2", "wpa_gui" },
                    name = { "Gnuplot (window id : 0)", "Minecraft", "R Graphics: Device 2 (ACTIVE)" } },
       properties = { floating = true } },
 
@@ -845,6 +845,7 @@ awful.rules.rules = {
 no_titlebar_apps = {
    ["gnome-commander"] = true,
    ["lt-gnome-commander"] = true,
+   ["plugin-container"] = true,
    ["Steam"] = true,
    ["Wine"] = true,
    ["xine"] = true,
