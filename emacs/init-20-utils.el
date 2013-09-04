@@ -152,3 +152,17 @@ Return the index of the matching item, or nil if not found."
 (defadvice deft-auto-save (around keep-whitespace-on-deft-auto-save activate)
   (flet ((delete-trailing-whitespace))
     ad-do-it))
+
+;; http://www.emacswiki.org/emacs/CamelCase
+(defun un-camelcase-string (s &optional sep start)
+  "Convert CamelCase string S to lower case with word separator SEP.
+    Default for SEP is a hyphen \"-\".
+
+    If third argument START is non-nil, convert words after that
+    index in STRING."
+  (let ((case-fold-search nil))
+    (while (string-match "[A-Z]" s (or start 1))
+      (setq s (replace-match (concat (or sep "-")
+				     (downcase (match-string 0 s)))
+			     t nil s)))
+    (downcase s)))

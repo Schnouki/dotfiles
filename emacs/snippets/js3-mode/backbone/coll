@@ -1,0 +1,14 @@
+#name: coll
+# --
+// ${1:description}
+${2:ns}.${3:name} = Backbone.Collection.extend({
+    model: $4,
+
+    url: function() {
+        return '/${3:$(downcase yas/text)}/';
+    },
+
+    initialize: function(attrs) {
+        $0
+    }
+});

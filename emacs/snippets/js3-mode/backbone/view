@@ -1,0 +1,27 @@
+#name: view
+# --
+// ${1:description}
+${2:ns}.${3:name} = Backbone.View.extend({
+    className: "${3:$(un-camelcase-string yas/text)}",
+
+    events: {
+        "${4:event} ${5:selector}" : "${6:funcname}"
+    },
+
+    initialize: function() {
+        this.model.on('change', this.render, this);
+        _.bindAll(this, 'render', '$6');
+    },
+
+    render: function() {
+        var data = this.model.toJSON();
+
+        return this;
+    },
+
+    $6: function() {
+        $0
+
+        return false;
+    }
+});
