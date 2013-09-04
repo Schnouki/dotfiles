@@ -44,6 +44,14 @@ this function with a prefix forces the creation of a new buffer."
 	(move-to-column pos-indent)))))
 (global-set-key [home] 'schnouki/home-key)
 
+;; Insert newline and return to point
+(defun schnouki/newline-same-point ()
+  (interactive)
+  (save-excursion
+    (newline-and-indent))
+  (funcall indent-line-function))
+(global-set-key (kbd "M-RET") 'schnouki/newline-same-point)
+
 ;; Quick diff between current buffer and file
 ;; From http://slashusr.wordpress.com/2010/01/19/quickly-diff-the-changes-made-in-the-current-buffer-with-its-file/
 (defun schnouki/diff-current-buffer-with-file ()
