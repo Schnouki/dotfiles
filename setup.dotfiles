@@ -17,7 +17,7 @@ setup_decrypt "gpg.conf.gpg" ".gnupg/gpg.conf"
 setup_decrypt "msmtprc.gpg" ".msmtprc"
 
 # Setup encrypted tarballs
-# (none at the moment :))
+setup_decrypt_tarball "calibre.tar.gpg"
 
 # Load Xresources
 if [ "$DISPLAY" ]; then
