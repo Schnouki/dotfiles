@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: function(cb) {...}
+# key: fcb
+# --
+function(cb$1) {
+    $0
+},

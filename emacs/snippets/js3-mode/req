@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: require([], function(...) {})
+# key: req
+# --
+require([$1], function($2) {
+    $0
+});

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Texte en petites capitales
+# key: sc
+# --
+\textsc{$1}$0

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: _this = this
+# key: _t
+# --
+var _this = this;

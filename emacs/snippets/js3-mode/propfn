@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Anonymous function as a property
+# key: propfn
+# --
+${1:propName}: function($2) {
+$0
+},
