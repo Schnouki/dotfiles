@@ -1,0 +1,10 @@
+#!/usr/bin/env zsh
+
+. ~/.config/notmuch/hook-common.zsh
+
+awesome_begin_update
+
+# Removes messages with the "deleted" tag
+(( $(notmuch count tag:deleted) > 0 )) && (notmuch search --output=files tag:deleted | xargs -rd'\n' rm)
+
+exit 0

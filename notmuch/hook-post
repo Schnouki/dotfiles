@@ -1,0 +1,13 @@
+#!/usr/bin/env zsh
+
+. ~/.config/notmuch/hook-common.zsh
+
+notmuch new
+new=$(notmuch count tag:new)
+nosync $CONFIGDIR/autotag.py || "Autotag failed."
+
+awesome_end_update
+dbus-send --session --dest="org.gnu.Emacs" "/org/gnu/Emacs" "org.gnu.Emacs.NotmuchNotify"
+[[ $new > 0 ]] && $CONFIGDIR/notify.py
+
+exit 0
