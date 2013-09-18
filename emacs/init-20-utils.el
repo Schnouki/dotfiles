@@ -4,8 +4,8 @@
 
 ;; Copy current line with M-k
 ;; http://www.emacsblog.org/2009/05/18/copying-lines-not-killing/#comment-27462
-(defun schnouki/copy-line (&optional arg)
-  (interactive "P")
+(defun schnouki/copy-line ()
+  (interactive)
   (kill-ring-save (line-beginning-position) (+ 1 (line-end-position))))
 (global-set-key (kbd "M-k") 'schnouki/copy-line)
 
@@ -94,18 +94,21 @@ Return the index of the matching item, or nil if not found."
 ;; immortal-star-buffers list or a major mode in the immortal-modes list.
 (setq schnouki/immortal-star-buffers '("^\\*scratch\\*")
       schnouki/immortal-modes        '(message-mode notmuch-hello-mode notmuch-search-mode
-				       notmuch-show-mode org-agenda-mode inferior-python-mode))
-(defun schnouki/kill-star-buffers ()
-  "Remove most star-buffers (`*Messages*', `*Compilation', ...) that are not in the `schnouki/immortal-star-buffers' list."
-  (interactive)
+				       notmuch-show-mode org-agenda-mode inferior-python-mode
+				       jabber-chat-mode jabber-roster-mode))
+(defun schnouki/kill-star-buffers (&optional arg)
+  "Remove most star-buffers (`*Messages*', `*Compilation', ...) that are not in the `schnouki/immortal-star-buffers' list. With prefix argument ARG, kill all star-buffers."
+  (interactive "P")
   (let ((count 0)
 	buf-name buf-mode)
     (dolist (buf (buffer-list))
       (setq buf-name (buffer-name buf)
 	    buf-mode (with-current-buffer buf major-mode))
-      (when (and (string-match "^\\*.+$" buf-name)
-		 (notany '(lambda (re) (string-match re buf-name)) schnouki/immortal-star-buffers)
-		 (not (memq buf-mode schnouki/immortal-modes)))
+      (when (and
+	     (string-match "^\\*.+$" buf-name)
+	     (or arg
+		 (and (notany '(lambda (re) (string-match re buf-name)) schnouki/immortal-star-buffers)
+		      (not (memq buf-mode schnouki/immortal-modes)))))
 	(kill-buffer buf)
 	(setq count (1+ count))))
     (message (concat (int-to-string count) " buffers killed"))))
