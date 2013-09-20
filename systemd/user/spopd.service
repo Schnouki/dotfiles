@@ -5,4 +5,4 @@ Description=Spop: a Spotify client daemon
 ExecStart=/usr/bin/spopd -f
 
 [Install]
-WantedBy=default.target
+WantedBy=xorg.target

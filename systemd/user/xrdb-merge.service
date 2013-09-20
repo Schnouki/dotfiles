@@ -1,6 +1,10 @@
+[Unit]
+Description=X resources database
+Requires=xorg.target
+
 [Service]
 Type=oneshot
 ExecStart=/usr/bin/xrdb -merge %h/.Xresources
 
 [Install]
-WantedBy=default.target
+WantedBy=xorg.target

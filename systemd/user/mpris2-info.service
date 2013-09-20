@@ -1,10 +1,9 @@
 [Unit]
 Description=MPRIS2 notifications service
-Wants=dbus.service
-After=dbus.service
+Requires=dbus.socket xorg.target
 
 [Service]
 ExecStart=/home/schnouki/bin/mpris2-info
 
 [Install]
-WantedBy=default.target
+WantedBy=xorg.target

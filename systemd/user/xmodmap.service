@@ -6,4 +6,4 @@ Type=oneshot
 ExecStart=/usr/bin/xmodmap %h/.Xmodmap
 
 [Install]
-WantedBy=default.target
+WantedBy=xorg.target

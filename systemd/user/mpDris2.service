@@ -1,10 +1,10 @@
 [Unit]
 Description=MPRIS2 support for MPD
-Requires=mpd.service
+Requires=mpd.service dbus.socket xorg.target
 After=mpd.service
 
 [Service]
 ExecStart=/usr/bin/mpDris2
 
 [Install]
-WantedBy=default.target
+WantedBy=xorg.target

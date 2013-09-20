@@ -1,6 +1,10 @@
+[Unit]
+Description=Synapics touchpad configuration tool
+Requires=xorg.target
+
 [Service]
 Type=oneshot
 ExecStart=/usr/bin/synclient TouchpadOff=1
 
 [Install]
-WantedBy=default.target
+WantedBy=xorg.target

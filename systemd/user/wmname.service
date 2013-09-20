@@ -1,6 +1,10 @@
+[Unit]
+Description=WM name setter
+Requires=xorg.target
+
 [Service]
 Type=oneshot
 ExecStart=/usr/bin/wmname LG3D
 
 [Install]
-WantedBy=default.target
+WantedBy=xorg.target

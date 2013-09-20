@@ -1,9 +1,10 @@
 [Unit]
 Description=Allow root to use this display
+Requires=xorg.target
 
 [Service]
 Type=oneshot
 ExecStart=/usr/bin/xhost +local:root
 
 [Install]
-WantedBy=default.target
+WantedBy=xorg.target
