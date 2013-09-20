@@ -124,7 +124,7 @@
        (let ((completion-ignore-case t)
 	     (ido-enable-fle-matching t))
 	 (ido-completing-read
-	  prompt collection nil nil nil 'notmuch-address-history)))
+	  prompt (cons initial-input collection) nil nil nil 'notmuch-address-history)))
      (setq notmuch-address-selection-function 'schnouki/notmuch-address-selection-function)
 
      (defun notmuch-mua-mail-url (url)
