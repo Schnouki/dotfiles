@@ -202,3 +202,10 @@
 ;; Wait a very little bit before fontifying buffers
 ;; http://tsengf.blogspot.fr/2012/11/slow-scrolling-speed-in-emacs.html
 (setq jit-lock-defer-time 0.05)
+
+;; Auto-update buffers when the file changes on-disk
+(global-auto-revert-mode 1)
+
+;; Better naming than main.yml<2>, main.yml<3>, main.yml<4>
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'post-forward-angle-brackets)
