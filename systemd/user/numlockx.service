@@ -1,0 +1,11 @@
+[Unit]
+Description=Enable numlock in X
+Requires=xorg.target
+Before=window-manager.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/numlockx on
+
+[Install]
+WantedBy=xorg.target
