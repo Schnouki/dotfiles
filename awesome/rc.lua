@@ -820,7 +820,7 @@ awful.rules.rules = {
                      keys = clientkeys,
                      buttons = clientbuttons } },
     -- Simple rules for floating windows
-    { rule_any = { class = { "Galculator", "Gimp", "Gmpc", "Gnote", "Klavaro", "MPlayer", "mplayer2",
+    { rule_any = { class = { "Galculator", "Gimp", "Gmpc", "Gnote", "Klavaro", "MPlayer", "mplayer2", "mpv",
                              "pinentry", "Plugin-container", "Qalculate", "Smplayer", "VirtualBox", "Vlc",
                              "Wine", "Xfmedia", "xine", "XVroot" },
                    instance = { "pinentry-gtk-2", "wpa_gui" },
