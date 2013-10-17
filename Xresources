@@ -46,17 +46,22 @@ URxvt.urlLauncher:    firefox
 URxvt.matcher.button: 1
 
 ! Tabbedex features
-URxvt.new-button:       no
-URxvt.autohide:         yes
-URxvt.no-tabbedex-keys: yes
+URxvt.tabbed.new-button:       no
+URxvt.tabbed.autohide:         yes
+URxvt.tabbed.no-tabbedex-keys: yes
 
 ! Tabbedex colors
-URxvt.tabbar-fg: 244
-URxvt.tabbar-bg: 16
-URxvt.tab-fg:    255
-URxvt.tab-bg:    52
-URxvt.title-fg:  244
-URxvt.title-bg:  16
+URxvt.tabbed.tabbar-fg:   244
+URxvt.tabbed.tabbar-bg:   16
+URxvt.tabbed.tab-fg:      255
+URxvt.tabbed.tab-bg:      52
+URxvt.tabbed.bell-tab-fg: 255
+URxvt.tabbed.bell-tab-bg: 160
+URxvt.tabbed.bell-fg:     244
+URxvt.tabbed.bell-bg:     17
+URxvt.tabbed.title-fg:    28
+URxvt.tabbed.title-bg:    16
+
 
 ! Tabbedex keybindings (4-1: Super + Alt)
 URxvt.keysym.4-1-Down:    perl:tabbedex:new_tab
