@@ -205,6 +205,7 @@
 
 ;; Auto-update buffers when the file changes on-disk
 (global-auto-revert-mode 1)
+(global-set-key (kbd "C-x r RET") 'revert-buffer)
 
 ;; Better naming than main.yml<2>, main.yml<3>, main.yml<4>
 (require 'uniquify)
