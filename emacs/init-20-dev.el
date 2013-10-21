@@ -15,9 +15,33 @@
   (setq indent-tabs-mode t))
 (add-hook 'emacs-lisp-mode-hook 'schnouki/emacs-lisp-default-indent)
 
-;; elpy
-(setq virtualenv-root "~/.virtualenvs")
-(elpy-enable)
+;; Python: virtualenv and Jedi completion
+(setq virtualenv-root "~/.virtualenvs"
+      virtualenv-workon-starts-python nil
+      jedi:complete-on-dot t)
+(add-hook 'python-mode-hook 'jedi:setup)
+
+;; Flycheck
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
+(eval-after-load 'flycheck
+  '(progn
+    (flycheck-define-checker python2-pylint
+      "A Python syntax and style checker using Pylint2."
+      :command ("pylint2" "-r" "n"
+                "--msg-template" "{path}:{line}:{C}:{msg} ({msg_id})"
+                (config-file "--rcfile" flycheck-pylint2rc)
+                source)
+      :error-patterns
+      ((error line-start (file-name) ":" line ":"
+              (or "E" "F") ":" (message) line-end)
+       (warning line-start (file-name) ":" line ":"
+                (or "W" "R" "C") ":" (message) line-end))
+      :modes python-mode)
+    (flycheck-def-config-file-var flycheck-pylint2rc python2-pylint
+				  ".pylintrc"
+      :safe #'stringp)
+    (add-to-list 'flycheck-checkers 'python2-pylint)))
 
 ;; Code folding
 (require 'folding)

@@ -16,13 +16,11 @@
 			  button-lock
 			  coffee-mode color-theme csharp-mode ctags-update
 			  deft dtrt-indent
-			  fixmee flymake flymake-coffee flymake-css flymake-go flymake-haml
-			  flymake-jshint flymake-jslint flymake-json flymake-lua
-			  flymake-python-pyflakes flymake-sass flymake-shell flymake-yaml
+			  fixmee flycheck
 			  git-annex git-commit-mode gitignore-mode go-mode google-translate
 			  haml-mode haskell-mode hideshowvis
 			  ioccur indent-guide
-			  jabber js3-mode
+			  jabber jedi js3-mode
 			  lua-mode
 			  magit markdown-mode mediawiki melpa multiple-cursors mc-extras
 			  php-mode pkgbuild-mode pretty-lambdada python python-pep8
@@ -30,6 +28,7 @@
 			  scss-mode sudoku
 			  twittering-mode
 			  unbound undo-tree
+			  virtualenv
 			  yaml-mode yasnippet
 			  zenburn-theme))
 (let ((refreshed nil))
