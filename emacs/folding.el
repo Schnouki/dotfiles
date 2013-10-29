@@ -2,30 +2,22 @@
 
 ;; This file is not part of Emacs
 
-;; Copyright (C) 2000-2012
-;;           Jari Aalto
-;; Copyright (C) 1995, 1996, 1997, 1998, 1999
-;;           Jari Aalto, Anders Lindgren.
-;; Copyright (C) 1994
-;;           Jari Aalto
-;; Copyright (C) 1992, 1993
-;;           Jamie Lokier, All rights reserved.
+;; Copyright (C) 2000-2013 Jari Aalto
+;; Copyright (C) 1995, 1996, 1997, 1998, 1999 Jari Aalto, Anders Lindgren.
+;; Copyright (C) 1994 Jari Aalto
+;; Copyright (C) 1992, 1993 Jamie Lokier, All rights reserved.
 ;;
-;; Author:      Jamie Lokier <jamie A T imbolc.ucc dt ie>
+;; Authors:     Jamie Lokier <jamie A T imbolc.ucc dt ie>
 ;;              Jari Aalto <jari aalto A T cante dt net>
 ;;              Anders Lindgren <andersl A T csd.uu dt se>
 ;; Maintainer:  Jari Aalto <jari aalto A T cante dt net>
 ;; Created:     1992
 ;; Keywords:    tools
 ;;
-;; [Latest XEmacs CVS tree commit and revision]
-;; Vcs-Version: $Revision: 3.42 $
-;; Vcs-Date:    $Date: 2007/05/07 10:50:05 $
-;;
 ;; [Latest devel version]
 ;; Vcs-URL:     http://savannah.nongnu.org/projects/emacs-tiny-tools
 
-(defconst folding-version-time "2012.0226.1623"
+(defconst folding-version-time "2013.0613.1821"
   "Last edit time in format YYYY.MMDD.HHMM.")
 
 ;;{{{ GPL
@@ -637,6 +629,8 @@
 ;;{{{ History
 
 ;; [person version] = developer and his revision tree number.
+;; NOTE: History records were stopped in 2009 when code was moved under
+;; version control. See VCS logs.
 ;;
 ;; Sep  20  2009  23.1             [jari git a80c2d6]
 ;; - Remove 'defmacro custom' for very old Emacs version that did
@@ -2570,7 +2564,7 @@ References:
 Return t ot nil if marks were removed."
   (interactive)
   (if (not (folding-mark-look-at))
-      (when (interactive-p)
+      (when (called-interactively-p 'interactive)
         (message "Folding: Cursor not over fold. Can't remove fold marks.")
         nil)
     (destructuring-bind (beg end)
@@ -2609,7 +2603,7 @@ Point must be over beginning fold mark."
       (if (and beg end)
           (folding-region-open-close beg end hide)))
      (t
-      (if (interactive-p)
+      (if (called-interactively-p 'interactive)
           (message "point is not at fold beginning."))))))
 
 (defun folding-display-name ()
@@ -3164,7 +3158,7 @@ Overview
 
 Folding-mode function
 
-    If Folding mode is not called interactively (`(interactive-p)' is nil),
+    If Folding mode is not called interactively (`(called-interactively-p 'interactive)' is nil),
     and it is called with two or less arguments, all of which are nil, then
     the point will not be altered if `folding-folding-on-startup' is set
     and `folding-whole-buffer' is called. This is generally not a good
@@ -3311,7 +3305,7 @@ Mouse behavior
                      (run-hooks hook-symbol)))
             (folding-set-mode-line))
           (and folding-folding-on-startup
-               (if (or (interactive-p)
+               (if (or (called-interactively-p 'interactive)
                        arg
                        inter)
                    (folding-whole-buffer)
@@ -3660,14 +3654,17 @@ visible. This is useful after some commands eg., search commands."
                                              folding-stack)
                                      '(folded)))
                              (folding-set-mode-line))
-                           (folding-narrow-to-region (car data) (nth 1 data)))))))
+                           (folding-narrow-to-region
+			    (car data)
+			    (nth 1 data)))))))
     (let ((goal (point)))
       (while (folding-skip-ellipsis-backward)
         (beginning-of-line)
         (open-fold)
         (goto-char goal))
-      (when (not folding-narrow-by-default)
-        (widen)))))
+      (if folding-narrow-by-default
+          (open-fold)
+	(widen)))))
 
 ;;}}}
 ;;{{{ folding-shift-out
@@ -4117,7 +4114,7 @@ function will work on read-only buffers."
       (narrow-to-region narrow-min narrow-max)
       (and (eq t folding-list)
            (error
-            "Cannot fold whole buffer -- unmatched begin-fold mark `%s' ´%s'"
+            "Cannot fold whole buffer -- unmatched begin-fold mark `%s' `%s'"
             (current-buffer)
             folding-top-mark))
       (and (integerp (car folding-list))

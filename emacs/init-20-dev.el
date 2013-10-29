@@ -44,19 +44,23 @@
     (add-to-list 'flycheck-checkers 'python2-pylint)))
 
 ;; Code folding
+(setq folding-mode-prefix-key (kbd "C-:")
+      folding-folding-on-startup nil
+      folding-internal-margins nil)
+
 (require 'folding)
 (folding-install)
 (folding-install-hooks)
+(add-hook 'after-revert-hook 'folding-mode)
 
-;; Shorter key bindings for folding/hideshow
-(dolist (key (list (kbd "C-! :") (kbd "C-ç f")))
-  (global-set-key key '(lambda () (interactive)
-			 (unless folding-mode (folding-mode))
-			 (folding-toggle-show-hide))))
+;; Key bindings for hideshow
+(defun schnouki/hs-togle-hiding ()
+  (interactive)
+  (unless hs-minor-mode (hs-minor-mode))
+  (hs-toggle-hiding))
+
 (dolist (key (list (kbd "C-! !") (kbd "C-ç ç")))
-  (global-set-key key '(lambda () (interactive)
-			 (unless hs-minor-mode (hs-minor-mode))
-			 (hs-toggle-hiding))))
+  (global-set-key key 'schnouki/hs-togle-hiding))
 
 ;; Display indicator in fringe for code that can be folded with hideshow
 (hideshowvis-enable)
