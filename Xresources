@@ -92,6 +92,6 @@ XTerm*color14:    #34E2E2
 XTerm*color15:    #EEEEEC
 
 XTerm*faceName: DejaVu Sans Mono
-XTerm*faceSize: 12.5
+XTerm*faceSize: 8
 
 !(call-process-shell-command "xrdb -load ~/.Xresources")
