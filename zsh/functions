@@ -33,9 +33,3 @@ function pacQ() {
     zformat -a align " " $tab
     print -lr -- $align
 }
-
-function venv() {
-    local name=$1
-    cd ~/$name
-    source ~/.virtualenvs/${name}/bin/activate
-}

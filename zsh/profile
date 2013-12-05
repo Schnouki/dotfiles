@@ -147,6 +147,9 @@ unsetopt hup
 # zmv is awesome
 autoload -Uz zmv
 
+# virtualenvwrapper is nice
+[[ -e /usr/bin/virtualenvwrapper.sh ]] && source /usr/bin/virtualenvwrapper.sh
+
 # Reset WORDCHARS so it's easier to navigate between words.
 # Default value: export WORDCHARS='*?_-.[]~=/&;!#$%^(){}<>'
 export WORDCHARS=''
