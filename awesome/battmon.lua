@@ -30,7 +30,7 @@ local function file_as_number(filename)
       io.close(file)
       return n
    else
-      return -1
+      return 0
    end
 end
 
@@ -74,9 +74,9 @@ local function battery_mon()
             end
 
             -- Lecture de l'état actuel
-            energy_full = energy_full + file_as_number(batname .. "/energy_full")
-            energy_now  = energy_now  + file_as_number(batname .. "/energy_now")
-            power_now   = power_now   + file_as_number(batname .. "/power_now")
+            energy_full = energy_full + file_as_number(batname .. "/energy_full") + file_as_number(batname .. "/charge_full")
+            energy_now  = energy_now  + file_as_number(batname .. "/energy_now")  + file_as_number(batname .. "/charge_now")
+            power_now   = power_now   + file_as_number(batname .. "/power_now")   + file_as_number(batname .. "/current_now")
          end
       else
          break
