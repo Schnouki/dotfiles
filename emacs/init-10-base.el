@@ -75,6 +75,10 @@
 ;; Justify at 80 columns
 (setq-default fill-column 80)
 
+;; Tweak visual-line stuff
+(setq line-move-visual nil)
+(global-set-key (kbd "C-x t") 'toggle-truncate-lines)
+
 ;; Display matching parenthesis
 ;; http://emacs-fu.blogspot.com/2009/01/balancing-your-parentheses.html
 (require 'paren)
