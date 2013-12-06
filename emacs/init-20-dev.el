@@ -51,7 +51,7 @@
 (require 'folding)
 (folding-install)
 (folding-install-hooks)
-(add-hook 'after-revert-hook 'folding-mode)
+(add-hook 'after-revert-hook 'folding-mode-find-file t)
 
 ;; Key bindings for hideshow
 (defun schnouki/hs-togle-hiding ()

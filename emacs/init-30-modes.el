@@ -24,6 +24,7 @@
 
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js3-mode))
 (add-to-list 'interpreter-mode-alist '("node" . js3-mode))
+(folding-add-to-marks-list 'js3-mode "// {{{" "// }}}" nil t)
 
 (folding-add-to-marks-list 'coffee-mode "# {{{" "# }}}" nil t)
 (add-hook 'coffee-mode-hook
@@ -112,7 +113,8 @@
     (goto-char (point-min))
     (when (re-search-forward "^<<<<<<< " nil t)
       (smerge-mode 1))))
-(add-hook 'find-file-hook 'sm-try-smerge t)
+(add-hook 'find-file-hook 'sm-try-smerge)
+(add-hook 'after-revert-hook 'sm-try-smerge)
 
 ;; Display the current function name in the mode line
 (which-function-mode 1)
