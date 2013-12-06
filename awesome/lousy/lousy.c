@@ -1,3 +1,4 @@
+#include <stdint.h>
 #include <stdlib.h>
 #include <stdbool.h>
 
@@ -8,13 +9,15 @@
 #include <xcb/randr.h>
 #include <xcb/screensaver.h>
 
+#include "lousy.h"
+
 static xcb_connection_t* conn = NULL;
 static const xcb_setup_t* setup = NULL;
 static xcb_screen_t* scr = NULL;
 static bool xkb_initialized = false;
 static bool xkb_supported = false;
 
-bool do_backlight(xcb_connection_t* conn, double* in_inc, double* out_get_cur, double* out_get_max);
+bool do_backlight(xcb_connection_t* conn, const xcb_setup_t* setup, double* in_new_pct, double* out_cur_pct);
 
 void init() {
     if (!conn)
@@ -54,9 +57,18 @@ uint32_t idle() {
     return ms_since_user_input;
 }
 
-void change_brightness(double delta) {
-    init();
-    do_backlight(conn, &delta, NULL, NULL);
+double get_backlight() {
+    double cur = 0;
+    if (!conn || !setup)
+        init();
+    do_backlight(conn, setup, NULL, &cur);
+    return cur;
+}
+
+void set_backlight(double new_pct) {
+    if (!conn || !setup)
+        init();
+    do_backlight(conn, setup, &new_pct, NULL);
 }
 
 uint32_t keyboard_indicators() {

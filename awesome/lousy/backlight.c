@@ -9,11 +9,11 @@
 
 static xcb_atom_t backlight, backlight_new, backlight_legacy;
 
-static long backlight_get(xcb_connection_t *conn, xcb_randr_output_t output) {
+static int32_t backlight_get(xcb_connection_t *conn, xcb_randr_output_t output) {
     xcb_generic_error_t *error;
     xcb_randr_get_output_property_reply_t *prop_reply = NULL;
     xcb_randr_get_output_property_cookie_t prop_cookie;
-    long value;
+    int32_t value;
 
     backlight = backlight_new;
     if (backlight != XCB_ATOM_NONE) {
@@ -41,7 +41,7 @@ static long backlight_get(xcb_connection_t *conn, xcb_randr_output_t output) {
         prop_reply->format != 32) {
         value = -1;
     } else {
-        value = *((long *) xcb_randr_get_output_property_data(prop_reply));
+        value = *((int32_t *) xcb_randr_get_output_property_data(prop_reply));
     }
 
     free(prop_reply);
@@ -55,9 +55,8 @@ static void backlight_set(xcb_connection_t *conn, xcb_randr_output_t output, lon
 }
 
 
-bool do_backlight(xcb_connection_t* conn, double* in_inc, double* out_get_cur, double* out_get_max) {
-    int value = 0;
-    int i, o;
+bool do_backlight(xcb_connection_t* conn, const xcb_setup_t* setup, double* in_new_pct, double* out_cur_pct) {
+    int o;
 
     xcb_generic_error_t *error;
 
@@ -104,7 +103,7 @@ bool do_backlight(xcb_connection_t* conn, double* in_inc, double* out_get_cur, d
         return false;
     }
 
-    iter = xcb_setup_roots_iterator(xcb_get_setup(conn));
+    iter = xcb_setup_roots_iterator(setup);
     while (iter.rem) {
         xcb_screen_t *screen = iter.data;
         xcb_window_t root = screen->root;
@@ -124,9 +123,7 @@ bool do_backlight(xcb_connection_t* conn, double* in_inc, double* out_get_cur, d
         outputs = xcb_randr_get_screen_resources_outputs(resources_reply);
         for (o = 0; o < resources_reply->num_outputs; o++) {
             xcb_randr_output_t output = outputs[o];
-            double            cur, new, step;
-            double        min, max;
-            double        set;
+            int32_t cur, min, max;
 
             cur = backlight_get(conn, output);
             if (cur != -1) {
@@ -144,12 +141,11 @@ bool do_backlight(xcb_connection_t* conn, double* in_inc, double* out_get_cur, d
                     min = values[0];
                     max = values[1];
 
-                    if (out_get_cur != NULL && out_get_max != NULL) {
-                        *out_get_cur = (cur - min);
-                        *out_get_max = (max - min);
+                    if (out_cur_pct != NULL) {
+                        *out_cur_pct = 100. * (cur-min) / (max-min);
                     }
-                    if (in_inc != NULL) {
-                        new = cur + *in_inc * (max - min) / 100;
+                    if (in_new_pct != NULL) {
+                        int32_t new = min + (*in_new_pct * (max - min) / 100.);
                         if (new > max) new = max;
                         if (new < min) new = min;
                         backlight_set(conn, output, (long) new);

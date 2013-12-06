@@ -268,6 +268,14 @@ end
 package.cpath = config_dir .. "/?.so;" .. package.cpath
 require("lousy")
 
+-- Backlight helper
+function change_backlight(mult)
+   local new_bl = lousy.get_backlight() * mult
+   if new_bl < 0.5 then new_bl = 0.5
+   elseif new_bl > 100 then new_bl = 100 end
+   lousy.set_backlight(new_bl)
+end
+
 -- Screen helper
 function get_next_screen()
    local s = mouse.screen + 1
@@ -542,8 +550,8 @@ persokeys = {
    awful.key({ modkey }, "KP_Delete", volume_mute),
 
    -- Luminosité
-   awful.key({ }, "XF86MonBrightnessUp",   function () lousy.change_brightness( 10) end),
-   awful.key({ }, "XF86MonBrightnessDown", function () lousy.change_brightness(-10) end),
+   awful.key({ }, "XF86MonBrightnessUp",   function () change_backlight(1.1) end),
+   awful.key({ }, "XF86MonBrightnessDown", function () change_backlight(0.9) end),
 
    -- F1 - mettre en veille
    awful.key({ modkey, "Control" }, "F1", function () awful.util.spawn("gksudo systemctl suspend") end),
