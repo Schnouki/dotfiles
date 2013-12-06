@@ -188,7 +188,7 @@
 (defun schnouki/maybe-make-executable-if-script-p ()
   (let ((name (buffer-file-name)))
     (unless (reduce 'or
-		    (mapcar '(lambda (dir) (string-prefix-p (expand-file-name dir) name))
+		    (mapcar #'(lambda (dir) (string-prefix-p (expand-file-name dir) name))
 			    schnouki/no-script))
       (executable-make-buffer-file-executable-if-script-p))))
 (add-hook 'after-save-hook 'schnouki/maybe-make-executable-if-script-p)
@@ -201,7 +201,7 @@
 
 ;; Wait a very little bit before fontifying buffers
 ;; http://tsengf.blogspot.fr/2012/11/slow-scrolling-speed-in-emacs.html
-(setq jit-lock-defer-time 0.05)
+;(setq jit-lock-defer-time 0.05)
 
 ;; Auto-update buffers when the file changes on-disk
 (global-auto-revert-mode 1)

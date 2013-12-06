@@ -40,7 +40,7 @@
 (setq ispell-tex-skip-alists
       (list
        (append (car ispell-tex-skip-alists)
-	       (mapcar '(lambda (cmd) (list (concat "\\\\" cmd) 'ispell-tex-arg-end)) schnouki/ispell-tex-skip-alists))
+	       (mapcar #'(lambda (cmd) (list (concat "\\\\" cmd) 'ispell-tex-arg-end)) schnouki/ispell-tex-skip-alists))
        (cadr ispell-tex-skip-alists)))
 
 ;; Indentation with align-current in LaTeX environments
