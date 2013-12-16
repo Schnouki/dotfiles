@@ -407,9 +407,6 @@ if gethost() == "thor" then
    }
 end
 
-require("battmon")
-batt_mon = battmon.new()
-
 require("locksmon")
 locks_mon = locksmon.new()
 
@@ -504,7 +501,6 @@ for i = 2, #vicious.widgets.cpu() do
    w:set_height(18)
    w:set_vertical(true)
    w:set_background_color("#000000")
-   w:set_border_color("#000000")
    w:set_color({type = "linear", from = {0, 0}, to = {0, 18},
                 stops = {{0, "#CC6666"}, {0.5, "#CCCC66"}, {1.0, "#66CC66"}}})
    vicious.register(w, vicious.widgets.cpu, "$" .. i, 3)
@@ -519,7 +515,6 @@ mem_widget:set_width(8)
 mem_widget:set_height(18)
 mem_widget:set_vertical(true)
 mem_widget:set_background_color("#000000")
-mem_widget:set_border_color("#000000")
 mem_widget:set_color({type = "linear", from = {0, 0}, to = {0, 18},
              stops = {{0, "#CC6666"}, {0.5, "#CCCC66"}, {1.0, "#66CC66"}}})
 vicious.register(mem_widget, vicious.widgets.mem, "$1", 3)
@@ -528,10 +523,51 @@ swap_widget:set_width(8)
 swap_widget:set_height(18)
 swap_widget:set_vertical(true)
 swap_widget:set_background_color("#000000")
-swap_widget:set_border_color("#000000")
 swap_widget:set_color({type = "linear", from = {0, 0}, to = {0, 18},
              stops = {{0, "#CC6666"}, {0.5, "#CC66CC"}, {1.0, "#6666CC"}}})
 vicious.register(swap_widget, vicious.widgets.mem, "$5", 3)
+
+bat_widget = wibox.widget.textbox()
+vicious.register(bat_widget, vicious.widgets.bat,
+                 function (widget, args)
+                    local ret = ""
+                    local state = args[1]
+                    local pct = args[2]
+                    local time = args[3]
+                    local colors = {
+                       LOW  = "#ac7373", -- red-2
+                       low  = "#dfaf8f", -- orange
+                       med  = "#f0dfaf", -- yellow
+                       high = "#afd8af", -- green+3
+                       ok   = "lightblue"
+                    }
+                    local col
+                    if state == "⌁" or state == "↯" then
+                       -- Unknown or full
+                       ret = markup.fg.color(colors["ok"], pct .. "% " .. state)
+                    elseif state == "+" then
+                       -- Charging
+                       ret = markup.fg.color(colors["high"], pct .. "% ↗")
+                       if time ~= "N/A" then
+                          if pct >= 75 then col = "high"
+                          elseif pct < 10 then col = "med"
+                          else col = "ok" end
+                          ret = ret .. markup.fg.color(colors[col], " (" .. time .. ")")
+                       end
+                    else
+                       -- Discharging
+                       if pct <= 25 then col = "LOW" else col = "low" end
+                       ret = markup.fg.color(colors[col], pct .. "% ↘")
+                       if time ~= "N/A" then
+                          if pct <= 25 then col = "LOW"
+                          elseif pct <= 50 then col = "low"
+                          else col = "ok" end
+                          ret = ret .. markup.fg.color(colors[col], " (" .. time .. ")")
+                       end
+                    end
+                    return " " .. ret .. " "
+                 end,
+                 5, "BAT0")
 
 vol_widget = awful.widget.progressbar()
 vol_widget:set_width(10)
@@ -675,7 +711,7 @@ for s = 1, screen.count() do
        separator,
        tb_mails, nv_w}, separator,
        cpu_icon, cpu_widgets, mem_icon, mem_widget, swap_widget, separator,
-       net_mon.widget, {ip_mon and ip_mon.widget or nil}, batt_mon.widget, vol_widget, separator, locks_mon.widget
+       net_mon.widget, {ip_mon and ip_mon.widget or nil}, bat_widget, vol_widget, separator, locks_mon.widget
     )
 
     -- Widgets that are aligned to the right
@@ -859,7 +895,8 @@ awful.rules.rules = {
     -- Simple rules for floating windows
     { rule_any = { class = { "BBQScreenClient2", "Galculator", "Gimp", "Gmpc", "Gnote", "Klavaro",
                              "MPlayer", "mplayer2", "mpv",
-                             "pinentry", "Plugin-container", "Qalculate", "Smplayer", "VirtualBox", "Vlc",
+                             "pinentry", "Plugin-container", "Qalculate",
+                             "Shutter", "Smplayer", "VirtualBox", "Vlc",
                              "Wine", "Xfmedia", "xine", "XVroot" },
                    instance = { "pinentry-gtk-2", "wpa_gui" },
                    name = { "Gnuplot (window id : 0)", "Minecraft", "R Graphics: Device 2 (ACTIVE)" } },
@@ -927,12 +964,13 @@ end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 -- {{{ Timers
-mytimer5 = timer { timeout = 5 }
-mytimer5:connect_signal("timeout", function ()
-    batt_mon:update()
-    if nvtemp_mon then nvtemp_mon:update() end
-end)
-mytimer5:start()
+if nvtemp_mon then
+   mytimer5 = timer { timeout = 5 }
+   mytimer5:connect_signal("timeout", function ()
+                              nvtemp_mon:update()
+   end)
+   mytimer5:start()
+end
 
 mytimer15 = timer { timeout = 15 }
 mytimer15:connect_signal("timeout", function ()
