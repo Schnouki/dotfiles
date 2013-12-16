@@ -11,6 +11,8 @@ local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
+-- Underscore (https://github.com/jtarchie/underscore-lua)
+local _ = require("underscore")
 
 -- Eminent dynamic tagging
 require("eminent")
@@ -492,29 +494,52 @@ end
 -- Vicious widgets
 cpu_mem_gradient = "linear:0,18:0,0:0,#66CC66:0.5,#CCCC66:1,#CC6666"
 
-cpuicon = wibox.widget.imagebox()
-cpuicon:set_image(config_dir .. "/icons/cpu.png")
-cpuwidget = awful.widget.graph({ height = 18, width = 50 })
-cpuwidget:set_background_color("#000000")
-cpuwidget:set_border_color("#000000")
-cpuwidget:set_color(cpu_mem_gradient)
-vicious.register(cpuwidget, vicious.widgets.cpu, "$1", 3)
+vicious.cache(vicious.widgets.cpu)
+cpu_icon = wibox.widget.imagebox()
+cpu_icon:set_image(config_dir .. "/icons/cpu.png")
+cpu_widgets = {}
+for i = 2, #vicious.widgets.cpu() do
+   w = awful.widget.progressbar()
+   w:set_width(4)
+   w:set_height(18)
+   w:set_vertical(true)
+   w:set_background_color("#000000")
+   w:set_border_color("#000000")
+   w:set_color({type = "linear", from = {0, 0}, to = {0, 18},
+                stops = {{0, "#CC6666"}, {0.5, "#CCCC66"}, {1.0, "#66CC66"}}})
+   vicious.register(w, vicious.widgets.cpu, "$" .. i, 3)
+   cpu_widgets[i-1] = w
+end
 
-memicon = wibox.widget.imagebox()
-memicon:set_image(config_dir .. "/icons/mem.png")
-memwidget = awful.widget.graph({ height = 18, width = 50 })
-memwidget:set_background_color("#000000")
-memwidget:set_border_color("#000000")
-memwidget:set_color(cpu_mem_gradient)
-vicious.register(memwidget, vicious.widgets.mem, "$1", 3)
+vicious.cache(vicious.widgets.mem)
+mem_icon = wibox.widget.imagebox()
+mem_icon:set_image(config_dir .. "/icons/mem.png")
+mem_widget = awful.widget.progressbar()
+mem_widget:set_width(8)
+mem_widget:set_height(18)
+mem_widget:set_vertical(true)
+mem_widget:set_background_color("#000000")
+mem_widget:set_border_color("#000000")
+mem_widget:set_color({type = "linear", from = {0, 0}, to = {0, 18},
+             stops = {{0, "#CC6666"}, {0.5, "#CCCC66"}, {1.0, "#66CC66"}}})
+vicious.register(mem_widget, vicious.widgets.mem, "$1", 3)
+swap_widget = awful.widget.progressbar()
+swap_widget:set_width(8)
+swap_widget:set_height(18)
+swap_widget:set_vertical(true)
+swap_widget:set_background_color("#000000")
+swap_widget:set_border_color("#000000")
+swap_widget:set_color({type = "linear", from = {0, 0}, to = {0, 18},
+             stops = {{0, "#CC6666"}, {0.5, "#CC66CC"}, {1.0, "#6666CC"}}})
+vicious.register(swap_widget, vicious.widgets.mem, "$5", 3)
 
-volbar = awful.widget.progressbar()
-volbar:set_width(10)
-volbar:set_height(18)
-volbar:set_vertical(true)
-volbar:set_background_color("#000000")
-volbar:set_border_color("#000000")
-vicious.register(volbar, vicious.contrib.pulse,
+vol_widget = awful.widget.progressbar()
+vol_widget:set_width(10)
+vol_widget:set_height(18)
+vol_widget:set_vertical(true)
+vol_widget:set_background_color("#000000")
+vol_widget:set_border_color("#000000")
+vicious.register(vol_widget, vicious.contrib.pulse,
                  function (widget, args)
                     local col = "#6666cc"
                     local vol = args[1]
@@ -526,11 +551,11 @@ vicious.register(volbar, vicious.contrib.pulse,
                     return vol
                  end, 5)
 
-function volume_up()   vicious.contrib.pulse.add( 5)  vicious.force({volbar}) end
-function volume_down() vicious.contrib.pulse.add(-5)  vicious.force({volbar}) end
-function volume_mute() vicious.contrib.pulse.toggle() vicious.force({volbar}) end
+function volume_up()   vicious.contrib.pulse.add( 5)  vicious.force({vol_widget}) end
+function volume_down() vicious.contrib.pulse.add(-5)  vicious.force({vol_widget}) end
+function volume_mute() vicious.contrib.pulse.toggle() vicious.force({vol_widget}) end
 
-volbar:buttons(awful.util.table.join(
+vol_widget:buttons(awful.util.table.join(
        awful.button({ }, 1, function () awful.util.spawn("pavucontrol") end),
        awful.button({ }, 4, volume_up),
        awful.button({ }, 5, volume_down),
@@ -646,12 +671,12 @@ for s = 1, screen.count() do
     left_layout:add(mytaglist[s])
     left_layout:add(mypromptbox[s])
 
-    local my_right_widgets = {
+    local my_right_widgets = _.concat({
        separator,
-       tb_mails, nv_w, separator,
-       cpuicon, cpuwidget, memicon, memwidget, separator,
-       net_mon.widget, ip_mon and ip_mon.widget or nil, batt_mon.widget, volbar, separator, locks_mon.widget
-    }
+       tb_mails, nv_w}, separator,
+       cpu_icon, cpu_widgets, mem_icon, mem_widget, swap_widget, separator,
+       net_mon.widget, {ip_mon and ip_mon.widget or nil}, batt_mon.widget, vol_widget, separator, locks_mon.widget
+    )
 
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
