@@ -14,16 +14,16 @@
 ;; Packages
 (setq schnouki/packages '(ace-jump-mode ack-and-a-half auto-complete
 			  button-lock
-			  coffee-mode color-theme csharp-mode ctags-update
+			  clippy coffee-mode color-theme csharp-mode ctags-update
 			  deft dtrt-indent
 			  fixmee flycheck
 			  git-annex git-commit-mode gitignore-mode go-mode google-translate
 			  haml-mode haskell-mode hideshowvis
 			  ioccur indent-guide
-			  jabber jedi js3-mode
+			  jabber jedi jquery-doc js3-mode
 			  lua-mode
 			  magit markdown-mode mediawiki melpa multiple-cursors mc-extras
-			  php-mode pkgbuild-mode pretty-lambdada python python-pep8
+			  php-mode pkgbuild-mode pretty-lambdada prodigy python python-pep8
 			  rainbow-mode
 			  scss-mode sudoku
 			  twittering-mode
