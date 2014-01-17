@@ -133,15 +133,8 @@
 ;; Auto-Complete
 (require 'auto-complete-config)
 (ac-config-default)
-(add-to-list 'ac-sources 'ac-source-gtags)
 (dolist (mode '(python2-mode python3-mode coffee-mode))
   (add-to-list 'ac-modes mode))
-
-;; Exuberant ctags
-(require 'ctags-update)
-(setq ctags-update-lighter " CU")
-(add-hook 'prog-mode-hook (lambda () (ctags-auto-update-mode t)))
-;; See also: https://gist.github.com/2901380
 
 ;; Fixmee
 (require 'fixmee)

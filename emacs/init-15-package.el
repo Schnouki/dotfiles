@@ -14,7 +14,7 @@
 ;; Packages
 (setq schnouki/packages '(ace-jump-mode ack-and-a-half auto-complete
 			  button-lock
-			  clippy coffee-mode color-theme csharp-mode ctags-update
+			  clippy coffee-mode color-theme csharp-mode
 			  deft dtrt-indent
 			  fixmee flycheck
 			  git-annex git-commit-mode gitignore-mode go-mode google-translate
