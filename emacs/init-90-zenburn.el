@@ -149,10 +149,6 @@
      (set-face-background 'smerge-refined-change "#6f6f6f") ;;zenburn-bg+2)
      ))
 
-(defun schnouki/zenburn-for-golbarg ()
-  (set-face-background golbarg-header-face zenburn-bg-1))
-(add-hook 'golbarg-mode-hook 'schnouki/zenburn-for-golbarg)
-
 ;; Undo-Tree
 (eval-after-load 'undo-tree
   '(progn

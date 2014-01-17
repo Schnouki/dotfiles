@@ -78,24 +78,6 @@
 (autoload 'po-find-file-coding-system "po-compat")
 (modify-coding-system-alist 'file "\\.po\\'\\|\\.po\\." 'po-find-file-coding-system)
 
-;; Golbarg, the most awesome blog engine ever
-(autoload 'golbarg-mode "golbarg.el" "Golbarg mode." t)
-(autoload 'golbarg-new-draft "golbarg.el" "New Golbarg draft." t)
-(setq golbarg-posts-dir "~/site/schnouki.net/posts"
-      golbarg-drafts-dir "~/Dropbox/blog-drafts")
-(global-set-key (kbd "C-! g") 'golbarg-new-draft)
-(global-set-key (kbd "C-ç g") 'golbarg-new-draft)
-(global-set-key (kbd "C-! M-g") '(lambda () (interactive) (find-file golbarg-drafts-dir)))
-(global-set-key (kbd "C-ç M-g") '(lambda () (interactive) (find-file golbarg-drafts-dir)))
-(add-to-list 'auto-mode-alist (cons (concat "^" (expand-file-name golbarg-posts-dir)  "/.+") 'golbarg-mode))
-(add-to-list 'auto-mode-alist (cons (concat "^" (expand-file-name golbarg-drafts-dir) "/.+") 'golbarg-mode))
-(add-hook 'golbarg-mode-hook
-	  '(lambda ()
-	     (turn-on-auto-fill)
-	     (ispell-change-dictionary "american")
-	     (flyspell-mode)
-	     (set (make-local-variable 'compile-command) "make -C ~/site/schnouki.net")))
-
 ;; -----------------------------------------------------------------------------
 ;; Minor modes
 ;; -----------------------------------------------------------------------------
