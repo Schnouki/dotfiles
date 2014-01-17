@@ -61,6 +61,7 @@
 			       ("facebook"    . "(tag:facebook and tag:unread)")
 			       ("lwn"         . "(from:lwn.net and tag:unread)")
 			       ("pc inpact"   . "(from:pcinpact.com and tag:unread)"))
+      notmuch-archive-tags '("-inbox" "-unread")
       notmuch-poll-script "~/.config/notmuch/mailsync"
       notmuch-address-command "~/.config/notmuch/addrbook.py"
       notmuch-crypto-process-mime t
@@ -86,7 +87,6 @@
      (define-key 'notmuch-show-mode-map "SH" 'schnouki/notmuch-signal-ham)
      (define-key 'notmuch-show-mode-map "SS" 'schnouki/notmuch-signal-spam)
 
-     (define-key 'notmuch-search-mode-map "a" 'schnouki/notmuch-search-archive-thread)
      (define-key 'notmuch-search-mode-map "d" 'notmuch-search-filter-by-date)
      (define-key 'notmuch-search-mode-map (kbd "C-<return>") 'schnouki/notmuch-search-show-thread-inhibit-images)
 
@@ -99,11 +99,6 @@
 		(format-time-string "%s.." beg)
 		(format-time-string "%s" now))))
 	 (notmuch-search-filter filter)))
-
-     (defun schnouki/notmuch-search-archive-thread ()
-       (interactive)
-       (notmuch-search-tag '("-inbox" "-unread"))
-       (notmuch-search-next-thread))
 
      (defun schnouki/notmuch-view-html ()
        "Open the HTML parts of a mail in a web browser."
