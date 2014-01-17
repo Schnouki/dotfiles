@@ -17,7 +17,7 @@
 			  clippy coffee-mode color-theme csharp-mode
 			  deft dtrt-indent
 			  fixmee flycheck
-			  git-annex git-commit-mode gitignore-mode go-mode google-translate
+			  git-annex git-commit-mode git-gutter-fringe gitignore-mode go-mode google-translate
 			  haml-mode haskell-mode hideshowvis
 			  ioccur indent-guide
 			  jabber jedi jquery-doc js3-mode
