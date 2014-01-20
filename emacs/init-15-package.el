@@ -1,6 +1,6 @@
-;; -----------------------------------------------------------------------------
-;; Emacs official package manager
-;; -----------------------------------------------------------------------------
+;;; 15-package --- Emacs official package manager
+;;; Commentary:
+;;; Code:
 
 (require 'package)
 
@@ -12,6 +12,7 @@
 (package-initialize)
 
 ;; Packages
+(defvar schnouki/packages nil)
 (setq schnouki/packages '(ace-jump-mode ack-and-a-half auto-complete
 			  button-lock
 			  clippy coffee-mode color-theme csharp-mode
@@ -39,3 +40,5 @@
 	(package-refresh-contents)
 	(setq refreshed t))
       (package-install package))))
+
+;;; init-15-package.el ends here

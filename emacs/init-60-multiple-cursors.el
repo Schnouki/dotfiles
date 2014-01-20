@@ -1,6 +1,6 @@
-;; -----------------------------------------------------------------------------
-;; Multiple cursors
-;; -----------------------------------------------------------------------------
+;;; 50-multiple-cursors --- multiple cursors
+;;; Commentary:
+;;; Code:
 
 (require 'multiple-cursors)
 (require 'mc-extras)
@@ -23,3 +23,5 @@
 (define-key mc/keymap (kbd "C-. =")   'mc/compare-chars)
 (eval-after-load 'cua-base
   '(define-key cua--rectangle-keymap (kbd "C-. C-,") 'mc/cua-rectangle-to-multiple-cursors))
+
+;;; init-60-multiple-cursors.el ends here

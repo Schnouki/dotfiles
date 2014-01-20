@@ -1,8 +1,8 @@
-;; -----------------------------------------------------------------------------
-;; Version control
-;; -----------------------------------------------------------------------------
+;;; 40-vc --- version control
+;;; Commentary:
+;;; Code:
 
-(autoload 'magit-status "magit" nil t)
+(require 'magit)
 (global-set-key (kbd "C-<") 'magit-status)
 (global-set-key (kbd "C-à") 'magit-status)
 
@@ -23,3 +23,5 @@
 (global-set-key (kbd "C-! g v") 'git-gutter:revert-hunk)
 (global-set-key (kbd "C-! g n") 'git-gutter:next-hunk)
 (global-set-key (kbd "C-! g p") 'git-gutter:previous-hunk)
+
+;;; init-40-vc.el ends here

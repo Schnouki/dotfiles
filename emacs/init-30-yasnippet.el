@@ -1,6 +1,6 @@
-;; -----------------------------------------------------------------------------
-;; yasnippet
-;; -----------------------------------------------------------------------------
+;;; 30-yasnippet --- yasnippet
+;;; Commentary:
+;;; Code:
 
 (require 'yasnippet)
 
@@ -26,3 +26,5 @@
     (local-set-key (kbd "TAB") command))) ; bind to (kbd "TAB")
 (add-hook 'ruby-mode-hook 'schnouki/yas-tab-noconflict)
 (add-hook 'markdown-mode-hook 'schnouki/yas-tab-noconflict)
+
+;;; init-30-yasnippet.el ends here

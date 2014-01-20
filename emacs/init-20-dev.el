@@ -1,6 +1,6 @@
-;; -----------------------------------------------------------------------------
-;; Development
-;; -----------------------------------------------------------------------------
+;;; 20-dev --- Development
+;;; Commentary:
+;;; Code:
 
 ;; Tabs and indentation
 (setq-default c-basic-offset 4
@@ -12,10 +12,13 @@
 
 ;; Default parameters for emacs-lisp
 (defun schnouki/emacs-lisp-default-indent ()
+  "Fix default indent for emacs-lisp."
   (setq indent-tabs-mode t))
 (add-hook 'emacs-lisp-mode-hook 'schnouki/emacs-lisp-default-indent)
 
 ;; Python: virtualenv and Jedi completion
+(require 'jedi)
+(require 'virtualenv)
 (setq virtualenv-root "~/.virtualenvs"
       virtualenv-workon-starts-python nil
       jedi:complete-on-dot t)
@@ -44,17 +47,18 @@
     (add-to-list 'flycheck-checkers 'python2-pylint)))
 
 ;; Code folding
+(require 'folding)
 (setq folding-mode-prefix-key (kbd "C-:")
       folding-folding-on-startup nil
       folding-internal-margins nil)
 
-(require 'folding)
 (folding-install)
 (folding-install-hooks)
 (add-hook 'after-revert-hook 'folding-mode-find-file t)
 
 ;; Key bindings for hideshow
 (defun schnouki/hs-togle-hiding ()
+  "Toggle hideshow minor mode."
   (interactive)
   (unless hs-minor-mode (hs-minor-mode))
   (hs-toggle-hiding))
@@ -78,7 +82,7 @@
   :group 'hideshow)
 
 (defcustom hs-face 'hs-face
-  "*Specify the face to to use for the hidden region indicator"
+  "*Specify the face to to use for the hidden region indicator."
   :type 'face
   :group 'hideshow)
 
@@ -88,6 +92,7 @@
   :group 'hideshow)
 
 (defun hs/display-code-line-counts (ov)
+  "Display the number of lines in a snippet hidden with hs."
   (when (eq 'code (overlay-get ov 'hs))
     (let* ((marker-string "*fringe-dummy*")
            (marker-length (length marker-string))
@@ -115,6 +120,7 @@
 ;; Compilation: close the window when successful
 ;; from http://www.emacswiki.org/emacs/ModeCompile
 (defun compilation-exit-autoclose (status code msg)
+  "Auto-close the compilation window when successful."
   ;; If M-x compile exists with a 0
   (when (and (eq status 'exit) (zerop code) (not (string= mode-name "Ack")))
     ;; then bury the *compilation* buffer, so that C-x b doesn't go there
@@ -143,3 +149,5 @@
 
 ;; SCSS
 (setq scss-compile-at-save nil)
+
+;;; init-20-dev.el ends here

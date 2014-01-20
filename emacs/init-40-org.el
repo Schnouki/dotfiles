@@ -1,6 +1,6 @@
-;; -----------------------------------------------------------------------------
-;; org-mode
-;; -----------------------------------------------------------------------------
+;;; 40-org --- org-mode
+;;; Commentary:
+;;; Code:
 
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 (add-hook 'org-mode-hook
@@ -94,3 +94,5 @@
   (org-overview))
 (global-set-key (kbd "C-! s") 'schnouki/org-sort-todo-list)
 (global-set-key (kbd "C-ç s") 'schnouki/org-sort-todo-list)
+
+;;; init-40-org.el ends here

@@ -1,6 +1,6 @@
-;; -----------------------------------------------------------------------------
-;; Basic settings
-;; -----------------------------------------------------------------------------
+;;; 10-base --- Basic settings
+;;; Commentary:
+;;; Code:
 
 ;; Paths
 (add-to-list 'load-path "~/.config/emacs")
@@ -27,6 +27,7 @@
 (setq browse-url-browser-function 'browse-url-firefox)
 
 ;; Display date and time
+(require 'time)
 (display-time)
 (setq display-time-24hr-format t)
 
@@ -89,9 +90,10 @@
 ;; http://www.emacswiki.org/emacs/ShowParenMode#toc1
 (defadvice show-paren-function
   (after show-matching-paren-offscreen activate)
-  "If the matching paren is offscreen, show the matching line in the
-    echo area. Has no effect if the character before point is not of
-    the syntax class ')'."
+  "If the matching paren is offscreen, show the matching line in the echo area.
+
+Has no effect if the character before point is not of the syntax
+class ')'."
   (interactive)
   (let ((matching-text nil))
     ;; Only call `blink-matching-open' if the character before point
@@ -122,17 +124,19 @@
 (transient-mark-mode t)
 
 ;; Active region becomes the window selection
-(setq select-active-region t)
+(setq select-active-regions t)
 
 ;; ediff window setup
 ;; - don't open a new frame for the control buffer
 ;; - split horizontally if the current frame is wide enough
+(require 'ediff)
 (setq ediff-window-setup-function 'ediff-setup-windows-plain
       ediff-split-window-function (lambda (&optional arg)
 				    (if (> (frame-width) 150)
 					(split-window-horizontally arg)
 				      (split-window-vertically arg))))
 ;; - restore window configuration when quitting ediff
+(defvar ediff-saved-window-configuration nil)
 (add-hook 'ediff-load-hook
 	  (lambda ()
 	    (add-hook 'ediff-before-setup-hook
@@ -151,6 +155,7 @@
 
 ;; Save opened files and other stuff
 ;; http://www.xsteve.at/prg/emacs/power-user-tips.html
+(require 'desktop)
 (setq desktop-save t
       desktop-load-locked-desktop t
       desktop-path '("." "~/.config/emacs"))
@@ -175,7 +180,7 @@
 ;; Abort the minibuffer when using the mouse
 ;; http://trey-jackson.blogspot.com/2010/04/emacs-tip-36-abort-minibuffer-when.html
 (defun stop-using-minibuffer ()
-  "kill the minibuffer"
+  "Kill the minibuffer."
   (when (>= (recursion-depth) 1)
     (abort-recursive-edit)))
 (add-hook 'mouse-leave-buffer-hook 'stop-using-minibuffer)
@@ -188,8 +193,9 @@
 
 ;; Automagically make scripts executable
 ;; http://www.masteringemacs.org/articles/2011/01/19/script-files-executable-automatically/
-(setq schnouki/no-script nil)
+(defvar schnouki/no-script nil)
 (defun schnouki/maybe-make-executable-if-script-p ()
+  "Automagically make scripts executable."
   (let ((name (buffer-file-name)))
     (unless (reduce 'or
 		    (mapcar #'(lambda (dir) (string-prefix-p (expand-file-name dir) name))
@@ -214,3 +220,9 @@
 ;; Better naming than main.yml<2>, main.yml<3>, main.yml<4>
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward-angle-brackets)
+
+;; Local Variables:
+;; byte-compile-warnings: (not cl-functions)
+;; End:
+
+;;; init-10-base.el ends here

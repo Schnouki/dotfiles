@@ -1,6 +1,6 @@
-;; -----------------------------------------------------------------------------
-;; Major modes
-;; -----------------------------------------------------------------------------
+;;; 30-modes --- Major modes
+;;; Commentary:
+;;; Code:
 
 ;; Prepare various major modes
 (load "auctex.el" nil t t)
@@ -89,7 +89,9 @@
 
 ;; smerge-mode, as suggested in the doc
 (autoload 'smerge-mode "smerge-mode" nil t)
-(setq smerge-command-prefix (kbd "C-c '"))
+(eval-after-load 'smerge-mode
+  '(progn
+     (setq smerge-command-prefix (kbd "C-c '"))))
 (defun sm-try-smerge ()
   (save-excursion
     (goto-char (point-min))
@@ -104,3 +106,5 @@
 ;; pretty-lambda
 (add-to-list 'pretty-lambda-auto-modes 'python-mode)
 (pretty-lambda-for-modes nil)
+
+;;; init-30-modes.el ends here

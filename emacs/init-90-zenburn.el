@@ -1,6 +1,6 @@
-;; -----------------------------------------------------------------------------
-;; zenburn color theme
-;; -----------------------------------------------------------------------------
+;;; 90-zenburn --- Zenburn color theme
+;;; Commentary:
+;;; Code:
 
 (load-theme 'zenburn)
 
@@ -213,3 +213,5 @@
      (set-face-attribute 'hideshowvis-hidable-face nil :foreground zenburn-green+3 :box nil)
      (set-face-attribute 'hs-fringe-face           nil :foreground zenburn-green+3 :box nil)
      (set-face-attribute 'hs-face                  nil :foreground zenburn-green+3 :background zenburn-bg-1 :box (list :style 'pressed-button))))
+
+;;; init-90-zenburn.el ends here

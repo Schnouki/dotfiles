@@ -1,6 +1,6 @@
-;; -----------------------------------------------------------------------------
-;; Mail client
-;; -----------------------------------------------------------------------------
+;;; 50-mail --- mail client
+;;; Commentary:
+;;; Code:
 
 ;; Mail parameters -- more of them in init-99-private.el ;)
 (setq message-auto-save-directory nil
@@ -245,3 +245,5 @@
 ;; Don't try to display PDFs inline when they have a wrong MIME type
 (eval-after-load 'mm-decode
   '(add-to-list 'mm-inline-media-tests '("text/pdf" ignore ignore)))
+
+;;; init-50-mail.el ends here
