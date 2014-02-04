@@ -15,8 +15,9 @@
 (defvar schnouki/packages nil)
 (setq schnouki/packages '(ace-jump-mode ack-and-a-half auto-complete
 			  button-lock
-			  clippy coffee-mode color-theme csharp-mode
+			  clippy coffee-mode color-theme color-identifiers-mode csharp-mode
 			  deft dtrt-indent
+			  es-mode
 			  fixmee flycheck
 			  git-annex git-commit-mode git-gutter-fringe gitignore-mode go-mode google-translate
 			  haml-mode haskell-mode hideshowvis
