@@ -79,6 +79,7 @@
 ;; Useful key bindings in notmuch buffers
 (eval-after-load 'notmuch
   '(progn
+     (define-key 'notmuch-show-mode-map "b" 'schnouki/notmuch-show-bounce)
      (define-key 'notmuch-show-mode-map "H" 'schnouki/notmuch-view-html)
      (define-key 'notmuch-show-mode-map "r" nil)
      (define-key 'notmuch-show-mode-map "R" nil)
@@ -137,6 +138,12 @@
 			   (if body
 			       (list 'insert body)
 			     (list 'insert-buffer (current-buffer))))))
+
+     (defun schnouki/notmuch-show-bounce (&optional address)
+       "Bounce the current message."
+       (interactive "sBounce To: ")
+       (notmuch-show-view-raw-message)
+       (message-resend address))
 
      (defun schnouki/notmuch-signal-spamham (type &rest to)
        (with-current-notmuch-show-message
