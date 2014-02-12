@@ -5,6 +5,6 @@
 awesome_begin_update
 
 # Removes messages with the "deleted" tag
-(( $(notmuch count tag:deleted) > 0 )) && (notmuch search --output=files tag:deleted | xargs -rd'\n' rm)
+(( $(notmuch count tag:deleted) > 0 )) && (notmuch search --output=files tag:deleted | xargs -rd'\n' rm -f)
 
 exit 0
