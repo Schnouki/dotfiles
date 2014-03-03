@@ -7,4 +7,8 @@ awesome_begin_update
 # Removes messages with the "deleted" tag
 (( $(notmuch count tag:deleted) > 0 )) && (notmuch search --output=files tag:deleted | xargs -rd'\n' rm -f)
 
+# Move spam to the "Spam" folder
+_search_spam=(tag:spam and folder:schnouki.net and not folder:Spam)
+(( $(notmuch count $_search_spam) > 0 )) && (notmuch search --output=files $_search_spam | xargs -rd'\n' mv -t ~/mail/schnouki.net/Spam/new)
+
 exit 0
