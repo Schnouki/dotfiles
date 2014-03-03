@@ -4,6 +4,7 @@ Requires=mpd.service dbus.socket xorg.target
 After=mpd.service
 
 [Service]
+BusName=org.mpris.MediaPlayer2.mpd
 ExecStart=/usr/bin/mpDris2
 
 [Install]
