@@ -10,36 +10,26 @@
 
 # TODO: use zkbd :)
 
-bindkey 'OH'  beginning-of-line
-bindkey '[H'  beginning-of-line
-bindkey '[1~' beginning-of-line
-bindkey '[7~' beginning-of-line
+zmodload zsh/terminfo
 
-bindkey 'OF'  end-of-line
-bindkey '[F'  end-of-line
-bindkey '[4~' end-of-line
-bindkey '[8~' end-of-line
+bindkey "$terminfo[khome]" beginning-of-line
+bindkey "$terminfo[kend]" end-of-line
 
-bindkey '[2~' overwrite-mode
-bindkey '[3~' delete-char
+bindkey "$terminfo[kich1]" overwrite-mode
+bindkey "$terminfo[kdch1]" delete-char
 
-# # Ctrl+left/right to move one word backward/forward
-bindkey '[1;5C' forward-word
-bindkey 'OC'    forward-word
-bindkey 'Oc'    forward-word
+# Ctrl+left/right to move one word backward/forward
+bindkey '[1;5C' emacs-forward-word
+bindkey 'OC'    emacs-forward-word
+bindkey 'Oc'    emacs-forward-word
 
-bindkey '[1;5D' backward-word
-bindkey 'OD'    backward-word
-bindkey 'Od'    backward-word
+bindkey '[1;5D' emacs-backward-word
+bindkey 'OD'    emacs-backward-word
+bindkey 'Od'    emacs-backward-word
 
 # PgUp/PgDown to search in history
-bindkey '[1;5A' history-search-backward
-bindkey '[5~'   history-search-backward
-bindkey '[5^'   history-search-backward
-
-bindkey '[1;5B' history-search-forward
-bindkey '[6~'   history-search-forward
-bindkey '[6^'   history-search-backward
+bindkey "$terminfo[kpp]" history-search-backward
+bindkey "$terminfo[knp]" history-search-forward
 
 # Ctrl+Up/Down for history substring search (plugin)
 bindkey 'Oa' history-substring-search-up
