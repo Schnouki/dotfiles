@@ -21,7 +21,7 @@
 			  fixmee flycheck
 			  git-annex git-commit-mode git-gutter-fringe gitignore-mode go-mode google-translate
 			  haml-mode haskell-mode hideshowvis
-			  ioccur indent-guide
+			  ioccur indent-guide ix
 			  jabber jedi jquery-doc js3-mode
 			  lua-mode
 			  magit markdown-mode mediawiki melpa multiple-cursors mc-extras
