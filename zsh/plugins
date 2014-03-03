@@ -1,0 +1,7 @@
+# -*- mode: sh; -*-
+
+# Syntax highlighting
+. ~/.config/zsh/modules/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# History substring search
+. ~/.config/zsh/modules/zsh-history-substring-search/zsh-history-substring-search.zsh

@@ -9,8 +9,5 @@ unset PROFILE_LOADED
 
 . ~/.config/zsh/aliases
 . ~/.config/zsh/functions
+. ~/.config/zsh/plugins
 . ~/.config/zsh/keys
-
-# Plugins
-. ~/.config/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-. ~/.config/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
