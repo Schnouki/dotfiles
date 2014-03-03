@@ -11,4 +11,6 @@ unset PROFILE_LOADED
 . ~/.config/zsh/functions
 . ~/.config/zsh/keys
 
-. /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# Plugins
+. ~/.config/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+. ~/.config/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh

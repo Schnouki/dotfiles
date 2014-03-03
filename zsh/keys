@@ -32,7 +32,7 @@ bindkey '[1;5D' backward-word
 bindkey 'OD'    backward-word
 bindkey 'Od'    backward-word
 
-# # Ctrl+up/down or PgUp/PgDown to search in history
+# PgUp/PgDown to search in history
 bindkey '[1;5A' history-search-backward
 bindkey '[5~'   history-search-backward
 bindkey '[5^'   history-search-backward
@@ -40,6 +40,10 @@ bindkey '[5^'   history-search-backward
 bindkey '[1;5B' history-search-forward
 bindkey '[6~'   history-search-forward
 bindkey '[6^'   history-search-backward
+
+# Ctrl+Up/Down for history substring search (plugin)
+bindkey 'Oa' history-substring-search-up
+bindkey 'Ob' history-substring-search-down
 
 # # Completion in the middle of a word
 # bindkey '	' expand-or-complete-prefix

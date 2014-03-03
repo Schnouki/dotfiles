@@ -4,3 +4,9 @@
 [submodule "zsh/completion/virsh"]
 	path = zsh/completion/virsh
 	url = https://planetcyborg.de/git/repos/jplitza/zsh-virsh-autocomplete
+[submodule "zsh/plugins/zsh-syntax-highlighting"]
+	path = zsh/plugins/zsh-syntax-highlighting
+	url = git://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule "zsh/plugins/zsh-history-substring-search"]
+	path = zsh/plugins/zsh-history-substring-search
+	url = git://github.com/zsh-users/zsh-history-substring-search.git
