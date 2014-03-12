@@ -2,7 +2,6 @@
 Description=Spop: a Spotify client daemon
 
 [Service]
-BusName=org.mpris.MediaPlayer2.spopd
 ExecStart=/usr/bin/spopd -f
 
 [Install]

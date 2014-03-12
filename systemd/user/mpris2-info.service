@@ -3,7 +3,6 @@ Description=MPRIS2 notifications service
 Requires=dbus.socket xorg.target
 
 [Service]
-BusName=net.schnouki.Mpris2Info
 ExecStart=/home/schnouki/bin/mpris2-info
 
 [Install]
