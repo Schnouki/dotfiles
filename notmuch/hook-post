@@ -4,13 +4,13 @@
 
 notmuch new
 new=$(notmuch count tag:new)
-nosync $CONFIGDIR/autotag.py || "Autotag failed."
+nosync $CONFIGDIR/autotag.py || echo "Autotag failed."
 
 awesome_end_update
 dbus-send --session --dest="org.gnu.Emacs" "/org/gnu/Emacs" "org.gnu.Emacs.NotmuchNotify"
 [[ $new > 0 ]] && $CONFIGDIR/notify.py
 
 # Once in a while, sync CardDAV contacts
-[[ $(( $RANDOM % 20 )) == 0 ]] && pycardsyncer
-
-exit 0
+if [[ $(( $RANDOM % 20 )) == 0 ]]; then
+    pycardsyncer
+fi
