@@ -1,10 +1,8 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import email.utils
-import gtk
+from gi.repository import Notify
 import notmuch
-import pynotify
 import sys
 
 markup_cnt  = '[<span foreground="#93e0e3">{0}</span>]'
@@ -16,7 +14,7 @@ MAX_FROM_LEN = 35
 MAX_SUBJ_LEN = 70
 
 db = notmuch.Database(mode=notmuch.Database.MODE.READ_ONLY)
-q = notmuch.Query(db, "tag:unread or tag:todo")
+q = notmuch.Query(db, "(tag:unread or tag:todo) and not tag:spam")
 q.set_sort(notmuch.Query.SORT.OLDEST_FIRST)
 
 # Read data about the new messages
@@ -24,8 +22,8 @@ tab = []
 msgs = 0
 mlc, mlf, mls = 0, 0, 0
 for thr in q.search_threads():
-    from_ = unicode(thr.get_authors())
-    subj_ = unicode(thr.get_subject())
+    from_ = thr.get_authors()
+    subj_ = thr.get_subject() or "(no subject)"
     tags = list(thr.get_tags())
     for tag in ("unread", "todo"):
         try: tags.remove(tag)
@@ -57,12 +55,12 @@ for thr in q.search_threads():
     lc = len(count)
     if lc > mlc:
         mlc = lc
-    
+
     from_ = markup_from.format(from_)
     subj_ = markup_subj.format(subj_)
     tags = markup_tags.format(tags)
     tab.append((count, from_, subj_, tags, lc, lf, ls))
-    
+
 
 if len(tab) == 0:
     sys.exit(0)
@@ -78,10 +76,9 @@ for c, f, s, t, lc, lf, ls in tab:
 txt = '<span font_desc="DejaVu Sans Mono 7.5">' + "\n".join(txt) + '</span>'
 
 # Display a notification
-pynotify.init("notmuch notify")
-n = pynotify.Notification("{0} unread messages in {1} threads".format(msgs, len(tab)), txt)
+Notify.init("notmuch notify")
+n = Notify.Notification.new("{0} unread messages in {1} threads".format(msgs, len(tab)), txt,
+                            "/usr/share/emacs/site-lisp/notmuch-logo.png")
 n.set_timeout(10000)
 n.set_category("email.arrived")
-icon = gtk.gdk.pixbuf_new_from_file("/usr/share/emacs/site-lisp/notmuch-logo.png")
-n.set_icon_from_pixbuf(icon)
 n.show()
