@@ -19,15 +19,15 @@ q.set_sort(notmuch.Query.SORT.OLDEST_FIRST)
 
 # Read data about the new messages
 tab = []
-msgs = 0
+msgs, threads_total = 0, 0
 mlc, mlf, mls = 0, 0, 0
 for thr in q.search_threads():
     from_ = thr.get_authors()
     subj_ = thr.get_subject() or "(no subject)"
     tags = list(thr.get_tags())
-    for tag in ("unread", "todo"):
-        try: tags.remove(tag)
-        except ValueError: pass
+    threads_total += 1
+    if "unread" not in tags:
+        continue
 
     from_ = from_.split(u"|", 1)[0]
 
@@ -47,7 +47,9 @@ for thr in q.search_threads():
 
     from_ = from_.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
     subj_ = subj_.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
-    tags = " ".join(tags).replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+    tags = [tag.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;') for tag in tags]
+    tags = ["<b>"+tag+"</b>" if tag in ("unread", "todo") else tag for tag in tags]
+    tags = " ".join(tags)
 
     count = thr.get_matched_messages()
     msgs += count
@@ -61,8 +63,7 @@ for thr in q.search_threads():
     tags = markup_tags.format(tags)
     tab.append((count, from_, subj_, tags, lc, lf, ls))
 
-
-if len(tab) == 0:
+if len(tab) == 0 and threads_total == 0:
     sys.exit(0)
 
 # Format a table
@@ -77,8 +78,8 @@ txt = '<span font_desc="DejaVu Sans Mono 7.5">' + "\n".join(txt) + '</span>'
 
 # Display a notification
 Notify.init("notmuch notify")
-n = Notify.Notification.new("{0} unread messages in {1} threads".format(msgs, len(tab)), txt,
-                            "/usr/share/emacs/site-lisp/notmuch-logo.png")
+summary = "{0} threads, including {1} unread threads ({2} messages)".format(threads_total, len(tab), msgs)
+n = Notify.Notification.new(summary, txt, "/usr/share/emacs/site-lisp/notmuch-logo.png")
 n.set_timeout(10000)
 n.set_category("email.arrived")
 n.show()
