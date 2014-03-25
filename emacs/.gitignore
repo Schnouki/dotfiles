@@ -4,6 +4,7 @@ auto-save-list
 .emacs.desktop.lock
 .mc-lists.el
 .org-id-locations
+.python-environments/
 ede-projects.el
 elpa/
 eshell/

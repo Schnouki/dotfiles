@@ -25,12 +25,11 @@
 			  jabber jedi jquery-doc js3-mode
 			  lua-mode
 			  magit magit-annex markdown-mode mediawiki melpa multiple-cursors mc-extras
-			  php-mode pkgbuild-mode pretty-lambdada prodigy python python-pep8
+			  php-mode pkgbuild-mode pretty-lambdada prodigy python python-environment python-pep8
 			  rainbow-mode
 			  scss-mode sudoku
 			  twittering-mode
 			  unbound undo-tree
-			  virtualenv
 			  yaml-mode yasnippet
 			  zenburn-theme))
 (let ((refreshed nil))
