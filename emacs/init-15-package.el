@@ -21,13 +21,13 @@
 			  fixmee flycheck
 			  git-annex git-commit-mode git-gutter-fringe gitignore-mode go-mode google-translate
 			  haml-mode haskell-mode hideshowvis
-			  ioccur indent-guide ix
+			  ido-ubiquitous ido-vertical-mode ioccur indent-guide ix
 			  jabber jedi jquery-doc js3-mode
 			  lua-mode
 			  magit magit-annex markdown-mode mediawiki melpa multiple-cursors mc-extras
 			  php-mode pkgbuild-mode pretty-lambdada prodigy python python-environment python-pep8
 			  rainbow-mode
-			  scss-mode sudoku
+			  scss-mode smex sudoku
 			  twittering-mode
 			  unbound undo-tree
 			  yaml-mode yasnippet
