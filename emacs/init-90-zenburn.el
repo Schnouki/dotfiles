@@ -214,4 +214,10 @@
      (set-face-attribute 'hs-fringe-face           nil :foreground zenburn-green+3 :box nil)
      (set-face-attribute 'hs-face                  nil :foreground zenburn-green+3 :background zenburn-bg-1 :box (list :style 'pressed-button))))
 
+;; git-annex
+(eval-after-load 'git-annex
+  '(progn
+     (set-face-attribute 'git-annex-dired-annexed-available zenburn-green+2)
+     (set-face-foreground 'git-annex-dired-annexed-unavailable zenburn-red)))
+
 ;;; init-90-zenburn.el ends here

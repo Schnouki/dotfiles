@@ -24,4 +24,7 @@
 (global-set-key (kbd "C-! g n") 'git-gutter:next-hunk)
 (global-set-key (kbd "C-! g p") 'git-gutter:previous-hunk)
 
+(require 'git-annex)
+(require 'magit-annex)
+
 ;;; init-40-vc.el ends here
