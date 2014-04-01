@@ -203,26 +203,6 @@ class ')'."
       (executable-make-buffer-file-executable-if-script-p))))
 (add-hook 'after-save-hook 'schnouki/maybe-make-executable-if-script-p)
 
-;; ido-mode for better buffer switching, file selection, etc.
-(require 'ido)
-(ido-mode 1)
-(setq ido-default-file-method 'selected-window
-      ido-default-buffer-method 'selected-window)
-(eval-after-load 'ido-ubiquitous
-  '(progn
-     (ido-ubiquitous 1)))
-(eval-after-load 'ido-vertical-mode
-  '(progn
-     (setq ido-vertical-define-keys 'C-n-C-p-up-down-left-right)
-     (ido-vertical-mode 1)))
-
-;; Enhanced M-x
-(eval-after-load 'smex
-  '(progn
-     (smex-initialize)
-     (global-set-key (kbd "M-x") 'smex)
-     (global-set-key (kbd "C-x M-x") 'smex-major-mode-commands)))
-
 ;; Wait a very little bit before fontifying buffers
 ;; http://tsengf.blogspot.fr/2012/11/slow-scrolling-speed-in-emacs.html
 ;(setq jit-lock-defer-time 0.05)

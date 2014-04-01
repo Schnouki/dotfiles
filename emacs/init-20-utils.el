@@ -120,6 +120,23 @@ Return the index of the matching item, or nil if not found."
     (message (concat (int-to-string count) " buffers killed"))))
 (global-set-key (kbd "C-x M-k") 'schnouki/kill-star-buffers)
 
+;; ido-mode for better buffer switching, file selection, etc.
+(require 'ido)
+(require 'ido-ubiquitous)
+(require 'ido-vertical-mode)
+(setq ido-default-file-method 'selected-window
+      ido-default-buffer-method 'selected-window
+      ido-vertical-define-keys 'C-n-C-p-up-down-left-right)
+(ido-mode 1)
+(ido-ubiquitous 1)
+(ido-vertical-mode 1)
+
+;; Enhanced M-x
+(require 'smex)
+(smex-initialize)
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "C-! M-x") 'smex-major-mode-commands)
+
 ;; undo-tree
 (require 'undo-tree)
 ;; Lighter displayed in mode line
