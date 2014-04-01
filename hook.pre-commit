@@ -45,4 +45,4 @@ hook_update_encrypted_file ".smd/config.default" "smd-config.default.gpg"
 hook_update_encrypted_file ".smd/loop" "smd-loop.gpg"
 
 hook_update_encrypted_tarball "Calibre" "calibre.tar.gpg" ~/.config/calibre/*
-hook_update_encrypted_tarball "Weechat" "weechat.tar.gpg" ~/.weechat/{*.conf,{perl,python}/**/**(-.)}
+hook_update_encrypted_tarball "Weechat" "weechat.tar.gpg" ~/.weechat/{*.conf,perl/**/**(-.)}
