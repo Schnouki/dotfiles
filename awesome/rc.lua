@@ -106,7 +106,7 @@ function change_wallpapers()
       -- Set a random wallpaper on each screen
       for s = 1, screen.count() do
          local rnd = math.random(#wallpapers)
-         gears.wallpaper.fit(wallpapers[rnd], s)
+         gears.wallpaper.fit(wallpapers[rnd], s, "#000000")
       end
    end
 end
