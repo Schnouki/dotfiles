@@ -210,6 +210,9 @@
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward-angle-brackets)
 
+;;  Move through camelCaseWords and other_long_words
+(global-subword-mode 1)
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not cl-functions)
 ;; End:
