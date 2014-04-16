@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: else if
+# key: elif
+# --
+else if ($1) {
+     $0
+}
