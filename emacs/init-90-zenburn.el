@@ -217,7 +217,7 @@
 ;; git-annex
 (eval-after-load 'git-annex
   '(progn
-     (set-face-attribute 'git-annex-dired-annexed-available zenburn-green+2)
+     (set-face-foreground 'git-annex-dired-annexed-available zenburn-green+2)
      (set-face-foreground 'git-annex-dired-annexed-unavailable zenburn-red)))
 
 ;;; init-90-zenburn.el ends here
