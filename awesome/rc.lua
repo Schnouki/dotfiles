@@ -173,9 +173,41 @@ utilsmenu = {
    { "pavucontrol", "pavucontrol", ("/usr/share/icons/gnome/16x16/apps/multimedia-volume-control.png") },
 }
 
+-- {{{ Screen menu -- from Dodo
+local ext_screen = "VGA1"
+local menu_screen_text = function ()
+    return ({
+        LVDS1 = "Laptop",
+        VGA1 = "VGA",
+        HDMI1 = "HDMI",
+    })[ext_screen]
+end
+
+screenmenu = {
+    { "clone",    "xrandr --output LVDS1 --auto --output " .. ext_screen .. " --auto --same-as LVDS1" },
+    { "left of",  "xrandr --output LVDS1 --auto --output " .. ext_screen .. " --auto --left-of LVDS1" },
+    { "right of", "xrandr --output LVDS1 --auto --output " .. ext_screen .. " --auto --right-of LVDS1" },
+    { menu_screen_text(), function (m, menu)
+        local prev = ext_screen
+        ext_screen = (ext_screen == "HDMI1" and "VGA1" or "HDMI1")
+        m.label:set_text(menu_screen_text())
+        for _, item in ipairs(menu.items) do
+            if type(item.cmd) == 'string' then
+                item.cmd = string.gsub(item.cmd, prev, ext_screen)
+            end
+        end
+        return true
+    end },
+}
+if screen.count() > 1 then
+    table.insert(screenmenu, 1, { "off", "xrandr --output LVDS1 --auto --output " .. ext_screen .. " --off" })
+end
+-- }}}
+
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "jeux", gamemenu },
                                     { "utils", utilsmenu },
+                                    { "écran ext.", screenmenu },
                                     { "gajim", "gajim", ("/usr/share/icons/hicolor/64x64/apps/gajim.png") },
                                     { "firefox aurora", "firefox-aurora", ("/usr/share/pixmaps/firefox-aurora-icon.png") },
                                     { "chromium", "chromium", ("/usr/share/icons/hicolor/16x16/apps/chromium.png") },
