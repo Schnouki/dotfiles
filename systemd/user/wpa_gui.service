@@ -3,6 +3,7 @@ Description=WPA Graphical User Interface
 Requires=xorg.target
 
 [Service]
+ExecStartPre=/usr/bin/sleep 5
 ExecStart=/usr/bin/wpa_gui -t
 
 [Install]
