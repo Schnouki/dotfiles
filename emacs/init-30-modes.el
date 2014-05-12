@@ -3,9 +3,11 @@
 ;;; Code:
 
 ;; Prepare various major modes
-(load "auctex.el" nil t t)
-(load "preview-latex.el" nil t t)
-(add-hook 'LaTeX-mode-hook 'flyspell-mode)
+(autoload 'auctex-mode "auctex.el" "LaTeX editing mode" t)
+(add-to-list 'auto-mode-alist '("\\.tex\\'" . auctex-mode))
+(autoload 'LaTeX-preview-setup "preview")
+(add-hook 'LaTeX-mode-hook #'LaTeX-preview-setup)
+(add-hook 'LaTeX-mode-hook #'flyspell-mode)
 
 (autoload 'lua-mode "lua-mode" "Lua mode." t)
 (add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
