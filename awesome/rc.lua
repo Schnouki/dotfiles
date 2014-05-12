@@ -177,7 +177,7 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
                                     { "jeux", gamemenu },
                                     { "utils", utilsmenu },
                                     { "gajim", "gajim", ("/usr/share/icons/hicolor/64x64/apps/gajim.png") },
-                                    { "firefox nightly", "firefox-nightly", ("/usr/share/pixmaps/firefox-nightly-icon.png") },
+                                    { "firefox aurora", "firefox-aurora", ("/usr/share/pixmaps/firefox-aurora-icon.png") },
                                     { "chromium", "chromium", ("/usr/share/icons/hicolor/16x16/apps/chromium.png") },
                                     { "shotwell", "shotwell", (config_dir .. "/icons/shotwell.png") },
                                     { "spotify", "spotify", (config_dir .. "/icons/spotify.png") },
