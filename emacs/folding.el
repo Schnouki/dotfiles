@@ -17,7 +17,7 @@
 ;; [Latest devel version]
 ;; Vcs-URL:     http://savannah.nongnu.org/projects/emacs-tiny-tools
 
-(defconst folding-version-time "2013.0613.1821"
+(defconst folding-version-time "2014.0401.0703"
   "Last edit time in format YYYY.MMDD.HHMM.")
 
 ;;{{{ GPL
@@ -52,7 +52,15 @@
 ;;      Folding mode handles a document as a tree, where each branch
 ;;      is bounded by special markers `{{{' and `}}}'. A branch can be
 ;;      placed inside another branch, creating a complete hierarchical
-;;      structure.
+;;      structure. The markers:
+;;
+;;      o  Are placed to the beginning of line. No spaces.
+;;      o  Are prefixed by mode comment and space as needed.
+;;         For example in C++ mode, the beginning marker is: "// {{{"
+;;         See source code of folding.el and section "Set some useful default
+;;         fold marks" for full listing of the markers. If you need to
+;;         customize these markers, modify `folding-mode-marks-alist' after
+;;         loading this package (See my-folding-load-hook example in this doc).
 ;;
 ;;      Folding mode can CLOSE a fold, leaving only the initial `{{{'
 ;;      and possibly a comment visible.
@@ -142,7 +150,7 @@
 ;;          After yank
 ;;          ;;{{{ fold all lines together }}}
 ;;
-;;  Relates packages or modes
+;;  Related packages or modes
 ;;
 ;;      Folding.el was designed to be a content organizer and it is most
 ;;      suitable for big files. Sometimes people misunderstand the
@@ -422,7 +430,7 @@
 ;;             ;;  Change text-mode fold marks. Handy for quick
 ;;             ;;  sh/perl/awk code
 ;;
-;;             (defvar folding-mode-marks-alist nil)
+;;             (defvar folding-mode-marks-alist)
 ;;
 ;;             (let* ((ptr (assq 'text-mode folding-mode-marks-alist)))
 ;;               (setcdr ptr (list "# {{{" "# }}}")))
@@ -3116,11 +3124,13 @@ If you're going to change the beginning and end mark in
 ;;;###autoload
 (defun turn-off-folding-mode ()
   "Turn off folding."
+  (interactive)
   (folding-mode -1))
 
 ;;;###autoload
 (defun turn-on-folding-mode ()
   "Turn on folding."
+  (interactive)
   (folding-mode 1))
 
 ;;;###autoload
