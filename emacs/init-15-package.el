@@ -24,7 +24,7 @@
 			  ido-ubiquitous ido-vertical-mode ioccur indent-guide ix
 			  jabber jedi jquery-doc js3-mode
 			  lua-mode
-			  magit magit-annex markdown-mode mediawiki multiple-cursors mc-extras
+			  magit magit-annex magit-gitflow markdown-mode mediawiki multiple-cursors mc-extras
 			  php-mode pkgbuild-mode pretty-lambdada prodigy python python-environment python-pep8
 			  rainbow-mode
 			  scss-mode smex sudoku

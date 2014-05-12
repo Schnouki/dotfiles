@@ -26,5 +26,7 @@
 
 (require 'git-annex)
 (require 'magit-annex)
+(require 'magit-gitflow)
+(add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
 
 ;;; init-40-vc.el ends here
