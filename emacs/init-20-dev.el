@@ -54,14 +54,16 @@
     (flycheck-define-checker python2-pylint
       "A Python syntax and style checker using Pylint2."
       :command ("pylint2" "-r" "n"
-                "--msg-template" "{path}:{line}:{C}:{msg} ({msg_id})"
+                "--msg-template" "{path}:{line}:{column}:{C}:{msg} ({msg_id})"
                 (config-file "--rcfile" flycheck-pylint2rc)
-                source)
+                source-inplace)
       :error-patterns
-      ((error line-start (file-name) ":" line ":"
-              (or "E" "F") ":" (message) line-end)
-       (warning line-start (file-name) ":" line ":"
-                (or "W" "R" "C") ":" (message) line-end))
+      ((error line-start (file-name) ":" line ":" column ":"
+	      (or "E" "F") ":" (message) line-end)
+       (warning line-start (file-name) ":" line ":" column ":"
+		(or "W" "R") ":" (message) line-end)
+       (info line-start (file-name) ":" line ":" column ":"
+	     "C:" (message) line-end))
       :modes python-mode)
     (flycheck-def-config-file-var flycheck-pylint2rc python2-pylint
 				  ".pylintrc"
