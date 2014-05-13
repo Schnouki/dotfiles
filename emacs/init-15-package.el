@@ -19,7 +19,7 @@
 			  deft dtrt-indent
 			  es-mode
 			  fixmee flycheck
-			  git-annex git-commit-mode git-gutter-fringe gitignore-mode go-mode google-translate
+			  geiser git-annex git-commit-mode git-gutter-fringe gitignore-mode go-mode google-translate
 			  haml-mode haskell-mode hideshowvis
 			  ido-ubiquitous ido-vertical-mode ioccur indent-guide ix
 			  jabber jedi jquery-doc js3-mode

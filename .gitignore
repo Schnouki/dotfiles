@@ -12,6 +12,7 @@ __pycache__/
 !ctags
 !fonts.conf
 !globalrc
+!guile
 !mimeo.conf
 !gpgdiff
 !gtk-3.0/settings.ini
