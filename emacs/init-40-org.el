@@ -2,7 +2,21 @@
 ;;; Commentary:
 ;;; Code:
 
-(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+(use-package org
+  :mode ("\\.org\\'" . org-mode)
+  :bind (("C-! l" . org-store-link)
+	 ("C-ç l" . org-store-link)
+	 ("C-! a" . org-agenda)
+	 ("C-ç a" . org-agenda)
+	 ("C-! b" . org-iswitchb)
+	 ("C-ç b" . org-iswitchb)
+	 ("C-! t" . schnouki/org-agenda-and-todo-list)
+	 ("C-ç t" . schnouki/org-agenda-and-todo-list)
+	 ("C-! r" . org-capture)
+	 ("C-ç r" . org-capture)
+	 ("C-! s" . schnouki/org-sort-todo-list)
+	 ("C-ç s" . schnouki/org-sort-todo-list)))
+
 (add-hook 'org-mode-hook
           (lambda ()
             (turn-on-font-lock)
@@ -46,7 +60,7 @@
 	("pe" "Priorité très basse" tags-todo "+PRIORITY=\"E\"")))
 
 (defun schnouki/org-agenda-and-todo-list ()
-  "Display agenda and todo list in the current window"
+  "Display agenda and todo list in the current window."
   (interactive)
   (delete-other-windows)
 
@@ -57,19 +71,7 @@
   (org-agenda-list)
   (fit-window-to-buffer nil nil 20))
 
-;; Keyboard shortcuts
-(global-set-key (kbd "C-! l") 'org-store-link)
-(global-set-key (kbd "C-ç l") 'org-store-link)
-(global-set-key (kbd "C-! a") 'org-agenda)
-(global-set-key (kbd "C-ç a") 'org-agenda)
-(global-set-key (kbd "C-! b") 'org-iswitchb)
-(global-set-key (kbd "C-ç b") 'org-iswitchb)
-(global-set-key (kbd "C-! t") 'schnouki/org-agenda-and-todo-list)
-(global-set-key (kbd "C-ç t") 'schnouki/org-agenda-and-todo-list)
-
 ;; Capture
-(global-set-key (kbd "C-! r") 'org-capture)
-(global-set-key (kbd "C-ç r") 'org-capture)
 (setq org-default-notes-file (concat org-directory "/notes.org")
       org-capture-templates
       '(("t" "TODO" entry (file "todo.org") "* TODO %?\n  %i\n  %a" :unnarrowed)
@@ -92,7 +94,5 @@
     (org-sort-entries nil ?f 'schnouki/org-sort-by-todo-keywords)
     (org-sort-entries nil ?p))
   (org-overview))
-(global-set-key (kbd "C-! s") 'schnouki/org-sort-todo-list)
-(global-set-key (kbd "C-ç s") 'schnouki/org-sort-todo-list)
 
 ;;; init-40-org.el ends here

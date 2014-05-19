@@ -7,6 +7,12 @@
 	      c-indent-level 4
 	      indent-tabs-mode nil) ;; No tabs at all!
 
+(use-package dtrt-indent
+  :ensure dtrt-indent
+  :commands dtrt-indent-mode
+  :idle
+  (dtrt-indent-mode 1))
+
 ;; No trailing whitespaces
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
@@ -17,40 +23,49 @@
 (add-hook 'emacs-lisp-mode-hook 'schnouki/emacs-lisp-default-indent)
 
 ;; Python: virtualenv and Jedi completion
-(require 'jedi)
-(require 'python-environment)
-(setq jedi:complete-on-dot t)
+(use-package python-environment
+  :ensure python-environment)
+(use-package jedi
+  :ensure jedi
+  :commands (jedi:setup jedi-install-server)
+  :init
+  (progn
+    (setq jedi:complete-on-dot t)
 
-(defcustom schnouki/jedi-venv-bin "virtualenv"
-  "Name of the virtualenv binary to use."
-  :group 'jedi)
+    (defcustom schnouki/jedi-venv-bin "virtualenv"
+      "Name of the virtualenv binary to use."
+      :group 'jedi)
 
-(defun schnouki/jedi-setup-with-venv ()
-  "Setup jedi, taking the virtual env into account."
-  (interactive)
-  (when schnouki/jedi-venv-bin
-    (make-local-variable 'python-environment-virtualenv)
-    (make-local-variable 'python-environment-default-root-name)
-    (make-local-variable 'jedi:server-command)
-    (setq python-environment-default-root-name (concat "default-" schnouki/jedi-venv-bin)
-	  python-environment-virtualenv `(,schnouki/jedi-venv-bin "--system-site-packages" "--quiet")
-	  jedi:server-command (jedi:-env-server-command)))
-  (if (file-directory-p (python-environment-root-path))
-      (jedi:setup)
-    (jedi:install-server)
-    (schnouki/jedi-setup-with-venv)))
+    (defun schnouki/jedi-setup-with-venv ()
+      "Setup jedi, taking the virtual env into account."
+      (interactive)
+      (when schnouki/jedi-venv-bin
+	(require 'jedi)
+	(make-local-variable 'python-environment-virtualenv)
+	(make-local-variable 'python-environment-default-root-name)
+	(make-local-variable 'jedi:server-command)
+	(setq python-environment-default-root-name (concat "default-" schnouki/jedi-venv-bin)
+	      python-environment-virtualenv `(,schnouki/jedi-venv-bin "--system-site-packages" "--quiet")
+	      jedi:server-command (jedi:-env-server-command)))
+      (if (file-directory-p (python-environment-root-path))
+	  (jedi:setup)
+	(jedi:install-server)
+	(schnouki/jedi-setup-with-venv)))
 
-(defun schnouki/jedi-setup-with-venv-hook ()
-  "Setup jedi from a mode hook."
-  (add-hook 'hack-local-variables-hook
-	    #'schnouki/jedi-setup-with-venv nil t))
-(add-hook 'python-mode-hook 'schnouki/jedi-setup-with-venv-hook)
+    (defun schnouki/jedi-setup-with-venv-hook ()
+      "Setup jedi from a mode hook."
+      (add-hook 'hack-local-variables-hook
+		#'schnouki/jedi-setup-with-venv nil t))
+
+    (add-hook 'python-mode-hook 'schnouki/jedi-setup-with-venv-hook)))
 
 ;; Flycheck
-(add-hook 'after-init-hook #'global-flycheck-mode)
+(use-package flycheck
+  :ensure flycheck
+  :init
+  (progn
+    (add-hook 'after-init-hook #'global-flycheck-mode)
 
-(eval-after-load 'flycheck
-  '(progn
     (flycheck-define-checker python2-pylint
       "A Python syntax and style checker using Pylint2."
       :command ("pylint2" "-r" "n"
@@ -71,14 +86,15 @@
     (add-to-list 'flycheck-checkers 'python2-pylint)))
 
 ;; Code folding
-(require 'folding)
-(setq folding-mode-prefix-key (kbd "C-:")
-      folding-folding-on-startup nil
-      folding-internal-margins nil)
-
-(folding-install)
-(folding-install-hooks)
-(add-hook 'after-revert-hook 'folding-mode-find-file t)
+(use-package folding
+  :init
+  (progn
+    (setq folding-mode-prefix-key (kbd "C-:")
+	  folding-folding-on-startup nil
+	  folding-internal-margins nil)
+    (folding-install)
+    (folding-install-hooks)
+    (add-hook 'after-revert-hook 'folding-mode-find-file t)))
 
 ;; Key bindings for hideshow
 (defun schnouki/hs-togle-hiding ()
@@ -86,12 +102,14 @@
   (interactive)
   (unless hs-minor-mode (hs-minor-mode))
   (hs-toggle-hiding))
-
 (dolist (key (list (kbd "C-! !") (kbd "C-ç ç")))
   (global-set-key key 'schnouki/hs-togle-hiding))
 
 ;; Display indicator in fringe for code that can be folded with hideshow
-(hideshowvis-enable)
+(use-package hideshowvis
+  :ensure hideshowvis
+  :init
+  (hideshowvis-enable))
 
 (define-fringe-bitmap 'hs-marker [0 24 24 126 126 24 24 0])
 
@@ -161,17 +179,28 @@
 ;	(concat (substring ediff-diff-ok-lines-regexp 0 -2) "\\|.*Pas de fin de ligne\\)")))
 
 ;; Auto-Complete
-(require 'auto-complete-config)
-(ac-config-default)
-(dolist (mode '(python2-mode python3-mode coffee-mode))
-  (add-to-list 'ac-modes mode))
+;; (require 'auto-complete-config)
+;; (ac-config-default)
+;; (dolist (mode '(python2-mode python3-mode coffee-mode))
+;;   (add-to-list 'ac-modes mode))
 
 ;; Fixmee
-(require 'fixmee)
-(setq button-lock-mode-lighter "")
-(global-fixmee-mode 1)
+(use-package fixmee
+  :ensure fixmee
+  :idle
+  (progn
+    (setq button-lock-mode-lighter "")
+    (global-fixmee-mode 1)))
 
-;; SCSS
-(setq scss-compile-at-save nil)
+;; Display the current function name in the mode line
+(which-function-mode 1)
+
+;; pretty-lambda
+(use-package pretty-lambdada
+  :ensure pretty-lambdada
+  :init
+  (progn
+    (add-to-list 'pretty-lambda-auto-modes 'python-mode)
+    (pretty-lambda-for-modes nil)))
 
 ;;; init-20-dev.el ends here

@@ -9,36 +9,16 @@
 (add-to-list 'package-archives '("elpa" . "http://tromey.com/elpa/"))
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
 
+;; Don't auto-activate packages
+(setq package-enable-at-startup nil)
 (package-initialize)
 
-;; Packages
-(defvar schnouki/packages nil)
-(setq schnouki/packages '(ace-jump-mode ack-and-a-half auto-complete
-			  button-lock
-			  clippy coffee-mode color-theme color-identifiers-mode csharp-mode
-			  deft dtrt-indent
-			  es-mode
-			  fixmee flycheck
-			  geiser git-annex git-commit-mode git-gutter-fringe gitignore-mode go-mode google-translate
-			  haml-mode haskell-mode hideshowvis
-			  ido-ubiquitous ido-vertical-mode ioccur indent-guide ix
-			  jabber jedi jquery-doc js3-mode
-			  lua-mode
-			  magit magit-annex magit-gitflow markdown-mode mediawiki multiple-cursors mc-extras
-			  php-mode pkgbuild-mode pretty-lambdada prodigy python python-environment python-pep8
-			  rainbow-mode
-			  scss-mode smex sudoku
-			  twittering-mode
-			  unbound undo-tree
-			  yaml-mode yasnippet
-			  zenburn-theme))
-(let ((refreshed nil))
-  (dolist (package schnouki/packages)
-    (unless (package-installed-p package)
-      (message (concat "Installing missing package: " (symbol-name package)))
-      (unless refreshed
-	(package-refresh-contents)
-	(setq refreshed t))
-      (package-install package))))
+;; Install use-packages, which will install everything else as needed
+(unless (package-installed-p 'use-package)
+  (message "Installing use-package…")
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(require 'use-package)
 
 ;;; init-15-package.el ends here

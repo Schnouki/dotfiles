@@ -121,66 +121,99 @@ Return the index of the matching item, or nil if not found."
 (global-set-key (kbd "C-x M-k") 'schnouki/kill-star-buffers)
 
 ;; ido-mode for better buffer switching, file selection, etc.
-(require 'ido)
-(require 'ido-ubiquitous)
-(require 'ido-vertical-mode)
-(setq ido-default-file-method 'selected-window
-      ido-default-buffer-method 'selected-window
-      ido-vertical-define-keys 'C-n-C-p-up-down-left-right)
-(ido-mode 1)
-(ido-ubiquitous 1)
-(ido-vertical-mode 1)
+(use-package ido
+  :init
+  (progn
+    (setq ido-default-file-method 'selected-window
+	  ido-default-buffer-method 'selected-window)
+    (ido-mode 1)))
+(use-package ido-ubiquitous
+  :ensure ido-ubiquitous
+  :init
+  (ido-ubiquitous 1))
+(use-package ido-vertical-mode
+  :ensure ido-vertical-mode
+  :init
+  (progn
+    (setq ido-vertical-define-keys 'C-n-C-p-up-down-left-right)
+    (ido-vertical-mode 1)))
 
 ;; Enhanced M-x
-(require 'smex)
-(smex-initialize)
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "C-! M-x") 'smex-major-mode-commands)
+(use-package smex
+  :ensure smex
+  :bind (("M-x" . smex)
+	 ("C-! M-x" . smex-major-mode-commands)))
+
+;; ack
+(use-package ack-and-a-half
+  :ensure ack-and-a-half
+  :commands ack)
 
 ;; undo-tree
-(require 'undo-tree)
-;; Lighter displayed in mode line
-(setq undo-tree-mode-lighter " UT")
-;; ...and enable!
-(global-undo-tree-mode)
+(use-package undo-tree
+  :ensure undo-tree
+  :init
+  (progn
+    ;; Lighter displayed in mode line
+    (setq undo-tree-mode-lighter " UT")
+    ;; ...and enable!
+    (global-undo-tree-mode)))
 
 ;; ace-jump (reminder: C-x C-SPC to pop-global-mark)
-(require 'ace-jump-mode)
-(global-set-key (kbd "C-;") 'ace-jump-mode)
-(global-set-key (kbd "C-'") 'ace-jump-mode)
-(setq ace-jump-mode-scope 'frame)
-
-;; http://irreal.org/blog/?p=760
-(add-hook 'ace-jump-mode-before-jump-hook
-	  (lambda () (push-mark (point) t))) ;until it's fixed in Maramalade
+(use-package
+  :ensure ace-jump-mode
+  :bind (("C-;" . ace-jump-mode)
+	  ("C-'" . ace-jump-mode))
+  :init
+  (setq ace-jump-mode-scope 'frame))
 
 ;; ioccur - incremental search of lines in current buffer matching input
-(add-to-list 'desktop-globals-to-save 'ioccur-history)
-(global-set-key (kbd "C-! C-s") 'ioccur)
-(global-set-key (kbd "C-! M-s") 'ioccur-find-buffer-matching)
+(use-package ioccur
+  :ensure ioccur
+  :bind (("C-! C-s" . ioccur)
+	 ("C-! M-s" . ioccur-find-buffer-matching))
+  :init
+  (add-to-list 'desktop-globals-to-save 'ioccur-history))
 
 ;; Google Translate
-(require 'google-translate)
-(autoload 'google-translate-query-translate "google-translate" nil t)
-(global-set-key (kbd "C-! w") 'google-translate-query-translate)
-(setq google-translate-default-source-language "en"
-      google-translate-default-target-language "fr"
-      google-translate-enable-ido-completion t)
+(use-package google-translate
+  :ensure google-translate
+  :bind ("C-! w" . google-translate-query-translate)
+  :init
+  (setq google-translate-default-source-language "en"
+	google-translate-default-target-language "fr"
+	google-translate-enable-ido-completion t))
 
 ;; NSFW
-(autoload 'sudoku "sudoku" nil t)
-(setq-default sudoku-level "medium")
+(use-package sudoku
+  :ensure sudoku
+  :commands sudoku
+  :init
+  (setq-default sudoku-level "medium"))
 
 ;; Deft
-(require 'deft)
-(setq deft-directory "~/Dropbox/deft"
-      deft-extension "org"
-      deft-text-mode 'org-mode
-      deft-use-filename-as-title t)
-(global-set-key (kbd "C-! d") 'deft)
-(defadvice deft-auto-save (around keep-whitespace-on-deft-auto-save activate)
-  (flet ((delete-trailing-whitespace))
-    ad-do-it))
+(use-package deft
+  :ensure deft
+  :bind ("C-! d" . deft)
+  :init
+  (progn
+    (setq deft-directory "~/Dropbox/deft"
+	  deft-extension "org"
+	  deft-text-mode 'org-mode
+	  deft-use-filename-as-title t)
+    (defadvice deft-auto-save (around keep-whitespace-on-deft-auto-save activate)
+      (flet ((delete-trailing-whitespace))
+	ad-do-it))))
+
+;; ix.io integration
+(use-package ix
+  :ensure ix
+  :commands (ix ix-browse ix-delete))
+
+;; Find unbound keys
+(use-package unbound
+  :ensure unbound
+  :commands describe-unbound-keys)
 
 ;; http://www.emacswiki.org/emacs/CamelCase
 (defun un-camelcase-string (s &optional sep start)

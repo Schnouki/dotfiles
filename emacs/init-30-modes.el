@@ -3,82 +3,118 @@
 ;;; Code:
 
 ;; Prepare various major modes
-(autoload 'auctex-mode "auctex.el" "LaTeX editing mode" t)
-(add-to-list 'auto-mode-alist '("\\.tex\\'" . auctex-mode))
-(autoload 'LaTeX-preview-setup "preview")
-(add-hook 'LaTeX-mode-hook #'LaTeX-preview-setup)
-(add-hook 'LaTeX-mode-hook #'flyspell-mode)
+(use-package lua-mode
+  :ensure lua-mode
+  :mode "\\.lua\\'"
+  :init
+  (folding-add-to-marks-list 'lua-mode "-- {{{" "-- }}}" nil t))
 
-(autoload 'lua-mode "lua-mode" "Lua mode." t)
-(add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
-(folding-add-to-marks-list 'lua-mode "-- {{{" "-- }}}" nil t)
+(use-package go-mode
+  :ensure go-mode
+  :mode "\\.go\\'"
+  :init
+  (progn
+    (folding-add-to-marks-list 'go-mode "// {{{" "// }}}" nil t)
+    (defun schnouki/maybe-gofmt-before-save ()
+      (when (eq major-mode 'go-mode)
+	(gofmt-before-save)))
+    (add-hook 'before-save-hook 'schnouki/maybe-gofmt-before-save)))
 
-(folding-add-to-marks-list 'go-mode "// {{{" "// }}}" nil t)
-(defun schnouki/maybe-gofmt-before-save ()
-  (when (eq major-mode 'go-mode)
-    (gofmt-before-save)))
-(add-hook 'before-save-hook 'schnouki/maybe-gofmt-before-save)
+(use-package haskell-mode
+  :ensure haskell-mode
+  :mode "\\.hs\\'")
 
-(autoload 'python-mode "python" "Python mode." t)
-(add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
-(defalias 'python2-mode 'python-mode)
-(defalias 'python3-mode 'python-mode)
+(use-package python
+  :ensure python
+  :mode ("\\.py'" . python-mode)
+  :init
+  (progn
+    (defalias 'python2-mode 'python-mode)
+    (defalias 'python3-mode 'python-mode)))
 
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js3-mode))
-(add-to-list 'interpreter-mode-alist '("node" . js3-mode))
-(folding-add-to-marks-list 'js3-mode "// {{{" "// }}}" nil t)
+(use-package js3-mode
+  :ensure js3-mode
+  :mode "\\.js\\'"
+  :interpreter "node"
+  :init
+  (folding-add-to-marks-list 'js3-mode "// {{{" "// }}}" nil t))
 
-(folding-add-to-marks-list 'coffee-mode "# {{{" "# }}}" nil t)
-(add-hook 'coffee-mode-hook
-	  '(lambda ()
-	     (setq tab-width 4
-		   coffee-tab-width 4)
-	     (local-set-key (kbd "C-c C-c") 'coffee-compile-buffer)))
+(use-package coffee-mode
+  :ensure coffee-mode
+  :mode "\\.coffee\'"
+  :init
+  (progn
+    (folding-add-to-marks-list 'coffee-mode "# {{{" "# }}}" nil t)
+    (add-hook 'coffee-mode-hook
+	      '(lambda ()
+		 (setq tab-width 4
+		       coffee-tab-width 4)
+		 (local-set-key (kbd "C-c C-c") 'coffee-compile-buffer)))))
 
-(autoload 'php-mode "php-mode.el" "Php mode." t)
-(add-to-list 'auto-mode-alist '("\\.php[345]?$" . php-mode))
+(use-package php-mode
+  :ensure php-mode
+  :mode "\\.php[345]?\\'")
 
-(autoload 'yaml-mode "yaml-mode.el" "Yaml mode." t)
-(add-to-list 'auto-mode-alist '("\\.ya?ml$" . yaml-mode))
+(use-package yaml-mode
+  :ensure yaml-mode
+  :mode "\\.ya?ml\\'")
 
-(autoload 'markdown-mode "markdown-mode.el" "Markdown mode." t)
-(dolist (ext '("md" "mdwn" "markdown"))
-  (add-to-list 'auto-mode-alist (cons (concat "\\." ext "$") 'markdown-mode)))
-(add-hook 'markdown-mode-hook '(lambda () (setq markdown-command "~/.config/emacs/markdown")))
+(use-package markdown-mode
+  :ensure markdown-mode
+  :mode (("\\.md\\'" . markdown-mode)
+  	 ("\\.mdwn\\'" . markdown-mode)
+  	 ("\\.markdown\\'" . markdown-mode))
+  :init
+  (setq markdown-command "~/.config/emacs/markdown"))
 
-(autoload 'adoc-mode "adoc-mode.el" "AsciiDoc mode." t)
-(add-to-list 'auto-mode-alist '("\\.adoc?$" . adoc-mode))
+(use-package adoc-mode
+  :ensure adoc-mode
+  :mode "\\.adoc?\\'")
 
-(autoload 'jinja-mode "jinja.el" "Jinja mode." t)
-(add-to-list 'auto-mode-alist '("\\.j2$" . jinja-mode))
+(use-package jinja2-mode
+  :ensure jinja2-mode
+  :mode "\\.j2\\'")
 
-(autoload 'cuda-mode "cuda-mode.el" "Cuda mode." t)
-(add-to-list 'auto-mode-alist '("\\.cu$" . cuda-mode))
-(folding-add-to-marks-list 'cuda-mode "// {{{" "// }}}" nil t)
+(use-package scss-mode
+  :ensure scss-mode
+  :mode "\\.scss\\'"
+  :init
+  (setq scss-compile-at-save nil))
 
-(autoload 'cmake-mode "cmake-mode.el" "CMake mode." t)
-(dolist (name '("CMakeLists\\.txt" "\\.cmake$"))
-  (add-to-list 'auto-mode-alist (cons name 'cmake-mode)))
+(use-package haml-mode
+  :ensure haml-mode
+  :mode "\\.haml\\'")
 
-;; pkgbuild-mode
-(autoload 'pkgbuild-mode "pkgbuild-mode.el" "PKGBUILD mode." t)
-(add-to-list 'auto-mode-alist '("/PKGBUILD$" . pkgbuild-mode))
+(use-package cuda-mode
+  :mode "\\.cu\\'"
+  :init
+  (folding-add-to-marks-list 'cuda-mode "// {{{" "// }}}" nil t))
 
-;; gnuplot-mode
-(autoload 'gnuplot-mode "gnuplot" "gnuplot major mode" t)
-(autoload 'gnuplot-make-buffer "gnuplot" "open a buffer in gnuplot mode" t)
-(add-to-list 'auto-mode-alist '("\\.gp$" . gnuplot-mode))
-(add-to-list 'auto-mode-alist '("\\.plot$" . gnuplot-mode))
+(use-package cmake-mode
+  :mode (("/CMakeLists\\.txt\\'" . cmake-mode)
+	 ("\\.cmake\\'" . cmake-mode)))
 
-;; plantuml-mode
-;; nothing into auto-mode-alist, just an autoload for the mode itself...
-(autoload 'plantuml-mode "plantuml-mode" "PlantUML major mode" t)
+(use-package pkgbuild-mode
+  :ensure pkgbuild-mode
+  :mode "/PKGBUILD\\'")
 
-;; po-mode
-(autoload 'po-mode "po-mode" "Major mode for translators to edit PO files" t)
-(add-to-list 'auto-mode-alist '("\\.po\\'\\|\\.po\\." . po-mode))
-(autoload 'po-find-file-coding-system "po-compat")
-(modify-coding-system-alist 'file "\\.po\\'\\|\\.po\\." 'po-find-file-coding-system)
+(use-package gnuplot
+  :mode "\\.gp\\'\\|\\.plot\\'"
+  :commands gnuplot-make-buffer)
+
+(use-package plantuml-mode
+  :commands plantuml-mode)
+
+(use-package es-mode
+  :ensure es-mode
+  :commands es-mode)
+
+(use-package po-mode
+  :mode "\\.pot?\\'")
+(use-package po-compat
+  :commands po-find-file-coding-system
+  :init
+  (modify-coding-system-alist 'file "\\.po\\'\\|\\.po\\." 'po-find-file-coding-system))
 
 ;; -----------------------------------------------------------------------------
 ;; Minor modes
@@ -90,21 +126,22 @@
   (add-hook hook 'hs-minor-mode))
 
 ;; smerge-mode, as suggested in the doc
-(autoload 'smerge-mode "smerge-mode" nil t)
-(setq smerge-command-prefix (kbd "C-c '"))
-(defun sm-try-smerge ()
-  (save-excursion
-    (goto-char (point-min))
-    (when (re-search-forward "^<<<<<<< " nil t)
-      (smerge-mode 1))))
-(add-hook 'find-file-hook 'sm-try-smerge)
-(add-hook 'after-revert-hook 'sm-try-smerge)
+(use-package smerge-mode
+  :commands smerge-mode
+  :init
+  (progn
+    (setq smerge-command-prefix (kbd "C-c '")))
 
-;; Display the current function name in the mode line
-(which-function-mode 1)
+    (defun sm-try-smerge ()
+      (save-excursion
+	(goto-char (point-min))
+	(when (re-search-forward "^<<<<<<< " nil t)
+	  (smerge-mode 1))))
+    (add-hook 'find-file-hook 'sm-try-smerge)
+    (add-hook 'after-revert-hook 'sm-try-smerge))
 
-;; pretty-lambda
-(add-to-list 'pretty-lambda-auto-modes 'python-mode)
-(pretty-lambda-for-modes nil)
+;; geiser, for Scheme REPL and autodoc
+(use-package geiser
+  :ensure geiser)
 
 ;;; init-30-modes.el ends here

@@ -192,9 +192,8 @@
 (defun schnouki/maybe-make-executable-if-script-p ()
   "Automagically make scripts executable."
   (let ((name (buffer-file-name)))
-    (unless (reduce 'or
-		    (mapcar #'(lambda (dir) (string-prefix-p (expand-file-name dir) name))
-			    schnouki/no-script))
+    (unless (cl-some #'(lambda (dir) (string-prefix-p (expand-file-name dir) name))
+		     schnouki/no-script)
       (executable-make-buffer-file-executable-if-script-p))))
 (add-hook 'after-save-hook 'schnouki/maybe-make-executable-if-script-p)
 

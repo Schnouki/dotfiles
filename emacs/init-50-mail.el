@@ -3,6 +3,13 @@
 ;;; Code:
 
 ;; Mail parameters -- more of them in init-99-private.el ;)
+
+;; Various notmuch parameters:
+;; - saved searches
+;; - kill message-mode buffer after a mail is sent
+;; - poll script that fetches new mail
+;; - addresses completion
+;; - crypto stuff
 (setq message-auto-save-directory nil
       send-mail-function 'message-send-mail-with-sendmail ;sendmail-send-it
       message-send-mail-function 'message-send-mail-with-sendmail
@@ -12,25 +19,8 @@
       mail-specify-envelope-from t
       mail-envelope-from 'header
       message-sendmail-envelope-from 'header
-      gnus-inhibit-images nil)
-
-;; Load notmuch
-(autoload 'notmuch "notmuch" nil t)
-(autoload 'notmuch-mua-new-mail "notmuch" nil t)
-
-;; Global keys to launch notmuch
-(global-set-key (kbd "C-! n") 'notmuch)
-(global-set-key (kbd "C-ç n") 'notmuch)
-(global-set-key (kbd "C-! m") 'notmuch-mua-new-mail)
-(global-set-key (kbd "C-ç m") 'notmuch-mua-new-mail)
-
-;; Various notmuch parameters:
-;; - saved searches
-;; - kill message-mode buffer after a mail is sent
-;; - poll script that fetches new mail
-;; - addresses completion
-;; - crypto stuff
-(setq notmuch-saved-searches '(("home"        . "(tag:inbox or tag:todo or tag:unread)")
+      gnus-inhibit-images nil
+      notmuch-saved-searches '(("home"        . "(tag:inbox or tag:todo or tag:unread)")
 			       ("unread"      . "tag:unread")
 			       ("inbox"       . "tag:inbox")
 			       ("flagged"     . "tag:flagged")
@@ -54,115 +44,100 @@
 			       ("prosody"     . "(tag:prosody and tag:unread)")
 			       ("xmpp"        . "(tag:xmpp and tag:unread)"))
       notmuch-archive-tags '("-inbox" "-unread")
-      notmuch-poll-script "~/.config/notmuch/mailsync"
       notmuch-address-command "~/.config/notmuch/addrbook.py"
       notmuch-crypto-process-mime t
       notmuch-mua-compose-in 'new-frame
       message-kill-buffer-on-exit t
       notmuch-thousands-separator " "
       notmuch-print-mechanism 'notmuch-print-muttprint/evince
+      notmuch-address-selection-function 'schnouki/notmuch-address-selection-function
 
       message-citation-line-function 'message-insert-formatted-citation-line
-      message-citation-line-format "Le %e %B %Y à %-H:%M %Z, %N a écrit :")
+      message-citation-line-format "Le %e %B %Y à %-H:%M %Z, %N a écrit :"
+      message-signature 'schnouki/choose-signature)
 
 ;; Add some features to message-mode
 (add-hook 'message-setup-hook '(lambda () (footnote-mode t)))
 
-;; Useful key bindings in notmuch buffers
-(eval-after-load 'notmuch
-  '(progn
-     (define-key 'notmuch-show-mode-map "b" 'schnouki/notmuch-show-bounce)
-     (define-key 'notmuch-show-mode-map "H" 'schnouki/notmuch-view-html)
-     (define-key 'notmuch-show-mode-map "r" nil)
-     (define-key 'notmuch-show-mode-map "R" nil)
-     (define-key 'notmuch-show-mode-map "ra" 'notmuch-show-reply)
-     (define-key 'notmuch-show-mode-map "rs" 'notmuch-show-reply-sender)
-     (define-key 'notmuch-show-mode-map "SH" 'schnouki/notmuch-signal-ham)
-     (define-key 'notmuch-show-mode-map "SS" 'schnouki/notmuch-signal-spam)
+;; Useful functions
+(defun notmuch-search-filter-by-date (days)
+  (interactive "NNumber of days to display: ")
+  (let* ((now (current-time))
+	 (beg (time-subtract now (days-to-time days)))
+	 (filter
+	  (concat
+	   (format-time-string "%s.." beg)
+	   (format-time-string "%s" now))))
+    (notmuch-search-filter filter)))
 
-     (define-key 'notmuch-search-mode-map "d" 'notmuch-search-filter-by-date)
-     (define-key 'notmuch-search-mode-map (kbd "C-<return>") 'schnouki/notmuch-search-show-thread-inhibit-images)
+(defun schnouki/notmuch-view-html ()
+  "Open the HTML parts of a mail in a web browser."
+  (interactive)
+  (with-current-notmuch-show-message
+   (let ((mm-handle (mm-dissect-buffer)))
+     (notmuch-foreach-mime-part
+      (lambda (p)
+	(if (string-equal (mm-handle-media-type p) "text/html")
+	    (mm-display-external p (lambda ()
+				     (message "Opening web browser...")
+				     (browse-url-of-buffer)
+				     (bury-buffer)))))
+      mm-handle))))
 
-     (defun notmuch-search-filter-by-date (days)
-       (interactive "NNumber of days to display: ")
-       (let* ((now (current-time))
-	      (beg (time-subtract now (days-to-time days)))
-	      (filter
-	       (concat
-		(format-time-string "%s.." beg)
-		(format-time-string "%s" now))))
-	 (notmuch-search-filter filter)))
+(defun schnouki/notmuch-address-selection-function (prompt collection initial-input)
+  (let ((completion-ignore-case t)
+	(ido-enable-fle-matching t))
+    (ido-completing-read
+     prompt (cons initial-input collection) nil nil nil 'notmuch-address-history)))
 
-     (defun schnouki/notmuch-view-html ()
-       "Open the HTML parts of a mail in a web browser."
-       (interactive)
-       (with-current-notmuch-show-message
-	(let ((mm-handle (mm-dissect-buffer)))
-	  (notmuch-foreach-mime-part
-	   (lambda (p)
-	     (if (string-equal (mm-handle-media-type p) "text/html")
-		 (mm-display-external p (lambda ()
-					  (message "Opening web browser...")
-					  (browse-url-of-buffer)
-					  (bury-buffer)))))
-	   mm-handle))))
+(defun notmuch-mua-mail-url (url)
+  (interactive (browse-url-interactive-arg "Mailto URL: "))
+  (let* ((alist (rfc2368-parse-mailto-url url))
+	 (to (assoc "To" alist))
+	 (subject (assoc "Subject" alist))
+	 (body (assoc "Body" alist))
+	 (rest (delete to (delete subject (delete body alist))))
+	 (to (cdr to))
+	 (subject (cdr subject))
+	 (body (cdr body))
+	 (mail-citation-hook (unless body mail-citation-hook)))
+    (notmuch-mua-mail to subject rest nil nil
+		      (if body
+			  (list 'insert body)
+			(list 'insert-buffer (current-buffer))))))
 
-     (defun schnouki/notmuch-address-selection-function (prompt collection initial-input)
-       (ido-mode 1)
-       (let ((completion-ignore-case t)
-	     (ido-enable-fle-matching t))
-	 (ido-completing-read
-	  prompt (cons initial-input collection) nil nil nil 'notmuch-address-history)))
-     (setq notmuch-address-selection-function 'schnouki/notmuch-address-selection-function)
+(defun schnouki/notmuch-show-bounce (&optional address)
+  "Bounce the current message."
+  (interactive "sBounce To: ")
+  (notmuch-show-view-raw-message)
+  (message-resend address))
 
-     (defun notmuch-mua-mail-url (url)
-       (interactive (browse-url-interactive-arg "Mailto URL: "))
-       (let* ((alist (rfc2368-parse-mailto-url url))
-	      (to (assoc "To" alist))
-	      (subject (assoc "Subject" alist))
-	      (body (assoc "Body" alist))
-	      (rest (delete to (delete subject (delete body alist))))
-	      (to (cdr to))
-	      (subject (cdr subject))
-	      (body (cdr body))
-	      (mail-citation-hook (unless body mail-citation-hook)))
-	 (notmuch-mua-mail to subject rest nil nil
-			   (if body
-			       (list 'insert body)
-			     (list 'insert-buffer (current-buffer))))))
+(defun schnouki/notmuch-signal-spamham (type &rest to)
+  (with-current-notmuch-show-message
+   (notmuch-mua-forward-message)
+   (message-replace-header "To" (mapconcat 'identity to ", "))
+   (message-remove-header "Fcc")
+   (message-sort-headers)
+   (message-hide-headers)
+   (message-goto-to)
+   (set-buffer-modified-p nil)
+   (if (yes-or-no-p (concat "Really flag this as " type "?"))
+       (message-send-and-exit)
+     (progn
+       (message-kill-buffer)
+       (delete-frame)))))
 
-     (defun schnouki/notmuch-show-bounce (&optional address)
-       "Bounce the current message."
-       (interactive "sBounce To: ")
-       (notmuch-show-view-raw-message)
-       (message-resend address))
+(defun schnouki/notmuch-search-show-thread-inhibit-images ()
+  (interactive)
+  (let ((gnus-inhibit-images t))
+    (notmuch-search-show-thread)))
 
-     (defun schnouki/notmuch-signal-spamham (type &rest to)
-       (with-current-notmuch-show-message
-	(notmuch-mua-forward-message)
-	(message-replace-header "To" (mapconcat 'identity to ", "))
-	(message-remove-header "Fcc")
-	(message-sort-headers)
-	(message-hide-headers)
-	(message-goto-to)
-	(set-buffer-modified-p nil)
-	(if (yes-or-no-p (concat "Really flag this as " type "?"))
-	    (message-send-and-exit)
-	  (progn
-	    (message-kill-buffer)
-	    (delete-frame)))))
-
-     (defun schnouki/notmuch-search-show-thread-inhibit-images ()
-       (interactive)
-       (let ((gnus-inhibit-images t))
-	 (notmuch-search-show-thread)))
-
-     ;; Display the hl-line correctly in notmuch-search
-     (defun schnouki/notmuch-hl-line-mode ()
-       (prog1 (hl-line-mode)
-	 (when hl-line-overlay
-	   (overlay-put hl-line-overlay 'priority 5))))
-     (add-hook 'notmuch-search-hook 'schnouki/notmuch-hl-line-mode)))
+;; Display the hl-line correctly in notmuch-search
+(defun schnouki/notmuch-hl-line-mode ()
+  (prog1 (hl-line-mode)
+    (when hl-line-overlay
+      (overlay-put hl-line-overlay 'priority 5))))
+(add-hook 'notmuch-search-hook 'schnouki/notmuch-hl-line-mode)
 
 ;; Choose signature according to the From header
 (defun schnouki/choose-signature ()
@@ -176,7 +151,6 @@
 	(with-temp-buffer
 	  (insert-file-contents sigfile)
 	  (buffer-string)))))
-(setq message-signature 'schnouki/choose-signature)
 
 ;; Set From header according to the To header
 ;; schnouki/message-sender-rules is a list of cons cells: if the "To" header
@@ -198,12 +172,10 @@
 	      (message (concat "Sender set to " from))))))))
 (add-hook 'message-setup-hook 'schnouki/choose-sender)
 
-;; TODO: check message-alternative-emails...
-
 ;; Choose msmtp account used to send a mail according to the From header
 ;; schnouki/msmtp-accounts is a list cons cells: ("from_regexp" . "account").
 (defun schnouki/change-msmtp-account ()
-  "Change msmtp account according to the current From header"
+  "Change msmtp account according to the current From header."
   (let* ((from (downcase (cadr (mail-extract-address-components (message-field-value "From")))))
 	 (account
 	  (catch 'first-match
@@ -223,18 +195,40 @@
 (ad-activate 'smtpmail-via-smtp)
 
 ;; Autorefresh notmuch-hello using D-Bus
-(eval-after-load 'notmuch
-  '(progn
-     (require 'dbus)
-     (defun schnouki/notmuch-dbus-notify ()
-       (save-excursion
-	 (save-restriction
-	   (when (get-buffer "*notmuch-hello*")
-	     (notmuch-hello-update t)))))
-     (ignore-errors
-       (dbus-register-method :session dbus-service-emacs dbus-path-emacs
-			     dbus-service-emacs "NotmuchNotify"
-			     'schnouki/notmuch-dbus-notify))))
+(defun schnouki/notmuch-dbus-notify ()
+  (save-excursion
+    (save-restriction
+      (when (get-buffer "*notmuch-hello*")
+	(notmuch-hello-update t)))))
+
+;; Load notmuch!
+(use-package notmuch
+  :bind (("C-! n" . notmuch)
+	 ("C-ç n" . notmuch)
+	 ("C-! m" . notmuch-mua-new-mail)
+	 ("C-ç m" . notmuch-mua-new-mail))
+  :config
+  (progn
+    ;; Show-mode keybindings
+    (define-key 'notmuch-show-mode-map "b" 'schnouki/notmuch-show-bounce)
+    (define-key 'notmuch-show-mode-map "H" 'schnouki/notmuch-view-html)
+    (define-key 'notmuch-show-mode-map "r" nil)
+    (define-key 'notmuch-show-mode-map "R" nil)
+    (define-key 'notmuch-show-mode-map "ra" 'notmuch-show-reply)
+    (define-key 'notmuch-show-mode-map "rs" 'notmuch-show-reply-sender)
+    (define-key 'notmuch-show-mode-map "SH" 'schnouki/notmuch-signal-ham)
+    (define-key 'notmuch-show-mode-map "SS" 'schnouki/notmuch-signal-spam)
+
+    ;; Search-mode keybindings
+    (define-key 'notmuch-search-mode-map "d" 'notmuch-search-filter-by-date)
+    (define-key 'notmuch-search-mode-map (kbd "C-<return>") 'schnouki/notmuch-search-show-thread-inhibit-images)
+
+    ;; Autorefresh notmuch-hello using D-Bus
+    (require 'dbus)
+    (ignore-errors
+      (dbus-register-method :session dbus-service-emacs dbus-path-emacs
+			    dbus-service-emacs "NotmuchNotify"
+			    'schnouki/notmuch-dbus-notify))))
 
 ;; Use ido to read filename when attaching a file
 (eval-after-load 'mml
@@ -248,5 +242,13 @@
 ;; Don't try to display PDFs inline when they have a wrong MIME type
 (eval-after-load 'mm-decode
   '(add-to-list 'mm-inline-media-tests '("text/pdf" ignore ignore)))
+
+;; Other communication services :)
+(use-package jabber
+  :ensure jabber
+  :commands jabber-connect)
+(use-package twittering-mode
+  :ensure twittering-mode
+  :commands (twit twittering-mode))
 
 ;;; init-50-mail.el ends here

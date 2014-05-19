@@ -2,19 +2,15 @@
 ;;; Commentary:
 ;;; Code:
 
-(require 'yasnippet)
-
-(yas-global-mode 1)
+(use-package yasnippet
+  :ensure yasnippet
+  :idle (yas-global-mode 1))
 
 ;; Snippets dir:
-;; - filter our elpy
 ;; - make sure the local one (~/.emacs.d/snippets) comes first
 (setq yas-snippet-dirs
       (cons "~/.emacs.d/snippets"
-	    (cl-remove-if (lambda (item)
-			    (or
-			     (string-equal "~/.emacs.d/snippets" item)
-			     (string-match "/elpy-.*/snippets" item)))
+	    (cl-remove-if (lambda (item) (string-equal "~/.emacs.d/snippets" item))
 			  yas-snippet-dirs)))
 
 ;; Modes that bind something to "<tab>" instead of "TAB"
