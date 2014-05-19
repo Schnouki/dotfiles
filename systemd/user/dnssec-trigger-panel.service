@@ -1,0 +1,10 @@
+[Unit]
+Description=DNSSEC-trigger panel
+Requires=xorg.target
+
+[Service]
+ExecStartPre=/usr/bin/sleep 5
+ExecStart=/usr/bin/dnssec-trigger-panel
+
+[Install]
+WantedBy=xorg.target
