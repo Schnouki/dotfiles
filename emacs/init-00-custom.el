@@ -10,11 +10,8 @@
  '(inhibit-startup-screen t)
  '(safe-local-variable-values
    (quote
-    ((schnouki/jedi-venv-bin . "virtualenv")
-     (python-environment-virtualenv . "webapps")
-     (require-final-newline)
+    ((require-final-newline)
      (ack-and-a-half-prompt-for-directory . t)
-     (schnouki/jedi-venv-bin . "virtualenv2")
      (flycheck-checker . python2-pylint)
      (delete-trailing-lines)
      (js3-strict-trailing-comma-warning)

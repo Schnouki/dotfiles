@@ -22,43 +22,6 @@
   (setq indent-tabs-mode t))
 (add-hook 'emacs-lisp-mode-hook 'schnouki/emacs-lisp-default-indent)
 
-;; Python: virtualenv and Jedi completion
-(use-package python-environment
-  :ensure python-environment)
-(use-package jedi
-  :ensure jedi
-  :commands (jedi:setup jedi-install-server)
-  :init
-  (progn
-    (setq jedi:complete-on-dot t)
-
-    (defcustom schnouki/jedi-venv-bin "virtualenv"
-      "Name of the virtualenv binary to use."
-      :group 'jedi)
-
-    (defun schnouki/jedi-setup-with-venv ()
-      "Setup jedi, taking the virtual env into account."
-      (interactive)
-      (when schnouki/jedi-venv-bin
-	(require 'jedi)
-	(make-local-variable 'python-environment-virtualenv)
-	(make-local-variable 'python-environment-default-root-name)
-	(make-local-variable 'jedi:server-command)
-	(setq python-environment-default-root-name (concat "default-" schnouki/jedi-venv-bin)
-	      python-environment-virtualenv `(,schnouki/jedi-venv-bin "--system-site-packages" "--quiet")
-	      jedi:server-command (jedi:-env-server-command)))
-      (if (file-directory-p (python-environment-root-path))
-	  (jedi:setup)
-	(jedi:install-server)
-	(schnouki/jedi-setup-with-venv)))
-
-    (defun schnouki/jedi-setup-with-venv-hook ()
-      "Setup jedi from a mode hook."
-      (add-hook 'hack-local-variables-hook
-		#'schnouki/jedi-setup-with-venv nil t))
-
-    (add-hook 'python-mode-hook 'schnouki/jedi-setup-with-venv-hook)))
-
 ;; Flycheck
 (use-package flycheck
   :ensure flycheck
