@@ -6,7 +6,7 @@
   :ensure color-theme)
 (use-package zenburn-theme
   :ensure zenburn-theme
-  :idle
+  :init
   (progn
     (load-theme 'zenburn)
 

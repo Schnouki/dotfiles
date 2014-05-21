@@ -130,7 +130,7 @@ Return the index of the matching item, or nil if not found."
 (use-package ido-ubiquitous
   :ensure ido-ubiquitous
   :init
-  (ido-ubiquitous 1))
+  (ido-ubiquitous-mode 1))
 (use-package ido-vertical-mode
   :ensure ido-vertical-mode
   :init
@@ -160,10 +160,10 @@ Return the index of the matching item, or nil if not found."
     (global-undo-tree-mode)))
 
 ;; ace-jump (reminder: C-x C-SPC to pop-global-mark)
-(use-package
+(use-package ace-jump-mode
   :ensure ace-jump-mode
   :bind (("C-;" . ace-jump-mode)
-	  ("C-'" . ace-jump-mode))
+	 ("C-'" . ace-jump-mode))
   :init
   (setq ace-jump-mode-scope 'frame))
 

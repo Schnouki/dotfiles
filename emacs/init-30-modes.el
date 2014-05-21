@@ -25,7 +25,6 @@
   :mode "\\.hs\\'")
 
 (use-package python
-  :ensure python
   :mode ("\\.py'" . python-mode)
   :init
   (progn
