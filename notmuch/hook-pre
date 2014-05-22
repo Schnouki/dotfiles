@@ -10,9 +10,9 @@ if (( $(notmuch count tag:deleted) > 0 )); then
 fi
 
 # Move spam to the "Spam" folder
-_search_spam=(tag:spam and folder:schnouki.net and not folder:Spam)
+_search_spam=(tag:spam and path:'schnouki.net/**' and not folder:schnouki.net/Spam)
 if (( $(notmuch count $_search_spam) > 0 )); then
-    notmuch search --output=files $_search_spam | xargs -rd'\n' mv -t ~/mail/schnouki.net/Spam/new
+    notmuch search --exclude=false --output=files $_search_spam | xargs -rd'\n' mv -t ~/mail/schnouki.net/Spam/new
 fi
 
 exit 0
