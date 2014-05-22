@@ -111,7 +111,7 @@ done
 autoload -Uz compinit
 compinit -u
 zstyle :compinstall filename "$HOME/.zshrc"
-zstyle ':completion::complete:*' use-cache 1
+zstyle ':completion:*' use-cache on
 
 unsetopt list_ambiguous
 setopt auto_remove_slash
@@ -122,21 +122,53 @@ setopt hist_ignore_all_dups
 setopt auto_cd
 setopt auto_pushd
 setopt correctall
+setopt completealiases
+
+# Completion: complex but rich :) Inspired by a lot of sources. Here are e few
+# important links:
+# - http://zsh.sourceforge.net/Doc/Release/Completion-System.html
+# - https://github.com/nicoulaj/dotfiles/blob/master/.zshrc#L317
+
+# Basic resentation styles
+zstyle ':completion:*:(descriptions|messages)' format '%K{53}%F{255}%B[ %d ]%b%f%k'
+zstyle ':completion:*:warnings'     format '%BNo matches found%b'
+
+# Default colors for listings.
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+
+# Separate directories from files.
+zstyle ':completion:*' list-dirs-first true
+
+# Turn on menu selection only when selections do not fit on screen.
+zstyle ':completion:*' menu select=long-list
+
+# Separate matches into groups.
+zstyle ':completion:*:matches' group yes
+zstyle ':completion:*' group-name ''
+
+# Describe options
+zstyle ':completion:*:options' description yes
+
+# Always use the most verbose completion.
+zstyle ':completion:*' verbose true
+
+# Treat sequences of slashes as single slash.
+zstyle ':completion:*' squeeze-slashes true
 
 # Avoid repeating file names when completing these commands
-zstyle ':completion:*:rm:*' ignore-line yes
-zstyle ':completion:*:mv:*' ignore-line yes
-zstyle ':completion:*:cp:*' ignore-line yes
+zstyle ':completion:*:(rm|mv|cp):*' ignore-line yes
 
-# Some colors
-zstyle ':completion:*:*:kill:*:processes' list-colors "=(#b) #([0-9]#)*=36=31"
+# Nicer listings for kill
+zstyle ':completion:*:*:kill:*' command 'ps -a -w -w -u $USER -o pid,cmd --sort=-pid'
+zstyle ':completion:*:*:kill:*:processes' list-colors "=(#b) #([0-9]#)*=39=32"
 
-# Useful stuff for writing and debugging completion functions
-#zstyle ':completion:*' verbose yes
-#zstyle ':completion:*:descriptions' format '%B%d%b'
-#zstyle ':completion:*:messages' format '%d'
-#zstyle ':completion:*:warnings' format 'No matches for: %d'
-#zstyle ':completion:*' group-name ''
+# Ignore hidden files by default
+zstyle ':completion:*:(all-|other-|)files'  ignored-patterns '*/.*'
+zstyle ':completion:*:(local-|)directories' ignored-patterns '*/.*'
+zstyle ':completion:*:cd:*'                 ignored-patterns '*/.*'
+
+# Don't complete completion functions/widgets.
+zstyle ':completion:*:functions' ignored-patterns '_*'
 
 ##### Various options
 setopt extendedglob
