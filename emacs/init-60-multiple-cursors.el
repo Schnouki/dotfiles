@@ -1,4 +1,4 @@
-;;; 50-multiple-cursors --- multiple cursors
+;;; 60-multiple-cursors --- multiple cursors
 ;;; Commentary:
 ;;; Code:
 

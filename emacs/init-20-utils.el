@@ -147,7 +147,13 @@ Return the index of the matching item, or nil if not found."
 ;; ack
 (use-package ack-and-a-half
   :ensure ack-and-a-half
-  :commands ack)
+  :commands ack
+  :init
+  (progn
+    (defalias 'ack 'ack-and-a-half)
+    (defalias 'ack-same 'ack-and-a-half-same)
+    (defalias 'ack-find-file 'ack-and-a-half-find-file)
+    (defalias 'ack-find-file-same 'ack-and-a-half-find-file-same)))
 
 ;; undo-tree
 (use-package undo-tree
