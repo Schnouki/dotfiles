@@ -204,24 +204,24 @@
 ;; Load notmuch!
 (use-package notmuch
   :bind (("C-! n" . notmuch)
-	 ("C-ç n" . notmuch)
-	 ("C-! m" . notmuch-mua-new-mail)
-	 ("C-ç m" . notmuch-mua-new-mail))
+	 ("C-! m" . notmuch-mua-new-mail))
   :config
   (progn
     ;; Show-mode keybindings
-    (define-key 'notmuch-show-mode-map "b" 'schnouki/notmuch-show-bounce)
-    (define-key 'notmuch-show-mode-map "H" 'schnouki/notmuch-view-html)
-    (define-key 'notmuch-show-mode-map "r" nil)
-    (define-key 'notmuch-show-mode-map "R" nil)
-    (define-key 'notmuch-show-mode-map "ra" 'notmuch-show-reply)
-    (define-key 'notmuch-show-mode-map "rs" 'notmuch-show-reply-sender)
-    (define-key 'notmuch-show-mode-map "SH" 'schnouki/notmuch-signal-ham)
-    (define-key 'notmuch-show-mode-map "SS" 'schnouki/notmuch-signal-spam)
+    (bind-keys :map notmuch-show-mode-map
+	       ("b" . schnouki/notmuch-show-bounce)
+	       ("H" . schnouki/notmuch-view-html)
+	       ("r" . nil)
+	       ("R" . nil)
+	       ("ra" . notmuch-show-reply)
+	       ("rs" . notmuch-show-reply-sender)
+	       ("SH" . schnouki/notmuch-signal-ham)
+	       ("SS" . schnouki/notmuch-signal-spam))
 
     ;; Search-mode keybindings
-    (define-key 'notmuch-search-mode-map "d" 'notmuch-search-filter-by-date)
-    (define-key 'notmuch-search-mode-map (kbd "C-<return>") 'schnouki/notmuch-search-show-thread-inhibit-images)
+    (bind-keys :map notmuch-search-mode-map
+	       ("d" . notmuch-search-filter-by-date)
+	       ("C-<return>" . schnouki/notmuch-search-show-thread-inhibit-images))
 
     ;; Autorefresh notmuch-hello using D-Bus
     (require 'dbus)

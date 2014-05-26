@@ -5,22 +5,15 @@
 (use-package org
   :mode ("\\.org\\'" . org-mode)
   :bind (("C-! l" . org-store-link)
-	 ("C-ç l" . org-store-link)
 	 ("C-! a" . org-agenda)
-	 ("C-ç a" . org-agenda)
 	 ("C-! b" . org-iswitchb)
-	 ("C-ç b" . org-iswitchb)
 	 ("C-! t" . schnouki/org-agenda-and-todo-list)
-	 ("C-ç t" . schnouki/org-agenda-and-todo-list)
 	 ("C-! r" . org-capture)
-	 ("C-ç r" . org-capture)
-	 ("C-! s" . schnouki/org-sort-todo-list)
-	 ("C-ç s" . schnouki/org-sort-todo-list)))
+	 ("C-! s" . schnouki/org-sort-todo-list))
+  :config
+  (bind-key "C-M-g" 'org-plot/gnuplot org-mode-map))
 
-(add-hook 'org-mode-hook
-          (lambda ()
-            (turn-on-font-lock)
-            (define-key org-mode-map (kbd "C-M-g") 'org-plot/gnuplot)))
+(add-hook 'org-mode-hook 'turn-on-font-lock)
 
 ;; Various parameters
 (setq-default org-tags-column -80)

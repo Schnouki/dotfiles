@@ -65,8 +65,7 @@
   (interactive)
   (unless hs-minor-mode (hs-minor-mode))
   (hs-toggle-hiding))
-(dolist (key (list (kbd "C-! !") (kbd "C-ç ç")))
-  (global-set-key key 'schnouki/hs-togle-hiding))
+(bind-key "C-! !" 'schnouki/hs-togle-hiding)
 
 ;; Display indicator in fringe for code that can be folded with hideshow
 (use-package hideshowvis
@@ -114,8 +113,7 @@
 
 ;; Default compilation commands
 (setq-default compile-command "make") ;; I don't want "make -k"
-(global-set-key (kbd "C-! c") 'compile)
-(global-set-key (kbd "C-ç c") 'compile)
+(bind-key "C-! c" 'compile)
 
 ;; Compilation: scroll the *compilation* buffer window as output appears, but
 ;; stop scrolling at the first error

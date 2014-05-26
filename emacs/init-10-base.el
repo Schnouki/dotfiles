@@ -63,9 +63,6 @@
 ;; Use "initials" completion style
 (add-to-list 'completion-styles 'initials t)
 
-;; Set justification with C-x M-f
-(global-set-key (kbd "C-x M-f") 'set-justification)
-
 ;; Avoid sentences that end with 2 spaces (American style).
 ;; TODO: change this automatically according to the current dictionary
 (setq sentence-end-double-space nil)
@@ -75,10 +72,6 @@
 
 ;; Justify at 80 columns
 (setq-default fill-column 80)
-
-;; Tweak visual-line stuff
-(setq line-move-visual nil)
-(global-set-key (kbd "C-x t") 'toggle-truncate-lines)
 
 ;; Display matching parenthesis
 ;; http://emacs-fu.blogspot.com/2009/01/balancing-your-parentheses.html
@@ -200,10 +193,6 @@
 ;; Wait a very little bit before fontifying buffers
 ;; http://tsengf.blogspot.fr/2012/11/slow-scrolling-speed-in-emacs.html
 ;(setq jit-lock-defer-time 0.05)
-
-;; Auto-update buffers when the file changes on-disk
-(global-auto-revert-mode 1)
-(global-set-key (kbd "C-x r RET") 'revert-buffer)
 
 ;; Better naming than main.yml<2>, main.yml<3>, main.yml<4>
 (require 'uniquify)

@@ -26,10 +26,11 @@
 			      mc/remove-current-cursor mc/remove-duplicated-cursors)
   :config
   (progn
-    (define-key mc/keymap (kbd "C-. C-d") 'mc/remove-current-cursor)
-    (define-key mc/keymap (kbd "C-. d")   'mc/remove-duplicated-cursors)
-    (define-key mc/keymap (kbd "C-. =")   'mc/compare-chars)
+    (bind-keys :map mc/keymap
+	       ("C-. C-d" . mc/remove-current-cursor)
+	       ("C-. d" . mc/remove-duplicated-cursors)
+	       ("C-. =" . mc/compare-chars))
     (eval-after-load 'cua-base
-      '(define-key cua--rectangle-keymap (kbd "C-. C-,") 'mc/cua-rectangle-to-multiple-cursors))))
+      '(bind-key "C-. C-," 'mc/cua-rectangle-to-multiple-cursors cua--rectangle-keymap))))
 
 ;;; init-60-multiple-cursors.el ends here

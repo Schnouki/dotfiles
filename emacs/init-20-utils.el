@@ -2,13 +2,28 @@
 ;;; Commentary:
 ;;; Code:
 
+;; bind-key
+(use-package bind-key
+  :ensure bind-key)
+
+;; Set justification with C-x M-f
+(bind-key "C-x M-f" 'set-justification)
+
+;; Tweak visual-line stuff
+(setq line-move-visual nil)
+(bind-key "C-x t" 'toggle-truncate-lines)
+
+;; Auto-update buffers when the file changes on-disk
+(global-auto-revert-mode 1)
+(bind-key "C-x r RET" 'revert-buffer)
+
 ;; Copy current line with M-k
 ;; http://www.emacsblog.org/2009/05/18/copying-lines-not-killing/#comment-27462
 (defun schnouki/copy-line ()
   "Copy the current line to the kill-ring."
   (interactive)
   (kill-ring-save (line-beginning-position) (+ 1 (line-end-position))))
-(global-set-key (kbd "M-k") 'schnouki/copy-line)
+(bind-key "M-k" 'schnouki/copy-line)
 
 ;; Switch to scratch buffer, creating it if necessary
 ;; http://stackoverflow.com/questions/234963/re-open-scratch-buffer-in-emacs/776052#776052
@@ -21,10 +36,10 @@ Calling this function with a prefix FORCE-NEW forces the creation of a new buffe
 	     (get-buffer-create "*scratch*"))))
     (switch-to-buffer sb)
     (lisp-interaction-mode)))
-(global-set-key (kbd "C-x M-s") 'schnouki/goto-scratch)
+(bind-key "C-x M-s" 'schnouki/goto-scratch)
 
 ;; buffer-menu
-(global-set-key (kbd "C-x C-b") 'buffer-menu)
+(bind-key "C-x C-b" 'buffer-menu)
 
 ;; "Smart" home key
 ;; Beginning of indented text --> beginning of "real" text --> beginning of line
@@ -53,7 +68,7 @@ Calling this function with a prefix FORCE-NEW forces the creation of a new buffe
   (save-excursion
     (newline-and-indent))
   (funcall indent-line-function))
-(global-set-key (kbd "M-RET") 'schnouki/newline-same-point)
+(bind-key "M-RET" 'schnouki/newline-same-point)
 
 ;; Quick diff between current buffer and file
 ;; From http://slashusr.wordpress.com/2010/01/19/quickly-diff-the-changes-made-in-the-current-buffer-with-its-file/
@@ -61,13 +76,13 @@ Calling this function with a prefix FORCE-NEW forces the creation of a new buffe
   "Quick diff between current buffer and a file."
   (interactive)
   (diff-buffer-with-file (current-buffer)))
-(global-set-key (kbd "C-x =") 'schnouki/diff-current-buffer-with-file)
+(bind-key "C-x =" 'schnouki/diff-current-buffer-with-file)
 
 ;; Enlarge/shrink window horozontally/vertically
-(global-set-key (kbd "C-M-j") 'shrink-window)
-(global-set-key (kbd "C-M-k") 'enlarge-window)
-(global-set-key (kbd "C-M-h") 'shrink-window-horizontally)
-(global-set-key (kbd "C-M-l") 'enlarge-window-horizontally)
+(bind-keys ("C-M-j" . shrink-window)
+	   ("C-M-k" . enlarge-window)
+	   ("C-M-h" . shrink-window-horizontally)
+	   ("C-M-l" . enlarge-window-horizontally))
 
 ;; Convert seconds to a duration
 (defun schnouki/seconds-to-duration (seconds)
@@ -118,7 +133,7 @@ Return the index of the matching item, or nil if not found."
 	(kill-buffer buf)
 	(setq count (1+ count))))
     (message (concat (int-to-string count) " buffers killed"))))
-(global-set-key (kbd "C-x M-k") 'schnouki/kill-star-buffers)
+(bind-key "C-x M-k" 'schnouki/kill-star-buffers)
 
 ;; ido-mode for better buffer switching, file selection, etc.
 (use-package ido
