@@ -10,3 +10,6 @@
 [submodule "zsh/modules/zsh-history-substring-search"]
 	path = zsh/modules/zsh-history-substring-search
 	url = git://github.com/zsh-users/zsh-history-substring-search.git
+[submodule "zsh/modules/git-annex-zsh-completion"]
+	path = zsh/modules/git-annex-zsh-completion
+	url = git://github.com/Schnouki/git-annex-zsh-completion.git
