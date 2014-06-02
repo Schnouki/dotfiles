@@ -6,7 +6,7 @@ for F in hook.*; do
 done
 
 # Setup dotfiles
-for F in ctags globalrc guile Xresources xinitrc; do
+for F in ctags globalrc guile tmux.conf Xresources xinitrc; do
     setup_file_symlink "$F" ".$F"
 done
 
