@@ -1,5 +1,5 @@
 # GUI theme
-include "/usr/share/themes/Numix/gtk-2.0/gtkrc"
+include "/usr/share/themes/Numix/gtk-2.0/gtkrc-dark"
 
 # Misc stuff
 gtk-icon-theme-name = "gnome"
