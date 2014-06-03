@@ -1,5 +1,6 @@
 # GUI theme
-include "/usr/share/themes/MediterraneanNight/gtk-2.0/gtkrc"
+include "/usr/share/themes/Numix/gtk-2.0/gtkrc"
 
 # Misc stuff
+gtk-icon-theme-name = "gnome"
 gtk-can-change-accels = 1
