@@ -50,6 +50,10 @@
 		       coffee-tab-width 4)
 		 (local-set-key (kbd "C-c C-c") 'coffee-compile-buffer)))))
 
+(use-package actionscript-mode
+  :ensure actionscript-mode
+  :mode "\\.as\'")
+
 (use-package php-mode
   :ensure php-mode
   :mode "\\.php[345]?\\'")
