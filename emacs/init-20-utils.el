@@ -38,8 +38,8 @@ Calling this function with a prefix FORCE-NEW forces the creation of a new buffe
     (lisp-interaction-mode)))
 (bind-key "C-x M-s" 'schnouki/goto-scratch)
 
-;; buffer-menu
-(bind-key "C-x C-b" 'buffer-menu)
+;; ibuffer
+(bind-key "C-x C-b" 'ibuffer)
 
 ;; "Smart" home key
 ;; Beginning of indented text --> beginning of "real" text --> beginning of line
