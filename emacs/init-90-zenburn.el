@@ -220,6 +220,11 @@
 	 (set-face-attribute 'hs-fringe-face           nil :foreground zenburn-green+3 :box nil)
 	 (set-face-attribute 'hs-face                  nil :foreground zenburn-green+3 :background zenburn-bg-1 :box (list :style 'pressed-button))))
 
+    ;; auto-dim-other-bufers
+    (eval-after-load 'auto-dim-other-buffers
+      '(progn
+	 (set-face-background 'auto-dim-other-buffers-face zenburn-bg-05)))
+
     ;; git-annex
     (eval-after-load 'git-annex
       '(progn
