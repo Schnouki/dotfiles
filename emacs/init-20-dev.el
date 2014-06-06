@@ -150,7 +150,8 @@
   :ensure fixmee
   :idle
   (progn
-    (setq button-lock-mode-lighter "")
+    (setq button-lock-mode-lighter nil
+	  fixmee-mode-lighter nil)
     (global-fixmee-mode 1)))
 
 ;; Display the current function name in the mode line

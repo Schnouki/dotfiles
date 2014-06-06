@@ -176,7 +176,7 @@ Return the index of the matching item, or nil if not found."
   :init
   (progn
     ;; Lighter displayed in mode line
-    (setq undo-tree-mode-lighter " UT")
+    (setq undo-tree-mode-lighter nil)
     ;; ...and enable!
     (global-undo-tree-mode)))
 

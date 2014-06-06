@@ -8,7 +8,8 @@
 	 ("C-à" . magit-status))
   :init
   (progn
-    (setq magit-process-popup-time 5)))
+    (setq magit-process-popup-time 5
+	  magit-auto-revert-mode-lighter nil)))
 
 (use-package magit-blame
   :ensure magit
