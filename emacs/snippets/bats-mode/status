@@ -1,0 +1,5 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: status
+# key: status
+# --
+[ "\$status" -eq ${1:0} ]

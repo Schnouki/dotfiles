@@ -1,0 +1,5 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: line
+# key: line
+# --
+[ "\${lines[${1:0}]}" = "${2:some value}" ]
