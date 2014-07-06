@@ -420,7 +420,7 @@ elseif gethost() == "baldr" then
    ifaces["E"] = "enp12s0"
    ifaces["W"] = "wlp3s0"
 end
-net_mon = netmon.new(ifaces, "8.8.8.8")
+net_mon = netmon.new(ifaces, "8.8.4.4")
 
 if gethost() == "thor" then
    require("ipmon")
