@@ -201,6 +201,10 @@
 ;;  Move through camelCaseWords and other_long_words
 (global-subword-mode 1)
 
+;; Enable "confusing" commands
+(dolist (feat '(downcase-region upcase-region))
+  (put feat 'disabled nil))
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not cl-functions)
 ;; End:

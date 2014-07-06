@@ -62,7 +62,7 @@
 	 (set-face-foreground 'notmuch-search-non-matching-authors "#b09f6f") ;; zenburn-yellow-4
 	 (set-face-attribute  'notmuch-tag-face                nil :foreground zenburn-green+2 :slant 'italic)
 
-	 (mapcar '(lambda (f) (set-face-attribute f nil :bold t :background zenburn-bg-1))
+	 (mapcar #'(lambda (f) (set-face-attribute f nil :bold t :background zenburn-bg-1))
 		 '(notmuch-crypto-signature-good notmuch-crypto-signature-good-key
 		   notmuch-crypto-signature-unknown notmuch-crypto-signature-bad
 		   notmuch-crypto-decryption notmuch-crypto-part-header))
