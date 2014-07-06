@@ -184,9 +184,11 @@ Return the index of the matching item, or nil if not found."
 (use-package ace-jump-mode
   :ensure ace-jump-mode
   :bind (("C-;" . ace-jump-mode)
-	 ("C-'" . ace-jump-mode))
+	 ("C-x C-;" . ace-jump-mode-pop-mark))
   :init
-  (setq ace-jump-mode-scope 'frame))
+  (setq ace-jump-mode-scope 'frame)
+  :config
+  (ace-jump-mode-enable-mark-sync))
 
 ;; ioccur - incremental search of lines in current buffer matching input
 (use-package ioccur
