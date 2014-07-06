@@ -58,18 +58,24 @@ else
     zstyle ':vcs_info:*' formats       "${FMT_BRANCH} / "
     zstyle ':vcs_info:*' nvcsformats   ""
 
+    # Detect the UID of user "schnouki" (aka me)
+    local my_uid
+    my_uid=$(id -u schnouki 2>/dev/null)
+    [[ -z "$my_uid" ]] && my_uid=1000
+
     PS1="%B" # Bold font
-    PS1+="%(!..%(1000#..%F{green}%n))" # Username in green if it's not UID 1000 or root
+    PS1+="%(!..%(${my_uid}#..%F{green}%n))" # Username in green if it's not schnouki or root
 
     # Display hostname in PS1 if we're running on SSH or in tmux/screen
-    if [[ ! -z "$(who am i)" ]] || [[ "x$TERM" == "xscreen" ]]; then
-        PS1+="%(!..%(1000#..%F{yellow}@))%F{white}%m "
+    if [[ ! -z "$(who am i)" ]] || [[ "x$TERM" == "xscreen" ]] || [[ "x$TERM" == "xscreen-256color" ]]; then
+        PS1+="%(!..%(${my_uid}#..%F{yellow}@))%F{white}%m "
     fi
 
     PS1+='%B%F{white}${ps1_path} ' # Path
     PS1+="%(!.%F{red}.%F{yellow})%# " # %/# sign in yellow or red (root)
     PS1+="%F{default}%b" # Restore normal font
     export PS1
+    unset my_uid
 
     RPS1="%(?..%B%F{red}%?%b%F{default} / )" # Status code if red if not 0
     RPS1+='${vcs_info_msg_0_}' # VCS info
