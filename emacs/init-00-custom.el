@@ -10,7 +10,8 @@
  '(inhibit-startup-screen t)
  '(safe-local-variable-values
    (quote
-    ((nxml-child-indent . 8)
+    ((org-enable-table-editor)
+     (nxml-child-indent . 8)
      (nxml-attribute-indent . 8)
      (require-final-newline)
      (ack-and-a-half-prompt-for-directory . t)
