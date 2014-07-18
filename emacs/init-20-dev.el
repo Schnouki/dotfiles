@@ -139,11 +139,14 @@
 ;  '(setq ediff-diff-ok-lines-regexp
 ;	(concat (substring ediff-diff-ok-lines-regexp 0 -2) "\\|.*Pas de fin de ligne\\)")))
 
-;; Auto-Complete
-;; (require 'auto-complete-config)
-;; (ac-config-default)
-;; (dolist (mode '(python2-mode python3-mode coffee-mode))
-;;   (add-to-list 'ac-modes mode))
+;; Company -- complete anything
+(use-package company
+  :ensure company
+  :init
+  (progn
+    (setq company-backends (remove 'company-ropemacs company-backends)
+	  company-tooltip-limit 20)
+    (global-company-mode 1)))
 
 ;; Fixmee
 (use-package fixmee

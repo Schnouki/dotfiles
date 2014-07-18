@@ -14,7 +14,7 @@
     (defcustom python-venv nil
       "Name of the virtualenv to work on."
       :group 'python
-      :safe #'stringp)(boundp 'python-venv)
+      :safe #'stringp)
 
     (defun schnouki/setup-venv ()
       (hack-local-variables)
@@ -22,12 +22,20 @@
 	(venv-workon python-venv)))
     (add-hook 'python-mode-hook 'schnouki/setup-venv)))
 
-(use-package jedi
-  :ensure jedi
-  :commands jedi:setup
+(use-package anaconda-mode
+  :ensure anaconda-mode
+  :commands anaconda-mode
   :init
   (progn
-    (setq jedi:complete-on-dot t)
-    (add-hook 'python-mode-hook 'jedi:setup)))
+    (add-hook 'python-mode-hook 'anaconda-mode)
+    (add-hook 'python-mode-hook 'eldoc-mode)))
+
+(use-package company-anaconda
+  :ensure company-anaconda
+  :init (add-to-list 'company-backends 'company-anaconda))
+
+(use-package company-inf-python
+  :ensure company-inf-python
+  :init (add-to-list 'company-backends 'company-inf-python))
 
 ;;; init-40-python.el ends here
