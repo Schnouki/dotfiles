@@ -11,7 +11,9 @@
 	 ("C-! r" . org-capture)
 	 ("C-! s" . schnouki/org-sort-todo-list))
   :config
-  (bind-key "C-M-g" 'org-plot/gnuplot org-mode-map))
+  (progn
+    (bind-key "C-M-g" 'org-plot/gnuplot org-mode-map)
+    (add-to-list 'org-babel-load-languages '(ditaa . t))))
 
 (add-hook 'org-mode-hook 'turn-on-font-lock)
 
@@ -50,7 +52,9 @@
 	("pb" "Priorité haute"      tags-todo "+PRIORITY=\"B\"")
 	("pc" "Priorité normale"    tags-todo "+PRIORITY=\"C\"")
 	("pd" "Priorité basse"      tags-todo "+PRIORITY=\"D\"")
-	("pe" "Priorité très basse" tags-todo "+PRIORITY=\"E\"")))
+	("pe" "Priorité très basse" tags-todo "+PRIORITY=\"E\""))
+
+      org-ditaa-jar-path "/usr/share/java/ditaa/ditaa-0_9.jar")
 
 (defun schnouki/org-agenda-and-todo-list ()
   "Display agenda and todo list in the current window."
