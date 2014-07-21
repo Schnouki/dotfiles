@@ -12,13 +12,30 @@
 (use-package go-mode
   :ensure go-mode
   :mode "\\.go\\'"
+  :commands (godoc gofmt gofmt-before-save)
   :init
   (progn
     (folding-add-to-marks-list 'go-mode "// {{{" "// }}}" nil t)
     (defun schnouki/maybe-gofmt-before-save ()
       (when (eq major-mode 'go-mode)
 	(gofmt-before-save)))
-    (add-hook 'before-save-hook 'schnouki/maybe-gofmt-before-save)))
+    (add-hook 'before-save-hook 'schnouki/maybe-gofmt-before-save))
+  :config
+  (progn
+    ;; http://yousefourabi.com/blog/2014/05/emacs-for-go/
+    (bind-key "C-c C-f" 'gofmt go-mode-map)
+    (bind-key "C-c C-g" 'go-goto-imports go-mode-map)
+    (bind-key "C-c C-k" 'godoc go-mode-map)
+    (bind-key "C-c C-r" 'go-remove-unused-imports go-mode-map)))
+
+(use-package company-go
+  :ensure company-go
+  :init (add-to-list 'company-backends 'company-go))
+
+(use-package go-eldoc
+  :ensure go-eldoc
+  :commands go-eldoc-setup
+  :init (add-hook 'go-mode-hook 'go-eldoc-setup))
 
 (use-package haskell-mode
   :ensure haskell-mode
