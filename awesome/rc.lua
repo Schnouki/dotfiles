@@ -21,6 +21,8 @@ vicious = require("vicious")
 vicious.contrib = require("vicious.contrib")
 -- Markup functions
 require("markup")
+-- Pomodoro widget
+pomodoro = require("pomodoro")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -110,7 +112,16 @@ function change_wallpapers()
       end
    end
 end
-change_wallpapers()
+
+-- Change the wallpaper 3s after startup (needed for dealing with multiple screens)
+(function()
+   local wp_timer = timer { timeout = 3 }
+   wp_timer:connect_signal("timeout", function()
+                           change_wallpapers()
+                           wp_timer:stop()
+   end)
+   wp_timer:start()
+end)()
 -- }}}
 
 -- {{{ Tags
@@ -630,6 +641,8 @@ vol_widget:buttons(awful.util.table.join(
        awful.button({ }, 2, volume_mute)
 ))
 
+-- Pomodoro widget
+pomodoro.init()
 -- }}}
 -- {{{     Raccourcis claviers persos
 persokeys = {
@@ -742,6 +755,7 @@ for s = 1, screen.count() do
     local my_right_widgets = _.concat({
        separator,
        tb_mails, nv_w}, separator,
+       pomodoro.icon_widget, separator,
        cpu_icon, cpu_widgets, mem_icon, mem_widget, swap_widget, separator,
        net_mon.widget, {ip_mon and ip_mon.widget or nil}, bat_widget, vol_widget, separator, locks_mon.widget
     )
