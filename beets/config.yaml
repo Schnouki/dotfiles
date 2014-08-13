@@ -1,6 +1,6 @@
 directory: ~/Music
 library: ~/Music/.library
-plugins: bpd fetchart
+plugins: bpd edit fetchart fromfilename
 color: yes
 
 replace:
@@ -19,3 +19,4 @@ paths:
   default: $albumartist/$year - $album%aunique{}/$track $title
   singleton: Non-Album/$artist/$title
   comp: Compilations/$album%aunique{}/$track $title
+  albumtype:bootleg: Bootlegs/$albumartist/$year - $album%aunique{}/$track $title
