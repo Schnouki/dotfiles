@@ -16,3 +16,6 @@
 [submodule "awesome/pomodoro"]
 	path = awesome/pomodoro
 	url = https://github.com/nikolavp/awesome-pomodoro.git
+[submodule "emacs/pelican-mode"]
+	path = emacs/pelican-mode
+	url = http://git.korewanetadesu.com/pelican-mode.git
