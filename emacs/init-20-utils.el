@@ -238,16 +238,6 @@ Return the index of the matching item, or nil if not found."
   :ensure unbound
   :commands describe-unbound-keys)
 
-;; auto dim other buffers
-(use-package auto-dim-other-buffers
-  :ensure auto-dim-other-buffers
-  :commands auto-dim-other-buffers-mode
-  :init
-  (progn
-    (add-hook 'after-init-hook
-	      (lambda ()
-		(auto-dim-other-buffers-mode t)))))
-
 ;; http://www.emacswiki.org/emacs/CamelCase
 (defun un-camelcase-string (s &optional sep start)
   "Convert CamelCase string S to lower case with word separator SEP.
