@@ -12,6 +12,9 @@ xrandr | grep -q "VGA1 connected" && \
 # GTK-2.0 RC files
 export GTK2_RC_FILES="$HOME/.config/gtkrc-2.0:$HOME/.config/gtkrc-$(hostname):/etc/gtk-2.0/gtkrc"
 
+# QT5 style
+export QT_STYLE_OVERRIDE=gtk
+
 # Tell Java to anti-alias fonts
 # https://wiki.archlinux.org/index.php/Java#Tips_and_tricks
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
