@@ -23,6 +23,8 @@ vicious.contrib = require("vicious.contrib")
 require("markup")
 -- Pomodoro widget
 pomodoro = require("pomodoro")
+-- Icon theme
+icon_theme = require("icon_theme")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -146,6 +148,16 @@ end
 -- }}}
 
 -- {{{ Menu
+-- Configure the icon theme
+icon_theme.add_theme("hicolor")
+icon_theme.add_theme("gnome")
+icon_theme.add_theme("Numix")
+icon_theme.add_theme("Numix-Circle")
+icon_theme.add_size("scalable")
+icon_theme.add_size("48x48")
+icon_theme.add_size("32x32")
+icon_theme.add_size("16x16")
+
 -- Create a laucher widget and a main menu
 myawesomemenu = {
    { "change wallpaper", change_wallpapers },
@@ -157,31 +169,31 @@ myawesomemenu = {
 
 steamdir = "/home/schnouki/.local/share/Steam/SteamApps/common/"
 gamemenu = {
-   { "steam", "steam", "/usr/share/icons/hicolor/16x16/apps/steam.png" },
+   { "steam", "steam", icon_theme.get("apps", "steam") },
    { "battle for wesnoth", "wesnoth", "/usr/share/icons/wesnoth-icon.png" },
    { "frozen bubble", "frozen-bubble", "/usr/share/pixmaps/frozen-bubble.png" },
    { "gplanarity", "gplanarity", "/usr/share/pixmaps/gplanarity.png" },
-   { "half-life", steamdir .. "Half-Life/hl.sh", "/home/schnouki/.local/share/icons/hicolor/16x16/apps/steam_icon_70.png" },
-   { "half-life opposing force", "Half-Life/hl.sh -game gearbox", "/home/schnouki/.local/share/icons/hicolor/32x32/apps/steam_icon_50.png" },
+   { "half-life", steamdir .. "Half-Life/hl.sh", icon_theme.get("apps", "steam_icon_70") },
+   { "half-life opposing force", "Half-Life/hl.sh -game gearbox", icon_theme.get("apps", "steam_icon_50") },
    { "hex-a-hop", "hex-a-hop", "/usr/share/hex-a-hop/icon.bmp" },
-   { "kerbal space program", "LC_ALL=C " .. steamdir .. "Kerbal Space Program/KSP.x86", steamdir .. "Kerbal Space Program/KSP_Data/Resources/UnityPlayer.png" },
+   { "kerbal space program", "LC_ALL=C " .. steamdir .. "Kerbal Space Program/KSP.x86", icon_theme.get("apps", "steam_icon_220200") },
    { "kildclient", "kildclient", "/usr/share/pixmaps/kildclient.png" },
    { "kobo deluxe", "kobodl", "/usr/share/pixmaps/kobo-icon.xpm" },
-   { "minecraft", "minecraft", "/usr/share/pixmaps/minecraft.png" },
+   { "minecraft", "minecraft", icon_theme.get("apps", "minecraft") },
    { "naev", "naev", "/usr/share/pixmaps/naev.png" },
-   { "serious sam 3", "steam steam://rungameid/41070", "/home/schnouki/.local/share/icons/hicolor/32x32/apps/steam_icon_41070.png" },
-   { "super meat boy", steamdir .. "Super Meat Boy/SuperMeatBoy", "/home/schnouki/.local/share/icons/hicolor/48x48/apps/steam_icon_40800.png" },
+   { "serious sam 3", "steam steam://rungameid/41070", icon_theme.get("apps", "steam_icon_41070") },
+   { "super meat boy", steamdir .. "Super Meat Boy/SuperMeatBoy", icon_theme.get("apps", "steam_icon_40800") },
    { "torchlight", "torchlight", "/usr/share/pixmaps/torchlight.png" },
-   { "type rider", "steam steam://rungameid/258890", "/home/schnouki/.local/share/icons/hicolor/16x16/apps/steam_icon_258890.png" },
-   { "world of goo", steamdir .. "World of Goo/WorldOfGoo", "/home/schnouki/.local/share/icons/hicolor/16x16/apps/steam_icon_22000.png" },
+   { "type rider", "steam steam://rungameid/258890", icon_theme.get("apps", "steam_icon_258890") },
+   { "world of goo", steamdir .. "World of Goo/WorldOfGoo", icon_theme.get("apps", "steam_icon_22000") },
 }
 
 utilsmenu = {
-   { "galculator", "galculator", ("/usr/share/icons/hicolor/48x48/apps/galculator.png") },
-   { "qalculate-gtk", "qalculate", ("/usr/share/pixmaps/qalculate.png") },
-   { "gdmap", "gdmap", ("/usr/share/pixmaps/gdmap_icon.png") },
-   { "gucharmap", "gucharmap", ("/usr/share/icons/gnome/16x16/apps/accessories-character-map.png") },
-   { "pavucontrol", "pavucontrol", ("/usr/share/icons/gnome/16x16/apps/multimedia-volume-control.png") },
+   { "galculator", "galculator", icon_theme.get("apps", "galculator") },
+   { "qalculate-gtk", "qalculate", "/usr/share/pixmaps/qalculate.png" },
+   { "gdmap", "gdmap", "/usr/share/pixmaps/gdmap_icon.png" },
+   { "gucharmap", "gucharmap", icon_theme.get("apps", "accessories-character-map") },
+   { "pavucontrol", "pavucontrol", icon_theme.get("apps", "multimedia-volume-control") },
 }
 
 -- {{{ Screen menu -- from Dodo
@@ -219,13 +231,13 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
                                     { "jeux", gamemenu },
                                     { "utils", utilsmenu },
                                     { "écran ext.", screenmenu },
-                                    { "gajim", "gajim", ("/usr/share/icons/hicolor/64x64/apps/gajim.png") },
-                                    { "firefox aurora", "firefox-aurora", ("/usr/share/pixmaps/firefox-aurora-icon.png") },
-                                    { "chromium", "chromium", ("/usr/share/icons/hicolor/16x16/apps/chromium.png") },
-                                    { "shotwell", "shotwell", (config_dir .. "/icons/shotwell.png") },
-                                    { "spotify", "spotify", (config_dir .. "/icons/spotify.png") },
-                                    { "libre office", "soffice", ("/usr/share/icons/hicolor/16x16/apps/libreoffice-writer.png") },
-                                    { "gcmd", "gnome-commander", ("/usr/share/pixmaps/gnome-commander.png") },
+                                    { "gajim", "gajim", icon_theme.get("apps", "gajim") },
+                                    { "firefox aurora", "firefox-aurora", icon_theme.get("apps", "firefox-aurora", "/usr/share/pixmaps/firefox-aurora-icon.png") },
+                                    { "chromium", "chromium", icon_theme.get("apps", "chromium") },
+                                    { "shotwell", "shotwell", icon_theme.get("apps", "shotwell") },
+                                    { "spotify", "spotify", icon_theme.get("apps", "spotify-client") },
+                                    { "libre office", "soffice", icon_theme.get("apps", "libfreoffice-writer") },
+                                    { "gcmd", "gnome-commander", icon_theme.get("apps", "gnome-commander", "/usr/share/pixmaps/gnome-commander.png") },
                                     { "open terminal", terminal }
                                   }
                         })
