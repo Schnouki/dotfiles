@@ -14,7 +14,15 @@
   (dtrt-indent-mode 1))
 
 ;; No trailing whitespaces
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+(defvar-local enable-delete-trailing-whitespace t
+  "Enable or disable automatic deletion of trailing whitespace on a per-buffer basis.")
+
+(defun schnouki/maybe-delete-trailing-whitespace ()
+  "Delete trailing whitespace, unless `enable-delete-trailing-whitespace' is nil."
+  (interactive)
+  (when enable-delete-trailing-whitespace
+    (delete-trailing-whitespace)))
+(add-hook 'before-save-hook 'schnouki/maybe-delete-trailing-whitespace)
 
 ;; Default parameters for emacs-lisp
 (defun schnouki/emacs-lisp-default-indent ()
