@@ -115,9 +115,9 @@ function change_wallpapers()
    end
 end
 
--- Change the wallpaper 3s after startup (needed for dealing with multiple screens)
+-- Change the wallpaper 5s after startup (needed for dealing with multiple screens)
 (function()
-   local wp_timer = timer { timeout = 3 }
+   local wp_timer = timer { timeout = 5 }
    wp_timer:connect_signal("timeout", function()
                            change_wallpapers()
                            wp_timer:stop()
@@ -181,6 +181,7 @@ gamemenu = {
    { "kobo deluxe", "kobodl", "/usr/share/pixmaps/kobo-icon.xpm" },
    { "minecraft", "minecraft", icon_theme.get("apps", "minecraft") },
    { "naev", "naev", "/usr/share/pixmaps/naev.png" },
+   { "open ttd", "openttd", icon_theme.get("apps", "openttd") },
    { "serious sam 3", "steam steam://rungameid/41070", icon_theme.get("apps", "steam_icon_41070") },
    { "super meat boy", steamdir .. "Super Meat Boy/SuperMeatBoy", icon_theme.get("apps", "steam_icon_40800") },
    { "torchlight", "torchlight", "/usr/share/pixmaps/torchlight.png" },
@@ -236,6 +237,7 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
                                     { "chromium", "chromium", icon_theme.get("apps", "chromium") },
                                     { "shotwell", "shotwell", icon_theme.get("apps", "shotwell") },
                                     { "spotify", "spotify", icon_theme.get("apps", "spotify-client") },
+                                    { "popcorn time", "popcorntime", icon_theme.get("apps", "popcorntime", "/usr/share/pixmaps/popcorntime.png") },
                                     { "libre office", "soffice", icon_theme.get("apps", "libfreoffice-writer") },
                                     { "gcmd", "gnome-commander", icon_theme.get("apps", "gnome-commander", "/usr/share/pixmaps/gnome-commander.png") },
                                     { "open terminal", terminal }
@@ -956,7 +958,7 @@ awful.rules.rules = {
                              "pinentry", "Plugin-container", "Qalculate",
                              "Shutter", "Smplayer", "VirtualBox", "Vlc",
                              "Wine", "Xfmedia", "xine", "XVroot" },
-                   instance = { "pinentry-gtk-2", "wpa_gui" },
+                   instance = { "pinentry-gtk-2", "popcorntime", "wpa_gui" },
                    name = { "Gnuplot (window id : 0)", "Minecraft", "R Graphics: Device 2 (ACTIVE)" } },
       properties = { floating = true } },
 
