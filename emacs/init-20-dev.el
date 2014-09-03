@@ -168,12 +168,33 @@
 ;; Display the current function name in the mode line
 (which-function-mode 1)
 
-;; pretty-lambda
-(use-package pretty-lambdada
-  :ensure pretty-lambdada
-  :init
-  (progn
-    (add-to-list 'pretty-lambda-auto-modes 'python-mode)
-    (pretty-lambda-for-modes nil)))
+;; Pretty symbols
+;; http://emacsredux.com/blog/2014/08/25/a-peek-at-emacs-24-dot-4-prettify-symbols-mode/
+(setq schnouki/prettify-symbols-common '(("lambda" . ?λ)
+					 ("<=" . ?≤)
+					 (">=" . ?≥)
+					 ("!=" . ?≠)
+					 ("-->" . ?→)
+					 ("<--" . ?←))
+      schnouki/prettify-symbols-modes '((emacs-lisp-mode . nil)
+					(lisp-mode . nil)
+					(python-mode . (("is not" . ?≢)
+							("is" . ?≡)))
+					(javascript-mode . (("===" . ?≡)
+							    ("!==" . ?≢)))))
+
+(defun schnouki/maybe-enable-prettify-symbols-mode ()
+  "Maybe enable prettify-symbol-mode for the current major mode."
+  (let ((config (assq major-mode schnouki/prettify-symbols-modes)))
+    (when config
+      ;; Add common symbols to the alist
+      (dolist (entry schnouki/prettify-symbols-common)
+	(push entry prettify-symbols-alist))
+      ;; Add mode-specific symbols to the alist
+      (dolist (entry (cdr config))
+	(push entry prettify-symbols-alist))
+      ;; Enable prettify-symbols-mode
+      (prettify-symbols-mode 1))))
+(add-hook 'prog-mode-hook 'schnouki/maybe-enable-prettify-symbols-mode)
 
 ;;; init-20-dev.el ends here
