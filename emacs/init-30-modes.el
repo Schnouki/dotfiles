@@ -153,7 +153,7 @@
 
 ;; HideShow minor mode for common major modes
 (dolist (hook '(c-mode-common-hook emacs-lisp-mode-hook java-mode-hook lisp-mode-hook
-		lua-mode perl-mode-hook python-mode sh-mode-hook))
+		lua-mode perl-mode-hook python-mode-hook sh-mode-hook))
   (add-hook hook 'hs-minor-mode))
 
 ;; smerge-mode, as suggested in the doc
@@ -174,5 +174,9 @@
 ;; geiser, for Scheme REPL and autodoc
 (use-package geiser
   :ensure geiser)
+
+;; eldoc-mode
+(dolist (hook '(emacs-lisp-mode-hook lisp-mode-hook python-mode-hook))
+  (add-hook hook 'eldoc-mode))
 
 ;;; init-30-modes.el ends here
