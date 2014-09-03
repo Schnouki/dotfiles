@@ -5,7 +5,7 @@
 (use-package magit
   :ensure magit
   :bind (("C-<" . magit-status)
-	 ("C-à" . magit-status))
+	 ("C-M-<" . magit-grep))
   :init
   (progn
     (setq magit-process-popup-time 5
@@ -13,8 +13,7 @@
 
 (use-package magit-blame
   :ensure magit
-  :bind (("C-c C-<" . magit-blame-mode)
-	 ("C-c C-à" . magit-blame-mode)))
+  :bind (("C-c C-<" . magit-blame-mode)))
 
 ;; git-annex
 (use-package git-annex
