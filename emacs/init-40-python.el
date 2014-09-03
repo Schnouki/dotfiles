@@ -38,4 +38,20 @@
   :ensure company-inf-python
   :init (add-to-list 'company-backends 'company-inf-python))
 
+;; Django helper
+(defun schnouki/use-django-interactive-shell ()
+  "Auto-detect Django projects and change the interactive shell to `manage.py shell'."
+  (interactive)
+  (let ((file (buffer-file-name))
+	(found nil))
+    (while (not (or (string= file "/")
+		    found))
+      (let* ((parent-dir (file-name-directory file))
+	     (manage-py (concat parent-dir "manage.py")))
+	(setq file (directory-file-name parent-dir))
+	(when (file-exists-p manage-py)
+	  (setq-local python-shell-interpreter-args (concat manage-py " shell"))
+	  (setq found t))))))
+(add-hook 'python-mode-hook 'schnouki/use-django-interactive-shell)
+
 ;;; init-40-python.el ends here
