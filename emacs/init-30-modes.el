@@ -114,9 +114,17 @@
   :mode (("/CMakeLists\\.txt\\'" . cmake-mode)
 	 ("\\.cmake\\'" . cmake-mode)))
 
+(use-package vala-mode
+  :ensure vala-mode
+  :mode "\\.vala\\'")
+
 (use-package pkgbuild-mode
   :ensure pkgbuild-mode
   :mode "/PKGBUILD\\'")
+
+(use-package dockerfile-mode
+  :ensure dockerfile-mode
+  :mode "/Dockerfile\\'")
 
 (use-package gnuplot
   :mode "\\.gp\\'\\|\\.plot\\'"
