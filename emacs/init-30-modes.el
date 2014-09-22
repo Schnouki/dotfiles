@@ -126,6 +126,10 @@
   :ensure dockerfile-mode
   :mode "/Dockerfile\\'")
 
+(use-package puppet-mode
+  :ensure puppet-mode
+  :mode "\\.pp\\'")
+
 (use-package gnuplot
   :mode "\\.gp\\'\\|\\.plot\\'"
   :commands gnuplot-make-buffer)
