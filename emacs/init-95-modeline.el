@@ -9,17 +9,17 @@
   (progn
     (setq sml/theme 'respectful
 	  sml/show-client t
-	  sml/hidden-modes '(" ,"           ; subword
-			     " Abbrev"      ; abbrev
-			    ;" AC"          ; auto-complete
-			     " Anaconda"    ; anaconda-mode
-			     " company"     ; company
-			     " ElDoc"       ; eldoc
-			     " Fld"         ; folding
-			     " GitFlow"     ; magit-gitflow
-			     " hs"          ; hideshow
-			     " yas"         ; yasnippet
-			     )
+	  rm-excluded-modes '(" ,"           ; subword
+			      " Abbrev"      ; abbrev
+			     ;" AC"          ; auto-complete
+			      " Anaconda"    ; anaconda-mode
+			      " company"     ; company
+			      " ElDoc"       ; eldoc
+			      " Fld"         ; folding
+			      " GitFlow"     ; magit-gitflow
+			      " hs"          ; hideshow
+			      " yas"         ; yasnippet
+			      )
 	  sml/replacer-regexp-list
 	  '(("^/ssh:.*:" ":SSH:")
 	    ("^/sudo:.*:" ":SU:")
