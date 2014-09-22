@@ -157,6 +157,7 @@ icon_theme.add_size("scalable")
 icon_theme.add_size("48x48")
 icon_theme.add_size("32x32")
 icon_theme.add_size("16x16")
+icon_theme.configure_naughty()
 
 -- Create a laucher widget and a main menu
 myawesomemenu = {
