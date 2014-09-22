@@ -21,4 +21,16 @@
 
 (require 'use-package)
 
+;; Notify that Emacs is loading…
+(use-package alert
+  :ensure alert
+  :commands alert
+  :config
+  (setq alert-default-style 'libnotify))
+
+(alert (concat "Emacs " emacs-version " is loading…")
+       :severity 'low
+       :icon "emacs"
+       :title "Emacs")
+
 ;;; init-15-package.el ends here
