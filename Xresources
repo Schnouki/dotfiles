@@ -40,9 +40,9 @@ URxvt.scrollTtyKeypress: true
 URxvt.urgentOnBell:      true
 
 URxvt.perl-lib:       /home/schnouki/.config/urxvt
-URxvt.perl-ext:       default,cspace,font-size,matcher,tabbedex
+URxvt.perl-ext:       default,cspace,font-size,matcher,url-select,tabbedex
 
-URxvt.urlLauncher:    firefox
+URxvt.url-launcher:   /usr/bin/xdg-open
 URxvt.matcher.button: 1
 
 ! Tabbedex features
@@ -62,7 +62,6 @@ URxvt.tabbed.bell-bg:     17
 URxvt.tabbed.title-fg:    28
 URxvt.tabbed.title-bg:    16
 
-
 ! Tabbedex keybindings (4-1: Super + Alt)
 URxvt.keysym.4-1-Down:    perl:tabbedex:new_tab
 URxvt.keysym.4-1-Left:    perl:tabbedex:prev_tab
@@ -76,6 +75,10 @@ URxvt.keysym.C-1-Up:     perl:font-size:increase
 URxvt.keysym.C-1-Down:   perl:font-size:decrease
 URxvt.keysym.C-S-1-Up:   perl:font-size:incglobal
 URxvt.keysym.C-S-1-Down: perl:font-size:decglobal
+
+! url-select
+URxvt.keysym.M-u: perl:url-select:select_next
+URxvt.url-select.launcher: /usr/bin/xdg-open
 
 ! Something similar for XTerm, just in case...
 XTerm*foreground: #C0C0C0
