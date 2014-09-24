@@ -40,7 +40,7 @@ URxvt.scrollTtyKeypress: true
 URxvt.urgentOnBell:      true
 
 URxvt.perl-lib:       /home/schnouki/.config/urxvt
-URxvt.perl-ext:       default,cspace,matcher,tabbedex
+URxvt.perl-ext:       default,cspace,font-size,matcher,tabbedex
 
 URxvt.urlLauncher:    firefox
 URxvt.matcher.button: 1
@@ -70,6 +70,12 @@ URxvt.keysym.4-1-Right:   perl:tabbedex:next_tab
 URxvt.keysym.4-1-Up:      perl:tabbedex:rename_tab
 URxvt.keysym.4-1-C-Left:  perl:tabbedex:move_tab_left
 URxvt.keysym.4-1-C-Right: perl:tabbedex:move_tab_right
+
+! Font-size (C-1: Ctrl + Alt)
+URxvt.keysym.C-1-Up:     perl:font-size:increase
+URxvt.keysym.C-1-Down:   perl:font-size:decrease
+URxvt.keysym.C-S-1-Up:   perl:font-size:incglobal
+URxvt.keysym.C-S-1-Down: perl:font-size:decglobal
 
 ! Something similar for XTerm, just in case...
 XTerm*foreground: #C0C0C0
