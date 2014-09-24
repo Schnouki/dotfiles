@@ -38,6 +38,7 @@ URxvt.scrollTtyOutput:   false
 URxvt.scrollWithBuffer:  true
 URxvt.scrollTtyKeypress: true
 URxvt.urgentOnBell:      true
+URxvt.iconFile:          /usr/share/icons/Numix-Circle/48x48/apps/xterm-color_48x48.svg
 
 URxvt.perl-lib:       /home/schnouki/.config/urxvt
 URxvt.perl-ext:       default,cspace,font-size,matcher,url-select,tabbedex
