@@ -10,7 +10,8 @@
  '(inhibit-startup-screen t)
  '(safe-local-variable-values
    (quote
-    ((org-enable-table-editor)
+    ((lua-indent-level . 4)
+     (org-enable-table-editor)
      (nxml-child-indent . 8)
      (nxml-attribute-indent . 8)
      (require-final-newline)

@@ -18,7 +18,8 @@ local _ = require("underscore")
 require("eminent")
 -- Vicious widgets
 vicious = require("vicious")
-vicious.contrib = require("vicious.contrib")
+-- Custom widgets based on Vicious
+brutal = require("brutal")
 -- Markup functions
 require("markup")
 -- Pomodoro widget
@@ -634,7 +635,7 @@ vol_widget:set_height(18)
 vol_widget:set_vertical(true)
 vol_widget:set_background_color("#000000")
 vol_widget:set_border_color("#000000")
-vicious.register(vol_widget, vicious.contrib.pulse,
+vicious.register(vol_widget, brutal.pulse,
                  function (widget, args)
                     local col = "#6666cc"
                     local vol = args[1]
@@ -646,15 +647,17 @@ vicious.register(vol_widget, vicious.contrib.pulse,
                     return vol
                  end, 5)
 
-function volume_up()   vicious.contrib.pulse.add( 5)  vicious.force({vol_widget}) end
-function volume_down() vicious.contrib.pulse.add(-5)  vicious.force({vol_widget}) end
-function volume_mute() vicious.contrib.pulse.toggle() vicious.force({vol_widget}) end
+function volume_up()   brutal.pulse.add( 5)  vicious.force({vol_widget}) end
+function volume_down() brutal.pulse.add(-5)  vicious.force({vol_widget}) end
+function volume_mute() brutal.pulse.toggle() vicious.force({vol_widget}) end
+function volume_update() vicious.force({ vol_widget }) end
 
 vol_widget:buttons(awful.util.table.join(
        awful.button({ }, 1, function () awful.util.spawn("pavucontrol") end),
+       awful.button({ }, 2, volume_mute),
+       awful.button({ }, 3, function () brutal.pulse.profiles_menu(volume_update):toggle() end),
        awful.button({ }, 4, volume_up),
-       awful.button({ }, 5, volume_down),
-       awful.button({ }, 2, volume_mute)
+       awful.button({ }, 5, volume_down)
 ))
 
 -- Pomodoro widget
