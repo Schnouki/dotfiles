@@ -162,11 +162,11 @@ icon_theme.configure_naughty()
 
 -- Create a laucher widget and a main menu
 myawesomemenu = {
-   { "change wallpaper", change_wallpapers },
-   { "manual", terminal .. " -e man awesome" },
-   { "edit config", editor_cmd .. " " .. awesome.conffile },
-   { "restart", awesome.restart },
-   { "quit", awesome.quit }
+   { "change &wallpaper", change_wallpapers },
+   { "&manual", terminal .. " -e man awesome" },
+   { "edit &config", editor_cmd .. " " .. awesome.conffile },
+   { "&restart", awesome.restart },
+   { "&quit", awesome.quit }
 }
 
 steamdir = "/home/schnouki/.local/share/Steam/SteamApps/common/"
@@ -192,11 +192,11 @@ gamemenu = {
 }
 
 utilsmenu = {
-   { "galculator", "galculator", icon_theme.get("apps", "galculator") },
+   { "&galculator", "galculator", icon_theme.get("apps", "galculator") },
    { "qalculate-gtk", "qalculate", "/usr/share/pixmaps/qalculate.png" },
-   { "gdmap", "gdmap", "/usr/share/pixmaps/gdmap_icon.png" },
-   { "gucharmap", "gucharmap", icon_theme.get("apps", "accessories-character-map") },
-   { "pavucontrol", "pavucontrol", icon_theme.get("apps", "multimedia-volume-control") },
+   { "gd&map", "gdmap", "/usr/share/pixmaps/gdmap_icon.png" },
+   { "g&ucharmap", "gucharmap", icon_theme.get("apps", "accessories-character-map") },
+   { "&pavucontrol", "pavucontrol", icon_theme.get("apps", "multimedia-volume-control") },
 }
 
 -- {{{ Screen menu -- from Dodo
@@ -210,9 +210,9 @@ local menu_screen_text = function ()
 end
 
 screenmenu = {
-    { "clone",    "xrandr --output LVDS1 --auto --output " .. ext_screen .. " --auto --same-as LVDS1" },
-    { "left of",  "xrandr --output LVDS1 --auto --output " .. ext_screen .. " --auto --left-of LVDS1" },
-    { "right of", "xrandr --output LVDS1 --auto --output " .. ext_screen .. " --auto --right-of LVDS1" },
+    { "&clone",    "xrandr --output LVDS1 --auto --output " .. ext_screen .. " --auto --same-as LVDS1" },
+    { "&left of",  "xrandr --output LVDS1 --auto --output " .. ext_screen .. " --auto --left-of LVDS1" },
+    { "&right of", "xrandr --output LVDS1 --auto --output " .. ext_screen .. " --auto --right-of LVDS1" },
     { menu_screen_text(), function (m, menu)
         local prev = ext_screen
         ext_screen = (ext_screen == "HDMI1" and "VGA1" or "HDMI1")
@@ -230,19 +230,19 @@ if screen.count() > 1 then
 end
 -- }}}
 
-mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "jeux", gamemenu },
-                                    { "utils", utilsmenu },
-                                    { "écran ext.", screenmenu },
-                                    { "gajim", "gajim", icon_theme.get("apps", "gajim") },
-                                    { "firefox aurora", "firefox-aurora", icon_theme.get("apps", "firefox-aurora", "/usr/share/pixmaps/firefox-aurora-icon.png") },
-                                    { "chromium", "chromium", icon_theme.get("apps", "chromium") },
-                                    { "shotwell", "shotwell", icon_theme.get("apps", "shotwell") },
-                                    { "spotify", "spotify", icon_theme.get("apps", "spotify-client") },
-                                    { "popcorn time", "popcorntime", icon_theme.get("apps", "popcorntime", "/usr/share/pixmaps/popcorntime.png") },
-                                    { "libre office", "soffice", icon_theme.get("apps", "libfreoffice-writer") },
-                                    { "gcmd", "gnome-commander", icon_theme.get("apps", "gnome-commander", "/usr/share/pixmaps/gnome-commander.png") },
-                                    { "open terminal", terminal }
+mymainmenu = awful.menu({ items = { { "&awesome", myawesomemenu, beautiful.awesome_icon },
+                                    { "&jeux", gamemenu },
+                                    { "&utils", utilsmenu },
+                                    { "écran &ext.", screenmenu },
+                                    { "&gajim", "gajim", icon_theme.get("apps", "gajim") },
+                                    { "&firefox aurora", "firefox-aurora", icon_theme.get("apps", "firefox-aurora", "/usr/share/pixmaps/firefox-aurora-icon.png") },
+                                    { "&chromium", "chromium", icon_theme.get("apps", "chromium") },
+                                    { "s&hotwell", "shotwell", icon_theme.get("apps", "shotwell") },
+                                    { "&spotify", "spotify", icon_theme.get("apps", "spotify-client") },
+                                    { "&popcorn time", "popcorntime", icon_theme.get("apps", "popcorntime", "/usr/share/pixmaps/popcorntime.png") },
+                                    { "libre &office", "soffice", icon_theme.get("apps", "libfreoffice-writer") },
+                                    { "&gcmd", "gnome-commander", icon_theme.get("apps", "gnome-commander", "/usr/share/pixmaps/gnome-commander.png") },
+                                    { "open &terminal", terminal }
                                   }
                         })
 
