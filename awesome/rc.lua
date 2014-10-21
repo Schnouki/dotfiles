@@ -115,14 +115,15 @@ function change_wallpapers()
    end
 end
 
--- Change the wallpaper 5s after startup (needed for dealing with multiple screens)
+-- Change the wallpaper 2s after startup (needed for dealing with multiple screens)
 (function()
-   local wp_timer = timer { timeout = 5 }
+   local wp_timer = timer { timeout = 2 }
    wp_timer:connect_signal("timeout", function()
                            change_wallpapers()
                            wp_timer:stop()
    end)
    wp_timer:start()
+   change_wallpapers()
 end)()
 -- }}}
 
