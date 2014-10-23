@@ -201,12 +201,26 @@ utilsmenu = {
 }
 
 -- {{{ Screen menu -- from Dodo
-local ext_screen = "VGA1"
+local function get_connected_screen(default)
+   local f = io.popen("xrandr")
+   local line, m
+   for line in f:lines() do
+      m = string.match(line, "^(%w+) connected")
+      if m ~= nil and m ~= "LVDS1" then
+         f:close()
+         return m
+      end
+   end
+   f:close()
+   return default
+end
+local ext_screen = get_connected_screen("VGA1")
+
 local menu_screen_text = function ()
     return ({
-        LVDS1 = "Laptop",
-        VGA1 = "VGA",
-        HDMI1 = "HDMI",
+        LVDS1 = "L&aptop",
+        VGA1 = "&VGA",
+        HDMI1 = "&HDMI",
     })[ext_screen]
 end
 
