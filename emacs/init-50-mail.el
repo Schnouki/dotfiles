@@ -13,36 +13,37 @@
 (setq message-auto-save-directory nil
       send-mail-function 'message-send-mail-with-sendmail ;sendmail-send-it
       message-send-mail-function 'message-send-mail-with-sendmail
-      sendmail-program "/usr/bin/msmtp"
+      sendmail-program "/home/schnouki/bin/msmtpq"
       message-sendmail-extra-arguments (list (concat "--domain=" (system-name)))
       message-send-mail-partially-limit nil
       mail-specify-envelope-from t
       mail-envelope-from 'header
       message-sendmail-envelope-from 'header
       gnus-inhibit-images nil
-      notmuch-saved-searches '(("home"        . "(tag:inbox or tag:todo or tag:unread)")
-			       ("unread"      . "tag:unread")
-			       ("inbox"       . "tag:inbox")
-			       ("flagged"     . "tag:flagged")
-			       ("todo"        . "tag:todo")
-			       ("drafts"      . "tag:draft")
-			       ("sent"        . "tag:sent")
-			       ("spam"        . "tag:spam")
-			       ("d20"         . "(tag:d20 and tag:ml)")
-			       ("all MLs"     . "(tag:ml and tag:unread)")
-			       ("ansible"     . "(tag:ansible and tag:unread)")
-			       ("april"       . "(tag:april and tag:unread)")
-			       ("arch"        . "(tag:arch and tag:unread)")
-			       ("awesome"     . "(tag:awesome and tag:unread)")
-			       ("buddycloud"  . "(tag:buddycloud and tag:unread)")
-			       ("camlistore"  . "(tag:camlistore and tag:unread)")
-			       ("emacs"       . "(tag:emacs and tag:unread)")
-			       ("fsfe"        . "(tag:fsfe and tag:unread)")
-			       ("ldn"         . "(tag:ldn and tag:unread)")
-			       ("notmuch"     . "(tag:notmuch and tag:unread)")
-			       ("nybicc "     . "(tag:nybi.cc and tag:unread)")
-			       ("prosody"     . "(tag:prosody and tag:unread)")
-			       ("xmpp"        . "(tag:xmpp and tag:unread)"))
+      notmuch-saved-searches '((:name "home"        :query "(tag:inbox or tag:todo or tag:unread)")
+			       (:name "unread"      :query "tag:unread")
+			       (:name "inbox"       :query "tag:inbox")
+			       (:name "blabla"      :query "tag:blabla")
+			       (:name "all MLs"     :query "(tag:ml and tag:unread)")
+			       (:name "flagged"     :query "tag:flagged")
+			       (:name "todo"        :query "tag:todo")
+			       (:name "drafts"      :query "tag:draft")
+			       (:name "sent"        :query "tag:sent")
+			       (:name "spam"        :query "tag:spam")
+			       (:name "d20"         :query "(tag:d20 and tag:ml)")
+			       (:name "ansible"     :query "(tag:ansible and tag:unread)")
+			       (:name "april"       :query "(tag:april and tag:unread)")
+			       (:name "arch"        :query "(tag:arch and tag:unread)")
+			       (:name "awesome"     :query "(tag:awesome and tag:unread)")
+			       (:name "buddycloud"  :query "(tag:buddycloud and tag:unread)")
+			       (:name "camlistore"  :query "(tag:camlistore and tag:unread)")
+			       (:name "emacs"       :query "(tag:emacs and tag:unread)")
+			       (:name "fsfe"        :query "(tag:fsfe and tag:unread)")
+			       (:name "ldn"         :query "(tag:ldn and tag:unread)")
+			       (:name "notmuch"     :query "(tag:notmuch and tag:unread)")
+			       (:name "nybicc "     :query "(tag:nybi.cc and tag:unread)")
+			       (:name "prosody"     :query "(tag:prosody and tag:unread)")
+			       (:name "xmpp"        :query "(tag:xmpp and tag:unread)"))
       notmuch-archive-tags '("-inbox" "-unread")
       notmuch-address-command "~/.config/notmuch/addrbook.py"
       notmuch-crypto-process-mime t

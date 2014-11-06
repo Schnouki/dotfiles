@@ -30,6 +30,9 @@
   (setq indent-tabs-mode t))
 (add-hook 'emacs-lisp-mode-hook 'schnouki/emacs-lisp-default-indent)
 
+(use-package dash
+  :ensure dash)
+
 ;; Flycheck
 (use-package flycheck
   :ensure flycheck
