@@ -41,6 +41,10 @@
   :ensure haskell-mode
   :mode "\\.hs\\'")
 
+(use-package groovy-mode
+  :ensure groovy-mode
+  :mode "\\.groovy\\'")
+
 (use-package python
   :mode ("\\.py'" . python-mode)
   :init
