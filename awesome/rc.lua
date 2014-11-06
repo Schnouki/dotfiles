@@ -13,6 +13,8 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 -- Underscore (https://github.com/jtarchie/underscore-lua)
 local _ = require("underscore")
+-- Filesystem
+local lfs = require("lfs")
 
 -- Eminent dynamic tagging
 require("eminent")
@@ -92,10 +94,6 @@ local layouts =
 -- }}}
 
 -- {{{ Wallpaper
-if beautiful.wallpaper_dir then
-   lfs = require("lfs")
-end
-
 function change_wallpapers()
    if beautiful.wallpaper_dir then
       -- List files in wallpaper dir
@@ -548,6 +546,7 @@ if f then
       else      tb_mails_color = tb_mails_color_normal
       end
    end
+   tb_mails_update()
 else
    -- Stubs for stuff needed elsewhere
    tb_mails = nil
@@ -555,6 +554,33 @@ else
    function tb_mails_set_count(n) end
    function tb_mails_updating(u) end
 end
+
+-- Widget with the number of mails queued in msmtpq
+msmtpq_dir = "/home/schnouki/.msmtpq"
+tb_msmtpq = wibox.widget.textbox()
+tb_msmtpq_color = "#dfaf8f" -- orange
+function tb_msmtpq_update()
+   local fn, full_fn, mode
+   local count = 0
+   local s = ""
+   for fn in lfs.dir(msmtpq_dir) do
+      if string.sub(fn, -5) == ".json" then
+         full_fn = msmtpq_dir .. "/" .. fn
+         mode = lfs.attributes(full_fn, "mode")
+         if mode == "file" then
+            count = count + 1
+         end
+      end
+   end
+
+   if count > 0 then
+      s = " [" .. count .. "]"
+      s = markup.fg.color(tb_msmtpq_color, s)
+      s = markup.bold(s)
+   end
+   tb_msmtpq:set_markup(s)
+end
+tb_msmtpq_update()
 
 -- Media player control
 function mpris2(command)
@@ -788,7 +814,7 @@ for s = 1, screen.count() do
 
     local my_right_widgets = _.concat({
        separator,
-       tb_mails, nv_w}, separator,
+       tb_mails, tb_msmtpq, nv_w}, separator,
        pomodoro.icon_widget, separator,
        cpu_icon, cpu_widgets, mem_icon, mem_widget, swap_widget, separator,
        net_mon.widget, {ip_mon and ip_mon.widget or nil}, bat_widget, vol_widget, separator, locks_mon.widget
@@ -1060,6 +1086,7 @@ mytimer15:connect_signal("timeout", function ()
     net_mon:update()
     if ip_mon then ip_mon:update() end
     tb_mails_update()
+    tb_msmtpq_update()
 
     --clistats.idle(lousy.idle())
 end)
