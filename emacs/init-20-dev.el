@@ -56,6 +56,12 @@
       :safe #'stringp)
     (add-to-list 'flycheck-checkers 'python2-pylint)))
 
+(use-package flycheck-pos-tip
+  :ensure flycheck-pos-tip
+  :init
+  (progn
+    (setq flycheck-display-error-messages #'flycheck-pos-tip-error-messages)))
+
 ;; Code folding
 (use-package folding
   :init
