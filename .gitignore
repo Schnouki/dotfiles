@@ -9,6 +9,7 @@ __pycache__/
 # Dotfiles
 !ackrc
 !beets/config.yaml
+!compton.conf
 !ctags
 !fonts.conf
 !globalrc
