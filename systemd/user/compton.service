@@ -1,0 +1,9 @@
+[Unit]
+Description=X compositor
+Requires=xorg.target
+
+[Service]
+ExecStart=/usr/bin/compton
+
+[Install]
+WantedBy=xorg.target
