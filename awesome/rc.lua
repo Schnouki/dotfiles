@@ -94,7 +94,7 @@ local layouts =
 -- }}}
 
 -- {{{ Wallpaper
-function change_wallpapers()
+function change_wallpapers(show_notif)
    if beautiful.wallpaper_dir then
       -- List files in wallpaper dir
       local wallpapers = {}
@@ -102,14 +102,24 @@ function change_wallpapers()
          local full_fn = beautiful.wallpaper_dir .. "/" .. fn
          local mode = lfs.attributes(full_fn, "mode")
          if mode == "file" then
-            table.insert(wallpapers, full_fn)
+            table.insert(wallpapers, fn)
          end
       end
 
       -- Set a random wallpaper on each screen
+      local notif_txt = ""
       for s = 1, screen.count() do
          local rnd = math.random(#wallpapers)
-         gears.wallpaper.fit(wallpapers[rnd], s, "#000000")
+         local fn = wallpapers[rnd]
+         local full_fn = beautiful.wallpaper_dir .. "/" .. fn
+         gears.wallpaper.fit(full_fn, s, "#000000")
+
+         if s > 1 then notif_txt = notif_txt .. "\n" end
+         notif_txt = notif_txt .. "<b>" .. s .. ":</b> " .. fn
+      end
+
+      if show_notif then
+         naughty.notify({ title = "New wallpapers", text = notif_txt })
       end
    end
 end
@@ -161,7 +171,7 @@ icon_theme.configure_naughty()
 
 -- Create a laucher widget and a main menu
 myawesomemenu = {
-   { "change &wallpaper", change_wallpapers },
+   { "change &wallpaper", function () change_wallpapers(true) end },
    { "&manual", terminal .. " -e man awesome" },
    { "edit &config", editor_cmd .. " " .. awesome.conffile },
    { "&restart", awesome.restart },
@@ -775,6 +785,9 @@ persokeys = {
    awful.key({                   }, "XF86HomePage",   function () awful.tag.viewonly(tags[1][3]) end),
    awful.key({         "Shift"   }, "XF86HomePage",   function () awful.tag.viewonly(tags[1][8]) end),
    awful.key({                   }, "XF86AudioPause", function () awful.tag.viewonly(tags[1][9]) end), -- Shift+Play
+
+   -- Changer le wallpaper
+   awful.key({ modkey, "Shift"   }, "w", function () change_wallpapers(true) end),
 }
 
 persoclientkeys = {
@@ -1093,7 +1106,7 @@ end)
 mytimer15:start()
 
 mytimer300 = timer { timeout = 300 }
-mytimer300:connect_signal("timeout", change_wallpapers)
+mytimer300:connect_signal("timeout", function () change_wallpapers() end)
 mytimer300:start()
 -- }}}
 -- {{{ Disable startup-notification
