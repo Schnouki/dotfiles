@@ -27,7 +27,6 @@ export EDITOR="emacsclient -c -a \"\""
 export BROWSER=firefox
 
 # Program-specifig options
-export GREP_OPTIONS="--exclude=*.svn-base --exclude-dir=.svn"
 export ACKRC="$XDG_CONFIG_HOME/ackrc"
 [[ -f /etc/chromium/default ]] && source /etc/chromium/default
 export CHROMIUM_USER_FLAGS="$CHROMIUM_FLAGS --disk-cache-size=100000000"
