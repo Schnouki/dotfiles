@@ -153,6 +153,7 @@
   (modify-coding-system-alist 'file "\\.po\\'\\|\\.po\\." 'po-find-file-coding-system))
 
 (use-package bats-mode
+  :ensure bats-mode
   :mode "\\.bats\\'")
 
 ;; -----------------------------------------------------------------------------
