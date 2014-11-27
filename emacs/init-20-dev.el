@@ -13,6 +13,11 @@
   :idle
   (dtrt-indent-mode 1))
 
+(use-package drag-stuff
+  :ensure drag-stuff
+  :init
+  (drag-stuff-global-mode t))
+
 ;; No trailing whitespaces
 (defvar-local enable-delete-trailing-whitespace t
   "Enable or disable automatic deletion of trailing whitespace on a per-buffer basis.")

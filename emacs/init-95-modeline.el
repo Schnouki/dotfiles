@@ -14,6 +14,7 @@
 			;" AC"          ; auto-complete
 			 " Anaconda"    ; anaconda-mode
 			 " company"     ; company
+			 " drag"        ; drag-stuff
 			 " ElDoc"       ; eldoc
 			 " Fld"         ; folding
 			 " GitFlow"     ; magit-gitflow
