@@ -64,10 +64,33 @@ local function get_sink_name(sink)
     local key = sink or 1
     -- Cache requests
     if not cached_sinks[key] then
-	local line = pacmd("list-sinks")
-	for s in string.gmatch(line, "name: <(.-)>") do
-		table.insert(cached_sinks, s)
-	end
+        local line, name, prio, mtch
+        local raw_sinks = {}
+        for line in pacmd_lines("list-sinks") do
+            mtch = string.match(line, "name: <(.-)>")
+            if mtch ~= nil then
+                name = mtch
+            else
+                mtch = string.match(line, "priority: (%d+)")
+                if mtch then
+                    prio = tonumber(mtch)
+                    table.insert(raw_sinks, {
+                                     name = name,
+                                     prio = prio,
+                    })
+                end
+            end
+        end
+
+        -- Sort sinks by priority
+        table.sort(raw_sinks, function(a, b) return a.prio > b.prio end)
+
+        -- Move to cached_sinks
+        cached_sinks = {}
+        local idx, entry
+        for idx, entry in ipairs(raw_sinks) do
+            table.insert(cached_sinks, entry.name)
+        end
     end
 
     return cached_sinks[key]
