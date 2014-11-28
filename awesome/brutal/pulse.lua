@@ -35,10 +35,21 @@ local pulse = {}
 
 -- {{{ Helper function
 local function pacmd(args)
-	local f = io.popen("pacmd "..args)
-	local line = f:read("*all")
-	f:close()
-	return line
+    local f = io.popen("pacmd "..args)
+    local line = f:read("*all")
+    f:close()
+    return line
+end
+local function pacmd_lines(args)
+    local f = io.popen("pacmd " .. args)
+    local lines_it = f:lines()
+    return function ()
+        local line = lines_it()
+        if line == nil then
+            f:close()
+        end
+        return line
+    end
 end
 
 local function escape(text)
@@ -63,17 +74,12 @@ local function get_sink_name(sink)
 end
 
 local function get_profiles()
-    local f = io.popen("pacmd list-cards")
     local profiles = {}
     local active_profile = nil
     local in_profiles = false
     local line, mtch, profile
     local name, desc, prio
-    for line in f:lines() do
-        if line == nil then
-            break
-        end
-
+    for line in pacmd_lines("list-cards") do
         -- Try to find a section header
         mtch = string.match(line, "^\t(%w+[%w%s]*):")
         if mtch ~= nil then
@@ -97,7 +103,6 @@ local function get_profiles()
             end
         end
     end
-    f:close()
 
     table.sort(profiles, function(a, b) return a.prio > b.prio or (a.prio == b.prio and a.desc < b.desc) end)
     for _, profile in ipairs(profiles) do
