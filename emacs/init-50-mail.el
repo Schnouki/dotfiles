@@ -192,7 +192,7 @@
 (defadvice smtpmail-via-smtp (before schnouki/set-smtp-account
  				     (&optional recipient smtpmail-text-buffer))
    "First set SMTP account."
-     (with-current-buffer smtpmail-text-buffer (schnouki/change-smtp)))
+   (with-current-buffer smtpmail-text-buffer (schnouki/change-smtp)))
 (ad-activate 'smtpmail-via-smtp)
 
 ;; Autorefresh notmuch-hello using D-Bus
