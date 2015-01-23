@@ -4,6 +4,7 @@
 
 (use-package yasnippet
   :ensure yasnippet
+  :diminish yas-minor-mode
   :idle (yas-global-mode 1))
 
 ;; Snippets dir:

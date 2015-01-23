@@ -67,6 +67,7 @@
 
 ;; Code folding
 (use-package folding
+  :diminish folding-mode
   :init
   (progn
     (setq folding-mode-prefix-key (kbd "C-:")
@@ -159,6 +160,7 @@
 ;; Company -- complete anything
 (use-package company
   :ensure company
+  :diminish company-mode
   :init
   (progn
     (setq company-backends (remove 'company-ropemacs company-backends)
@@ -222,6 +224,7 @@
 
 (use-package drag-stuff
   :ensure drag-stuff
+  :diminish drag-stuff-mode
   :init
   (progn
     (setq drag-stuff-modifier '(meta shift))

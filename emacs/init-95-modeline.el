@@ -12,14 +12,8 @@
 	  rm-blacklist '(" ,"           ; subword
 			 " Abbrev"      ; abbrev
 			;" AC"          ; auto-complete
-			 " Anaconda"    ; anaconda-mode
-			 " company"     ; company
-			 " drag"        ; drag-stuff
 			 " ElDoc"       ; eldoc
-			 " Fld"         ; folding
-			 " GitFlow"     ; magit-gitflow
 			 " hs"          ; hideshow
-			 " yas"         ; yasnippet
 			 )
 	  sml/replacer-regexp-list
 	  '(("^/ssh:.*:" ":SSH:")

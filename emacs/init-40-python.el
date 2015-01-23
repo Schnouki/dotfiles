@@ -25,6 +25,7 @@
 (use-package anaconda-mode
   :ensure anaconda-mode
   :commands anaconda-mode
+  :diminish anaconda-mode
   :init
   (progn
     (add-hook 'python-mode-hook 'anaconda-mode)
