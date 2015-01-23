@@ -249,7 +249,7 @@ screenmenu = {
     end },
 }
 if screen.count() > 1 then
-    table.insert(screenmenu, 1, { "off", "xrandr --output LVDS1 --auto --output " .. ext_screen .. " --off" })
+    table.insert(screenmenu, 1, { "&off", "xrandr --output LVDS1 --auto --output " .. ext_screen .. " --off" })
 end
 -- }}}
 
@@ -1030,6 +1030,8 @@ awful.rules.rules = {
       callback = awful.client.setslave },
     { rule_any = { instance = { "spotify.exe", "spotify", "Steam" } },
       properties = { floating=true, tag = tags[1][9] } },
+    { rule = { instance = "popcorntime" },
+      properties = { floating = true, tag = tags[screen.count()][9] } },
     { rule = { class = "Audacious" },
       properties = { floating = true, ontop = true, sticky = true } },
     { rule = { instance = "pluginloader.exe" },
