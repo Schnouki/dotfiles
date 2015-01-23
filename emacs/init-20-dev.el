@@ -38,26 +38,7 @@
   :ensure flycheck
   :init
   (progn
-    (add-hook 'after-init-hook #'global-flycheck-mode)
-
-    (flycheck-define-checker python2-pylint
-      "A Python syntax and style checker using Pylint2."
-      :command ("pylint2" "-r" "n"
-                "--msg-template" "{path}:{line}:{column}:{C}:{msg} ({msg_id})"
-                (config-file "--rcfile" flycheck-pylint2rc)
-                source-inplace)
-      :error-patterns
-      ((error line-start (file-name) ":" line ":" column ":"
-	      (or "E" "F") ":" (message) line-end)
-       (warning line-start (file-name) ":" line ":" column ":"
-		(or "W" "R") ":" (message) line-end)
-       (info line-start (file-name) ":" line ":" column ":"
-	     "C:" (message) line-end))
-      :modes python-mode)
-    (flycheck-def-config-file-var flycheck-pylint2rc python2-pylint
-				  ".pylintrc"
-      :safe #'stringp)
-    (add-to-list 'flycheck-checkers 'python2-pylint)))
+    (add-hook 'after-init-hook #'global-flycheck-mode)))
 
 (use-package flycheck-pos-tip
   :ensure flycheck-pos-tip
