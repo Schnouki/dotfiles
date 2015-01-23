@@ -114,6 +114,47 @@
   (notmuch-show-view-raw-message)
   (message-resend address))
 
+(defun schnouki/notmuch-show-edit-draft ()
+  "Edit a draft message."
+  (interactive)
+  (unless (member "draft" (notmuch-show-get-tags))
+    (error "This message is not tagged as draft"))
+  (let ((filename (notmuch-show-get-filename)))
+    ;; Prepare the mail
+    (message-mail nil nil nil nil (notmuch-mua-get-switch-function))
+    (let ((inhibit-read-only t))
+      (erase-buffer))
+    (insert-file-contents filename)
+
+    ;; Insert the separator if it's not there yet
+    (goto-char (point-min))
+    (unless (search-forward mail-header-separator nil t)
+      (goto-char (point-min))
+      (search-forward "\n\n")
+      (forward-char -1)
+      (insert mail-header-separator)
+      (forward-line 1))
+
+    ;; Update date and user agent
+    (message-replace-header "Date" (message-make-date))
+    (when notmuch-mua-user-agent-function
+      (let ((user-agent (funcall notmuch-mua-user-agent-function)))
+    	(when (not (string= "" user-agent))
+    	  (message-replace-header "User-Agent" user-agent))))
+
+    ;; Associate buffer with file name
+    (setq buffer-file-name filename)
+    (setq buffer-auto-save-file-name (make-auto-save-file-name))
+
+    ;; Delete the file after the message is sent
+    (add-to-list 'message-send-actions #'lambda () (delete-file filename))
+
+    (message-sort-headers)
+    (message-hide-headers)
+    (set-buffer-modified-p nil)
+    (notmuch-mua-maybe-set-window-dedicated)
+    (message-goto-body)))
+
 (defun schnouki/notmuch-signal-spamham (type &rest to)
   (with-current-notmuch-show-message
    (notmuch-mua-forward-message)
@@ -212,6 +253,7 @@
     ;; Show-mode keybindings
     (bind-keys :map notmuch-show-mode-map
 	       ("b" . schnouki/notmuch-show-bounce)
+	       ("e" . schnouki/notmuch-show-edit-draft)
 	       ("H" . schnouki/notmuch-view-html)
 	       ("r" . nil)
 	       ("R" . nil)
