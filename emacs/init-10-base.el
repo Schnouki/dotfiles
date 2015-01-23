@@ -24,7 +24,20 @@
 			(t "Mono-10"))))
 
 ;; Web browser
-(setq browse-url-browser-function 'browse-url-firefox)
+;(setq browse-url-browser-function 'browse-url-firefox)
+(defun schnouki/browse-url-firefox-36 (url &optional new-window)
+  (interactive (browse-url-interactive-arg "URL: "))
+  (setq url (browse-url-encode-url url))
+  (let* ((process-environment (browse-url-process-environment)))
+    (apply 'start-process
+	   (concat "firefox " url) nil
+	   browse-url-firefox-program
+	   (append
+	    browse-url-firefox-arguments
+	    (if (browse-url-maybe-new-window new-window)
+		"--new-tab")
+	    (list url)))))
+(setq browse-url-browser-function 'schnouki/browse-url-firefox-36)
 
 ;; Display date and time
 (require 'time)
