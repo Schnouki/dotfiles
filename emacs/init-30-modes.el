@@ -52,6 +52,10 @@
     (defalias 'python2-mode 'python-mode)
     (defalias 'python3-mode 'python-mode)))
 
+(use-package hy-mode
+  :ensure hy-mode
+  :mode "\\.hy\\'")
+
 (use-package js3-mode
   :ensure js3-mode
   :mode "\\.js\\'"
@@ -137,6 +141,10 @@
 (use-package gnuplot
   :mode "\\.gp\\'\\|\\.plot\\'"
   :commands gnuplot-make-buffer)
+
+(use-package graphviz-dot-mode
+  :ensure t
+  :mode "\\.dot\\'")
 
 (use-package plantuml-mode
   :commands plantuml-mode)
