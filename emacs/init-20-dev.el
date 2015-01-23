@@ -13,11 +13,6 @@
   :idle
   (dtrt-indent-mode 1))
 
-(use-package drag-stuff
-  :ensure drag-stuff
-  :init
-  (drag-stuff-global-mode t))
-
 ;; No trailing whitespaces
 (defvar-local enable-delete-trailing-whitespace t
   "Enable or disable automatic deletion of trailing whitespace on a per-buffer basis.")
@@ -210,5 +205,26 @@
       ;; Enable prettify-symbols-mode
       (prettify-symbols-mode 1))))
 (add-hook 'prog-mode-hook 'schnouki/maybe-enable-prettify-symbols-mode)
+
+;; Increase selected region by semantic units
+(use-package expand-region
+  :ensure expand-region
+  :demand t
+  :bind (("C-:" . er/expand-region)
+	 ("C-," . er/contract-region)))
+
+(use-package smart-forward
+  :ensure smart-forward
+  :bind (("M-<up>" . smart-up)
+	 ("M-<down>" . smart-down)
+	 ("M-<left>" . smart-backward)
+	 ("M-<right>" . smart-forward)))
+
+(use-package drag-stuff
+  :ensure drag-stuff
+  :init
+  (progn
+    (setq drag-stuff-modifier '(meta shift))
+    (drag-stuff-global-mode t)))
 
 ;;; init-20-dev.el ends here
