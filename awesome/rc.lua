@@ -20,6 +20,7 @@ local lfs = require("lfs")
 require("eminent")
 -- Vicious widgets
 vicious = require("vicious")
+vicious.contrib = require("vicious.contrib")
 -- Custom widgets based on Vicious
 brutal = require("brutal")
 -- Markup functions
@@ -600,8 +601,6 @@ function mpris2(command)
 end
 
 -- Vicious widgets
-cpu_mem_gradient = "linear:0,18:0,0:0,#66CC66:0.5,#CCCC66:1,#CC6666"
-
 vicious.cache(vicious.widgets.cpu)
 cpu_icon = wibox.widget.imagebox()
 cpu_icon:set_image(config_dir .. "/icons/cpu.png")
@@ -617,6 +616,16 @@ for i = 2, #vicious.widgets.cpu() do
    vicious.register(w, vicious.widgets.cpu, "$" .. i, 3)
    cpu_widgets[i-1] = w
 end
+
+vicious.cache(vicious.contrib.sensors)
+cputemp_widget = awful.widget.progressbar()
+cputemp_widget:set_width(4)
+cputemp_widget:set_vertical(true)
+cputemp_widget:set_background_color("#000000")
+cputemp_widget:set_color({type = "linear", from = {0, 0}, to = {0, 18},
+             stops = {{0, "#CC6666"}, {0.2, "#CC66CC"}, {1.0, "#66CCCC"}}})
+vicious.register(cputemp_widget, vicious.contrib.sensors, "$2", 10, "Physical id 0")
+cpu_widgets[#cpu_widgets + 1] = cputemp_widget
 
 vicious.cache(vicious.widgets.mem)
 mem_icon = wibox.widget.imagebox()
