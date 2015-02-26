@@ -12,6 +12,7 @@ markup_tags = '<i>(<span foreground="#9fc59f">{0}</span>)</i>'
 
 MAX_FROM_LEN = 35
 MAX_SUBJ_LEN = 70
+MAX_THREADS = 15
 
 db = notmuch.Database(mode=notmuch.Database.MODE.READ_ONLY)
 q = notmuch.Query(db, "(tag:unread or tag:todo) and not tag:spam")
@@ -19,15 +20,23 @@ q.set_sort(notmuch.Query.SORT.NEWEST_FIRST)
 
 # Read data about the new messages
 tab = []
-msgs, threads_total = 0, 0
+msgs, threads_total, threads_unread = 0, 0, 0
 mlc, mlf, mls = 0, 0, 0
 for thr in q.search_threads():
-    from_ = thr.get_authors()
-    subj_ = thr.get_subject() or "(no subject)"
-    tags = list(thr.get_tags())
     threads_total += 1
+    tags = list(thr.get_tags())
     if "unread" not in tags:
         continue
+    threads_unread += 1
+
+    count = thr.get_matched_messages()
+    msgs += count
+
+    if threads_unread >= MAX_THREADS:
+        continue
+
+    from_ = thr.get_authors()
+    subj_ = thr.get_subject() or "(no subject)"
 
     from_ = from_.split(u"|", 1)[0]
 
@@ -51,8 +60,6 @@ for thr in q.search_threads():
     tags = ["<b>"+tag+"</b>" if tag in ("unread", "todo") else tag for tag in tags]
     tags = " ".join(tags)
 
-    count = thr.get_matched_messages()
-    msgs += count
     count = markup_cnt.format(count)
     lc = len(count)
     if lc > mlc:
@@ -78,7 +85,7 @@ txt = '<span font_desc="DejaVu Sans Mono 7.5">' + "\n".join(txt) + '</span>'
 
 # Display a notification
 Notify.init("notmuch notify")
-summary = "{0} threads, including {1} unread threads ({2} messages)".format(threads_total, len(tab), msgs)
+summary = "{0} threads, including {1} unread threads ({2} messages)".format(threads_total, threads_unread, msgs)
 n = Notify.Notification.new(summary, txt, "/usr/share/emacs/site-lisp/notmuch-logo.png")
 n.set_timeout(10000)
 n.set_category("email.arrived")
