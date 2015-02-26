@@ -66,8 +66,8 @@ else
     PS1="%B" # Bold font
     PS1+="%(!..%(${my_uid}#..%F{green}%n))" # Username in green if it's not schnouki or root
 
-    # Display hostname in PS1 if we're running on SSH or in tmux/screen
-    if [[ ! -z "$(who am i)" ]] || [[ "x$TERM" == "xscreen" ]] || [[ "x$TERM" == "xscreen-256color" ]]; then
+    # Display hostname in PS1 if we're running on a remote session (SSH, tmux, screen…)
+    if [[ -z "$XDG_SEAT" ]]; then
         PS1+="%(!..%(${my_uid}#..%F{yellow}@))%F{white}%m "
     fi
 
