@@ -15,7 +15,7 @@ MAX_SUBJ_LEN = 70
 
 db = notmuch.Database(mode=notmuch.Database.MODE.READ_ONLY)
 q = notmuch.Query(db, "(tag:unread or tag:todo) and not tag:spam")
-q.set_sort(notmuch.Query.SORT.OLDEST_FIRST)
+q.set_sort(notmuch.Query.SORT.NEWEST_FIRST)
 
 # Read data about the new messages
 tab = []

@@ -48,6 +48,7 @@
       notmuch-archive-tags '("-inbox" "-unread")
       notmuch-address-command "~/.config/notmuch/addrbook.py"
       notmuch-crypto-process-mime t
+      notmuch-search-oldest-first nil
       notmuch-mua-compose-in 'new-frame
       message-kill-buffer-on-exit t
       notmuch-thousands-separator " "
