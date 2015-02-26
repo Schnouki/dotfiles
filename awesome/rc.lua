@@ -1048,6 +1048,9 @@ awful.rules.rules = {
     { rule_any = { class = {"Arandr", "Pavucontrol" } },
       properties = { floating = true },
       callback = awful.placement.centered },
+    { rule = { class = "Skype", role = "CallWindow" },
+      properties = { floating = true },
+      callback = awful.placement.centered },
 }
 no_titlebar_apps = {
    ["gnome-commander"] = true,
