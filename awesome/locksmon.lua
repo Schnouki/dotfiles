@@ -18,7 +18,7 @@ end
 local LocksMon = {}
 
 function LocksMon:new()
-   local t = timer { timeout = 0.1 }
+   local t = timer { timeout = 0.25 }
    local o = { widget = wibox.widget.textbox(), timer = t, key = nil }
    t:connect_signal("timeout",
                     function()
