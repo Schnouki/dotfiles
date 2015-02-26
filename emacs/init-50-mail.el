@@ -51,7 +51,6 @@
       notmuch-search-oldest-first nil
       notmuch-mua-compose-in 'new-frame
       message-kill-buffer-on-exit t
-      notmuch-thousands-separator " "
       notmuch-print-mechanism 'notmuch-print-muttprint/evince
       notmuch-address-selection-function 'schnouki/notmuch-address-selection-function
 
@@ -148,7 +147,7 @@
     (setq buffer-auto-save-file-name (make-auto-save-file-name))
 
     ;; Delete the file after the message is sent
-    (add-to-list 'message-send-actions #'lambda () (delete-file filename))
+    (add-to-list 'message-send-actions #'(lambda () (delete-file filename)))
 
     (message-sort-headers)
     (message-hide-headers)
