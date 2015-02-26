@@ -8,7 +8,6 @@
 	 ("C-! a" . org-agenda)
 	 ("C-! b" . org-iswitchb)
 	 ("C-! t" . schnouki/org-agenda-and-todo-list)
-	 ("C-! r" . org-capture)
 	 ("C-! s" . schnouki/org-sort-todo-list))
   :config
   (progn
@@ -67,12 +66,6 @@
   ;; Then display agenda
   (org-agenda-list)
   (fit-window-to-buffer nil nil 20))
-
-;; Capture
-(setq org-default-notes-file (concat org-directory "/notes.org")
-      org-capture-templates
-      '(("t" "TODO" entry (file "todo.org") "* TODO %?\n  %i\n  %a" :unnarrowed)
-        ("i" "Idée" entry (file) "* Idée : %^{Titre} (%T)\n  %i\n  %a" :unnarrowed)))
 
 ;; Get the index of a todo keyword in the schnouki/org-todo-keywords-sort-order list
 ;; Used to sort a todo-list by todo order
