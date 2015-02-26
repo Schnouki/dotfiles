@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: if err != nil { return err }
+# key: ie
+# --
+if err != nil {
+    return ${1:nil, }err
+}$0
