@@ -223,7 +223,7 @@ local function get_connected_screen(default)
    f:close()
    return default
 end
-local ext_screen = get_connected_screen("VGA1")
+local ext_screen = get_connected_screen("HDMI1")
 
 local menu_screen_text = function ()
     return ({
