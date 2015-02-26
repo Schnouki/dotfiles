@@ -22,6 +22,7 @@ alias ssu="sudo -i"
 [[ $(hostname) == "DroboShare" ]] & alias ssu="sudo -i zsh"
 
 alias ec="emacsclient -n -c -a \"\""
+alias ecn="emacsclient -n -a \"\""
 
 # Correct options for xfig
 alias xfig='xfig -Portrait -specialtext -latexfonts -startlatexFont default'
