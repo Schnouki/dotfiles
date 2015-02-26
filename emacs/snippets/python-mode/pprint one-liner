@@ -1,0 +1,5 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: pprint one-liner
+# key: pp
+# --
+import pprint; pprint.pprint($1)$0

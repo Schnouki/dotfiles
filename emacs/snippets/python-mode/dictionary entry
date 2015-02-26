@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: dictionary entry
+# key: de
+# --
+"${1:name}": {
+    $0
+},

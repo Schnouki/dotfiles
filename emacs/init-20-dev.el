@@ -151,7 +151,9 @@
       schnouki/prettify-symbols-modes '((emacs-lisp-mode . nil)
 					(lisp-mode . nil)
 					(python-mode . (("is not" . ?≢)
-							("is" . ?≡)))
+							("is" . ?≡)
+							("in" . ?∈)
+							("not in" . ?∉)))
 					(javascript-mode . (("===" . ?≡)
 							    ("!==" . ?≢)))))
 
