@@ -70,29 +70,9 @@
 (use-package hideshowvis
   :ensure hideshowvis
   :init
-  (hideshowvis-enable))
-
-(define-fringe-bitmap 'hs-marker [0 24 24 126 126 24 24 0])
-
-(defcustom hs-fringe-face 'hs-fringe-face
-  "*Specify face used to highlight the fringe on hidden regions."
-  :type 'face
-  :group 'hideshow)
-
-(defface hs-fringe-face
-  '((t (:foreground "#888" :box (:line-width 2 :color "grey75" :style released-button))))
-  "Face used to highlight the fringe on folded regions"
-  :group 'hideshow)
-
-(defcustom hs-face 'hs-face
-  "*Specify the face to to use for the hidden region indicator."
-  :type 'face
-  :group 'hideshow)
-
-(defface hs-face
-  '((t (:background "#ff8" :box t)))
-  "Face to hightlight the ... area of hidden regions"
-  :group 'hideshow)
+  (progn
+    (hideshowvis-enable)
+    (hideshowvis-symbols)))
 
 (defun hs/display-code-line-counts (ov)
   "Display the number of lines in a snippet hidden with hs."
