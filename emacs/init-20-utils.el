@@ -251,4 +251,12 @@ If third argument START is non-nil, convert words after that index in STRING."
 			     t nil s)))
     (downcase s)))
 
+;; Increment number at point
+(use-package evil-numbers
+  :ensure t
+  :bind (("C-! +"             . evil-numbers/inc-at-pt)
+	 ("C-! <kp-add>"      . evil-numbers/inc-at-pt)
+	 ("C-! -"             . evil-numbers/dec-at-pt)
+	 ("C-! <kp-subtract>" . evil-numbers/dec-at-pt)))
+
 ;;; init-20-utils.el ends here
