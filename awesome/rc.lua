@@ -762,7 +762,7 @@ persokeys = {
    awful.key({ modkey }, "Next",  next_screen_viewnext),
 
    -- Impr. Écran
-   awful.key({ }, "Print", function () awful.util.spawn("shutter -f") end),
+   awful.key({ modkey }, "Print", function () awful.util.spawn("shutter -f") end),
 
    -- Éditeur de texte avec la touche ThinkVantage
    awful.key({                 }, "XF86Launch1", function () awful.util.spawn(editor_cmd) end),
