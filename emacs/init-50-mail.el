@@ -176,9 +176,12 @@
     (notmuch-search-show-thread)))
 
 ;; Display the hl-line correctly in notmuch-search
+(defface schnouki/notmuch-hl-line '((t :inherit hl-line))
+  "Face used for hl-line in notmuch-search mode")
 (defun schnouki/notmuch-hl-line-mode ()
   (prog1 (hl-line-mode)
     (when hl-line-overlay
+      (setq-local hl-line-face 'schnouki/notmuch-hl-line)
       (overlay-put hl-line-overlay 'priority 5))))
 (add-hook 'notmuch-search-hook 'schnouki/notmuch-hl-line-mode)
 
