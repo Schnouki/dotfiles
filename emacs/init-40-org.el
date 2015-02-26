@@ -19,12 +19,12 @@
 ;; Various parameters
 (setq-default org-tags-column -80)
 (setq org-directory "~/Dropbox/org/"
-      org-todo-keywords '((sequence "TODO" "STARTED" "|" "DONE" "CANCELED"))
-      schnouki/org-todo-keywords-sort-order '("DONE" "STARTED" "TODO" "CANCELED")
+      org-todo-keywords '((sequence "TODO" "STARTED" "|" "DONE" "DÉLÉGUÉ" "ANNULÉ"))
+      schnouki/org-todo-keywords-sort-order '("DONE" "STARTED" "TODO" "DÉLÉGUÉ" "ANNULÉ")
       org-highest-priority ?A
       org-default-priority ?C
       org-lowest-priority  ?E
-      org-log-done 'time
+      org-log-done nil
       org-support-shift-select t
 
       org-agenda-window-setup 'other-window
@@ -32,7 +32,7 @@
       org-enforce-todo-dependencies t
       org-enforce-todo-checkbox-dependencies t
       org-hierarchical-todo-statistics nil
-      org-hierarchical-checkbox-statistics nil
+      org-checkbox-hierarchical-statistics nil
 
       org-agenda-include-diary nil
       diary-file (concat org-directory "diary")
@@ -40,7 +40,7 @@
 
       org-agenda-dim-blocked-tasks t
       org-agenda-files (mapcar (lambda (s) (concat org-directory s ".org"))
-			       '("todo"))
+			       '("todo" "agenda"))
       org-agenda-custom-commands
       '(("c" . "TODO par catégories")
 	("cp" "Catégorie: perso" tags-todo "+perso")
