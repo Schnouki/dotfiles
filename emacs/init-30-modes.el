@@ -19,7 +19,22 @@
     (defun schnouki/maybe-gofmt-before-save ()
       (when (eq major-mode 'go-mode)
 	(gofmt-before-save)))
-    (add-hook 'before-save-hook 'schnouki/maybe-gofmt-before-save))
+    (add-hook 'before-save-hook 'schnouki/maybe-gofmt-before-save)
+
+    ;; From https://github.com/bradleywright/emacs.d
+    ;; Update GOPATH if there's a _vendor dir (as created by gom)
+    (defun schnouki/set-local-go-path ()
+      "Sets a local GOPATH if appropriate"
+      (let ((directory (locate-dominating-file (buffer-file-name) "_vendor"))
+	    (current-go-path (getenv "GOPATH")))
+	(when directory
+	  (make-local-variable 'process-environment)
+	  (let ((local-go-path (concat (expand-file-name directory) "_vendor")))
+	    (if (not current-go-path)
+		(setenv "GOPATH" local-go-path)
+	      (unless (string-match-p local-go-path current-go-path)
+		(setenv "GOPATH" (concat local-go-path ":" current-go-path))))))))
+    (add-hook 'go-mode-hook 'schnouki/set-local-go-path))
   :config
   (progn
     ;; http://yousefourabi.com/blog/2014/05/emacs-for-go/
