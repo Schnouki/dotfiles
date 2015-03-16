@@ -67,7 +67,7 @@ beautiful.init(config_dir .. "/themes/schnouki-zenburn.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "urxvtcd"
-editor = "emacsclient -c -a \"\""
+editor = "emacsclient -n -c -a \"\""
 -- editor_cmd = terminal .. " -e " .. editor
 editor_cmd = editor
 
