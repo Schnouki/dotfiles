@@ -243,4 +243,15 @@ If third argument START is non-nil, convert words after that index in STRING."
 	 ("C-! -"             . evil-numbers/dec-at-pt)
 	 ("C-! <kp-subtract>" . evil-numbers/dec-at-pt)))
 
+;; Unicode fonts
+(use-package unicode-fonts
+  :ensure t
+  :defer 5
+  :config
+  (progn
+    (setq unicode-fonts-block-font-mapping
+	  '(("Emoticons"
+	     ("Apple Color Emoji" "Symbola" "Quivira"))))
+    (unicode-fonts-setup)))
+
 ;;; init-20-utils.el ends here
