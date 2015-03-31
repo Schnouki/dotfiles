@@ -140,11 +140,13 @@
 ;; Fixmee
 (use-package fixmee
   :ensure t
+  :defer 10
   :config
-  (schnouki/when-idle
+  (progn
     (setq button-lock-mode-lighter nil
 	  fixmee-mode-lighter nil)
-    (global-fixmee-mode 1)))
+    (require 'button-lock)
+    (global-fixmee-mode)))
 
 ;; Display the current function name in the mode line
 (which-function-mode 1)
