@@ -4,13 +4,13 @@
 
 ;; Prepare various major modes
 (use-package lua-mode
-  :ensure lua-mode
+  :ensure t
   :mode "\\.lua\\'"
   :init
   (folding-add-to-marks-list 'lua-mode "-- {{{" "-- }}}" nil t))
 
 (use-package go-mode
-  :ensure go-mode
+  :ensure t
   :mode "\\.go\\'"
   :commands (godoc gofmt gofmt-before-save)
   :init
@@ -44,20 +44,21 @@
     (bind-key "C-c C-r" 'go-remove-unused-imports go-mode-map)))
 
 (use-package company-go
-  :ensure company-go
+  :ensure t
+  :commands company-go
   :init (add-to-list 'company-backends 'company-go))
 
 (use-package go-eldoc
-  :ensure go-eldoc
+  :ensure t
   :commands go-eldoc-setup
   :init (add-hook 'go-mode-hook 'go-eldoc-setup))
 
 (use-package haskell-mode
-  :ensure haskell-mode
+  :ensure t
   :mode "\\.hs\\'")
 
 (use-package groovy-mode
-  :ensure groovy-mode
+  :ensure t
   :mode "\\.groovy\\'")
 
 (use-package python
@@ -68,18 +69,18 @@
     (defalias 'python3-mode 'python-mode)))
 
 (use-package hy-mode
-  :ensure hy-mode
+  :ensure t
   :mode "\\.hy\\'")
 
 (use-package js3-mode
-  :ensure js3-mode
+  :ensure t
   :mode "\\.js\\'"
   :interpreter "node"
   :init
   (folding-add-to-marks-list 'js3-mode "// {{{" "// }}}" nil t))
 
 (use-package coffee-mode
-  :ensure coffee-mode
+  :ensure t
   :mode "\\.coffee\'"
   :init
   (progn
@@ -91,19 +92,19 @@
 		 (local-set-key (kbd "C-c C-c") 'coffee-compile-buffer)))))
 
 (use-package actionscript-mode
-  :ensure actionscript-mode
+  :ensure t
   :mode "\\.as\'")
 
 (use-package php-mode
-  :ensure php-mode
+  :ensure t
   :mode "\\.php[345]?\\'")
 
 (use-package yaml-mode
-  :ensure yaml-mode
+  :ensure t
   :mode "\\.ya?ml\\'")
 
 (use-package markdown-mode
-  :ensure markdown-mode
+  :ensure t
   :mode (("\\.md\\'" . markdown-mode)
   	 ("\\.mdwn\\'" . markdown-mode)
   	 ("\\.markdown\\'" . markdown-mode))
@@ -111,21 +112,21 @@
   (setq markdown-command "~/.config/emacs/markdown"))
 
 (use-package adoc-mode
-  :ensure adoc-mode
+  :ensure t
   :mode "\\.adoc?\\'")
 
 (use-package jinja2-mode
-  :ensure jinja2-mode
+  :ensure t
   :mode "\\.j2\\'")
 
 (use-package scss-mode
-  :ensure scss-mode
+  :ensure t
   :mode "\\.scss\\'"
   :init
   (setq scss-compile-at-save nil))
 
 (use-package haml-mode
-  :ensure haml-mode
+  :ensure t
   :mode "\\.haml\\'")
 
 (use-package cuda-mode
@@ -138,19 +139,19 @@
 	 ("\\.cmake\\'" . cmake-mode)))
 
 (use-package vala-mode
-  :ensure vala-mode
+  :ensure t
   :mode "\\.vala\\'")
 
 (use-package pkgbuild-mode
-  :ensure pkgbuild-mode
+  :ensure t
   :mode "/PKGBUILD\\'")
 
 (use-package dockerfile-mode
-  :ensure dockerfile-mode
+  :ensure t
   :mode "/Dockerfile\\'")
 
 (use-package puppet-mode
-  :ensure puppet-mode
+  :ensure t
   :mode "\\.pp\\'")
 
 (use-package gnuplot
@@ -165,7 +166,7 @@
   :commands plantuml-mode)
 
 (use-package es-mode
-  :ensure es-mode
+  :ensure t
   :commands es-mode)
 
 (use-package po-mode
@@ -176,7 +177,7 @@
   (modify-coding-system-alist 'file "\\.po\\'\\|\\.po\\." 'po-find-file-coding-system))
 
 (use-package bats-mode
-  :ensure bats-mode
+  :ensure t
   :mode "\\.bats\\'")
 
 ;; -----------------------------------------------------------------------------
@@ -205,7 +206,7 @@
 
 ;; geiser, for Scheme REPL and autodoc
 (use-package geiser
-  :ensure geiser)
+  :ensure t)
 
 ;; eldoc-mode
 (dolist (hook '(emacs-lisp-mode-hook lisp-mode-hook python-mode-hook))

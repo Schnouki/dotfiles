@@ -3,9 +3,9 @@
 ;;; Code:
 
 (use-package color-theme
-  :ensure color-theme)
+  :ensure t)
 (use-package zenburn-theme
-  :ensure zenburn-theme
+  :ensure t
   :init
   (progn
     (load-theme 'zenburn)

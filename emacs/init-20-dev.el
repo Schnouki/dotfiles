@@ -2,16 +2,22 @@
 ;;; Commentary:
 ;;; Code:
 
+(use-package dash
+  :ensure t)
+
 ;; Tabs and indentation
 (setq-default c-basic-offset 4
 	      c-indent-level 4
 	      indent-tabs-mode nil) ;; No tabs at all!
 
 (use-package dtrt-indent
-  :ensure dtrt-indent
+  :ensure t
   :commands dtrt-indent-mode
-  :idle
-  (dtrt-indent-mode 1))
+  :defer 3
+  :config
+  (progn
+    (dtrt-indent-mode 1)
+    (setq global-mode-string (--remove (eq it 'dtrt-indent-mode-line-info) global-mode-string))))
 
 ;; No trailing whitespaces
 (defvar-local enable-delete-trailing-whitespace t
@@ -30,26 +36,29 @@
   (setq indent-tabs-mode t))
 (add-hook 'emacs-lisp-mode-hook 'schnouki/emacs-lisp-default-indent)
 
-(use-package dash
-  :ensure dash)
-
 ;; Flycheck
 (use-package flycheck
-  :ensure flycheck
+  :ensure t
+  :config
+  (progn
+    (setq flycheck-check-syntax-automatically (--remove (or (eq it 'mode-enabled)
+							    (eq it 'new-line))
+							flycheck-check-syntax-automatically)))
   :init
   (progn
     (add-hook 'after-init-hook #'global-flycheck-mode)))
 
 (use-package flycheck-pos-tip
-  :ensure flycheck-pos-tip
+  :ensure t
+  :commands flycheck-pos-tip-error-messages
   :init
-  (progn
-    (setq flycheck-display-error-messages #'flycheck-pos-tip-error-messages)))
+  (eval-after-load 'flycheck
+    '(setq flycheck-display-error-messages #'flycheck-pos-tip-error-messages)))
 
 ;; Code folding
 (use-package folding
   :diminish folding-mode
-  :init
+  :config
   (progn
     (setq folding-mode-prefix-key (kbd "C-:")
 	  folding-folding-on-startup nil
@@ -68,8 +77,8 @@
 
 ;; Display indicator in fringe for code that can be folded with hideshow
 (use-package hideshowvis
-  :ensure hideshowvis
-  :init
+  :ensure t
+  :config
   (progn
     (hideshowvis-enable)
     (hideshowvis-symbols)))
@@ -120,9 +129,9 @@
 
 ;; Company -- complete anything
 (use-package company
-  :ensure company
+  :ensure t
   :diminish company-mode
-  :init
+  :config
   (progn
     (setq company-backends (remove 'company-ropemacs company-backends)
 	  company-tooltip-limit 20)
@@ -130,9 +139,9 @@
 
 ;; Fixmee
 (use-package fixmee
-  :ensure fixmee
-  :idle
-  (progn
+  :ensure t
+  :config
+  (schnouki/when-idle
     (setq button-lock-mode-lighter nil
 	  fixmee-mode-lighter nil)
     (global-fixmee-mode 1)))
@@ -173,22 +182,22 @@
 
 ;; Increase selected region by semantic units
 (use-package expand-region
-  :ensure expand-region
+  :ensure t
   :demand t
   :bind (("C-:" . er/expand-region)
 	 ("C-," . er/contract-region)))
 
 (use-package smart-forward
-  :ensure smart-forward
+  :ensure t
   :bind (("M-<up>" . smart-up)
 	 ("M-<down>" . smart-down)
 	 ("M-<left>" . smart-backward)
 	 ("M-<right>" . smart-forward)))
 
 (use-package drag-stuff
-  :ensure drag-stuff
+  :ensure t
   :diminish drag-stuff-mode
-  :init
+  :config
   (progn
     (setq drag-stuff-modifier '(meta shift))
     (drag-stuff-global-mode t)))

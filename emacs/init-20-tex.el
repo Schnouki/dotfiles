@@ -4,7 +4,8 @@
 
 ;; Basic settings
 (use-package auctex
-  :mode ("\\.tex\\'" . auctex-mode)
+  :ensure t
+  :mode ("\\.tex\\'" . latex-mode)
   :commands (latex-mode LaTeX-mode plain-tex-mode)
   :init
   (progn

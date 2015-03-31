@@ -3,7 +3,7 @@
 ;;; Code:
 
 (use-package multiple-cursors
-  :ensure multiple-cursors
+  :ensure t
   :bind (("C-* l" . mc/edit-lines)
 	 ("C-* n" . mc/mark-next-like-this)
 	 ("C-* p" . mc/mark-previous-like-this)
@@ -20,7 +20,7 @@
   (require 'mc-extras))
 
 (use-package mc-extras
-  :ensure mc-extras
+  :ensure t
   :commands (mc/compare-chars mc/compare-chars-backward mc/compare-chars-forward
 			      mc/cua-rectangle-to-multiple-cursors
 			      mc/remove-current-cursor mc/remove-duplicated-cursors)

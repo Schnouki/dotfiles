@@ -3,9 +3,10 @@
 ;;; Code:
 
 (use-package magit
-  :ensure magit
-  :bind (("C-<" . magit-status)
+  :ensure t
+  :bind (("C-<"   . magit-status)
 	 ("C-M-<" . magit-grep))
+  :demand t
   :init
   (progn
     (setq magit-process-popup-time 5
@@ -17,16 +18,16 @@
 
 ;; git-annex
 (use-package git-annex
-  :ensure git-annex)
+  :ensure t)
 (use-package magit-annex
-  :ensure magit-annex
+  :ensure t
   :defer t
   :init
   (add-hook 'magit-mode-hook (lambda () (require 'magit-annex))))
 
 ;; gitflow
 (use-package magit-gitflow
-  :ensure magit-gitflow
+  :ensure t
   :commands turn-on-magit-gitflow
   :diminish magit-gitflow-mode
   :init
@@ -34,6 +35,6 @@
 
 ;; gitignore
 (use-package gitignore-mode
-  :ensure gitignore-mode)
+  :ensure t)
 
 ;;; init-40-vc.el ends here

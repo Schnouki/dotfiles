@@ -3,7 +3,7 @@
 ;;; Code:
 
 (use-package prodigy
-  :ensure prodigy
+  :ensure t
   :bind ("C-! p" . prodigy)
   :config
   (let ((blogdir (expand-file-name "~/site/blog")))

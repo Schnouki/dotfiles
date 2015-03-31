@@ -4,7 +4,7 @@
 
 ;; bind-key
 (use-package bind-key
-  :ensure bind-key)
+  :ensure t)
 
 ;; Set justification with C-x M-f
 (bind-key "C-x M-f" 'set-justification)
@@ -137,32 +137,35 @@ Return the index of the matching item, or nil if not found."
 
 ;; ido-mode for better buffer switching, file selection, etc.
 (use-package ido
-  :init
+  :config
   (progn
     (setq ido-default-file-method 'selected-window
 	  ido-default-buffer-method 'selected-window)
     (ido-mode 1)))
 (use-package ido-ubiquitous
-  :ensure ido-ubiquitous
-  :init
+  :ensure t
+  :config
   (ido-ubiquitous-mode 1))
 (use-package ido-vertical-mode
-  :ensure ido-vertical-mode
-  :init
+  :ensure t
+  :config
   (progn
     (setq ido-vertical-define-keys 'C-n-C-p-up-down-left-right)
     (ido-vertical-mode 1)))
 
 ;; Enhanced M-x
 (use-package smex
-  :ensure smex
+  :ensure t
   :bind (("M-x" . smex)
 	 ("C-! M-x" . smex-major-mode-commands)))
 
 ;; ack
 (use-package ack-and-a-half
-  :ensure ack-and-a-half
-  :commands ack
+  :ensure t
+  :bind (("C-! M-<" . ack-and-a-half)
+	 ("C-! <"   . ack-and-a-half-same)
+	 ("C-! M-f" . ack-and-a-half-find-file)
+	 ("C-! f"   . ack-and-a-half-find-file-same))
   :init
   (progn
     (defalias 'ack 'ack-and-a-half)
@@ -172,8 +175,8 @@ Return the index of the matching item, or nil if not found."
 
 ;; undo-tree
 (use-package undo-tree
-  :ensure undo-tree
-  :init
+  :ensure t
+  :config
   (progn
     ;; Lighter displayed in mode line
     (setq undo-tree-mode-lighter nil)
@@ -182,7 +185,7 @@ Return the index of the matching item, or nil if not found."
 
 ;; ace-jump (reminder: C-x C-SPC to pop-global-mark)
 (use-package ace-jump-mode
-  :ensure ace-jump-mode
+  :ensure t
   :bind (("C-;" . ace-jump-mode)
 	 ("C-x C-;" . ace-jump-mode-pop-mark))
   :init
@@ -192,7 +195,7 @@ Return the index of the matching item, or nil if not found."
 
 ;; ioccur - incremental search of lines in current buffer matching input
 (use-package ioccur
-  :ensure ioccur
+  :ensure t
   :bind (("C-! C-s" . ioccur)
 	 ("C-! M-s" . ioccur-find-buffer-matching))
   :init
@@ -200,7 +203,7 @@ Return the index of the matching item, or nil if not found."
 
 ;; Google Translate
 (use-package google-translate
-  :ensure google-translate
+  :ensure t
   :bind ("C-! w" . google-translate-query-translate)
   :init
   (setq google-translate-default-source-language "en"
@@ -209,14 +212,14 @@ Return the index of the matching item, or nil if not found."
 
 ;; NSFW
 (use-package sudoku
-  :ensure sudoku
+  :ensure t
   :commands sudoku
   :init
   (setq-default sudoku-level "medium"))
 
 ;; Deft
 (use-package deft
-  :ensure deft
+  :ensure t
   :bind ("C-! d" . deft)
   :init
   (progn
@@ -230,12 +233,12 @@ Return the index of the matching item, or nil if not found."
 
 ;; ix.io integration
 (use-package ix
-  :ensure ix
+  :ensure t
   :commands (ix ix-browse ix-delete))
 
 ;; Find unbound keys
 (use-package unbound
-  :ensure unbound
+  :ensure t
   :commands describe-unbound-keys)
 
 ;; http://www.emacswiki.org/emacs/CamelCase

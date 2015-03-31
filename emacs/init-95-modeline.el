@@ -4,8 +4,8 @@
 
 ;; Smart mode line
 (use-package smart-mode-line
-  :ensure smart-mode-line
-  :init
+  :ensure t
+  :config
   (progn
     (setq sml/theme 'respectful
 	  sml/show-client t

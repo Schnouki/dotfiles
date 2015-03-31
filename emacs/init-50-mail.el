@@ -292,10 +292,10 @@
 
 ;; Other communication services :)
 (use-package jabber
-  :ensure jabber
+  :ensure t
   :commands jabber-connect)
 (use-package twittering-mode
-  :ensure twittering-mode
+  :ensure t
   :commands (twit twittering-mode))
 
 ;;; init-50-mail.el ends here

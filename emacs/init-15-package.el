@@ -11,7 +11,7 @@
 
 ;; Don't auto-activate packages
 (setq package-enable-at-startup nil)
-(package-initialize)
+(package-initialize nil)
 
 ;; Install use-packages, which will install everything else as needed
 (unless (package-installed-p 'use-package)
@@ -23,7 +23,7 @@
 
 ;; Notify that Emacs is loading…
 (use-package alert
-  :ensure alert
+  :ensure t
   :commands alert
   :config
   (setq alert-default-style 'libnotify))

@@ -3,7 +3,7 @@
 ;;; Code:
 
 (use-package virtualenvwrapper
-  :ensure virtualenvwrapper
+  :ensure t
   :commands (venv-workon venv-deactivate venv-initialize-interactive-shells venv-initialize-eshell)
   :config
   (message "virtualenvwrapper loaded")
@@ -23,7 +23,7 @@
     (add-hook 'python-mode-hook 'schnouki/setup-venv)))
 
 (use-package anaconda-mode
-  :ensure anaconda-mode
+  :ensure t
   :commands anaconda-mode
   :diminish anaconda-mode
   :init
@@ -32,11 +32,11 @@
     (add-hook 'python-mode-hook 'eldoc-mode)))
 
 (use-package company-anaconda
-  :ensure company-anaconda
+  :ensure t
   :init (add-to-list 'company-backends 'company-anaconda))
 
 (use-package company-inf-python
-  :ensure company-inf-python
+  :ensure t
   :init (add-to-list 'company-backends 'company-inf-python))
 
 ;; Django helper
