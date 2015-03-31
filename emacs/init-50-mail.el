@@ -281,7 +281,7 @@
 (eval-after-load 'mml
   '(progn
      (defadvice mml-minibuffer-read-file (around ido-mml-minibuffer-read-file)
-       (flet ((read-file-name (prompt &optional dir default-fn mustmatch)
+       (cl-flet ((read-file-name (prompt &optional dir default-fn mustmatch)
 			      (ido-read-file-name prompt dir default-fn mustmatch)))
 	 ad-do-it))
      (ad-activate 'mml-minibuffer-read-file)))

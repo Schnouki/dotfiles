@@ -162,9 +162,6 @@
   :ensure t
   :mode "\\.dot\\'")
 
-(use-package plantuml-mode
-  :commands plantuml-mode)
-
 (use-package es-mode
   :ensure t
   :commands es-mode)
