@@ -254,4 +254,10 @@ If third argument START is non-nil, convert words after that index in STRING."
 	     ("Apple Color Emoji" "Symbola" "Quivira"))))
     (unicode-fonts-setup)))
 
+;; Colorize strings that represent colors
+(use-package rainbow-mode
+  :ensure t
+  :commands rainbow-mode
+  :diminish rainbow-mode)
+
 ;;; init-20-utils.el ends here
