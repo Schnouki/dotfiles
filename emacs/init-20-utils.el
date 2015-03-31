@@ -140,24 +140,13 @@ Return the index of the matching item, or nil if not found."
   :config
   (progn
     (setq ido-default-file-method 'selected-window
-	  ido-default-buffer-method 'selected-window)
-    (ido-mode 1)))
-(use-package ido-ubiquitous
-  :ensure t
-  :config
-  (ido-ubiquitous-mode 1))
+	  ido-default-buffer-method 'selected-window)))
 (use-package ido-vertical-mode
   :ensure t
   :config
   (progn
     (setq ido-vertical-define-keys 'C-n-C-p-up-down-left-right)
     (ido-vertical-mode 1)))
-
-;; Enhanced M-x
-(use-package smex
-  :ensure t
-  :bind (("M-x" . smex)
-	 ("C-! M-x" . smex-major-mode-commands)))
 
 ;; ack
 (use-package ack-and-a-half
@@ -192,14 +181,6 @@ Return the index of the matching item, or nil if not found."
   (setq ace-jump-mode-scope 'frame)
   :config
   (ace-jump-mode-enable-mark-sync))
-
-;; ioccur - incremental search of lines in current buffer matching input
-(use-package ioccur
-  :ensure t
-  :bind (("C-! C-s" . ioccur)
-	 ("C-! M-s" . ioccur-find-buffer-matching))
-  :init
-  (add-to-list 'desktop-globals-to-save 'ioccur-history))
 
 ;; Google Translate
 (use-package google-translate

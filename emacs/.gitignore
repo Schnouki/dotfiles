@@ -1,22 +1,23 @@
-auto-save-list
 %backup%~
+
+.python-environments/
+auto-save-list/
+elpa/
+eshell/
+url/
+var/
+
 .emacs.desktop
 .emacs.desktop.lock
 .mc-lists.el
 .org-id-locations
-.python-environments/
-ede-projects.el
-elpa/
-eshell/
-var/
-places
-server
-url
-tramp
-image-dired
 abbrev_defs
-el-get
-ac-comphist.dat
+ede-projects.el
+image-dired
+places
+recentf
+server
+tramp
 
 # Symlinks
 golbarg.el

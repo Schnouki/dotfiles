@@ -143,6 +143,27 @@
       (eval-after-load 'git-annex
 	`(progn
 	   (set-face-foreground 'git-annex-dired-annexed-available ,zenburn-green+2)
-	   (set-face-foreground 'git-annex-dired-annexed-unavailable ,zenburn-red))))))
+	   (set-face-foreground 'git-annex-dired-annexed-unavailable ,zenburn-red)))
+
+      ;;; helm
+      ;; helm-go-package
+      (eval-after-load 'helm-go-package
+	`(progn
+	   (set-face-foreground 'helm-source-go-package-godoc-description ,zenburn-yellow)))
+
+      ;; helm-ls-git
+      (eval-after-load 'helm-ls-git
+	`(progn
+	   (set-face-foreground 'helm-ls-git-modified-not-staged-face ,zenburn-yellow)
+	   (set-face-foreground 'helm-ls-git-modified-and-staged-face ,zenburn-orange)
+	   (set-face-foreground 'helm-ls-git-renamed-modified-face ,zenburn-orange)
+	   (set-face-foreground 'helm-ls-git-untracked-face ,zenburn-red)
+	   (set-face-foreground 'helm-ls-git-added-copied-face ,zenburn-green)
+	   (set-face-foreground 'helm-ls-git-added-modified-face ,zenburn-blue)
+	   (set-face-foreground 'helm-ls-git-deleted-not-staged-face ,zenburn-red-4)
+	   (set-face-foreground 'helm-ls-git-deleted-and-staged-face ,zenburn-bg-1)
+	   (set-face-foreground 'helm-ls-git-conflict-face ,zenburn-magenta)))
+
+      )))
 
 ;;; init-90-zenburn.el ends here
