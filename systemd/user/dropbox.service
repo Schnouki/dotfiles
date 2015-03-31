@@ -3,9 +3,11 @@ Description=Dropbox
 Requires=xorg.target
 
 [Service]
-Type=forking
-ExecStart=/usr/bin/dropbox start
-ExecStop=/usr/bin/dropbox stop
+Type=simple
+ExecStart=/usr/bin/dropboxd
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
 
 [Install]
-WantedBy=xorg.target
+WantedBy=default.target

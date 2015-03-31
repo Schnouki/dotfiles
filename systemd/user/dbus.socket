@@ -3,3 +3,6 @@ Description=D-Bus System Message Bus Socket
 
 [Socket]
 ListenStream=%t/dbus/user_bus_socket
+
+[Install]
+WantedBy=sockets.target
