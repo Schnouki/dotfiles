@@ -20,7 +20,7 @@
       mail-envelope-from 'header
       message-sendmail-envelope-from 'header
       gnus-inhibit-images nil
-      notmuch-saved-searches '((:name "home"        :key "h" :query "(tag:inbox or tag:todo or tag:unread)")
+      notmuch-saved-searches '((:name "home"        :key "h" :query "tag:inbox or tag:todo or tag:unread")
 			       (:name "unread"      :key "u" :query "tag:unread")
 			       (:name "inbox"       :key "i" :query "tag:inbox")
 			       (:name "blabla"      :key "b" :query "tag:blabla")
