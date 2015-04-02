@@ -10,7 +10,8 @@
   :init
   (progn
     (setq magit-process-popup-time 5
-	  magit-auto-revert-mode-lighter nil)))
+          magit-auto-revert-mode-lighter nil
+          magit-last-seen-setup-instructions "1.4.0")))
 
 (use-package magit-blame
   :ensure magit
