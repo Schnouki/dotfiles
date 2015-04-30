@@ -16,7 +16,6 @@ __pycache__/
 !guile
 !mimeo.conf
 !gpgdiff
-!gtk-3.0/settings.ini
 !gtkrc-2.0
 !gtkrc-odin
 !gtkrc-baldr
@@ -32,6 +31,8 @@ __pycache__/
 ddns/key
 !emacs
 !fontconfig
+!gtk-3.0
+gtk-3.0/bookmarks
 !mozilla
 !mpDris2
 !notmuch
