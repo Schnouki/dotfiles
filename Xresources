@@ -104,4 +104,23 @@ XTerm*color15:    #EEEEEC
 XTerm*faceName: DejaVu Sans Mono
 XTerm*faceSize: 8
 
+! rofi -- dmenu clone
+rofi.opacity:  100
+rofi.width:    90
+rofi.lines:    25
+rofi.font:     DejaVu Sans Mono 7
+rofi.location: 0
+rofi.padding:  5
+
+rofi.color-enabled: true
+rofi.color-window: #3F3F3F,#000000
+
+! State:           bg,     fg,     bgalt   hlbg,   hlfg
+! zenburn:         bg,     fg,     bg-05,  bg+1,   fg+1
+rofi.color-normal: #3F3F3F,#DCDCCC,#383838,#4F4F4F,#FFFFEF
+!                  blue-4, fg,     blue-5, blue-3, fg+1
+rofi.color-active: #4C7073,#DCDCCC,#366060,#5C888B,#FFFFEF
+!                  red-4,  fg,     red-5,  red-3,  fg+1
+rofi.color-urgent: #8C5353,#DCDCCC,#7C4343,#9C6363,#FFFFEF
+
 !(call-process-shell-command "xrdb -load ~/.Xresources")
