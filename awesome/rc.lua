@@ -263,7 +263,7 @@ mymainmenu = awful.menu({ items = { { "&awesome", myawesomemenu, beautiful.aweso
                                     { "&chromium", "chromium", icon_theme.get("apps", "chromium") },
                                     { "s&hotwell", "shotwell", icon_theme.get("apps", "shotwell") },
                                     { "&spotify", "spotify", icon_theme.get("apps", "spotify-client") },
-                                    { "&netflix", "google-chrome-stable https://www.netflix.com/", icon_theme.get("apps", "netflix") },
+                                    { "&netflix", "chromium https://www.netflix.com/", icon_theme.get("apps", "netflix") },
                                     { "&popcorn time", "popcorntime", icon_theme.get("apps", "popcorntime", "/usr/share/pixmaps/popcorntime.png") },
                                     { "libre &office", "soffice", icon_theme.get("apps", "libfreoffice-writer") },
                                     { "&gcmd", "gnome-commander", icon_theme.get("apps", "gnome-commander", "/usr/share/pixmaps/gnome-commander.png") },
