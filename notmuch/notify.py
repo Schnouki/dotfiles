@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import configparser
 from gi.repository import Notify
 import notmuch
+import os.path
 import sys
 
 markup_cnt  = '[<span foreground="#93e0e3">{0}</span>]'
@@ -14,9 +16,16 @@ MAX_FROM_LEN = 35
 MAX_SUBJ_LEN = 70
 MAX_THREADS = 15
 
+config = configparser.ConfigParser()
+with open(os.path.expanduser("~/.notmuch-config")) as ini:
+    config.read_file(ini)
+exc_tags = config["search"].get("exclude_tags", "").split(";")
+
 db = notmuch.Database(mode=notmuch.Database.MODE.READ_ONLY)
 q = notmuch.Query(db, "tag:unread or tag:todo")
 q.set_sort(notmuch.Query.SORT.NEWEST_FIRST)
+for tag in exc_tags:
+    q.exclude_tag(tag.strip())
 
 # Read data about the new messages
 tab = []
@@ -36,9 +45,11 @@ for thr in q.search_threads():
         continue
 
     from_ = thr.get_authors()
-    subj_ = thr.get_subject() or "(no subject)"
-
     from_ = from_.split(u"|", 1)[0]
+    from_ = from_.replace("\t", " ")
+
+    subj_ = thr.get_subject() or "(no subject)"
+    subj_ = subj_.replace("\t", " ")
 
     lf = len(from_)
     if lf > MAX_FROM_LEN:
