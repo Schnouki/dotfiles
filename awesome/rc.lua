@@ -254,18 +254,28 @@ if screen.count() > 1 then
 end
 -- }}}
 
+-- {{{ Screenshot menu
+screenshotmenu = {
+   { "&Full screen", "shutter -f" },
+   { "&Window", "shutter -w" },
+   { "&Active window", "shutter -a" },
+   { "&Selection", "shutter -s" },
+}
+-- }}}
+
 mymainmenu = awful.menu({ items = { { "&awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "&jeux", gamemenu },
                                     { "&utils", utilsmenu },
                                     { "écran &ext.", screenmenu },
+                                    { "&screenshot", screenshotmenu },
                                     { "&gajim", "gajim", icon_theme.get("apps", "gajim") },
                                     { "&firefox beta", "firefox-beta-bin", icon_theme.get("apps", "firefox-beta-bin") },
                                     { "&chromium", "chromium", icon_theme.get("apps", "chromium") },
                                     { "s&hotwell", "shotwell", icon_theme.get("apps", "shotwell") },
-                                    { "&spotify", "spotify", icon_theme.get("apps", "spotify-client") },
+                                    { "sp&otify", "spotify", icon_theme.get("apps", "spotify-client") },
                                     { "&netflix", "chromium https://www.netflix.com/", icon_theme.get("apps", "netflix") },
                                     { "&popcorn time", "popcorntime", icon_theme.get("apps", "popcorntime", "/usr/share/pixmaps/popcorntime.png") },
-                                    { "libre &office", "soffice", icon_theme.get("apps", "libfreoffice-writer") },
+                                    { "&libre office", "soffice", icon_theme.get("apps", "libfreoffice-writer") },
                                     { "&gcmd", "gnome-commander", icon_theme.get("apps", "gnome-commander", "/usr/share/pixmaps/gnome-commander.png") },
                                     { "open &terminal", terminal }
                                   }
