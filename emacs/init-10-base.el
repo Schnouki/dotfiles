@@ -53,6 +53,9 @@
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
 
+;; No internal border
+(add-to-list 'default-frame-alist '(internal-border . 0))
+
 ;; Focus follows mouse
 ;(setq mouse-autoselect-window t)
 
