@@ -177,6 +177,10 @@
   :ensure t
   :mode "\\.bats\\'")
 
+(use-package systemd
+  :ensure t
+  :mode ("\\.automount\\'\\|\\.busname\\'\\|\\.mount\\'\\|\\.service\\'\\|\\.slice\\'\\|\\.socket\\'\\|\\.target\\'\\|\\.timer\\'\\|\\.link\\'\\|\\.netdev\\'\\|\\.network\\'\\|\\.override\\.conf.*\\'" . systemd-mode))
+
 ;; -----------------------------------------------------------------------------
 ;; Minor modes
 ;; -----------------------------------------------------------------------------
