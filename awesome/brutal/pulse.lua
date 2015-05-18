@@ -23,7 +23,8 @@ local string = {
     gmatch = string.gmatch
 }
 local math = {
-    floor = math.floor
+    floor = math.floor,
+    tointeger = math.tointeger
 }
 local awful = require("awful")
 -- }}}
@@ -216,7 +217,7 @@ function pulse.add(percent, sink)
     local pattern = "set%-sink%-volume "..escape(sink).." (0x[%x]+)"
     local initial_vol =  tonumber(string.match(data, pattern))
 
-    local vol = initial_vol + percent/100*0x10000
+    local vol = math.tointeger(math.floor(initial_vol + percent/100*0x10000))
     if vol > 0x10000 then vol = 0x10000 end
     if vol < 0 then vol = 0 end
 
