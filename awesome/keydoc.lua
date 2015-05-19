@@ -45,18 +45,19 @@ local currentgroup = "Misc"
 local orig = awful.key.new
 
 -- Replacement for awful.key.new
-local function new(mod, key, press, release, docstring)
+local function new(mod, key, press, release, docstring, docgroup)
 	-- Usually, there is no use of release, let's just use it for doc
 	-- if it's a string.
-	if press and release and not docstring
+	if press and release and (not docstring or (type(docstring) == "string" and not docgroup))
 	and type(release) == "string" then
+		docgroup = docstring
 		docstring = release
 		release = nil
 	end
 	local k = orig(mod, key, press, release)
 	-- Remember documentation for this key (we take the first one)
 	if k and #k > 0 and docstring then
-		doc[k[1]] = { help = docstring, group = currentgroup }
+		doc[k[1]] = { help = docstring, group = docgroup or currentgroup }
 	end
 	return k
 end
