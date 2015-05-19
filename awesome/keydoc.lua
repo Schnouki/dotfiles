@@ -6,7 +6,7 @@
 -- with some patches and additions:
 -- 	changed obsolete module declaration
 --	public settings:
---		translation table 
+--		translation table
 --		colors and font
 --	several notifications if not fit on screen
 --
@@ -21,6 +21,7 @@ local type = type
 local modkey = modkey or "Mod4"
 local beautiful = require("beautiful")
 local naughty = require("naughty")
+local wibox = require("wibox")
 local capi = {
 	root = root,
 	client = client
@@ -150,7 +151,7 @@ local function markup(keys,pattern)
 					"%"..(longest - unilen(skey))..
 					"s%s%2s", "",skey,""
 				)..
-				' </span><span color="'..fg_doc..'">'.. 
+				' </span><span color="'..fg_doc..'">'..
 				help .. '</span>\n'
 			end
 		end
@@ -168,7 +169,7 @@ local function spairs(t, order)
 
 	-- if order function given, sort by it by
 	-- passing the table and keys a, b,
-	-- otherwise just sort the keys 
+	-- otherwise just sort the keys
 	if order then
 		table.sort(keys, function(a,b) return order(t, a, b) end)
 	else
