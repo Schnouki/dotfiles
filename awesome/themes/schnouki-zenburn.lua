@@ -14,6 +14,7 @@ theme.wallpaper_dir = "/home/schnouki/images/wallpapers"
 -- {{{ Styles
 theme.font      = "DejaVu Sans 8"
 theme.taglist_font = "DejaVu Sans 10"
+theme.monofont = "DejaVu Sans Mono 8"
 
 -- {{{ Colors
 theme.fg_normal = "#DCDCCC"
@@ -50,11 +51,11 @@ theme.titlebar_bg_normal = "#3F3F3F"
 -- You can add as many variables as
 -- you wish and access them by using
 -- beautiful.variable in your rc.lua
---theme.fg_widget        = "#AECF96"
---theme.fg_center_widget = "#88A175"
---theme.fg_end_widget    = "#FF5656"
---theme.bg_widget        = "#494B4F"
---theme.border_widget    = "#3F3F3F"
+theme.fg_widget        = "#7F9F7F"
+theme.fg_center_widget = "#5F7F5F"
+theme.fg_end_widget    = "#CC9393"
+theme.bg_widget        = "#4F4F4F"
+theme.border_widget    = "#3F3F3F"
 -- }}}
 
 -- {{{ Mouse finder
