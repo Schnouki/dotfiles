@@ -19,12 +19,19 @@ local LocksMon = {}
 
 function LocksMon:new()
    local t = timer { timeout = 0.25 }
-   local o = { widget = wibox.widget.textbox(), timer = t, key = nil }
-   t:connect_signal("timeout",
-                    function()
-                       t:stop()
-                       o:immediateUpdate()
-                    end)
+   local o = { widget = wibox.widget.textbox(), timer = t, key = nil,
+               tries = 4,
+               current_cl = lousy.get_caps_lock(),
+               current_nl = lousy.get_num_lock(),
+             }
+   local timeout_func = function()
+      o.tries = o.tries - 1
+      if o.tries == 0 then
+         t:stop()
+      end
+      o:immediateUpdate()
+   end
+   t:connect_signal("timeout", timeout_func)
    setmetatable(o, self)
    self.__index = self
    return o
@@ -47,7 +54,7 @@ function LocksMon:immediateUpdate()
    end
    self.widget:set_markup(s)
 
-   if self.key == "Caps_Lock" then
+   if self.key == "Caps_Lock" and self.current_cl ~= cl then
       s = "Caps Lock is "
       if cl > 0 then
          s = s .. col("bad", "ON")
@@ -55,7 +62,7 @@ function LocksMon:immediateUpdate()
          s = s .. col("good", "OFF")
       end
       naughty.notify({ text = markup.big(markup.bold(s)) })
-   elseif self.key == "Num_Lock" then
+   elseif self.key == "Num_Lock" and self.current_nl ~= nl then
       s = "Num Lock is "
       if nl > 0 then
          s = s .. col("good", "ON")
@@ -64,10 +71,13 @@ function LocksMon:immediateUpdate()
       end
       naughty.notify({ text = markup.big(markup.bold(s)) })
    end
+   self.current_cl = cl
+   self.current_nl = nl
 end
 
 function LocksMon:update(key)
    self.key = key
+   self.tries = 4
    self.timer:start()
 end
 -- }}}
