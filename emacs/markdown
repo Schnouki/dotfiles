@@ -1,6 +1,29 @@
 #!/usr/bin/env python3
 
 import markdown
+import pygments.formatters
 
-md = markdown.Markdown(extensions=["extra"])
+formatter = pygments.formatters.get_formatter_by_name("html", style="default")
+
+CODEHILITE_CSS = formatter.get_style_defs()
+
+HEADER = """<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <style type="text/css">
+""" + CODEHILITE_CSS + """
+    </style>
+  </head>
+  <body>
+"""
+
+FOOTER = """
+  </body>
+</html>
+"""
+
+print(HEADER)
+md = markdown.Markdown(extensions=["extra", "codehilite"])
 md.convertFile()
+print(FOOTER)
