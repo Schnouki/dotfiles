@@ -225,7 +225,31 @@ local function get_connected_screen(default)
 end
 local ext_screen = get_connected_screen("HDMI1")
 
-local menu_screen_text = function ()
+local function ext_screen_connected()
+   local f = io.popen("xrandr")
+   local line, m
+   for line in f:lines() do
+      m = string.match(line, "^" .. ext_screen .. " connected")
+      if m == nil then
+         f:close()
+         return true
+      end
+   end
+   f:close()
+   return false
+end
+
+local function auto_set_screen(direction)
+   local cmd = "xrandr --output LVDS1 --auto --output " .. ext_screen
+   if ext_screen_connected() then
+      cmd = cmd .. " --auto --" .. direction .. " LVDS1"
+   else
+      cmd = cmd .. " --off"
+   end
+   return os.execute(cmd)
+end
+
+local function menu_screen_text()
     return ({
         LVDS1 = "L&aptop",
         VGA1 = "&VGA",
@@ -234,6 +258,7 @@ local menu_screen_text = function ()
 end
 
 screenmenu = {
+    { "&auto",     function() auto_set_screen("left-of") end },
     { "&clone",    "xrandr --output LVDS1 --auto --output " .. ext_screen .. " --auto --same-as LVDS1" },
     { "&left of",  "xrandr --output LVDS1 --auto --output " .. ext_screen .. " --auto --left-of LVDS1" },
     { "&right of", "xrandr --output LVDS1 --auto --output " .. ext_screen .. " --auto --right-of LVDS1" },
@@ -250,7 +275,7 @@ screenmenu = {
     end },
 }
 if screen.count() > 1 then
-    table.insert(screenmenu, 1, { "&off", "xrandr --output LVDS1 --auto --output " .. ext_screen .. " --off" })
+    table.insert(screenmenu, 2, { "&off", "xrandr --output LVDS1 --auto --output " .. ext_screen .. " --off" })
 end
 -- }}}
 
