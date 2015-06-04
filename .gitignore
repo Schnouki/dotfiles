@@ -9,6 +9,7 @@ __pycache__/
 # Dotfiles
 !ackrc
 !beets/config.yaml
+!chromium-flags.conf
 !compton.conf
 !ctags
 !fonts.conf
