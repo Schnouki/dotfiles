@@ -1,7 +1,9 @@
 directory: ~/Music
 library: ~/Music/.library
 plugins: bpd edit fetchart fromfilename
-color: yes
+
+ui:
+  color: yes
 
 replace:
   '[\\/]': _
@@ -9,7 +11,9 @@ replace:
   '[\x00-\x1f]': _
   '[<>"\?\*\|]': ''
   '\s*:\s+': ' - '
+  '\.$': ''
   '\s+$': ''
+  '^\s+': ''
 
 bpd:
   host: 127.0.0.1
