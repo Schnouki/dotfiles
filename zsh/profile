@@ -16,7 +16,7 @@ autoload -U colors
 colors
 # Nice colors in ls. Changing TERM is needed because dircolors doesn't know
 # about rxvt-256color...
-eval `TERM=xterm-256color dircolors -b`
+eval `TERM=xterm-256color dircolors -b ~/.config/zsh/colors.db`
 
 # Add some more colors!
 function _add_lscolors() {
