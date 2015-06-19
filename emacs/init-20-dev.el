@@ -204,4 +204,9 @@
     (setq drag-stuff-modifier '(meta shift))
     (drag-stuff-global-mode t)))
 
+;; REST client!
+(use-package restclient
+  :ensure t
+  :commands restclient-mode)
+
 ;;; init-20-dev.el ends here

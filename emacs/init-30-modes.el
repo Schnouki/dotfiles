@@ -72,12 +72,12 @@
   :ensure t
   :mode "\\.hy\\'")
 
-(use-package js3-mode
+(use-package js2-mode
   :ensure t
   :mode "\\.js\\'"
   :interpreter "node"
   :init
-  (folding-add-to-marks-list 'js3-mode "// {{{" "// }}}" nil t))
+  (folding-add-to-marks-list 'js2-mode "// {{{" "// }}}" nil t))
 
 (use-package coffee-mode
   :ensure t
