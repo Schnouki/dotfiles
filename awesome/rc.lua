@@ -824,10 +824,10 @@ persokeys = {
 
    -- Misc
    keydoc.group("Misc"),
-   awful.key({ modkey }, "Print", function () awful.util.spawn("shutter -f") end, "Take a screenshot with Shutter"),
-   awful.key({ modkey, "Shift" }, "f", function() mymousefinder:find() end,       "Locate pointer"),
-   awful.key({ modkey, "Shift"   }, "w", function () change_wallpapers(true) end, "Change wallpaper"),
-   awful.key({ modkey }, "F1", keydoc.display),
+   awful.key({ modkey          }, "Print", function () awful.util.spawn("shutter -f") end, "Take a screenshot with Shutter"),
+   awful.key({ modkey, "Shift" }, "f",     function() mymousefinder:find() end,            "Locate pointer"),
+   awful.key({ modkey, "Shift" }, "w",     function () change_wallpapers(true) end,        "Change wallpaper"),
+   awful.key({ modkey          }, "F1",    keydoc.display),
 }
 
 persoclientkeys = {
