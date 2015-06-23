@@ -531,6 +531,9 @@ end
 require("locksmon")
 locks_mon = locksmon.new()
 
+require("fish")
+fish_w = fish.new()
+
 -- Afficher des infos sur le client qui a le focus
 -- d'après http://github.com/MajicOne/awesome-configs/blob/master/rc.lua
 function win_info ()
@@ -870,7 +873,7 @@ for s = 1, screen.count() do
        tb_mails, tb_msmtpq, nv_w}, separator,
        pomodoro.icon_widget, separator,
        cpu_icon, cpu_widgets, mem_icon, mem_widget, swap_widget, separator,
-       net_mon.widget, {ip_mon and ip_mon.widget or nil}, bat_widget, vol_widget, separator, locks_mon.widget
+       net_mon.widget, {ip_mon and ip_mon.widget or nil}, bat_widget, vol_widget, separator, locks_mon.widget, fish_w.widget
     )
 
     -- Widgets that are aligned to the right
