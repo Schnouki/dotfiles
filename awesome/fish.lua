@@ -6,27 +6,40 @@ module("fish")
 local fish = {}
 
 function fish:new()
-   local w = wibox.widget.imagebox()
-   w:set_image(awful.util.getdir("config") .. "/icons/fortune-cookie.png")
-   w:buttons(
+   local cd = awful.util.getdir("config")
+   local o = {
+      widget = wibox.widget.imagebox(),
+      icon_small = cd .. "/icons/fortune-cookie-16.png",
+      icon_big = cd .. "/icons/fortune-cookie-32.png",
+      timeout = 7
+   }
+   o.widget:set_image(o.icon_small)
+   o.widget:buttons(
       awful.util.table.join(
-         awful.button({ }, 1, function() w:fortune() end),
-         awful.button({ }, 3, function() w:fortune("fr") end)
+         awful.button({ }, 1, function() o:fortune() end),
+         awful.button({ }, 3, function() o:fortune("fr") end)
    ))
-   setmetatable(w, self)
+   setmetatable(o, self)
    self.__index = self
-   return w
+   return o
 end
 
 function fish:fortune(lang)
    if lang == nil then
       lang = ""
    end
-   local fh = io.popen("fortune -a " .. lang)
+   local fh = io.popen("fortune -ac " .. lang)
+   local cookie = fh:read("*line")
    local fortune = fh:read("*all")
    fh:close()
-   fortune = string.sub(fortune, 1, -2)
-   naughty.notify({ text = fortune, timeout = 7 })
+   cookie = string.sub(cookie, 2, -2)
+   fortune = string.sub(fortune, 2, -2)
+   naughty.notify({
+         title = "Fortune about " .. cookie,
+         text = fortune,
+         timeout = self.timeout,
+         icon = self.icon_big
+   })
 end
 
 function new()

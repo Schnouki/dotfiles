@@ -871,7 +871,7 @@ for s = 1, screen.count() do
     local my_right_widgets = _.concat({
        separator,
        tb_mails, tb_msmtpq, nv_w}, separator,
-       pomodoro.icon_widget, fish_w, separator,
+       pomodoro.icon_widget, fish_w.widget, separator,
        cpu_icon, cpu_widgets, mem_icon, mem_widget, swap_widget, separator,
        net_mon.widget, {ip_mon and ip_mon.widget or nil}, bat_widget, vol_widget, separator, locks_mon.widget
     )
