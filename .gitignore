@@ -21,6 +21,7 @@ __pycache__/
 !gtkrc-odin
 !gtkrc-baldr
 !mpd.conf
+!python_startup.py
 !tmux.conf
 !Xresources
 !xinitrc

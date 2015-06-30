@@ -37,5 +37,8 @@ if [[ ${CPUTYPE} == "armv5tel" ]]; then
 fi
 export GOOS=linux
 
+# Python
+export PYTHONSTARTUP=$HOME/.config/python_startup.py
+
 # 256-color terminal
 [[ $TERM == "xterm" ]] && export TERM="xterm-256color"
