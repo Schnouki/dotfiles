@@ -11,7 +11,8 @@
   (progn
     (setq magit-process-popup-time 5
           magit-auto-revert-mode-lighter nil
-          magit-last-seen-setup-instructions "1.4.0")))
+          magit-last-seen-setup-instructions "1.4.0"
+          vc-follow-symlinks t)))
 
 (use-package magit-blame
   :ensure magit
@@ -27,12 +28,12 @@
   (add-hook 'magit-mode-hook (lambda () (require 'magit-annex))))
 
 ;; gitflow
-(use-package magit-gitflow
-  :ensure t
-  :commands turn-on-magit-gitflow
-  :diminish magit-gitflow-mode
-  :init
-  (add-hook 'magit-mode-hook 'turn-on-magit-gitflow))
+;; (use-package magit-gitflow
+;;   :ensure t
+;;   :commands turn-on-magit-gitflow
+;;   :diminish magit-gitflow-mode
+;;   :init
+;;   (add-hook 'magit-mode-hook 'turn-on-magit-gitflow))
 
 ;; gitignore
 (use-package gitignore-mode
