@@ -468,7 +468,7 @@ function toggle_titlebar(c)
    end
 end
 function handle_titlebar(c)
-   if awful.client.floating.get(c) then
+   if awful.client.floating.get(c) and not c.fullscreen then
       if not all_titlebars[c] and not no_titlebar_apps[c.class] and not no_titlebar_apps[c.instance] then
          titlebar_add(c)
       end
