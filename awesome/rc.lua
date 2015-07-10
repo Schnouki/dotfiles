@@ -418,7 +418,7 @@ end
 -- Gestion de la titlebar
 local all_titlebars = {}
 function titlebar_add(c)
-    if c.type == "normal" or c.type == "dialog" then
+    if c.type == "normal" or c.type == "dialog" or c.type == "utility"then
         -- Widgets that are aligned to the left
         local left_layout = wibox.layout.fixed.horizontal()
         left_layout:add(awful.titlebar.widget.iconwidget(c))
