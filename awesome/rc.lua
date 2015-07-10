@@ -751,13 +751,17 @@ function volume_up()   brutal.pulse.add( 5)  vicious.force({vol_widget}) end
 function volume_down() brutal.pulse.add(-5)  vicious.force({vol_widget}) end
 function volume_mute() brutal.pulse.toggle() vicious.force({vol_widget}) end
 function volume_update() vicious.force({ vol_widget }) end
+function volume_music_up()   brutal.pulse.add_role( 5, "music") end
+function volume_music_down() brutal.pulse.add_role(-5, "music") end
 
 vol_widget:buttons(awful.util.table.join(
        awful.button({ }, 1, function () awful.util.spawn("pavucontrol") end),
        awful.button({ }, 2, volume_mute),
        awful.button({ }, 3, function () brutal.pulse.profiles_menu(volume_update):toggle() end),
        awful.button({ }, 4, volume_up),
-       awful.button({ }, 5, volume_down)
+       awful.button({ }, 5, volume_down),
+       awful.button({ "Shift" }, 4, volume_music_up),
+       awful.button({ "Shift" }, 5, volume_music_down)
 ))
 
 -- Pomodoro widget
@@ -776,6 +780,11 @@ persokeys = {
    awful.key({ modkey }, "Up",        volume_up,   "Raise volume"),
    awful.key({ modkey }, "Down",      volume_down, "Lower volume"),
    awful.key({ modkey }, "KP_Delete", volume_mute, "Toggle mute"),
+
+   awful.key({ "Shift" }, "XF86AudioRaiseVolume", volume_music_up),
+   awful.key({ "Shift" }, "XF86AudioLowerVolume", volume_music_down),
+   awful.key({ modkey, "Shift" }, "Up",           volume_music_up,   "Raise music volume"),
+   awful.key({ modkey, "Shift" }, "Down",         volume_music_down, "Lower music volume"),
 
    -- Luminosité
    awful.key({ }, "XF86MonBrightnessUp",   function () change_backlight(1.1) end),
