@@ -172,15 +172,16 @@ Return the index of the matching item, or nil if not found."
     ;; ...and enable!
     (global-undo-tree-mode)))
 
-;; ace-jump (reminder: C-x C-SPC to pop-global-mark)
-(use-package ace-jump-mode
+;; avy (reminder: C-x C-SPC to pop-global-mark)
+(use-package avy
   :ensure t
-  :bind (("C-;" . ace-jump-mode)
-	 ("C-x C-;" . ace-jump-mode-pop-mark))
-  :init
-  (setq ace-jump-mode-scope 'frame)
+  :bind (("C-;" . avy-goto-word-or-subword-1)
+	 ("C-x C-;" . avy-pop-mark))
   :config
-  (ace-jump-mode-enable-mark-sync))
+  (progn
+    (avy-setup-default)
+    (setq avy-keys '(?q ?s ?d ?f ?j ?k ?l ?m) ;; AZERTY :)
+	  avy-background t)))
 
 ;; Google Translate
 (use-package google-translate
