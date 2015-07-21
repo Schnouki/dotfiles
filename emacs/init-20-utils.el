@@ -172,6 +172,11 @@ Return the index of the matching item, or nil if not found."
     ;; ...and enable!
     (global-undo-tree-mode)))
 
+;; goto-last-change
+(use-package goto-last-change
+  :ensure t
+  :bind ("C-x M-u" . goto-last-change))
+
 ;; avy (reminder: C-x C-SPC to pop-global-mark)
 (use-package avy
   :ensure t
