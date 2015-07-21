@@ -99,5 +99,15 @@
     ;;; TODO configure
   ))
 
+(use-package helm-swoop
+  :ensure t
+  :bind (("C-² C-s" . helm-swoop)
+         ("C-² M-s" . helm-multi-swoop-current-mode))
+  :config
+  (progn
+    (setq helm-swoop-use-line-number-face t
+          helm-swoop-speed-or-color t)
+    (define-key helm-swoop-map (kbd "M-m") 'helm-multi-swoop-current-mode-from-helm-swoop)))
+
 
 ;;; init-80-helm.el ends here
