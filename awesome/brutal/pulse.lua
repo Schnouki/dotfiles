@@ -106,28 +106,44 @@ local function get_sink_name(sink)
 end
 
 local function get_sink_inputs_by_role(role)
-    local line, mtch, sink_index, sink_volume
+    local line, mtch, in_properties
     local sinks = {}
+    local sink_data = nil
     for line in pacmd_lines("list-sink-inputs") do
         -- Try to find a section header
         mtch = string.match(line, "index: (%d+)")
         if mtch ~= nil then
-            sink_index = mtch
-            sink_volume = nil
+            -- New sink: save the previous one!
+            if sink_data ~= nil and sink_data["prop.media.role"] == role then
+                sinks[sink_data.index] = sink_data
+            end
+            sink_data = { index = mtch }
+            in_properties = false
+
+        elseif string.match(line, "%s*properties:") then
+            in_properties = true
+
+        elseif in_properties then
+            -- Read the property and add it to the sink data
+            local prop_name, prop_val
+            for prop_name, prop_val in string.gmatch(line, '%s*([%a%d_%.%-]*) = "([^"]*)"') do
+                sink_data["prop." .. prop_name] = prop_val
+            end
+
         else
             -- Try to find a "volume" line
             mtch = string.match(line, "volume: [%a-]+: (%d+)")
             if mtch ~= nil then
-                sink_volume = tonumber(mtch)
-            else
-                -- Try to find a "role" line
-                mtch = string.find(line, 'media.role = "' .. role .. '"')
-                if mtch ~= nil and sink_index ~= nil and sink_volume ~= nil then
-                    sinks[sink_index] = sink_volume
-                end
+                sink_data.volume = tonumber(mtch)
             end
         end
     end
+
+    -- Save the last sink
+    if sink_data ~= nil and sink_data["prop.media.role"] == role then
+        sinks[sink_data.index] = sink_data
+    end
+
     return sinks
 end
 
@@ -256,12 +272,16 @@ end
 
 function pulse.add_role(percent, role)
     local sinks = get_sink_inputs_by_role(role)
-    local sink_idx, sink_vol
-    for sink_idx, sink_vol in pairs(sinks) do
-        local vol = get_new_volume(sink_vol, percent)
+    local sink_idx, sink_data
+    for sink_idx, sink_data in pairs(sinks) do
+        local vol = get_new_volume(sink_data.volume, percent)
         local cmd = string.format("pacmd set-sink-input-volume %s 0x%x >/dev/null", sink_idx, vol)
         os.execute(cmd)
     end
+end
+
+function pulse.get_role(role)
+    return get_sink_inputs_by_role(role)
 end
 
 function pulse.toggle(sink)

@@ -746,6 +746,23 @@ vicious.register(vol_widget, brutal.pulse,
                     widget:set_color(col)
                     return vol
                  end, 5)
+vol_widget_t = awful.tooltip({
+      objects = { vol_widget },
+      timer_function = function()
+         local sink_idx, sink_data
+         local txt = ""
+         for sink_idx, sink_data in pairs(brutal.pulse.get_role("music")) do
+            local name = sink_data["prop.application.process.name"]
+               or sink_data["prop.application.process.binary"]
+            local volume = 100. * sink_data.volume / 65536.
+            if txt ~= "" then
+               txt = txt .. "\n"
+            end
+            txt = txt .. string.format("<b>%s:</b> %.1f%%", name, volume)
+         end
+         return txt
+      end
+})
 
 function volume_up()   brutal.pulse.add( 5)  vicious.force({vol_widget}) end
 function volume_down() brutal.pulse.add(-5)  vicious.force({vol_widget}) end
