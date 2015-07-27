@@ -1,4 +1,4 @@
-;;; 20-utils --- Small useful functions and key bindings
+;;; 25-utils --- Small useful functions and key bindings
 ;;; Commentary:
 ;;; Code:
 
@@ -27,16 +27,40 @@
 
 ;; Switch to scratch buffer, creating it if necessary
 ;; http://stackoverflow.com/questions/234963/re-open-scratch-buffer-in-emacs/776052#776052
-(defun schnouki/goto-scratch (&optional force-new)
-  "Switch to scratch buffer, creating it if necessary.
-Calling this function with a prefix FORCE-NEW forces the creation of a new buffer."
+(defun schnouki/goto-scratch (&optional force-new mode)
+  "Switch to a scratch buffer, creating it if necessary.
+Calling this function with a prefix FORCE-NEW forces the creation
+of a new buffer.  If MODE is nil, create a buffer in
+`initial-major-mode'.  If t, use the current `major-mode'.  If a
+symbol, use that mode instead."
   (interactive "P")
-  (let ((sb (if force-new
-	       (generate-new-buffer "*scratch*")
-	     (get-buffer-create "*scratch*"))))
-    (switch-to-buffer sb)
-    (lisp-interaction-mode)))
+  (let* ((buffer-mode (if (booleanp mode)
+			  (if mode major-mode
+			    initial-major-mode)
+			mode))
+	 (buffer-name (concat "*scratch"
+			      (when (not (eq buffer-mode initial-major-mode))
+				(concat ":" (symbol-name buffer-mode)))
+			      "*"))
+	 (buffer (if force-new
+		     (generate-new-buffer buffer-name)
+		   (get-buffer-create buffer-name))))
+    (switch-to-buffer buffer)
+    (when (not (eq major-mode buffer-mode))
+      (funcall buffer-mode))))
+
+(defun schnouki/goto-scratch-mode (&optional prefix)
+  "Switch to a scratch buffer, letting the user decide its major mode.
+If PREFIX is not nil, force creating a new scratch buffer."
+  (interactive "P")
+  (let* ((modes (--map (cdr it) auto-mode-alist))
+	 (default-mode (symbol-name major-mode))
+	 (prompt (concat "Major mode (" default-mode "): "))
+	 (chosen-mode (completing-read prompt modes nil nil nil nil default-mode)))
+    (schnouki/goto-scratch prefix (intern chosen-mode))))
+
 (bind-key "C-x M-s" 'schnouki/goto-scratch)
+(bind-key "C-x M-d" 'schnouki/goto-scratch-mode)
 
 ;; ibuffer
 (bind-key "C-x C-b" 'ibuffer)
@@ -113,7 +137,9 @@ Return the index of the matching item, or nil if not found."
 ;; immortal-star-buffers list or a major mode in the immortal-modes list.
 (defvar schnouki/immortal-star-buffers nil)
 (defvar schnouki/immortal-modes nil)
-(setq schnouki/immortal-star-buffers '("^\\*scratch\\*")
+(setq schnouki/immortal-star-buffers `(,(rx string-start "*scratch"
+					    (optional ":" (1+ print))
+					    "*" string-end))
       schnouki/immortal-modes        '(message-mode notmuch-hello-mode notmuch-search-mode
 				       notmuch-show-mode org-agenda-mode inferior-python-mode
 				       jabber-chat-mode jabber-roster-mode))
@@ -266,4 +292,4 @@ If third argument START is non-nil, convert words after that index in STRING."
   :commands rainbow-mode
   :diminish rainbow-mode)
 
-;;; init-20-utils.el ends here
+;;; init-25-utils.el ends here
