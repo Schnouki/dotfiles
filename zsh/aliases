@@ -21,6 +21,11 @@ fi
 alias ssu="sudo -i"
 [[ $(hostname) == "DroboShare" ]] & alias ssu="sudo -i zsh"
 
+alias sctl="systemctl"
+alias sctlu="systemctl --user"
+alias jctl="journalctl"
+alias jctlu="journalctl --user"
+
 alias ec="emacsclient -n -c -a \"\""
 alias ecn="emacsclient -n -a \"\""
 
