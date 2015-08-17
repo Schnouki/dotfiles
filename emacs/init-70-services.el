@@ -21,7 +21,7 @@
       :tags '(blog)
       :cwd (concat blogdir "/output")
       :command "python3"
-      :args '("-c" "import logging; logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(message)s'); import pelican.server" "9090")
-      :ready-message "serving at port [0-9]+")))
+      :args '("-m" "pelican.server" "9090")
+      :port 9090)))
 
 ;;; init-70-services.el ends here
