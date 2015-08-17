@@ -656,18 +656,12 @@ end
 vicious.cache(vicious.widgets.cpu)
 cpu_icon = wibox.widget.imagebox()
 cpu_icon:set_image(config_dir .. "/icons/cpu.png")
-cpu_widgets = {}
-for i = 2, #vicious.widgets.cpu() do
-   w = awful.widget.progressbar()
-   w:set_width(4)
-   w:set_height(18)
-   w:set_vertical(true)
-   w:set_background_color("#000000")
-   w:set_color({type = "linear", from = {0, 0}, to = {0, 18},
-                stops = {{0, "#CC6666"}, {0.5, "#CCCC66"}, {1.0, "#66CC66"}}})
-   vicious.register(w, vicious.widgets.cpu, "$" .. i, 3)
-   cpu_widgets[i-1] = w
-end
+cpu_graph = awful.widget.graph()
+cpu_graph:set_width(32):set_height(18)
+cpu_graph:set_background_color("#000000")
+cpu_graph:set_color({type = "linear", from = {0, 0}, to = {0, 18},
+                     stops = {{0, "#CC6666"}, {0.5, "#CCCC66"}, {1.0, "#66CC66"}}})
+vicious.register(cpu_graph, vicious.widgets.cpu, "$1", 3)
 
 vicious.cache(vicious.contrib.sensors)
 cputemp_widget = awful.widget.progressbar()
@@ -675,9 +669,35 @@ cputemp_widget:set_width(4)
 cputemp_widget:set_vertical(true)
 cputemp_widget:set_background_color("#000000")
 cputemp_widget:set_color({type = "linear", from = {0, 0}, to = {0, 18},
-             stops = {{0, "#CC6666"}, {0.2, "#CC66CC"}, {1.0, "#66CCCC"}}})
-vicious.register(cputemp_widget, vicious.contrib.sensors, "$2", 10, "Physical id 0")
-cpu_widgets[#cpu_widgets + 1] = cputemp_widget
+                          stops = {{0, "#CC6666"}, {0.2, "#CC66CC"}, {1.0, "#66CCCC"}}})
+vicious.register(cputemp_widget, vicious.contrib.sensors,
+                 function(widget, args)
+                    cpu_temp = args[1]
+                    return args[2]
+                 end, 10, "Physical id 0")
+
+vicious.cache(vicious.widgets.uptime)
+cpu_tooltip = awful.tooltip({
+      objects = { cpu_graph, cputemp_widget },
+      timer_function = function()
+         local txt = ""
+         for idx, val in pairs(vicious.widgets.cpu()) do
+            if idx >= 2 then
+               txt = txt .. string.format("Core %d: %d %%\n", idx-1, val)
+            end
+         end
+
+         -- Add temperature
+         txt = txt .. string.format("\nTemperature: %d °C", cpu_temp)
+
+         -- Add load average
+         local uptime = vicious.widgets.uptime()
+         txt = txt .. string.format("\n\nLoad: %s %s %s", uptime[4], uptime[5], uptime[6])
+
+         return txt
+      end
+})
+
 
 vicious.cache(vicious.widgets.mem)
 mem_icon = wibox.widget.imagebox()
@@ -910,7 +930,7 @@ for s = 1, screen.count() do
        separator,
        tb_mails, tb_msmtpq, nv_w}, separator,
        pomodoro.icon_widget, fish_w.widget, separator,
-       cpu_icon, cpu_widgets, mem_icon, mem_widget, swap_widget, separator,
+       cpu_icon, cpu_graph, cputemp_widget, mem_icon, mem_widget, swap_widget, separator,
        net_mon.widget, {ip_mon and ip_mon.widget or nil}, bat_widget, vol_widget, separator, locks_mon.widget
     )
 
