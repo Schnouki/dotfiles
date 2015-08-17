@@ -413,6 +413,19 @@ function next_screen_viewprev()
    awful.tag.viewprev(get_next_screen())
 end
 
+-- {{{ Auto xrandr!
+-- local connected_displays = lousy.count_connected_displays()
+-- local display_timer = timer { timeout = 2.5 }
+-- display_timer:connect_signal("timeout", function ()
+--                                 local new_displays = lousy.count_connected_displays()
+--                                 if new_displays ~= conntected_displays then
+--                                    auto_set_screen("left-of")
+--                                    connected_displays = new_displays
+--                                 end
+-- end)
+-- display_timer:start()
+-- }}}
+
 -- {{{     Window management
 -- Gestion de la titlebar
 local all_titlebars = {}
