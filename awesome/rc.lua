@@ -293,7 +293,7 @@ mymainmenu = awful.menu({ items = { { "&awesome", myawesomemenu, beautiful.aweso
                                     { "&utils", utilsmenu },
                                     { "écran &ext.", screenmenu },
                                     { "&screenshot", screenshotmenu },
-                                    { "&firefox beta", "firefox-beta-bin", icon_theme.get("apps", "firefox-beta-bin") },
+                                    { "&firefox", "firefox", icon_theme.get("apps", "firefox") },
                                     { "&chromium", "chromium", icon_theme.get("apps", "chromium") },
                                     { "&gajim", "gajim", icon_theme.get("apps", "gajim") },
                                     { "t&hunderbird", "thunderbird", icon_theme.get("apps", "thunderbird") },
