@@ -301,7 +301,6 @@ mymainmenu = awful.menu({ items = { { "&awesome", myawesomemenu, beautiful.aweso
                                     { "&netflix", "chromium https://www.netflix.com/", icon_theme.get("apps", "netflix") },
                                     { "&popcorn time", "popcorntime", icon_theme.get("apps", "popcorntime", "/usr/share/pixmaps/popcorntime.png") },
                                     { "&libre office", "soffice", icon_theme.get("apps", "libreoffice-writer") },
-                                    { "&gcmd", "gnome-commander", icon_theme.get("apps", "gnome-commander", "/usr/share/pixmaps/gnome-commander.png") },
                                     { "open &terminal", terminal }
                                   }
                         })
@@ -318,7 +317,7 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- Create a textclock widget
 mytextclock_icon = wibox.widget.imagebox()
 mytextclock_icon:set_image(config_dir .. "/icons/time.png")
-mytextclock = awful.widget.textclock("%H:%M")
+mytextclock = awful.widget.textclock("%X", 1)
 mytextclock_t = awful.tooltip({ objects = { mytextclock },
                                 timer_function = function() return os.date("%A %e %B %Y\n%T") end })
 
