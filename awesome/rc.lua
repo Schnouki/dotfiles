@@ -1142,7 +1142,8 @@ awful.rules.rules = {
                              "Shutter", "Smplayer", "VirtualBox", "Vlc",
                              "Wine", "Xfmedia", "xine", "XVroot" },
                    instance = { "pinentry-gtk-2", "popcorntime", "wpa_gui" },
-                   name = { "Gnuplot (window id : 0)", "Minecraft", "R Graphics: Device 2 (ACTIVE)" } },
+                   name = { "Gnuplot (window id : 0)", "Minecraft", "Popcorn Time",
+                            "R Graphics: Device 2 (ACTIVE)" } },
       properties = { floating = true } },
 
     { rule = { class = "Firefox" },
