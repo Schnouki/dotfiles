@@ -1,0 +1,55 @@
+session_name: findspire
+start_directory: ~/findspire/findspire-front
+before_script: printf "\033]777;tabbedex;set_tab_name;fs-front\007"
+windows:
+  - window_name: srv
+    focus: on
+    layout: main-horizontal
+    options:
+      other-pane-height: 10
+    shell_command_before:
+      - workon findspire
+      - clear
+    panes:
+      - focus: true
+      - ./manage.py trunserver --traceback
+  - window_name: wrk
+    layout: tiled
+    shell_command_before:
+      - workon findspire
+      - clear
+    panes:
+      - focus: true
+      -
+  - options:
+      automatic-rename: on
+    shell_command_before:
+      - workon findspire
+      - clear
+    panes:
+      -
+  - options:
+      automatic-rename: on
+    shell_command_before:
+      - workon findspire
+      - clear
+    panes:
+      -
+  - options:
+      automatic-rename: on
+    shell_command_before:
+      - workon findspire
+      - clear
+    panes:
+      -
+  - window_name: ddex
+    start_directory: ~/findspire/ddex
+    panes:
+      -
+  - window_name: golem
+    start_directory: ~/findspire/golem
+    panes:
+      -
+  - window_name: prod
+    panes:
+      -
