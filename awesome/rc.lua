@@ -280,11 +280,33 @@ end
 -- }}}
 
 -- {{{ Screenshot menu
+local function screenshot(mode)
+   local run_maim = true
+   local maim_cmd = "maim"
+   local filename = os.date("%F-%H_%M_%S") .. ".png"
+   local fullname = os.getenv("HOME") .. "/Dropbox/Public/Screenshots/" .. filename
+   if mode == "active_window" then
+      local c = client.focus
+      if c ~= nil and c.content ~= nil then
+         local surface = gears.surface.load(c.content, true)
+         surface:write_to_png(fullname)
+         run_maim = false
+      end
+   elseif mode == "selection" then
+      cmd = cmd .. " -s -c 1,0,0,0.6"
+   end
+   if run_maim then
+      naughty.notify({text = cmd })
+      cmd = cmd .. " " .. fullname
+      os.execute(cmd)
+   end
+   os.execute("mimeo " .. fullname)
+end
 screenshotmenu = {
-   { "&Full screen", "shutter -f" },
-   { "&Window", "shutter -w" },
-   { "&Active window", "shutter -a" },
-   { "&Selection", "shutter -s" },
+   { "&Open dir", "geeqie " .. os.getenv("HOME") .. "/Dropbox/Public/Screenshots" },
+   { "&Full screen", screenshot },
+   { "&Active window", function() screenshot("active_window") end },
+   { "&Selection", function() screenshot("selection") end },
 }
 -- }}}
 
@@ -578,9 +600,6 @@ function win_info ()
       hover_timeout = 0.5
    })
 end
-
--- Localiser le pointeur de la souris
-mymousefinder = awful.mouse.finder()
 
 -- Widget with number of unread mails if notmuch is available
 local f = io.open("/usr/bin/notmuch")
@@ -885,9 +904,9 @@ persokeys = {
 
    -- Misc
    keydoc.group("Misc"),
-   awful.key({ modkey          }, "Print", function () awful.util.spawn("shutter -f") end, "Take a screenshot with Shutter"),
-   awful.key({ modkey, "Shift" }, "f",     function() mymousefinder:find() end,            "Locate pointer"),
-   awful.key({ modkey, "Shift" }, "w",     function () change_wallpapers(true) end,        "Change wallpaper"),
+   awful.key({ modkey          }, "Print", screenshot,                                 "Take a screenshot with Shutter"),
+   awful.key({ modkey, "Shift" }, "f",     function() awful.mouse.finder():find() end, "Locate pointer"),
+   awful.key({ modkey, "Shift" }, "w",     function () change_wallpapers(true) end,    "Change wallpaper"),
    awful.key({ modkey          }, "F1",    keydoc.display),
 }
 
@@ -1136,11 +1155,11 @@ awful.rules.rules = {
                      keys = clientkeys,
                      buttons = clientbuttons } },
     -- Simple rules for floating windows
-    { rule_any = { class = { "BBQScreenClient2", "Galculator", "Gimp", "Gmpc", "Gnote", "Klavaro",
-                             "MPlayer", "mplayer2", "mpv",
-                             "pinentry", "Plugin-container", "Qalculate",
-                             "Shutter", "Smplayer", "VirtualBox", "Vlc",
-                             "Wine", "Xfmedia", "xine", "XVroot" },
+    { rule_any = { class = { "BBQScreenClient2", "Galculator", "Gimp", "Gmpc",
+                             "mpv",
+                             "pinentry", "Plugin-container",
+                             "Smplayer", "VirtualBox", "Vlc",
+                             "Wine" },
                    instance = { "pinentry-gtk-2", "popcorntime", "wpa_gui" },
                    name = { "Gnuplot (window id : 0)", "Minecraft", "Popcorn Time",
                             "R Graphics: Device 2 (ACTIVE)" } },
@@ -1150,7 +1169,7 @@ awful.rules.rules = {
       except = { instance = "Navigator" },
       properties = { floating = true } },
     { rule = { class = "Thunderbird" },
-      properties = { tag = tags[screen.count()][1] } },
+      properties = { tag = tags[screen.count()][screen.count() > 1 and 1 or 2] } },
     { rule = { class = "Gajim.py", role = "roster" },
       properties = { tag = tags[screen.count()][1] } },
     { rule = { class = "Gajim.py", role = "messages" },
