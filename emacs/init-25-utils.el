@@ -298,4 +298,39 @@ If third argument START is non-nil, convert words after that index in STRING."
   :commands rainbow-mode
   :diminish rainbow-mode)
 
+;; Use ImageMagick as much as possible
+(let* ((types '(bmp jpeg png svg))
+       (fix-alist (lambda (alist)
+		    (--map-when (-contains? types (cdr it))
+				(cons (car it) 'imagemagick)
+				alist))))
+  (setq image-type-header-regexps (funcall fix-alist image-type-header-regexps)
+	image-type-file-name-regexps (funcall fix-alist image-type-file-name-regexps)))
+
+(defun schnouki/image-transform-fit-to-window ()
+  "Fit the current image to the window."
+  ;; From http://emacs.stackexchange.com/a/2458/2006
+  (interactive)
+  (let* ((img-size (image-display-size (image-get-display-property) t))
+	 (img-width (car img-size))
+	 (img-height (cdr img-size))
+	 (img-h/w-ratio (/ (float img-height) (float img-width)))
+	 (win-width (window-pixel-width))
+	 (win-height (window-pixel-height))
+	 (win-h/w-ratio (/ (float win-height) (float win-width))))
+    ;; Fit image by width if the h/w ratio of window is > h/w ratio of the image
+    (if (> win-h/w-ratio img-h/w-ratio)
+        (image-transform-fit-to-width)
+      ;; Else fit by height
+      (image-transform-fit-to-height))))
+
+;; Add useful image-mode key bindings
+(with-eval-after-load 'image-mode
+  (bind-keys :map image-mode-map
+	     ("r" . image-transform-set-rotation)
+	     ("zh" . image-transform-fit-to-height)
+	     ("zs" . image-transform-set-scale)
+	     ("zw" . image-transform-fit-to-width)
+	     ("zz" . schnouki/image-transform-fit-to-window)))
+
 ;;; init-25-utils.el ends here
