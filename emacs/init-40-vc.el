@@ -9,14 +9,15 @@
   :demand t
   :init
   (progn
-    (setq magit-process-popup-time 5
+    (setq magit-process-popup-time -1
           magit-auto-revert-mode-lighter nil
           magit-last-seen-setup-instructions "1.4.0"
+          magit-revert-buffers 'silent
           vc-follow-symlinks t)))
 
 (use-package magit-blame
   :ensure magit
-  :bind (("C-c C-<" . magit-blame-mode)))
+  :bind (("C-c C-<" . magit-blame)))
 
 ;; git-annex
 (use-package git-annex
