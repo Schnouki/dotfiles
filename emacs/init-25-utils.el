@@ -275,6 +275,12 @@ If third argument START is non-nil, convert words after that index in STRING."
 	 ("C-! -"             . evil-numbers/dec-at-pt)
 	 ("C-! <kp-subtract>" . evil-numbers/dec-at-pt)))
 
+;; Shrink whitespaces
+;; http://pragmaticemacs.com/emacs/delete-blank-lines-and-shrink-whitespace/
+(use-package shrink-whitespace
+  :ensure t
+  :bind ("M-SPC" . shrink-whitespace))
+
 ;; Unicode fonts
 (use-package unicode-fonts
   :ensure t
