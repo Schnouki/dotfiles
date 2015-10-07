@@ -36,4 +36,13 @@
 	      (error "Could not find the modified nor the date header"))))))
     (define-key pelican-keymap (kbd "C-c P m") 'pelican-update-modified)))
 
+;; Useless :)
+(use-package company-emoji
+  :ensure t
+  :commands company-emoji-init
+  :config
+  (setq company-emoji-insert-unicode nil)
+  :init
+  (add-hook 'markdown-mode-hook 'company-emoji-init))
+
 ;;; init-40-blog.el ends here
