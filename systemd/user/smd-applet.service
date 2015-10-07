@@ -1,0 +1,10 @@
+[Unit]
+Description=Syncmaildir applet
+Requires=xorg.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/smd-applet
+
+[Install]
+WantedBy=xorg.target
