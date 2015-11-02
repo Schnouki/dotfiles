@@ -4,14 +4,13 @@ before_script: printf "\033]777;tabbedex;set_tab_name;fs-front\007"
 windows:
   - window_name: srv
     focus: on
-    layout: main-horizontal
-    options:
-      other-pane-height: 10
+    layout: 7126,197x55,0,0[198x39,0,0{103x39,0,0,1,94x39,104,0,2},198x15,0,40,3]
     shell_command_before:
       - workon findspire
       - clear
     panes:
       - focus: true
+      - touch /tmp/q && tail -f /tmp/q
       - ./manage.py trunserver --traceback
   - window_name: wrk
     layout: tiled
@@ -42,14 +41,18 @@ windows:
       - clear
     panes:
       -
+  - window_name: tests
+    start_directory: ~/findspire/findspire-front/tests
+    shell_command_before:
+      - workon findspire
+      - clear
+    panes:
+      -
   - window_name: ddex
     start_directory: ~/findspire/ddex
     panes:
       -
   - window_name: golem
     start_directory: ~/findspire/golem
-    panes:
-      -
-  - window_name: prod
     panes:
       -
