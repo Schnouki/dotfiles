@@ -1,6 +1,7 @@
 %backup%~
 
 .python-environments/
+anaconda-mode/
 auto-save-list/
 elpa/
 eshell/
@@ -17,6 +18,7 @@ image-dired
 places
 recentf
 server
+smex-items
 tramp
 
 # Symlinks

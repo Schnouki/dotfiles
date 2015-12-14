@@ -108,7 +108,7 @@ XTerm*faceSize: 8
 rofi.opacity:  100
 rofi.width:    90
 rofi.lines:    25
-rofi.font:     DejaVu Sans Mono 7
+rofi.font:     DejaVu Sans Mono 10
 rofi.location: 0
 rofi.padding:  5
 

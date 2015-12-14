@@ -28,6 +28,7 @@ alias jctlu="journalctl --user"
 
 alias ec="emacsclient -n -c -a \"\""
 alias ecn="emacsclient -n -a \"\""
+alias ecnw="emacsclient -nw -a \"\""
 
 # Correct options for xfig
 alias xfig='xfig -Portrait -specialtext -latexfonts -startlatexFont default'
