@@ -282,7 +282,7 @@ end
 -- {{{ Screenshot menu
 local function screenshot(mode)
    local run_maim = true
-   local maim_cmd = "maim"
+   local cmd = "maim"
    local filename = os.date("%F-%H_%M_%S") .. ".png"
    local fullname = os.getenv("HOME") .. "/Dropbox/Public/Screenshots/" .. filename
    if mode == "active_window" then
