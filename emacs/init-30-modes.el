@@ -64,7 +64,7 @@
 
 (use-package groovy-mode
   :ensure t
-  :mode "\\.groovy\\'")
+  :mode "\\.groovy\\'\\|\\.gradle\\'")
 
 (use-package python
   :mode ("\\.py'" . python-mode)
