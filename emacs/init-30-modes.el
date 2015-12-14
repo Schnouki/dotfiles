@@ -22,18 +22,23 @@
     (add-hook 'before-save-hook 'schnouki/maybe-gofmt-before-save)
 
     ;; From https://github.com/bradleywright/emacs.d
-    ;; Update GOPATH if there's a _vendor dir (as created by gom)
+    ;; Update GOPATH if there's a _vendor (gom) or vendor (gb) dir
     (defun schnouki/set-local-go-path ()
       "Sets a local GOPATH if appropriate"
-      (let ((directory (locate-dominating-file (buffer-file-name) "_vendor"))
-	    (current-go-path (getenv "GOPATH")))
-	(when directory
-	  (make-local-variable 'process-environment)
-	  (let ((local-go-path (concat (expand-file-name directory) "_vendor")))
-	    (if (not current-go-path)
-		(setenv "GOPATH" local-go-path)
-	      (unless (string-match-p local-go-path current-go-path)
-		(setenv "GOPATH" (concat local-go-path ":" current-go-path))))))))
+      (let ((current-go-path (getenv "GOPATH")))
+        (catch 'found
+          (dolist (vendor-dir '("_vendor" "vendor"))
+            (let ((directory (locate-dominating-file (buffer-file-name) vendor-dir)))
+              (when directory
+                (make-local-variable 'process-environment)
+                (let ((local-go-path (concat (expand-file-name directory) vendor-dir)))
+                  (if (not current-go-path)
+                      (setenv "GOPATH" local-go-path)
+                    (unless (string-match-p local-go-path current-go-path)
+                      (setenv "GOPATH" (concat local-go-path ":" current-go-path))))
+                  (setq-local go-command
+                              (concat "GOPATH=\"" local-go-path ":" (expand-file-name directory) ":${GOPATH}\" " go-command))
+                  (throw 'found local-go-path))))))))
     (add-hook 'go-mode-hook 'schnouki/set-local-go-path))
   :config
   (progn
