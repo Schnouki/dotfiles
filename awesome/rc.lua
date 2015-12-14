@@ -1201,7 +1201,7 @@ awful.rules.rules = {
                              "Smplayer", "VirtualBox", "Vlc",
                              "Wine" },
                    instance = { "pinentry-gtk-2", "popcorntime", "wpa_gui" },
-                   name = { "Gnuplot (window id : 0)", "Minecraft", "Popcorn Time",
+                   name = { "Android Device Monitor", "Gnuplot (window id : 0)", "Minecraft", "Popcorn Time",
                             "R Graphics: Device 2 (ACTIVE)" } },
       properties = { floating = true } },
 
