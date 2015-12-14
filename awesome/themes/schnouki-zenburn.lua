@@ -20,9 +20,22 @@ theme.monofont = "DejaVu Sans Mono 8"
 theme.fg_normal = "#DCDCCC"
 theme.fg_focus  = "#F0DFAF"
 theme.fg_urgent = "#CC9393"
-theme.bg_normal = "#3F3F3F"
-theme.bg_focus  = "#1E2320"
-theme.bg_urgent = "#3F3F3F"
+
+theme.bg_normal_ok = "#3F3F3F"
+theme.bg_focus_ok  = "#1E2320"
+theme.bg_urgent_ok = "#3F3F3F"
+
+theme.bg_normal_warn = "#164040"
+theme.bg_focus_warn  = "#002020"
+theme.bg_urgent_warn = "#164040"
+
+theme.bg_normal_emerg = "#5C2323"
+theme.bg_focus_emerg  = "#3C0303"
+theme.bg_urgent_emerg = "#5C2323"
+
+theme.bg_normal = theme.bg_normal_ok
+theme.bg_focus  = theme.bg_focus_ok
+theme.bg_urgent = theme.bg_urgent_ok
 -- }}}
 
 -- {{{ Borders
@@ -126,3 +139,5 @@ theme.titlebar_maximized_button_normal_inactive = "/usr/share/awesome/themes/zen
 -- }}}
 
 return theme
+
+-- eval: (when (require 'rainbow-mode nil t) (rainbow-mode 1))

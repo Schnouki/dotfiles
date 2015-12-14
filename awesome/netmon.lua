@@ -43,6 +43,11 @@ end
 local function col(color, text)
    return "<span color=\"" .. color .. "\">" .. text .. "</span>"
 end
+
+-- From http://lua-users.org/wiki/StringTrim (trim6)
+local function trim(s)
+  return s:match'^()%s*$' and '' or s:match'^%s*(.*%S)'
+end
 -- }}}
 -- {{{ Class definition
 local NetMon = {}
@@ -77,6 +82,17 @@ function NetMon:update()
       s = s .. col(colors[if_color], k)
    end
    self.widget:set_markup(s)
+end
+
+function NetMon:ssid(ifname)
+   local iface = self.ifnames[ifname]
+   if iface ~= nil then
+      local cmd = "iwgetid --raw " .. iface
+      local pipe = io.popen(cmd)
+      local val = pipe:read("*a")
+      pipe:close()
+      return trim(val)
+   end
 end
 -- }}}
 

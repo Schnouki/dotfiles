@@ -568,6 +568,41 @@ locks_mon = locksmon.new()
 require("fish")
 fish_w = fish.new()
 
+-- Time-based indications using theme colors
+if ifaces["W"] ~= nil then
+   local function clockcheck()
+      local time = tonumber(os.date("%H%M"))
+      local ssid = net_mon:ssid("W")
+      if ssid == nil then return end
+      local at_work = ssid:lower():match("^findspire")
+      local theme = beautiful.get()
+      local new_normal = theme.bg_normal_ok
+      local new_focus = theme.bg_focus_ok
+      local new_urgent = theme.bg_urgent_ok
+      if at_work and time >= 1750 then
+         new_normal = theme.bg_normal_emerg
+         new_focus = theme.bg_focus_emerg
+         new_urgent = theme.bg_urgent_emerg
+      elseif at_work and time >= 1720 then
+         new_normal = theme.bg_normal_warn
+         new_focus = theme.bg_focus_warn
+         new_urgent = theme.bg_urgent_warn
+      end
+      if new_normal ~= theme.bg_normal or new_focus ~= theme.bg_focus or new_urgent ~= theme.bg_urgent then
+         theme.bg_normal = new_normal
+         theme.bg_focus = new_focus
+         theme.bg_urgent = new_urgent
+         if wibox_created then
+            create_wibox()
+         end
+      end
+   end
+   local clockwarn = timer { timeout = 60 }
+   clockwarn:connect_signal("timeout", clockcheck)
+   clockwarn:start()
+   clockcheck()
+end
+
 -- Afficher des infos sur le client qui a le focus
 -- d'après http://github.com/MajicOne/awesome-configs/blob/master/rc.lua
 function win_info ()
@@ -919,58 +954,63 @@ persoclientkeys = {
 -- }}}
 -- }}}
 -- {{{   Wibox creation
-for s = 1, screen.count() do
-    -- Create a promptbox for each screen
-    mypromptbox[s] = awful.widget.prompt()
-    -- Create an imagebox widget which will contains an icon indicating which layout we're using.
-    -- We need one layoutbox per screen.
-    mylayoutbox[s] = awful.widget.layoutbox(s)
-    mylayoutbox[s]:buttons(awful.util.table.join(
-                           awful.button({ }, 1, function () awful.layout.inc(layouts, 1) end),
-                           awful.button({ }, 3, function () awful.layout.inc(layouts, -1) end),
-                           awful.button({ }, 4, function () awful.layout.inc(layouts, 1) end),
-                           awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end)))
-    -- Create a taglist widget
-    mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.all, mytaglist.buttons)
+local wibox_created = false
+function create_wibox()
+   for s = 1, screen.count() do
+      -- Create a promptbox for each screen
+      mypromptbox[s] = awful.widget.prompt()
+      -- Create an imagebox widget which will contains an icon indicating which layout we're using.
+      -- We need one layoutbox per screen.
+      mylayoutbox[s] = awful.widget.layoutbox(s)
+      mylayoutbox[s]:buttons(awful.util.table.join(
+                                awful.button({ }, 1, function () awful.layout.inc(layouts, 1) end),
+                                awful.button({ }, 3, function () awful.layout.inc(layouts, -1) end),
+                                awful.button({ }, 4, function () awful.layout.inc(layouts, 1) end),
+                                awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end)))
+      -- Create a taglist widget
+      mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.all, mytaglist.buttons)
 
-    -- Create a tasklist widget
-    mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, mytasklist.buttons)
+      -- Create a tasklist widget
+      mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, mytasklist.buttons)
 
-    -- Create the wibox
-    mywibox[s] = awful.wibox({ position = "top", height = "18", screen = s, ontop = nil })
+      -- Create the wibox
+      mywibox[s] = awful.wibox({ position = "top", height = "18", screen = s, ontop = nil })
 
-    -- Widgets that are aligned to the left
-    local left_layout = wibox.layout.fixed.horizontal()
-    left_layout:add(mylauncher)
-    left_layout:add(mytaglist[s])
-    left_layout:add(mypromptbox[s])
+      -- Widgets that are aligned to the left
+      local left_layout = wibox.layout.fixed.horizontal()
+      left_layout:add(mylauncher)
+      left_layout:add(mytaglist[s])
+      left_layout:add(mypromptbox[s])
 
-    local my_right_widgets = _.concat({
-       separator,
-       tb_mails, tb_msmtpq, nv_w}, separator,
-       pomodoro.icon_widget, fish_w.widget, separator,
-       cpu_icon, cpu_graph, cputemp_widget, mem_icon, mem_widget, swap_widget, separator,
-       net_mon.widget, {ip_mon and ip_mon.widget or nil}, bat_widget, vol_widget, separator, locks_mon.widget
-    )
+      local my_right_widgets = _.concat({
+            separator,
+            tb_mails, tb_msmtpq, nv_w}, separator,
+         pomodoro.icon_widget, fish_w.widget, separator,
+         cpu_icon, cpu_graph, cputemp_widget, mem_icon, mem_widget, swap_widget, separator,
+         net_mon.widget, {ip_mon and ip_mon.widget or nil}, bat_widget, vol_widget, separator, locks_mon.widget
+      )
 
-    -- Widgets that are aligned to the right
-    local right_layout = wibox.layout.fixed.horizontal()
-    for i, w in pairs(my_right_widgets) do right_layout:add(w) end
-    if s == 1 then right_layout:add(separator) end
+      -- Widgets that are aligned to the right
+      local right_layout = wibox.layout.fixed.horizontal()
+      for i, w in pairs(my_right_widgets) do right_layout:add(w) end
+      if s == 1 then right_layout:add(separator) end
 
-    if s == 1 then right_layout:add(wibox.widget.systray()) end
-    right_layout:add(mytextclock_icon)
-    right_layout:add(mytextclock)
-    right_layout:add(mylayoutbox[s])
+      if s == 1 then right_layout:add(wibox.widget.systray()) end
+      right_layout:add(mytextclock_icon)
+      right_layout:add(mytextclock)
+      right_layout:add(mylayoutbox[s])
 
-    -- Now bring it all together (with the tasklist in the middle)
-    local layout = wibox.layout.align.horizontal()
-    layout:set_left(left_layout)
-    layout:set_middle(mytasklist[s])
-    layout:set_right(right_layout)
+      -- Now bring it all together (with the tasklist in the middle)
+      local layout = wibox.layout.align.horizontal()
+      layout:set_left(left_layout)
+      layout:set_middle(mytasklist[s])
+      layout:set_right(right_layout)
 
-    mywibox[s]:set_widget(layout)
- end
+      mywibox[s]:set_widget(layout)
+   end
+   wibox_created = true
+end
+create_wibox()
 -- }}}
 -- }}}
 -- {{{ Mouse bindings
