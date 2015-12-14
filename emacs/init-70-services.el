@@ -22,6 +22,14 @@
       :cwd (concat blogdir "/output")
       :command "python3"
       :args '("-m" "pelican.server" "9090")
+      :port 9090)
+
+    (prodigy-define-service
+      :name "Pelican server with devd"
+      :tags '(blog)
+      :cwd (concat blogdir "/output")
+      :command "devd"
+      :args '("-p" "9090" "-l" ".")
       :port 9090)))
 
 ;;; init-70-services.el ends here

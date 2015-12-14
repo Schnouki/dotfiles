@@ -13,7 +13,22 @@
   (progn
     (unbind-key (kbd "C-c P t") pelican-keymap)
     (unbind-key (kbd "C-c P u") pelican-keymap)
-    (define-key pelican-keymap (kbd "C-c P d") 'pelican-update-date)
+
+    (defun pelican-update-date-with-filename ()
+      "Update the date in the current file name and updats its date header."
+      (interactive)
+      (let ((current-file-name (file-name-nondirectory (buffer-file-name)))
+	    (re-date-prefix (rx bol (= 4 digit) "-" (= 2 digit) "-" (= 2 digit) " ")))
+	(when (string-match-p re-date-prefix current-file-name)
+	  (let* ((new-file-name (concat (format-time-string "%Y-%m-%d ")
+					(substring current-file-name 11)))
+		 (full-name (concat (file-name-directory (buffer-file-name))
+				    new-file-name)))
+	    (when (not (string= (buffer-file-name) full-name))
+	      (rename-file (buffer-file-name) full-name)
+	      (set-visited-file-name full-name nil t)))))
+      (pelican-update-date))
+    (define-key pelican-keymap (kbd "C-c P d") 'pelican-update-date-with-filename)
 
     (defun pelican-update-modified (&optional date)
       "Update a Pelican modification date header."
