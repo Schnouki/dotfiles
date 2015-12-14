@@ -64,6 +64,15 @@ If PREFIX is not nil, force creating a new scratch buffer."
 
 ;; ibuffer
 (bind-key "C-x C-b" 'ibuffer)
+(use-package ibuffer-vc
+  :ensure t
+  :config
+  (progn
+    (add-hook 'ibuffer-hook
+	      (lambda ()
+		(ibuffer-vc-set-filter-groups-by-vc-root)
+		(unless (eq ibuffer-sorting-mode 'alphabetic)
+		  (ibuffer-do-sort-by-alphabetic))))))
 
 ;; "Smart" home key
 ;; Beginning of indented text --> beginning of "real" text --> beginning of line
@@ -139,7 +148,8 @@ Return the index of the matching item, or nil if not found."
 (defvar schnouki/immortal-modes nil)
 (setq schnouki/immortal-star-buffers `(,(rx string-start "*scratch"
 					    (optional ":" (1+ print))
-					    "*" string-end))
+					    "*" string-end)
+				       "*anaconda-mode*")
       schnouki/immortal-modes        '(message-mode notmuch-hello-mode notmuch-search-mode
 				       notmuch-show-mode org-agenda-mode inferior-python-mode
 				       jabber-chat-mode jabber-roster-mode))
@@ -162,17 +172,43 @@ Return the index of the matching item, or nil if not found."
 (bind-key "C-x M-k" 'schnouki/kill-star-buffers)
 
 ;; ido-mode for better buffer switching, file selection, etc.
+;; http://defn.io/posts/2015-10-12-ido-mode.html
 (use-package ido
   :config
   (progn
-    (setq ido-default-file-method 'selected-window
-	  ido-default-buffer-method 'selected-window)))
+    (setq ido-enable-flex-matching t
+	  ido-use-virtual-buffers t
+	  ido-default-file-method 'selected-window
+	  ido-default-buffer-method 'selected-window
+	  magit-completing-read-function #'magit-ido-completing-read
+	  org-completion-use-ido t
+	  org-outline-path-complete-in-steps nil  ; recommended if using ido
+	  )
+    (ido-mode 1)
+    (ido-everywhere 1)))
+
+(use-package ido-ubiquitous
+  :ensure t
+  :config
+  (ido-ubiquitous-mode 1))
+
 (use-package ido-vertical-mode
   :ensure t
   :config
   (progn
     (setq ido-vertical-define-keys 'C-n-C-p-up-down-left-right)
     (ido-vertical-mode 1)))
+
+(use-package ido-clever-match
+  :ensure t
+  :config
+  (ido-clever-match-enable))
+
+;; Enhanced M-x
+(use-package smex
+  :ensure t
+  :bind (("M-x" . smex)
+	 ("C-! M-x" . smex-major-mode-commands)))
 
 ;; ack
 (use-package ack-and-a-half
@@ -214,6 +250,22 @@ Return the index of the matching item, or nil if not found."
     (setq avy-keys '(?q ?s ?d ?f ?j ?k ?l ?m) ;; AZERTY :)
 	  avy-background t)))
 
+(use-package avy-zap
+  :ensure t
+  :bind (("M-z" . avy-zap-to-char-dwim)
+	 ("M-Z" . avy-zap-up-to-char-dwim)))
+
+;; Google thing under point
+(use-package google-this
+  :ensure t
+  :diminish google-this-mode
+  :init
+  (progn
+    (setq google-this-keybind (kbd "C-! g")))
+  :config
+  (progn
+    (google-this-mode 1)))
+
 ;; Google Translate
 (use-package google-translate
   :ensure t
@@ -222,6 +274,34 @@ Return the index of the matching item, or nil if not found."
   (setq google-translate-default-source-language "en"
 	google-translate-default-target-language "fr"
 	google-translate-enable-ido-completion t))
+
+;; Other search engines :)
+(use-package engine-mode
+  :ensure t
+  :config
+  (progn
+    (engine/set-keymap-prefix (kbd "C-! C-!"))
+    (setq engine/browser-function 'eww-browse-url)
+    (defengine duckduckgo
+      "https://duckduckgo.com/html/?q=%s"
+      :keybinding "d")
+    (defengine rfcs
+      "http://pretty-rfc.herokuapp.com/search?q=%s")
+    (defengine stack-overflow
+      "https://stackoverflow.com/search?q=%s"
+      :keybinding "s")
+    (defengine wikipedia
+      "http://www.wikipedia.org/search-redirect.php?language=fr&go=Go&search=%s"
+      :keybinding "w"
+      :docstring "Search Wikipedia FR")
+    (defengine wikipedia
+      "http://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s"
+      :keybinding "W"
+      :docstring "Search Wikipedia EN")
+    (defengine wolfram-alpha
+      "http://www.wolframalpha.com/input/?i=%s"
+      :keybinding "a")
+    (engine-mode 1)))
 
 ;; NSFW
 (use-package sudoku
