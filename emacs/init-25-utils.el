@@ -289,7 +289,7 @@ If third argument START is non-nil, convert words after that index in STRING."
   (progn
     (setq unicode-fonts-block-font-mapping
 	  '(("Emoticons"
-	     ("Apple Color Emoji" "Symbola" "Quivira"))))
+	     ("Apple Color Emoji" "Noto Emoji" "Symbola" "Quivira"))))
     (unicode-fonts-setup)))
 
 ;; Colorize strings that represent colors

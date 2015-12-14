@@ -13,6 +13,7 @@
           magit-auto-revert-mode-lighter nil
           magit-last-seen-setup-instructions "1.4.0"
           magit-revert-buffers 'silent
+          magit-push-always-verify nil
           vc-follow-symlinks t)))
 
 (use-package magit-blame

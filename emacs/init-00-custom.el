@@ -3,11 +3,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("11636897679ca534f0dec6f5e3cb12f28bf217a527755f6b9e744bd240ed47e1" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" default)))
+ '(custom-safe-themes t)
  '(ecb-options-version "2.40")
  '(inhibit-startup-screen t)
+ '(magit-fetch-arguments (quote ("--prune")))
  '(safe-local-variable-values
    (quote
     ((python-venv . "findspire")

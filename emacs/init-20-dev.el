@@ -209,4 +209,14 @@
   :ensure t
   :commands restclient-mode)
 
+;; Stop Unicode trolls (probably useless, hence commented out)
+(use-package unicode-troll-stopper
+  :disabled t
+  :ensure t
+  :commands unicode-troll-stopper-mode
+  :diminish unicode-troll-stopper-mode
+  :init
+  (progn
+    (add-hook 'prog-mode-hook #'unicode-troll-stopper-mode)))
+
 ;;; init-20-dev.el ends here
