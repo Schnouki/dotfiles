@@ -2,10 +2,13 @@
 # -*- coding: utf-8 -*-
 
 import configparser
-from gi.repository import Notify
+import gi
 import notmuch
 import os.path
 import sys
+
+gi.require_version('Notify', '0.7')
+from gi.repository import Notify
 
 markup_cnt  = '[<span foreground="#93e0e3">{0}</span>]'
 markup_from = '<span foreground="#ffeece">{0}</span>'
