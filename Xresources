@@ -41,10 +41,9 @@ URxvt.urgentOnBell:      true
 URxvt.iconFile:          /usr/share/icons/Numix-Circle/48x48/apps/xterm-color_48x48.svg
 
 URxvt.perl-lib:       /home/schnouki/.config/urxvt
-URxvt.perl-ext:       default,cspace,font-size,matcher,url-select,tabbedex
+URxvt.perl-ext:       default,cspace,font-size,url-select,tabbedex
 
 URxvt.url-launcher:   /usr/bin/xdg-open
-URxvt.matcher.button: 1
 
 ! Tabbedex features
 URxvt.tabbed.new-button:       no
@@ -80,6 +79,7 @@ URxvt.keysym.C-S-1-Down: perl:font-size:decglobal
 ! url-select
 URxvt.keysym.M-u: perl:url-select:select_next
 URxvt.url-select.launcher: /usr/bin/xdg-open
+URxvt.url-select.underline: yes
 
 ! Something similar for XTerm, just in case...
 XTerm*foreground: #C0C0C0
