@@ -310,9 +310,20 @@ screenshotmenu = {
 }
 -- }}}
 
+-- {{{ Layouts menu
+layoutsmenu = {}
+for _, layout in ipairs(layouts) do
+   local name = awful.layout.getname(layout)
+   local entry = { name, function() awful.layout.set(name) end, beautiful["layout_" .. name] }
+   table.insert(layoutsmenu, entry)
+end
+mylayoutsmenu = awful.menu({ items = layoutsmenu })
+-- }}}
+
 mymainmenu = awful.menu({ items = { { "&awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "&jeux", gamemenu },
                                     { "&utils", utilsmenu },
+                                    { "&layouts", layoutsmenu },
                                     { "écran &ext.", screenmenu },
                                     { "&screenshot", screenshotmenu },
                                     { "&firefox", "firefox", icon_theme.get("apps", "firefox") },
@@ -322,7 +333,7 @@ mymainmenu = awful.menu({ items = { { "&awesome", myawesomemenu, beautiful.aweso
                                     { "sp&otify", "spotify", icon_theme.get("apps", "spotify-client") },
                                     { "&netflix", "chromium https://www.netflix.com/", icon_theme.get("apps", "netflix") },
                                     { "&popcorn time", "popcorntime", icon_theme.get("apps", "popcorntime", "/usr/share/pixmaps/popcorntime.png") },
-                                    { "&libre office", "soffice", icon_theme.get("apps", "libreoffice-writer") },
+                                    { "li&bre office", "soffice", icon_theme.get("apps", "libreoffice-writer") },
                                     { "open &terminal", terminal }
                                   }
                         })
@@ -1041,7 +1052,10 @@ globalkeys = awful.util.table.join(
             if client.focus then client.focus:raise() end
         end,
         "Previous"),
-    awful.key({ modkey,           }, "w", function () mymainmenu:show() end),
+
+    keydoc.group("Menu"),
+    awful.key({ modkey,           }, "w", function () mymainmenu:show() end,    "Show main menu"),
+    awful.key({ modkey, "Control" }, "w", function () mylayoutsmenu:show() end, "Show layouts menu"),
 
     -- Layout manipulation
     keydoc.group("Layout manipulation"),
