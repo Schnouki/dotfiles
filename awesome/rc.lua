@@ -538,6 +538,34 @@ function new_transient(c)
       client.focus = c
    end
 end
+
+-- Resize client by ratio
+function resize_client_ratio(ratio, c)
+   c = c or client.focus
+   local geom = c:geometry()
+   local coords = mouse.coords()
+
+   -- New width and height (plus deltas)
+   local nw = geom.width * ratio
+   local nh = geom.height * ratio
+   local dw = nw - geom.width
+   local dh = nh - geom.height
+
+   -- Mouse coordinates inside of the window
+   local mx = coords.x - geom.x
+   local my = coords.y - geom.y
+
+   -- Make sure they are inside the window. If they are not, put them in the center of the window.
+   if mx < 0 or mx >= geom.width then mx = geom.width / 2 end
+   if my < 0 or my >= geom.height then my = geom.height / 2 end
+
+   -- Delta for window X and Y: keep the mx/width and my/height ratios
+   local dx = mx * (1 - ratio)
+   local dy = my * (1 - ratio)
+
+   -- Move and resize!
+   awful.client.moveresize(dx, dy, dw, dh, c)
+end
 -- }}}
 -- {{{     Widgets perso
 separator = wibox.widget.imagebox()
@@ -958,9 +986,13 @@ persokeys = {
 
 persoclientkeys = {
    keydoc.group("Client controls"),
-   awful.key({ modkey, "Shift"   }, "t", toggle_titlebar,                          "Toggle titlebar"),
-   awful.key({ modkey            }, "s", function (c) c.sticky = not c.sticky end, "Toggle sticky"),
-   awful.key({ modkey, "Control" }, "i", win_info,                                 "Show info"),
+   awful.key({ modkey, "Shift"   }, "t",           toggle_titlebar,                              "Toggle titlebar"),
+   awful.key({ modkey            }, "s",           function (c) c.sticky = not c.sticky end,     "Toggle sticky"),
+   awful.key({ modkey, "Control" }, "i",           win_info,                                     "Show info"),
+   awful.key({ modkey            }, "KP_Add",      function (c) resize_client_ratio(1.1, c) end, "Increase size by 10%"),
+   awful.key({ modkey            }, "KP_Subtract", function (c) resize_client_ratio(0.9, c) end, "Decrease size by 10%"),
+   awful.key({ modkey, "Control" }, "KP_Add",      function (c) resize_client_ratio(1.5, c) end, "Increase size by 50%"),
+   awful.key({ modkey, "Control" }, "KP_Subtract", function (c) resize_client_ratio(0.5, c) end, "Decrease size by 50%"),
 }
 -- }}}
 -- }}}
