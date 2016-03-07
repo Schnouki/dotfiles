@@ -2,6 +2,24 @@
 ;;; Commentary:
 ;;; Code:
 
+;; Tweak the GC threshold.
+;; The default value is 800000, set it to something higher once the startup is
+;; complete. And set it to something even higher in the minibuffer (for ido and
+;; other complex features)
+(setq schnouki/gc-threshold 2000000
+      schnouki/gc-threshold-minibuffer 10000000)
+
+(defun schnouki/set-normal-gc-threshold ()
+  (setq gc-cons-threshold schnouki/gc-threshold))
+(defun schnouki/set-minibuffer-gc-threshold ()
+  (setq gc-cons-threshold schnouki/gc-threshold-minibuffer))
+
+(add-hook 'after-init-hook #'schnouki/set-normal-gc-threshold)
+(add-hook 'minibuffer-setup-hook #'schnouki/set-minibuffer-gc-threshold)
+(add-hook 'minibuffer-exit-hook #'schnouki/set-normal-gc-threshold)
+
+(setq gc-cons-threshold most-positive-fixnum)
+
 ;; Paths
 (add-to-list 'load-path "~/.config/emacs")
 
