@@ -324,20 +324,30 @@ end
 mylayoutsmenu = awful.menu({ items = layoutsmenu })
 -- }}}
 
+function safe_cmd(cmd)
+   return function()
+      return awful.util.spawn(cmd, true, {
+                                 MemoryLimit = "3G",
+                                 CPUQuota = "400%"
+      })
+   end
+end
+
 mymainmenu = awful.menu({ items = { { "&awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "&jeux", gamemenu },
                                     { "&utils", utilsmenu },
                                     { "&layouts", layoutsmenu },
                                     { "écran &ext.", screenmenu },
                                     { "&screenshot", screenshotmenu },
-                                    { "&firefox", "firefox", icon_theme.get("apps", "firefox") },
-                                    { "&chromium", "chromium", icon_theme.get("apps", "chromium") },
+                                    { "&firefox", safe_cmd("firefox"), icon_theme.get("apps", "firefox") },
+                                    { "&chromium", safe_cmd("chromium"), icon_theme.get("apps", "chromium") },
                                     { "&gajim", "gajim", icon_theme.get("apps", "gajim") },
-                                    { "t&hunderbird", "thunderbird", icon_theme.get("apps", "thunderbird") },
+                                    { "t&hunderbird", safe_cmd("thunderbird"), icon_theme.get("apps", "thunderbird") },
                                     { "sp&otify", "spotify", icon_theme.get("apps", "spotify-client") },
                                     { "&netflix", "chromium https://www.netflix.com/", icon_theme.get("apps", "netflix") },
-                                    { "&popcorn time", "popcorntime", icon_theme.get("apps", "popcorntime", "/usr/share/pixmaps/popcorntime.png") },
+                                    { "&popcorn time", safe_cmd("popcorntime"), icon_theme.get("apps", "popcorntime", "/usr/share/pixmaps/popcorntime.png") },
                                     { "li&bre office", "soffice", icon_theme.get("apps", "libreoffice-writer") },
+                                    { "an&droid studio", safe_cmd("android-studio"), icon_theme.get("apps", "android-studio", "/usr/share/pixmaps/android-studio.png") },
                                     { "open &terminal", terminal }
                                   }
                         })
@@ -1356,8 +1366,25 @@ mytimer300:start()
 -- }}}
 -- {{{ Disable startup-notification
 -- http://awesome.naquadah.org/wiki/Disable_startup-notification_globally
-local oldspawn = awful.util.spawn
-awful.util.spawn = function (s)
-  oldspawn(s, false)
+-- local oldspawn1 = awful.util.spawn
+-- awful.util.spawn = function (s)
+--   oldspawn1(s, false)
+-- end
+-- }}}
+-- {{{ Run applications in a different (transient) systemd scope
+-- This allows awesome to be restarted by systemd without killing the
+-- applications started from it.
+local oldspawn2 = awful.util.spawn
+awful.util.spawn = function (cmd, sn, props)
+   local params = ""
+   if props ~= nil then
+      local k, v
+      for k, v in pairs(props) do
+         params = params .. "-p " .. k .. "=" .. v .. " "
+      end
+   end
+   cmd = "systemd-run --user --scope " .. params .. cmd
+   -- naughty.notify({ text = cmd })
+   oldspawn2(cmd, sn)
 end
 -- }}}
