@@ -991,6 +991,7 @@ persokeys = {
    awful.key({ modkey, "Control" }, "Right", mpris2("next"),      "Next"),
 
    awful.key({ modkey, "Shift"   }, "d", function () awful.util.spawn("dspop") end, "Run dspop"),
+   awful.key({ modkey, "Control" }, "d", function () awful.util.spawn("dmpd") end,  "Run dmpd"),
    awful.key({ modkey, "Shift"   }, "i", mpris2("info"),                            "Show MPRIS2 info"),
    awful.key({ modkey, "Shift"   }, "o", mpris2("nextplayer"),                      "Switch to the next MPRIS2 player"),
 
@@ -1264,7 +1265,7 @@ awful.rules.rules = {
                              "pinentry", "Plugin-container",
                              "Smplayer", "VirtualBox", "Vlc",
                              "Wine" },
-                   instance = { "pinentry-gtk-2", "popcorntime", "wpa_gui" },
+                   instance = { "crx_eggkanocgddhmamlbiijnphhppkpkmkl", "pinentry-gtk-2", "popcorntime", "wpa_gui" },
                    name = { "Android Device Monitor", "Gnuplot (window id : 0)", "Minecraft", "Popcorn Time",
                             "R Graphics: Device 2 (ACTIVE)" } },
       properties = { floating = true } },
