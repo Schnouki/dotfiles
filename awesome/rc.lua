@@ -181,26 +181,28 @@ myawesomemenu = {
    { "&quit", awesome.quit }
 }
 
-steamdir = "/home/schnouki/.local/share/Steam/SteamApps/common/"
+require("steam")
+steamdir = "/home/schnouki/.local/share/Steam/SteamApps"
+steammenu = { theme = {width = 200 } }
+for _, game in ipairs(steam.get_games(steamdir)) do
+   table.insert(steammenu, { game["name"], "steam steam://rungameid/" .. game["id"],
+                             icon_theme.get("apps", "steam_icon_" .. game["id"]) })
+end
+
 gamemenu = {
-   { "steam", "steam", icon_theme.get("apps", "steam") },
+   theme = { width = 200 },
+   { "&steam", "steam", icon_theme.get("apps", "steam") },
+   { "steam &games", steammenu, icon_theme.get("apps", "steam") },
    { "battle for wesnoth", "wesnoth", "/usr/share/icons/wesnoth-icon.png" },
    { "frozen bubble", "frozen-bubble", "/usr/share/pixmaps/frozen-bubble.png" },
    { "gplanarity", "gplanarity", "/usr/share/pixmaps/gplanarity.png" },
-   { "half-life", steamdir .. "Half-Life/hl.sh", icon_theme.get("apps", "steam_icon_70") },
-   { "half-life opposing force", "Half-Life/hl.sh -game gearbox", icon_theme.get("apps", "steam_icon_50") },
    { "hex-a-hop", "hex-a-hop", "/usr/share/hex-a-hop/icon.bmp" },
-   { "kerbal space program", "LC_ALL=C " .. steamdir .. "Kerbal Space Program/KSP.x86", icon_theme.get("apps", "steam_icon_220200") },
    { "kildclient", "kildclient", "/usr/share/pixmaps/kildclient.png" },
    { "kobo deluxe", "kobodl", "/usr/share/pixmaps/kobo-icon.xpm" },
    { "minecraft", "minecraft", icon_theme.get("apps", "minecraft") },
    { "naev", "naev", "/usr/share/pixmaps/naev.png" },
    { "open ttd", "openttd", icon_theme.get("apps", "openttd") },
-   { "serious sam 3", "steam steam://rungameid/41070", icon_theme.get("apps", "steam_icon_41070") },
-   { "super meat boy", steamdir .. "Super Meat Boy/SuperMeatBoy", icon_theme.get("apps", "steam_icon_40800") },
    { "torchlight", "torchlight", "/usr/share/pixmaps/torchlight.png" },
-   { "type rider", "steam steam://rungameid/258890", icon_theme.get("apps", "steam_icon_258890") },
-   { "world of goo", steamdir .. "World of Goo/WorldOfGoo", icon_theme.get("apps", "steam_icon_22000") },
 }
 
 utilsmenu = {
