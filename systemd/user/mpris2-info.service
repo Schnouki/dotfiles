@@ -6,4 +6,4 @@ Requires=dbus.socket xorg.target
 ExecStart=/home/schnouki/bin/mpris2-info
 
 [Install]
-WantedBy=xorg.target
+WantedBy=applications.target

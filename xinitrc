@@ -19,15 +19,6 @@ export QT_STYLE_OVERRIDE=gtk
 # https://wiki.archlinux.org/index.php/Java#Tips_and_tricks
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
 
-# GPG agent
-gnupginf="$HOME/.gnupg/gpg-agent.info"
-if ( pgrep -u "${USER}" gpg-agent ); then
-    eval `cat $gnupginf`
-    eval `cut -d= -f1 $gnupginf | xargs echo export`
-else
-    eval `gpg-agent --daemon --write-env-file $gnupginf`
-fi
-
 # Source scripts in /etc/X11/xinit/xinitrc.d/
 if [ -d /etc/X11/xinit/xinitrc.d ]; then
     for f in /etc/X11/xinit/xinitrc.d/*; do
@@ -40,4 +31,6 @@ systemctl --user import-environment
 
 # From https://bbs.archlinux.org/viewtopic.php?pid=1303951#p1303951
 systemctl --user start xorg.target
+sleep 5
+systemctl --user start applications.target
 while true; do sleep 1h; done

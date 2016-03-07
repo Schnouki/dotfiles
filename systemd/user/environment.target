@@ -2,5 +2,3 @@
 Description=Set session environment variables
 IgnoreOnIsolate=true
 Requires=dbus.socket
-RequiredBy=xorg.target
-Before=xorg.target

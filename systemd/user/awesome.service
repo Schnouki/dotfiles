@@ -1,10 +1,12 @@
 [Unit]
 Description=Awesome WM
-Requires=dbus.socket
+Requires=dbus.socket environment.target
+After=environment.target
 
 [Service]
 ExecStart=/usr/bin/awesome
 #Restart=on-failure
+TasksMax=infinity
 
 [Install]
 Alias=window-manager.service

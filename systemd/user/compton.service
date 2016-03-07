@@ -6,4 +6,4 @@ Requires=xorg.target
 ExecStart=/usr/bin/compton
 
 [Install]
-WantedBy=xorg.target
+WantedBy=applications.target

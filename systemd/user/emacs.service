@@ -11,4 +11,4 @@ TimeoutStartSec=0
 Restart=on-abnormal
 
 [Install]
-WantedBy=default.target
+WantedBy=applications.target

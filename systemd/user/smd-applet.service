@@ -7,4 +7,4 @@ Type=simple
 ExecStart=/usr/bin/smd-applet
 
 [Install]
-WantedBy=xorg.target
+WantedBy=applications.target

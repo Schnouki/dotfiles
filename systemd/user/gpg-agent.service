@@ -1,6 +1,5 @@
 [Unit]
 Description=GnuPG (and SSH) private key agent
-Wants=environment.target
 Before=environment.target
 IgnoreOnIsolate=true
 
@@ -11,4 +10,4 @@ ExecStartPost=/usr/bin/systemctl --user set-environment SSH_AUTH_SOCK=${HOME}/.g
 Restart=on-abort
 
 [Install]
-WantedBy=default.target
+WantedBy=default.target environment.target

@@ -7,4 +7,4 @@ ExecStartPre=/usr/bin/sleep 5
 ExecStart=/usr/bin/wpa_gui -t
 
 [Install]
-WantedBy=xorg.target
+WantedBy=applications.target
