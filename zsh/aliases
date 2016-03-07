@@ -3,12 +3,12 @@
 # When using BusyBox, programs like grep, df and free are symlinks to
 # /bin/busybox. So we check these cases with -L.
 
-alias ls='ls -Fh --color=auto'
-alias l='ls -Fh --color=auto'
-alias lk='ls -Fh --color=auto'
-alias la='ls -Fha --color=auto'
-alias ll='ls -Fhl --color=auto'
-alias lla='ls -Fhla --color=auto'
+alias ls='ls -FNh --color=auto'
+alias l='ls -FNh --color=auto'
+alias lk='ls -FNh --color=auto'
+alias la='ls -FNha --color=auto'
+alias ll='ls -FNhl --color=auto'
+alias lla='ls -FNhla --color=auto'
 
 [[ ! -L $(which df) ]] && alias df='df -h'
 [[ ! -L $(which free) ]] && alias free='free -m'
