@@ -132,7 +132,10 @@
 
 (use-package haml-mode
   :ensure t
-  :mode "\\.haml\\'")
+  :mode "\\.haml\\'"
+  :config
+  (add-to-list 'haml-block-openers
+               "^[ \t]*-[ \t]*elif"))
 
 (use-package cuda-mode
   :mode "\\.cu\\'"
