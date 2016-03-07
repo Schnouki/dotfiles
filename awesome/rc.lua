@@ -29,6 +29,8 @@ require("markup")
 pomodoro = require("pomodoro")
 -- Icon theme
 icon_theme = require("icon_theme")
+-- Fangh calendar :)
+fangh_calendar = require("fangh_calendar")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -352,7 +354,11 @@ mytextclock_icon = wibox.widget.imagebox()
 mytextclock_icon:set_image(config_dir .. "/icons/time.png")
 mytextclock = awful.widget.textclock("%X", 1)
 mytextclock_t = awful.tooltip({ objects = { mytextclock },
-                                timer_function = function() return os.date("%A %e %B %Y\n%T") end })
+                                timer_function = function()
+                                   local txt = os.date("%A %e %B %Y\n%T")
+                                   txt = txt .. "\n\n" .. fangh_calendar.format_today()
+                                   return txt
+                                end })
 
 -- Create a wibox for each screen and add it
 mywibox = {}
