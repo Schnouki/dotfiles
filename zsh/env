@@ -24,7 +24,7 @@ export XDG_CACHE_HOME=$HOME/.cache
 
 # Programs
 export EDITOR="emacsclient -c -a \"\""
-export BROWSER=firefox
+export BROWSER=chromium
 
 # Program-specifig options
 export ACKRC="$XDG_CONFIG_HOME/ackrc"

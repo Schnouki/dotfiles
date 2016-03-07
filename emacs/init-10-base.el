@@ -37,7 +37,7 @@
 	    (if (browse-url-maybe-new-window new-window)
 		"--new-tab")
 	    (list url)))))
-(setq browse-url-browser-function 'schnouki/browse-url-firefox-36)
+(setq browse-url-browser-function 'browse-url-chromium)
 
 ;; Display date and time
 (require 'time)
