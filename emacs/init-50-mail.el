@@ -45,6 +45,7 @@
 			       (:name "prosody"              :query "(tag:prosody and tag:unread)")
 			       (:name "spop"                 :query "(tag:spop and tag:unread")
 			       (:name "xmpp"                 :query "(tag:xmpp and tag:unread)"))
+      notmuch-show-all-tags-list t
       notmuch-archive-tags '("-inbox" "-unread")
       notmuch-address-command "~/.config/notmuch/addrbook.py"
       notmuch-crypto-process-mime t

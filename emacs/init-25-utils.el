@@ -204,6 +204,10 @@ Return the index of the matching item, or nil if not found."
   :config
   (ido-clever-match-enable))
 
+(use-package ido-occur
+  :ensure t
+  :bind ("C-! o" . ido-occur))
+
 ;; Enhanced M-x
 (use-package smex
   :ensure t
