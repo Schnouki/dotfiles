@@ -5,7 +5,7 @@
 (use-package magit
   :ensure t
   :bind (("C-<"   . magit-status)
-	 ("C-M-<" . magit-grep))
+	 ("C-M-<" . vc-git-grep))
   :demand t
   :init
   (progn
