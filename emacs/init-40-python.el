@@ -5,8 +5,6 @@
 (use-package virtualenvwrapper
   :ensure t
   :commands (venv-workon venv-deactivate venv-initialize-interactive-shells venv-initialize-eshell)
-  :config
-  (message "virtualenvwrapper loaded")
   :init
   (progn
     (setq venv-location "~/.virtualenvs")
