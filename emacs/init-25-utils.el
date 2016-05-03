@@ -208,6 +208,12 @@ Return the index of the matching item, or nil if not found."
   :ensure t
   :bind ("C-! o" . ido-occur))
 
+(use-package flx-ido
+  :ensure t
+  :config
+  (flx-ido-mode 1)
+  (setq ido-use-faces nil))
+
 ;; Enhanced M-x
 (use-package smex
   :ensure t
