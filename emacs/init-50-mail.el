@@ -291,6 +291,9 @@
 (eval-after-load 'mm-decode
   '(add-to-list 'mm-inline-media-tests '("text/pdf" ignore ignore)))
 
+;; Viewers
+(mailcap-add "image/.*" "geeqie %s" '(eq window-system 'x))
+
 ;; Other communication services :)
 (use-package jabber
   :ensure t
