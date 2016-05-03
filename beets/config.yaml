@@ -1,6 +1,6 @@
 directory: ~/Music
 library: ~/Music/.library
-plugins: bpd edit fetchart fromfilename
+plugins: bpd edit fetchart fromfilename mbsync
 
 ui:
   color: yes
