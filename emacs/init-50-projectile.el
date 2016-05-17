@@ -4,7 +4,7 @@
 
 (use-package projectile
   :ensure t
-  :config
+  :init
   (setq projectile-keymap-prefix (kbd "s-!")
         projectile-mode-line '(:eval
                               (if
@@ -12,6 +12,7 @@
                                   " Projectile"
                                 (format " Pj[%s]"
                                         (projectile-project-name)))))
+  :config
   (projectile-global-mode))
 
 ;;; init-50-projectile.el ends here

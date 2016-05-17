@@ -219,11 +219,14 @@
   (progn
     (add-hook 'prog-mode-hook #'unicode-troll-stopper-mode)))
 
-
 ;; Smart Comments
 (use-package smart-comment
   :ensure t
   :bind ("M-;" . smart-comment))
+
+;; GNU Global
+(use-package ggtags
+  :ensure t)
 
 
 ;;; init-20-dev.el ends here
