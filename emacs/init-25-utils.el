@@ -25,6 +25,13 @@
   (kill-ring-save (line-beginning-position) (+ 1 (line-end-position))))
 (bind-key "M-k" 'schnouki/copy-line)
 
+;; Viking-mode
+(use-package viking-mode
+  :ensure t
+  :diminish viking-mode
+  :config
+  (viking-global-mode t))
+
 ;; Switch to scratch buffer, creating it if necessary
 ;; http://stackoverflow.com/questions/234963/re-open-scratch-buffer-in-emacs/776052#776052
 (defun schnouki/goto-scratch (&optional force-new mode)
@@ -264,6 +271,13 @@ Return the index of the matching item, or nil if not found."
   :ensure t
   :bind (("M-z" . avy-zap-to-char-dwim)
 	 ("M-Z" . avy-zap-up-to-char-dwim)))
+
+;; Visual feedback on some operations
+(use-package volatile-highlights
+  :ensure t
+  :diminish volatile-highlights-mode
+  :config
+  (volatile-highlights-mode t))
 
 ;; Google thing under point
 (use-package google-this
