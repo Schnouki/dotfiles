@@ -33,3 +33,7 @@ function pacQ() {
     zformat -a align " " $tab
     print -lr -- $align
 }
+
+function sshmux() {
+    ssh -t $1 'tmux attach || tmux new'
+}
