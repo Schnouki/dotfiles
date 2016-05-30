@@ -219,7 +219,7 @@ local function get_connected_screen(default)
    local line, m
    for line in f:lines() do
       m = string.match(line, "^(%w+) connected")
-      if m ~= nil and m ~= "LVDS1" then
+      if m ~= nil and m ~= "LVDS-1" then
          f:close()
          return m
       end
@@ -227,7 +227,7 @@ local function get_connected_screen(default)
    f:close()
    return default
 end
-local ext_screen = get_connected_screen("HDMI1")
+local ext_screen = get_connected_screen("HDMI-1")
 
 local function ext_screen_connected()
    local f = io.popen("xrandr")
@@ -244,9 +244,9 @@ local function ext_screen_connected()
 end
 
 local function auto_set_screen(direction)
-   local cmd = "xrandr --output LVDS1 --auto --output " .. ext_screen
+   local cmd = "xrandr --output LVDS-1 --auto --output " .. ext_screen
    if ext_screen_connected() then
-      cmd = cmd .. " --auto --" .. direction .. " LVDS1"
+      cmd = cmd .. " --auto --" .. direction .. " LVDS-1"
    else
       cmd = cmd .. " --off"
    end
@@ -255,20 +255,20 @@ end
 
 local function menu_screen_text()
     return ({
-        LVDS1 = "L&aptop",
-        VGA1 = "&VGA",
-        HDMI1 = "&HDMI",
+          ["LVDS-1"] = "L&aptop",
+          ["VGA-1"]  = "&VGA",
+          ["HDMI-1"] = "&HDMI",
     })[ext_screen]
 end
 
 screenmenu = {
     { "&auto",     function() auto_set_screen("left-of") end },
-    { "&clone",    "xrandr --output LVDS1 --auto --output " .. ext_screen .. " --auto --same-as LVDS1" },
-    { "&left of",  "xrandr --output LVDS1 --auto --output " .. ext_screen .. " --auto --left-of LVDS1" },
-    { "&right of", "xrandr --output LVDS1 --auto --output " .. ext_screen .. " --auto --right-of LVDS1" },
+    { "&clone",    "xrandr --output LVDS-1 --auto --output " .. ext_screen .. " --auto --same-as LVDS-1" },
+    { "&left of",  "xrandr --output LVDS-1 --auto --output " .. ext_screen .. " --auto --left-of LVDS-1" },
+    { "&right of", "xrandr --output LVDS-1 --auto --output " .. ext_screen .. " --auto --right-of LVDS-1" },
     { menu_screen_text(), function (m, menu)
         local prev = ext_screen
-        ext_screen = (ext_screen == "HDMI1" and "VGA1" or "HDMI1")
+        ext_screen = (ext_screen == "HDMI-1" and "VGA-1" or "HDMI-1")
         m.label:set_text(menu_screen_text())
         for _, item in ipairs(menu.items) do
             if type(item.cmd) == 'string' then
@@ -279,7 +279,7 @@ screenmenu = {
     end },
 }
 if screen.count() > 1 then
-    table.insert(screenmenu, 2, { "&off", "xrandr --output LVDS1 --auto --output " .. ext_screen .. " --off" })
+    table.insert(screenmenu, 2, { "&off", "xrandr --output LVDS-1 --auto --output " .. ext_screen .. " --off" })
 end
 -- }}}
 
