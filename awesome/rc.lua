@@ -448,11 +448,18 @@ package.cpath = config_dir .. "/?.so;" .. package.cpath
 require("lousy")
 
 -- Backlight helper
+local backlight_notif_id = nil
 function change_backlight(mult)
    local new_bl = lousy.get_backlight() * mult
    if new_bl < 0.5 then new_bl = 0.5
    elseif new_bl > 100 then new_bl = 100 end
    lousy.set_backlight(new_bl)
+   local notif = naughty.notify({
+         text = "Backlight level: " .. new_bl .. "%",
+         replaces_id = backlight_notif_id,
+         icon = icon_theme.get("notifications", "notification-display-brightness")
+   })
+   backlight_notif_id = notif.id
 end
 
 -- Screen helper
