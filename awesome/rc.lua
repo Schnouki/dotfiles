@@ -168,8 +168,11 @@ icon_theme.add_theme("Numix")
 icon_theme.add_theme("Numix-Circle")
 icon_theme.add_size("scalable")
 icon_theme.add_size("48x48")
+icon_theme.add_size("48")
 icon_theme.add_size("32x32")
+icon_theme.add_size("32")
 icon_theme.add_size("16x16")
+icon_theme.add_size("16")
 icon_theme.configure_naughty()
 
 -- Create a laucher widget and a main menu
@@ -189,6 +192,7 @@ for _, game in ipairs(steam.get_games(steamdir)) do
                              icon_theme.get("apps", "steam_icon_" .. game["id"]) })
 end
 
+gamesdir = "/home/schnouki/Media/Jeux"
 gamemenu = {
    theme = { width = 200 },
    { "&steam", "steam", icon_theme.get("apps", "steam") },
@@ -202,6 +206,7 @@ gamemenu = {
    { "minecraft", "minecraft", icon_theme.get("apps", "minecraft") },
    { "naev", "naev", "/usr/share/pixmaps/naev.png" },
    { "open ttd", "openttd", icon_theme.get("apps", "openttd") },
+   { "quake", "darkplaces-sdl -window -basedir " .. gamesdir .. "/Quake", icon_theme.get("apps", "quake") },
    { "torchlight", "torchlight", "/usr/share/pixmaps/torchlight.png" },
 }
 
@@ -348,6 +353,7 @@ mymainmenu = awful.menu({ items = { { "&awesome", myawesomemenu, beautiful.aweso
                                     { "&popcorn time", safe_cmd("popcorntime"), icon_theme.get("apps", "popcorntime", "/usr/share/pixmaps/popcorntime.png") },
                                     { "li&bre office", "soffice", icon_theme.get("apps", "libreoffice-writer") },
                                     { "an&droid studio", safe_cmd("android-studio"), icon_theme.get("apps", "android-studio", "/usr/share/pixmaps/android-studio.png") },
+                                    { "pc&manfm", safe_cmd("pcmanfm"), icon_theme.get("apps", "system-file-manager") },
                                     { "open &terminal", terminal }
                                   }
                         })
