@@ -6,7 +6,7 @@ IgnoreOnIsolate=true
 [Service]
 Type=forking
 ExecStart=/usr/bin/gpg-agent --daemon --enable-ssh-support
-ExecStartPost=/usr/bin/systemctl --user set-environment SSH_AUTH_SOCK=${HOME}/.gnupg/S.gpg-agent.ssh
+ExecStartPost=/usr/bin/systemctl --user set-environment SSH_AUTH_SOCK=${XDG_RUNTIME_DIR}/gnupg/S.gpg-agent.ssh
 Restart=on-abort
 
 [Install]
