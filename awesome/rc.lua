@@ -707,8 +707,12 @@ if f then
    tb_mails_color_updating = "#ac7373" -- red-2
    tb_mails_color = tb_mails_color_normal
    function tb_mails_set_count(n)
+      local gt0 = n > 0
+      if n >= 10000 then
+         n = string.format("%.1fk", n / 1000)
+      end
       local s = markup.fg.color(tb_mails_color, "✉ " .. n)
-      if n > 0 then
+      if gt0 then
          s = markup.bold(s)
       end
       tb_mails:set_markup(s)
