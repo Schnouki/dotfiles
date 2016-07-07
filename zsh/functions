@@ -35,5 +35,5 @@ function pacQ() {
 }
 
 function sshmux() {
-    ssh -t $1 'tmux attach || tmux new'
+    ssh -t $1 'tmux -u attach || tmux -u new'
 }
