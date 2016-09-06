@@ -19,8 +19,6 @@ static bool xkb_supported = false;
 static bool randr_initialized = false;
 static bool randr_supported = false;
 
-bool do_backlight(xcb_connection_t* conn, const xcb_setup_t* setup, double* in_new_pct, double* out_cur_pct);
-
 void init() {
     if (!conn)
         conn = xcb_connect(NULL, NULL);
@@ -71,20 +69,6 @@ uint32_t idle() {
     free(info);
 
     return ms_since_user_input;
-}
-
-double get_backlight() {
-    double cur = 0;
-    if (!conn || !setup)
-        init();
-    do_backlight(conn, setup, NULL, &cur);
-    return cur;
-}
-
-void set_backlight(double new_pct) {
-    if (!conn || !setup)
-        init();
-    do_backlight(conn, setup, &new_pct, NULL);
 }
 
 uint32_t keyboard_indicators() {

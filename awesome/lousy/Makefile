@@ -3,7 +3,7 @@ CFLAGS  += -fPIC -O2 -Wall
 
 all: lousy.so
 
-lousy.so: lousy_wrap.o lousy.o backlight.o
+lousy.so: lousy_wrap.o lousy.o
 	gcc -shared -o $@ $^ $(LDFLAGS)
 
 %.o: %.c
