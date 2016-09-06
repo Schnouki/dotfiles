@@ -2,10 +2,11 @@
 -- Licensed under the GNU General Public License v2
 --  * (c) 2010, MrMagne <mr.magne@yahoo.fr>
 --  * (c) 2010, Mic92 <jthalheim@gmail.com>
---  * (c) 2014, Thomas Jost <schnouki@schnouki.net>
+--  * (c) 2016, Thomas Jost <schnouki@schnouki.net>
 ---------------------------------------------------
 
 -- {{{ Grab environment
+local pairs = pairs
 local ipairs = ipairs
 local type = type
 local tonumber = tonumber
@@ -17,16 +18,17 @@ local table = {
     sort = table.sort
 }
 local string = {
-    find = string.find,
     match = string.match,
-    format = string.format,
-    gmatch = string.gmatch
+    format = string.format
 }
 local math = {
     floor = math.floor,
     tointeger = math.tointeger
 }
+
 local awful = require("awful")
+
+local parser = require("brutal/pulse_parser")
 -- }}}
 
 
@@ -35,8 +37,8 @@ local awful = require("awful")
 local pulse = {}
 
 -- {{{ Helper function
-local function pacmd(args)
-    local f = io.popen("pacmd "..args)
+local function get_cmd_output(cmd)
+    local f = io.popen(cmd)
     if f == nil then
         return nil
     else
@@ -45,8 +47,8 @@ local function pacmd(args)
         return line
     end
 end
-local function pacmd_lines(args)
-    local f = io.popen("pacmd " .. args)
+local function get_cmd_lines(cmd)
+    local f = io.popen(cmd)
     if f == nil then
         return nil
     else
@@ -61,212 +63,149 @@ local function pacmd_lines(args)
     end
 end
 
-local function escape(text)
-    local special_chars = { ["."] = "%.", ["-"] = "%-" }
-    return text:gsub("[%.%-]", special_chars)
+local function pacmd(args)       return get_cmd_output("pacmd " .. args) end
+local function pacmd_lines(args) return get_cmd_lines("pacmd " .. args)  end
+
+local function get_pacmd_dump()
+    return parser.parse_pacmd_dump(pacmd_lines("dump"))
+end
+local function get_sinks()
+    return parser.parse_pacmd_list_sinks(pacmd("list-sinks"))
+end
+local function get_sink_inputs()
+    return parser.parse_pacmd_list_sinks(pacmd("list-sink-inputs"))
+end
+local function get_cards()
+    return parser.parse_pacmd_list_cards(pacmd("list-cards"))
 end
 
-local cached_sinks = {}
-local function get_sink_name(sink)
-    if type(sink) == "string" then return sink end
-    -- avoid nil keys
-    local key = sink or 1
-    -- Cache requests
-    if not cached_sinks[key] then
-        local line, name, prio, mtch
-        local raw_sinks = {}
-        for line in pacmd_lines("list-sinks") do
-            mtch = string.match(line, "name: <(.-)>")
-            if mtch ~= nil then
-                name = mtch
-            else
-                mtch = string.match(line, "priority: (%d+)")
-                if mtch then
-                    prio = tonumber(mtch)
-                    table.insert(raw_sinks, {
-                                     name = name,
-                                     prio = prio,
-                    })
-                end
-            end
-        end
-
-        -- Sort sinks by priority
-        table.sort(raw_sinks, function(a, b) return a.prio > b.prio end)
-
-        -- Move to cached_sinks
-        cached_sinks = {}
-        local idx, entry
-        for idx, entry in ipairs(raw_sinks) do
-            table.insert(cached_sinks, entry.name)
-        end
+local function get_sink_name(dump, sink)
+    if type(sink) == "string" and dump.profile[sink] then
+        return sink
+    else
+        return dump.default
     end
-
-    return cached_sinks[key]
 end
 
 local function get_sink_inputs_by_role(role)
-    local line, mtch, in_properties
+    local sink
     local sinks = {}
-    local sink_data = nil
-    for line in pacmd_lines("list-sink-inputs") do
-        -- Try to find a section header
-        mtch = string.match(line, "index: (%d+)")
-        if mtch ~= nil then
-            -- New sink: save the previous one!
-            if sink_data ~= nil and sink_data["prop.media.role"] == role then
-                sinks[sink_data.index] = sink_data
-            end
-            sink_data = { index = mtch }
-            in_properties = false
-
-        elseif string.match(line, "%s*properties:") then
-            in_properties = true
-
-        elseif in_properties then
-            -- Read the property and add it to the sink data
-            local prop_name, prop_val
-            for prop_name, prop_val in string.gmatch(line, '%s*([%a%d_%.%-]*) = "([^"]*)"') do
-                sink_data["prop." .. prop_name] = prop_val
-            end
-
-        else
-            -- Try to find a "volume" line
-            mtch = string.match(line, "volume: [%a-]+: (%d+)")
+    local all_sinks = get_sink_inputs()
+    for _, sink in ipairs(all_sinks) do
+        if sink.prop["media.role"] == role then
+            -- Parse volume
+            mtch = string.match(sink.attr.volume, "[%a-]+: (%d+)")
             if mtch ~= nil then
-                sink_data.volume = tonumber(mtch)
+                sink.volume = tonumber(mtch) / 0x10000 * 100
             end
+            sinks[sink.index] = sink
         end
     end
-
-    -- Save the last sink
-    if sink_data ~= nil and sink_data["prop.media.role"] == role then
-        sinks[sink_data.index] = sink_data
-    end
-
     return sinks
 end
 
-local function get_profiles()
-    local profiles = {}
-    local active_profile = nil
-    local in_profiles = false
-    local line, mtch, profile
-    local name, desc, prio
-    for line in pacmd_lines("list-cards") do
-        -- Try to find a section header
-        mtch = string.match(line, "^\t(%w+[%w%s]*):")
-        if mtch ~= nil then
-            local section = mtch
-            if section == "profiles" then
-                in_profiles = true
-            else
-                in_profiles = false
-                if section == "active profile" then
-                    mtch = string.match(line, ".*: <(.*)>")
-                    active_profile = mtch
-                end
-            end
-        elseif in_profiles then
-            for name, desc, prio in string.gmatch(line, "%s*(output:.*): (.+) %(priority (%d+)") do
-                table.insert(profiles, {
-                    name = name,
-                    desc = desc,
-                    prio = tonumber(prio),
-                })
-            end
+local function profile_setter(card_id, profile_id, callback)
+    return function()
+        pacmd("set-card-profile " .. card_id .. " " .. profile_id)
+        callback()
+    end
+end
+local function get_profiles_menu(callback)
+    local card, prefix, profile_id, profile
+    local cards = get_cards()
+    local menu = { }
+    for _, card in ipairs(cards) do
+        local card_name = card.prop["device.description"]
+        local profiles = {}
+        local profiles_menu = {}
+        for profile_id, profile in pairs(card.profile) do
+            table.insert(profiles, {
+                             id = profile_id,
+                             name = profile.name,
+                             prio = profile.priority,
+                             active = card.active_profile == profile_id
+            })
         end
+        table.sort(profiles, function(a, b) return a.prio > b.prio end)
+        for _, profile in ipairs(profiles) do
+            if profile.active then prefix = "✓ " else prefix = "  " end
+            table.insert(profiles_menu, { prefix .. profile.name,
+                                          profile_setter(card.index, profile.id, callback) })
+        end
+        profiles_menu.theme = { width = 400 }
+        table.insert(menu, { card_name, profiles_menu })
     end
-
-    table.sort(profiles, function(a, b) return a.prio > b.prio or (a.prio == b.prio and a.desc < b.desc) end)
-    for _, profile in ipairs(profiles) do
-        profile.active = profile.name == active_profile
-    end
-    return profiles
+    return menu
 end
 
-local cached_profiles_menu = nil
-local function set_profile(name)
-    cached_sinks = {}
-    cached_profiles_menu = nil
-    pacmd("set-card-profile 0 " .. name)
+local function sink_setter(sink, callback)
+    return function()
+        pacmd("set-default-sink " .. sink)
+        callback()
+    end
 end
+local function get_sinks_menu(callback)
+    local prefix, sink
+    local all_sinks = get_sinks()
+    local dump = get_pacmd_dump()
+    local default_sink = dump.default
+    local menu = {}
+    local sinks = {}
 
-local function get_profiles_menu(update_func, names)
-    if cached_profiles_menu ~= nil then
-        return cached_profiles_menu
+    for _, sink in ipairs(all_sinks) do
+        table.insert(sinks, {
+                         index = sink.index,
+                         name = sink.prop["device.description"],
+                         prio = tonumber(sink.attr.priority),
+                         default = sink.attr.name == "<" .. default_sink .. ">"
+        })
     end
-
-    local all_profiles = get_profiles()
-    local profiles = {}
-    local menu_items = {}
-    local desc, profile
-    if names == nil then
-        profiles = all_profiles
-    else
-        for _, name in ipairs(names) do
-            for _, profile in ipairs(all_profiles) do
-                if profile.name == name then
-                    table.insert(profiles, profile)
-                    break
-                end
-            end
-        end
+    table.sort(sinks, function(a, b) return a.prio > b.prio end)
+    for _, sink in ipairs(sinks) do
+        if sink.default then prefix = "✓ " else prefix = "  " end
+        table.insert(menu, { prefix .. sink.name,
+                             sink_setter(sink.index, callback) })
     end
-
-    -- Display the menu
-    for _, profile in ipairs(profiles) do
-        if profile.active then desc = "✓ " else desc = "    " end
-        table.insert(menu_items, { desc .. profile.desc,
-                                   function()
-                                       set_profile(profile.name)
-                                       update_func()
-        end })
-    end
-    cached_profiles_menu = awful.menu({ items = menu_items,
-                                        theme = { width = 350 }})
-    return cached_profiles_menu
+    menu.theme = { width = 250 }
+    return menu
 end
 -- }}}
 
 -- {{{ Pulseaudio widget type
 local function worker(format, sink)
-    sink = get_sink_name(sink)
+    -- Get data
+    local data = get_pacmd_dump()
+
+    -- Fix sink name if needed
+    sink = get_sink_name(data, sink)
     if sink == nil then return {0, "unknown"} end
 
-    -- Get sink data
-    local data = pacmd("dump")
-
     -- If mute return 0 (not "Mute") so we don't break progressbars
-    if string.find(data,"set%-sink%-mute "..escape(sink).." yes") then
+    if data.mute[sink] then
         return {0, "off"}
     end
 
-    local vol = tonumber(string.match(data, "set%-sink%-volume "..escape(sink).." (0x[%x]+)"))
-    if vol == nil then vol = 0 end
-
-    return { vol/0x10000*100, "on"}
+    return {data.volume[sink], "on"}
 end
 -- }}}
 
 -- {{{ Volume control helper
 local function get_new_volume(initial_vol, percent)
-    local vol = math.tointeger(math.floor(initial_vol + percent/100*0x10000))
+    local new_vol = initial_vol + percent
+    local vol = math.tointeger(math.floor(new_vol / 100 * 0x10000))
     if vol > 0x10000 then vol = 0x10000 end
     if vol < 0 then vol = 0 end
     return vol
 end
 
 function pulse.add(percent, sink)
-    sink = get_sink_name(sink)
+    local data = get_pacmd_dump()
+    sink = get_sink_name(data, sink)
     if sink == nil then return end
 
-    local data = pacmd("dump")
-    local pattern = "set%-sink%-volume "..escape(sink).." (0x[%x]+)"
-    local initial_vol =  tonumber(string.match(data, pattern))
-    local vol = get_new_volume(initial_vol, percent)
-
-    local cmd = string.format("pacmd set-sink-volume %s 0x%x >/dev/null", sink, vol)
+    local initial_vol = data.volume[sink]
+    local new_vol = get_new_volume(initial_vol, percent)
+    local cmd = string.format("pacmd set-sink-volume %s 0x%x >/dev/null", sink, new_vol)
     return os.execute(cmd)
 end
 
@@ -285,23 +224,25 @@ function pulse.get_role(role)
 end
 
 function pulse.toggle(sink)
-    sink = get_sink_name(sink)
+    local data = get_pacmd_dump()
+    sink = get_sink_name(data, sink)
     if sink == nil then return end
-
-    local data = pacmd("dump")
-    local pattern = "set%-sink%-mute "..escape(sink).." (%a%a%a?)"
-    local mute = string.match(data, pattern)
+    local mute = data.mute[sink]
 
     -- 0 to enable a sink or 1 to mute it.
-    local state = { yes = 0, no = 1}
+    local state = { [true] = 0, [false] = 1}
     local cmd = string.format("pacmd set-sink-mute %s %d", sink, state[mute])
     return os.execute(cmd)
 end
 -- }}}
 
--- {{{ Card profiles helpers
-function pulse.profiles_menu(names)
-    return get_profiles_menu(names)
+-- {{{ Menu builder
+function pulse.menu(callback)
+    local menu_items = {
+        { "Profiles",     get_profiles_menu(callback) },
+        { "Default sink", get_sinks_menu(callback) }
+    }
+    return awful.menu({ items = menu_items })
 end
 -- }}}
 

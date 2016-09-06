@@ -950,9 +950,10 @@ local function get_volume(include_global_in_text)
    local sink_idx, sink_data
    local first = true
    for sink_idx, sink_data in pairs(brutal.pulse.get_role("music")) do
-      local name = sink_data["prop.application.process.name"]
-         or sink_data["prop.application.process.binary"]
-      local volume = 100. * sink_data.volume / 65536.
+      local name = sink_data.prop["media.software"]
+         or sink_data.prop["application.process.name"]
+         or sink_data.prop["application.process.binary"]
+      local volume = sink_data.volume
       if first then
          first = false
          if txt ~= "" then
@@ -1013,7 +1014,7 @@ function volume_music_down() brutal.pulse.add_role(-5, "music") notify_volume() 
 vol_widget:buttons(awful.util.table.join(
        awful.button({ }, 1, function () awful.util.spawn("pavucontrol") end),
        awful.button({ }, 2, volume_mute),
-       awful.button({ }, 3, function () brutal.pulse.profiles_menu(volume_update):toggle() end),
+       awful.button({ }, 3, function () brutal.pulse.menu(volume_update):toggle() end),
        awful.button({ }, 4, volume_up),
        awful.button({ }, 5, volume_down),
        awful.button({ "Shift" }, 4, volume_music_up),
