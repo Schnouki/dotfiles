@@ -27,6 +27,7 @@ local math = {
 }
 
 local awful = require("awful")
+local icon_theme = require("icon_theme")
 
 local parser = require("brutal/pulse_parser")
 -- }}}
@@ -79,6 +80,15 @@ local function get_cards()
     return parser.parse_pacmd_list_cards(pacmd("list-cards"))
 end
 
+local function get_icon(name)
+    local icon = icon_theme.get("devices", name)
+    if icon == nil then
+        local default = string.match(name, "(%w+-%w+)-%w+")
+        icon = icon_theme.get("devices", default)
+    end
+    return icon
+end
+
 local function get_sink_name(dump, sink)
     if type(sink) == "string" and dump.profile[sink] then
         return sink
@@ -116,6 +126,7 @@ local function get_profiles_menu(callback)
     local menu = { }
     for _, card in ipairs(cards) do
         local card_name = card.prop["device.description"]
+        local card_icon = card.prop["device.icon_name"]
         local profiles = {}
         local profiles_menu = {}
         for profile_id, profile in pairs(card.profile) do
@@ -128,12 +139,12 @@ local function get_profiles_menu(callback)
         end
         table.sort(profiles, function(a, b) return a.prio > b.prio end)
         for _, profile in ipairs(profiles) do
-            if profile.active then prefix = "✓ " else prefix = "  " end
+            if profile.active then prefix = "✓ " else prefix = "   " end
             table.insert(profiles_menu, { prefix .. profile.name,
                                           profile_setter(card.index, profile.id, callback) })
         end
         profiles_menu.theme = { width = 400 }
-        table.insert(menu, { card_name, profiles_menu })
+        table.insert(menu, { card_name, profiles_menu, get_icon(card_icon) })
     end
     return menu
 end
@@ -156,15 +167,18 @@ local function get_sinks_menu(callback)
         table.insert(sinks, {
                          index = sink.index,
                          name = sink.prop["device.description"],
+                         icon = sink.prop["device.icon_name"],
                          prio = tonumber(sink.attr.priority),
                          default = sink.attr.name == "<" .. default_sink .. ">"
         })
     end
     table.sort(sinks, function(a, b) return a.prio > b.prio end)
     for _, sink in ipairs(sinks) do
-        if sink.default then prefix = "✓ " else prefix = "  " end
+        local name = sink.name
+        if sink.default then prefix = "✓ " else prefix = "   " end
         table.insert(menu, { prefix .. sink.name,
-                             sink_setter(sink.index, callback) })
+                             sink_setter(sink.index, callback),
+                             get_icon(sink.icon) })
     end
     menu.theme = { width = 250 }
     return menu
