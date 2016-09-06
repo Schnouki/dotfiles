@@ -4,7 +4,6 @@
 
 (use-package yasnippet
   :ensure t
-  :diminish yas-minor-mode
   :defer 15
   :config
   (progn

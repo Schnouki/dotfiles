@@ -132,10 +132,10 @@
   :ensure t
   :diminish company-mode
   :config
-  (progn
-    (setq company-backends (remove 'company-ropemacs company-backends)
-	  company-tooltip-limit 20)
-    (global-company-mode 1)))
+  (setq company-backends (remove 'company-ropemacs company-backends)
+        company-tooltip-limit 20
+        company-tooltip-align-annotations t)
+  (global-company-mode 1))
 
 ;; Fixmee
 (use-package fixmee

@@ -28,12 +28,14 @@
 	  notmuch-tag-formats `(("attachment" (notmuch-tag-format-image-data tag (schnouki/get-icon "mimetypes/archive")))
 				("encrypted"  (notmuch-tag-format-image-data tag (schnouki/get-icon "status/keys")))
 				("flagged"    (propertize tag 'face '(:foreground ,zenburn-blue))
-				 (notmuch-tag-format-image-data tag (schnouki/get-icon "emblems/emblem-favorite")))
+				 (notmuch-tag-format-image-data tag (schnouki/get-icon "actions/edit-flag")))
 				("forwarded"  (propertize tag 'face '(:weight bold :foreground ,zenburn-blue-4)))
 				("inbox"      (propertize tag 'face '(:weight bold)))
 				("replied"    (propertize tag 'face '(:weight bold :foreground ,zenburn-blue-2)))
 				("sent"       (propertize tag 'face '(:weight bold :foreground ,zenburn-cyan)))
 				("todo"       (propertize tag 'face '(:weight bold :foreground ,zenburn-orange)))
+				("trash"      (propertize tag 'face '(:weight bold :foreground ,zenburn-blue-5))
+				 (notmuch-tag-format-image-data tag (schnouki/get-icon "actions/edit-delete")))
 				("unread"     (propertize tag 'face '(:foreground ,zenburn-red)))))
 
     (eval-after-load 'notmuch

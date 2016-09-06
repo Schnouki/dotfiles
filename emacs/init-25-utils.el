@@ -15,6 +15,7 @@
 
 ;; Auto-update buffers when the file changes on-disk
 (global-auto-revert-mode 1)
+(diminish 'auto-revert-mode)
 (bind-key "C-x r RET" 'revert-buffer)
 
 ;; Copy current line with M-k
@@ -260,6 +261,7 @@ Return the index of the matching item, or nil if not found."
 (use-package avy
   :ensure t
   :bind (("C-;" . avy-goto-word-or-subword-1)
+	 ("C-M-;" . avy-goto-char)
 	 ("C-x C-;" . avy-pop-mark))
   :config
   (progn
@@ -436,5 +438,12 @@ If third argument START is non-nil, convert words after that index in STRING."
 	     ("zs" . image-transform-set-scale)
 	     ("zw" . image-transform-fit-to-width)
 	     ("zz" . schnouki/image-transform-fit-to-window)))
+
+;; Weather
+(use-package wttrin
+  :ensure t
+  :bind ("C-! x" . wttrin)
+  :init
+  (setq wttrin-default-cities '("Nancy" "Forbach" "Paris")))
 
 ;;; init-25-utils.el ends here

@@ -158,7 +158,7 @@
 
 (defun schnouki/notmuch-signal-spamham (type &rest to)
   (with-current-notmuch-show-message
-   (notmuch-mua-forward-message)
+   (notmuch-show-forward-message)
    (message-replace-header "To" (mapconcat 'identity to ", "))
    (message-remove-header "Fcc")
    (message-sort-headers)
@@ -295,9 +295,6 @@
 (mailcap-add "image/.*" "geeqie %s" '(eq window-system 'x))
 
 ;; Other communication services :)
-(use-package jabber
-  :ensure t
-  :commands jabber-connect)
 (use-package twittering-mode
   :ensure t
   :commands (twit twittering-mode))

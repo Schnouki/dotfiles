@@ -74,6 +74,10 @@
   :ensure t
   :mode "\\.groovy\\'\\|\\.gradle\\'")
 
+(use-package kotlin-mode
+  :ensure t
+  :mode "\\.kt\\'")
+
 (use-package python
   :mode ("\\.py'" . python-mode)
   :init
@@ -104,6 +108,16 @@
 		       coffee-tab-width 4)
 		 (local-set-key (kbd "C-c C-c") 'coffee-compile-buffer)))))
 
+(use-package tide
+  :ensure t
+  :mode ("\\.ts\\'" . typescript-mode)
+  :config
+  (add-hook 'typescript-mode-hook
+            (lambda ()
+              (tide-setup)
+              (add-hook 'before-save-hook 'tide-format-before-save nil t))
+            ))
+
 (use-package actionscript-mode
   :ensure t
   :mode "\\.as\'")
@@ -132,6 +146,10 @@
   :ensure t
   :mode "\\.j2\\'")
 
+(use-package sass-mode
+  :ensure t
+  :mode "\\.sass\\'")
+
 (use-package scss-mode
   :ensure t
   :mode "\\.scss\\'"
@@ -144,6 +162,16 @@
   :config
   (add-to-list 'haml-block-openers
                "^[ \t]*-[ \t]*elif"))
+
+(use-package handlebars-mode
+  :ensure t
+  :mode "\\.hbs\\'")
+
+(use-package web-mode
+  :ensure t
+  :mode "\\.tmpl\\'"
+  :init
+  (setq web-mode-engines-alist '(("go"    . "\\.tmpl\\'"))))
 
 (use-package cuda-mode
   :mode "\\.cu\\'"
@@ -196,6 +224,12 @@
 (use-package systemd
   :ensure t
   :mode ("\\.automount\\'\\|\\.busname\\'\\|\\.mount\\'\\|\\.service\\'\\|\\.slice\\'\\|\\.socket\\'\\|\\.target\\'\\|\\.timer\\'\\|\\.link\\'\\|\\.netdev\\'\\|\\.network\\'\\|\\.override\\.conf.*\\'" . systemd-mode))
+
+(use-package plantuml-mode
+  :ensure t
+  :mode "\\.plu\\'"
+  :init
+  (setq plantuml-jar-path "/opt/plantuml/plantuml.jar"))
 
 ;; -----------------------------------------------------------------------------
 ;; Minor modes
