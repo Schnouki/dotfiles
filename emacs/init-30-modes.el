@@ -9,63 +9,6 @@
   :init
   (folding-add-to-marks-list 'lua-mode "-- {{{" "-- }}}" nil t))
 
-(use-package go-mode
-  :ensure t
-  :mode "\\.go\\'"
-  :commands (godoc gofmt gofmt-before-save)
-  :bind (:map go-mode-map
-              ("C-c C-k" . godoc)
-              ("C-c C-r" . go-remove-unused-imports)
-              )
-  :init
-  (progn
-    (folding-add-to-marks-list 'go-mode "// {{{" "// }}}" nil t)
-    (add-hook 'before-save-hook 'gofmt-before-save)
-
-    ;; From https://github.com/bradleywright/emacs.d
-    ;; Update GOPATH if there's a _vendor (gom) or vendor (gb) dir
-    (defun schnouki/set-local-go-path ()
-      "Sets a local GOPATH if appropriate"
-      (let ((current-go-path (getenv "GOPATH")))
-        (catch 'found
-          (dolist (vendor-dir '("_vendor" "vendor"))
-            (let ((directory (locate-dominating-file (buffer-file-name) vendor-dir)))
-              (when directory
-                (make-local-variable 'process-environment)
-                (let* ((this-directory (expand-file-name directory))
-                       (local-go-path (concat this-directory "src:" this-directory vendor-dir))
-                       (full-go-path
-                        (if (not current-go-path)
-                            local-go-path
-                          (concat local-go-path ":" current-go-path)))
-                       (path-hash (secure-hash 'sha256 full-go-path))
-                       (wrapper-name (concat temporary-file-directory "go-wrapper-" path-hash)))
-                  (message (concat "New $GOPATH: " full-go-path))
-                  (setenv "GOPATH" full-go-path)
-                  (when (not (file-exists-p wrapper-name))
-                    (with-temp-file wrapper-name
-                      (insert "#!/usr/bin/env bash\n"
-                              "export GOPATH=\"" full-go-path "\"\n"
-                              "exec go \"$@\"\n"))
-                    (set-file-modes wrapper-name #o755))
-                  (setq-local go-command wrapper-name)
-                  (throw 'found local-go-path))))))))
-    (add-hook 'go-mode-hook 'schnouki/set-local-go-path))
-  :config
-  (load "~/.go/src/golang.org/x/tools/cmd/oracle/oracle.el")
-  (require 'go-oracle)
-  (add-hook 'go-mode-hook 'go-oracle-mode))
-
-(use-package company-go
-  :ensure t
-  :commands company-go
-  :init (add-to-list 'company-backends 'company-go))
-
-(use-package go-eldoc
-  :ensure t
-  :commands go-eldoc-setup
-  :init (add-hook 'go-mode-hook 'go-eldoc-setup))
-
 (use-package haskell-mode
   :ensure t
   :mode "\\.hs\\'")

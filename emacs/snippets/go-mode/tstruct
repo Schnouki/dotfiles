@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: struct declaration
+# key: tstruct
+# --
+type $1 struct {
+	$0
+}
