@@ -13,22 +13,22 @@ local colors = {
 -- {{{ Internals
 local status_files = {}
 
-local function last_ping_result(host)
-   if status_files[host] == nil then
+local function last_ping_result(hosts)
+   if status_files[hosts] == nil then
       return nil
    else
-      local f = io.open(status_files[host])
+      local f = io.open(status_files[hosts])
       local val = f:read("*a")
       f:close()
       return (#val > 0)
    end
 end
 
-local function new_ping(host)
-   if status_files[host] == nil then
-      status_files[host] = os.tmpname()
+local function new_ping(hosts)
+   if status_files[hosts] == nil then
+      status_files[hosts] = os.tmpname()
    end
-   local cmd = "fping -a " .. host .. " >" .. status_files[host] .. " 2>/dev/null &"
+   local cmd = "( fping -a -t 250 -r 0 " .. hosts .. " 2>/dev/null | sponge " .. status_files[hosts] .. " ) &"
    os.execute(cmd)
 end
 
@@ -52,10 +52,10 @@ end
 -- {{{ Class definition
 local NetMon = {}
 
-function NetMon:new(ifnames, host)
+function NetMon:new(ifnames, hosts)
    local o = { widget = wibox.widget.textbox(),
                ifnames = ifnames,
-               host = host }
+               hosts = hosts }
    setmetatable(o, self)
    self.__index = self
    return o
@@ -67,8 +67,8 @@ function NetMon:update()
       local if_status = if_up(iface)
       local if_color
       if if_status then
-         local net_up = last_ping_result(self.host)
-         new_ping(self.host)
+         local net_up = last_ping_result(self.hosts)
+         new_ping(self.hosts)
          if net_up == nil then
             if_color = "unknown"
          elseif net_up then
@@ -96,8 +96,8 @@ function NetMon:ssid(ifname)
 end
 -- }}}
 
-function new(ifnames, host)
-   local w = NetMon:new(ifnames, host)
+function new(ifnames, hosts)
+   local w = NetMon:new(ifnames, hosts)
    w:update()
    return w
 end
