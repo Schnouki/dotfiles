@@ -340,12 +340,18 @@ function safe_cmd(cmd)
    end
 end
 
+winemenu = {
+   { "&balsamiq", safe_cmd("wine C:\\Program Files (x86)\\Balsamiq Mockups 3\\Balsamiq Mockups 3.exe"),
+     "/home/schnouki/.wine/drive_c/Program Files (x86)/Balsamiq Mockups 3/icons/mockups_ico_16.png" },
+}
+
 mymainmenu = awful.menu({ items = { { "&awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "&jeux", gamemenu },
                                     { "&utils", utilsmenu },
                                     { "&layouts", layoutsmenu },
                                     { "écran &ext.", screenmenu },
                                     { "&screenshot", screenshotmenu },
+                                    { "&wine", winemenu, icon_theme.get("apps", "wine") },
                                     { "&firefox", safe_cmd("firefox"), icon_theme.get("apps", "firefox") },
                                     { "&chromium", safe_cmd("chromium"), icon_theme.get("apps", "chromium") },
                                     { "&gajim", "gajim", icon_theme.get("apps", "gajim") },
@@ -1390,7 +1396,6 @@ no_titlebar_apps = {
    ["plugin-container"] = true,
    ["pluginloader.exe"] = true,
    ["Steam"] = true,
-   ["Wine"] = true,
    ["xine"] = true,
    ["Xitk"] = true,
 }
