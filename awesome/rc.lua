@@ -334,8 +334,8 @@ mylayoutsmenu = awful.menu({ items = layoutsmenu })
 function safe_cmd(cmd)
    return function()
       return awful.util.spawn(cmd, true, {
-                                 MemoryLimit = "3G",
-                                 CPUQuota = "400%"
+                                 MemoryLimit = "3G"
+                                 --CPUQuota = "400%"
       })
    end
 end
