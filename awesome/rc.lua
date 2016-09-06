@@ -15,6 +15,8 @@ local menubar = require("menubar")
 local _ = require("underscore")
 -- Filesystem
 local lfs = require("lfs")
+-- Sockets!
+local socket = require("socket")
 
 -- Eminent dynamic tagging
 require("eminent")
@@ -448,14 +450,37 @@ package.cpath = config_dir .. "/?.so;" .. package.cpath
 require("lousy")
 
 -- Backlight helper
+local function round(n)
+   local i, d = math.modf(n)
+   if d >= 0.5 then return i+1 else return i end
+end
+local function get_backlight()
+   local p = io.popen("light")
+   local n = round(tonumber(p:read("*a")))
+   p:close()
+   return n
+end
+local function set_backlight(lvl)
+   os.execute("light -S " .. lvl)
+end
+
 local backlight_notif_id = nil
-function change_backlight(mult)
-   local new_bl = lousy.get_backlight() * mult
-   if new_bl < 0.5 then new_bl = 0.5
+local backlight_time = 0
+function change_backlight(offset)
+   local min_bl = 1
+   local min_dt = 0.2
+
+   local new_time = socket.gettime()
+   local dt = new_time - backlight_time
+   if dt < min_dt then return end
+   backlight_time = new_time
+
+   local new_bl = get_backlight() + offset
+   if new_bl < min_bl then new_bl = min_bl
    elseif new_bl > 100 then new_bl = 100 end
-   lousy.set_backlight(new_bl)
+   set_backlight(new_bl)
    local notif = naughty.notify({
-         text = "Backlight level: " .. new_bl .. "%",
+         text = "Backlight level: " .. get_backlight() .. "%",
          replaces_id = backlight_notif_id,
          icon = icon_theme.get("notifications", "notification-display-brightness")
    })
@@ -1012,8 +1037,8 @@ persokeys = {
    awful.key({ modkey, "Shift" }, "Down",         volume_music_down, "Lower music volume"),
 
    -- Luminosité
-   awful.key({ }, "XF86MonBrightnessUp",   function () change_backlight(1.1) end),
-   awful.key({ }, "XF86MonBrightnessDown", function () change_backlight(0.9) end),
+   awful.key({ }, "XF86MonBrightnessUp",   function () change_backlight( 5) end),
+   awful.key({ }, "XF86MonBrightnessDown", function () change_backlight(-5) end),
 
    keydoc.group("Power management"),
    -- F1 - mettre en veille
