@@ -27,8 +27,6 @@ vicious.contrib = require("vicious.contrib")
 brutal = require("brutal")
 -- Markup functions
 require("markup")
--- Pomodoro widget
-pomodoro = require("pomodoro")
 -- Icon theme
 icon_theme = require("icon_theme")
 -- Fangh calendar :)
@@ -666,9 +664,6 @@ end
 require("locksmon")
 locks_mon = locksmon.new()
 
-require("fish")
-fish_w = fish.new()
-
 -- Time-based indications using theme colors
 if ifaces["W"] ~= nil then
    local function clockcheck()
@@ -1020,9 +1015,6 @@ vol_widget:buttons(awful.util.table.join(
        awful.button({ "Shift" }, 4, volume_music_up),
        awful.button({ "Shift" }, 5, volume_music_down)
 ))
-
--- Pomodoro widget
-pomodoro.init()
 -- }}}
 -- {{{     Raccourcis claviers persos
 local keydoc = require("keydoc")
@@ -1144,7 +1136,6 @@ function create_wibox()
       local my_right_widgets = _.concat({
             separator,
             tb_mails, tb_msmtpq, nv_w}, separator,
-         pomodoro.icon_widget, fish_w.widget, separator,
          cpu_icon, cpu_graph, cputemp_widget, mem_icon, mem_widget, swap_widget, separator,
          net_mon.widget, {ip_mon and ip_mon.widget or nil}, bat_widget, vol_widget, separator, locks_mon.widget
       )
