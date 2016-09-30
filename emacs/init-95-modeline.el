@@ -19,8 +19,8 @@
 	    ("^/sudo:.*:" ":SU:")
 	    ("^~/.config/" ":C:")
 	    ("^~/Dropbox/" ":DB:")
-	    ("^~/findspire/findspire-front/" ":FS:")
-	    ("^:FS:findspire/" ":FSf:")
+	    ("^~/stibidik/" ":S:")
+	    ("^:S:web/src/stibidik/" ":Sw:")
 	    ))
 
     ;; Move which-func indicator to just after the file name

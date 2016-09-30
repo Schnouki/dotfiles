@@ -179,6 +179,9 @@ Return the index of the matching item, or nil if not found."
     (message (concat (int-to-string count) " buffers killed"))))
 (bind-key "C-x M-k" 'schnouki/kill-star-buffers)
 
+;; Nicer binding than C-x 5 0 to close the current frame.
+(bind-key "C-x w" 'delete-frame)
+
 ;; ido-mode for better buffer switching, file selection, etc.
 ;; http://defn.io/posts/2015-10-12-ido-mode.html
 (use-package ido
@@ -456,5 +459,12 @@ If third argument START is non-nil, convert words after that index in STRING."
   :bind ("C-! x" . wttrin)
   :init
   (setq wttrin-default-cities '("Nancy" "Forbach" "Paris")))
+
+;; Create directories on the fly
+;; http://mbork.pl/2016-07-25_Making_directories_on_the_fly
+(defun make-parent-directory ()
+  "Make sure the directory of `buffer-file-name' exists."
+  (make-directory (file-name-directory buffer-file-name) t))
+(add-hook 'find-file-not-found-functions #'make-parent-directory)
 
 ;;; init-25-utils.el ends here

@@ -55,6 +55,11 @@
   (eval-after-load 'flycheck
     '(setq flycheck-display-error-messages #'flycheck-pos-tip-error-messages)))
 
+(use-package avy-flycheck
+  :ensure t
+  :bind (:map flycheck-command-map
+              ("g" . avy-flycheck-goto-error)))
+
 ;; Code folding
 (use-package origami
   :ensure t
