@@ -8,8 +8,9 @@
   :commands (godoc gofmt gofmt-before-save)
   :bind (:map go-mode-map
               ("C-c C-k" . godoc)
-              ("C-c C-n" . go-rename)
               ("C-c C-r" . go-remove-unused-imports)
+              ("C-c C-n" . go-rename)
+              ("C-c C-t" . go-add-tags)
               )
   :init
   (add-hook 'before-save-hook 'gofmt-before-save)
@@ -43,15 +44,24 @@
   :ensure t
   :commands go-rename)
 
-;; Patched version of go-packages-native that strips "vendor" dirs
-;; (https://github.com/dominikh/go-mode.el/issues/135)
-(defun schnouki/go-packages-native-without-vendor ()
-  "Return a list of all installed Go packages, stripping vendor directories."
+(use-package go-add-tags
+  :ensure t
+  :commands go-add-tags)
+
+;; Patched versions of go-packages-native and go-packages-go-list that strip
+;; "vendor" dirs (https://github.com/dominikh/go-mode.el/issues/135)
+(defun schnouki/go-packages-strip-vendor (packages)
   (mapcar (lambda (pkg)
 	    (if (string-match "/vendor/\\(.*\\)" pkg)
 		(match-string 1 pkg)
 	      pkg))
-	  (go-packages-native)))
-(setq go-packages-function 'schnouki/go-packages-native-without-vendor)
+	  packages))
+(defun schnouki/go-packages-native-without-vendor ()
+  "Return a list of all installed Go packages, stripping vendor directories."
+  (schnouki/go-packages-strip-vendor (go-packages-native)))
+(defun schnouki/go-packages-go-list-without-vendor ()
+  "Return a list of all Go packages, using `go list', stripping vendor directories."
+  (schnouki/go-packages-strip-vendor (go-packages-go-list)))
+(setq go-packages-function 'schnouki/go-packages-go-list-without-vendor)
 
 ;;; init-40-go.el ends here
