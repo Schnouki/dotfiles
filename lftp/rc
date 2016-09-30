@@ -1,0 +1,2 @@
+set ftp:ssl-allow off
+set sftp:auto-confirm on
