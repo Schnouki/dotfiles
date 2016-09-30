@@ -228,19 +228,30 @@ Return the index of the matching item, or nil if not found."
   :bind (("M-x" . smex)
 	 ("C-! M-x" . smex-major-mode-commands)))
 
-;; ack
-(use-package ack-and-a-half
+;; ag
+(use-package ag
   :ensure t
-  :bind (("C-! M-<" . ack-and-a-half)
-	 ("C-! <"   . ack-and-a-half-same)
-	 ("C-! M-f" . ack-and-a-half-find-file)
-	 ("C-! f"   . ack-and-a-half-find-file-same))
+  :bind (("C-! <"    . ag-project)
+	 ("C-! M-< " . ag)
+	 ("C-! f"    . ag-project-files)
+	 ("C-! M-f"  . ag-files))
+  :config
+  (setq ag-highlight-search t))
+
+;; wgrep
+(use-package wgrep
+  :ensure t
+  :commands wgrep-setup
+  :config
+  (setq wgrep-auto-save-buffer t)
   :init
-  (progn
-    (defalias 'ack 'ack-and-a-half)
-    (defalias 'ack-same 'ack-and-a-half-same)
-    (defalias 'ack-find-file 'ack-and-a-half-find-file)
-    (defalias 'ack-find-file-same 'ack-and-a-half-find-file-same)))
+  (add-hook 'grep-setup-hook 'wgrep-setup))
+
+(use-package wgrep-ag
+  :ensure t
+  :commands wgrep-ag-setup
+  :init
+  (add-hook 'ag-mode-hook 'wgrep-ag-setup))
 
 ;; undo-tree
 (use-package undo-tree
