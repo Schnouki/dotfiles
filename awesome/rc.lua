@@ -352,6 +352,7 @@ mymainmenu = awful.menu({ items = { { "&awesome", myawesomemenu, beautiful.aweso
                                     { "&wine", winemenu, icon_theme.get("apps", "wine") },
                                     { "&firefox", safe_cmd("firefox"), icon_theme.get("apps", "firefox") },
                                     { "&chromium", safe_cmd("chromium"), icon_theme.get("apps", "chromium") },
+                                    { "fran&z", safe_cmd("franz-bin"), icon_theme.get("apps", "franz", "/usr/share/pixmaps/franz.png") },
                                     { "&gajim", "gajim", icon_theme.get("apps", "gajim") },
                                     { "t&hunderbird", safe_cmd("thunderbird"), icon_theme.get("apps", "thunderbird") },
                                     { "sp&otify", "spotify", icon_theme.get("apps", "spotify-client") },
