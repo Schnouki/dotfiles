@@ -66,3 +66,6 @@ BEGIN {
 }'"
 alias pac_unreq="LC_ALL=C pacman -Qti | filter_pacman_qt"
 alias pac_unreq_norepo="LC_ALL=C pacman -Qtim | filter_pacman_qt"
+
+# Ledger!
+alias led="ledger -f ~/compta/main.ldg"
