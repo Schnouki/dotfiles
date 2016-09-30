@@ -117,25 +117,6 @@
 	 (set-face-attribute 'show-paren-match    nil :weight 'bold :foreground nil :background ,zenburn-bg-1)
 	 (set-face-attribute 'show-paren-mismatch nil :weight 'bold :foreground ,zenburn-red :background "#3c1313")))
 
-    ;; folding
-    (eval-after-load 'folding
-      `(progn
-	 (defface folding-header-line '((((class color) (min-colors 89))
-					 (:foreground ,zenburn-green+4
-						      :background ,zenburn-bg-1
-						      :box (:line-width -1 :style released-button))))
-	   "Face for folding headers")
-	 (defvar folding-header-line-face 'folding-header-line)
-	 (setq-default folding-font-lock-begin-mark 'folding-header-line-face
-		       folding-font-lock-end-mark   'folding-header-line-face)))
-
-    ;; hideshowvis
-    (eval-after-load 'hideshowvis
-      `(progn
-	 (set-face-attribute 'hideshowvis-hidable-face nil :foreground ,zenburn-green+3 :box nil)
-	 (set-face-attribute 'hs-fringe-face           nil :foreground ,zenburn-green+3 :box nil)
-	 (set-face-attribute 'hs-face                  nil :foreground ,zenburn-green+3 :background ,zenburn-bg-1 :box (list :style 'pressed-button))))
-
     ;; auto-dim-other-bufers
     (eval-after-load 'auto-dim-other-buffers
       `(progn

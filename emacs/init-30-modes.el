@@ -5,9 +5,7 @@
 ;; Prepare various major modes
 (use-package lua-mode
   :ensure t
-  :mode "\\.lua\\'"
-  :init
-  (folding-add-to-marks-list 'lua-mode "-- {{{" "-- }}}" nil t))
+  :mode "\\.lua\\'")
 
 (use-package haskell-mode
   :ensure t
@@ -35,16 +33,13 @@
 (use-package js2-mode
   :ensure t
   :mode "\\.js\\'"
-  :interpreter "node"
-  :init
-  (folding-add-to-marks-list 'js2-mode "// {{{" "// }}}" nil t))
+  :interpreter "node")
 
 (use-package coffee-mode
   :ensure t
   :mode "\\.coffee\'"
   :init
   (progn
-    (folding-add-to-marks-list 'coffee-mode "# {{{" "# }}}" nil t)
     (add-hook 'coffee-mode-hook
 	      '(lambda ()
 		 (setq tab-width 4
@@ -117,9 +112,7 @@
   (setq web-mode-engines-alist '(("go"    . "\\.tmpl\\'"))))
 
 (use-package cuda-mode
-  :mode "\\.cu\\'"
-  :init
-  (folding-add-to-marks-list 'cuda-mode "// {{{" "// }}}" nil t))
+  :mode "\\.cu\\'")
 
 (use-package cmake-mode
   :mode (("/CMakeLists\\.txt\\'" . cmake-mode)
@@ -177,11 +170,6 @@
 ;; -----------------------------------------------------------------------------
 ;; Minor modes
 ;; -----------------------------------------------------------------------------
-
-;; HideShow minor mode for common major modes
-(dolist (hook '(c-mode-common-hook emacs-lisp-mode-hook java-mode-hook lisp-mode-hook
-		lua-mode perl-mode-hook python-mode-hook sh-mode-hook))
-  (add-hook hook 'hs-minor-mode))
 
 ;; smerge-mode, as suggested in the doc
 (use-package smerge-mode

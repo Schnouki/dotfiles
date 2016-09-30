@@ -56,48 +56,20 @@
     '(setq flycheck-display-error-messages #'flycheck-pos-tip-error-messages)))
 
 ;; Code folding
-(use-package folding
-  :diminish folding-mode
-  :config
-  (progn
-    (setq folding-mode-prefix-key (kbd "C-:")
-	  folding-folding-on-startup nil
-	  folding-internal-margins nil)
-    (folding-install)
-    (folding-install-hooks)
-    (add-hook 'after-revert-hook 'folding-mode-find-file t)))
-
-;; Key bindings for hideshow
-(defun schnouki/hs-togle-hiding ()
-  "Toggle hideshow minor mode."
-  (interactive)
-  (unless hs-minor-mode (hs-minor-mode))
-  (hs-toggle-hiding))
-(bind-key "C-! !" 'schnouki/hs-togle-hiding)
-
-;; Display indicator in fringe for code that can be folded with hideshow
-(use-package hideshowvis
+(use-package origami
   :ensure t
-  :config
-  (progn
-    (hideshowvis-enable)
-    (hideshowvis-symbols)))
-
-(defun hs/display-code-line-counts (ov)
-  "Display the number of lines in a snippet hidden with hs."
-  (when (eq 'code (overlay-get ov 'hs))
-    (let* ((marker-string "*fringe-dummy*")
-           (marker-length (length marker-string))
-           (display-string (format "(%d)..." (count-lines (overlay-start ov) (overlay-end ov))))
-           )
-      (overlay-put ov 'help-echo "Hiddent text. C-c,= to show")
-      (put-text-property 0 marker-length 'display (list 'left-fringe 'hs-marker 'hs-fringe-face) marker-string)
-      (overlay-put ov 'before-string marker-string)
-      (put-text-property 0 (length display-string) 'face 'hs-face display-string)
-      (overlay-put ov 'display display-string)
-      )))
-
-(setq hs-set-up-overlay 'hs/display-code-line-counts)
+  :commands origami-mode
+  :bind (:map origami-mode-map
+              ("C-: :" . origami-recursively-toggle-node)
+              ("C-: t" . origami-toggle-node)
+              ("C-: o" . origami-show-only-node)
+              ("C-: u" . origami-undo)
+              ("C-: U" . origami-redo)
+              ("C-: C-r" . origami-reset)
+              )
+  :init
+  (defun schnouki/enable-origami-mode () (origami-mode 1))
+  (add-hook 'prog-mode-hook 'schnouki/enable-origami-mode))
 
 ;; Default compilation commands
 (setq-default compile-command "make") ;; I don't want "make -k"

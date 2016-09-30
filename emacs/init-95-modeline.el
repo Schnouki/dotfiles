@@ -13,7 +13,6 @@
 			 " Abbrev"      ; abbrev
 			;" AC"          ; auto-complete
 			 " ElDoc"       ; eldoc
-			 " hs"          ; hideshow
 			 )
 	  sml/replacer-regexp-list
 	  '(("^/ssh:.*:" ":SSH:")

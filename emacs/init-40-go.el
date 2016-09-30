@@ -12,7 +12,6 @@
               ("C-c C-r" . go-remove-unused-imports)
               )
   :init
-  (folding-add-to-marks-list 'go-mode "// {{{" "// }}}" nil t)
   (add-hook 'before-save-hook 'gofmt-before-save)
 
   :config
