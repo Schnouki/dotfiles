@@ -19,6 +19,7 @@
       mail-specify-envelope-from t
       mail-envelope-from 'header
       message-sendmail-envelope-from 'header
+      message-default-headers "X-Clacks-Overhead: GNU Terry Pratchett\n"
       gnus-inhibit-images nil
       notmuch-saved-searches '((:name "home"        :key "h" :query "(tag:inbox or tag:todo or tag:unread)")
 			       (:name "unread"      :key "u" :query "tag:unread")
