@@ -1,5 +1,6 @@
 * {
-    font: Sans 8;
+    font-family: Sans;
+    font-size: 8pt;
 }
 
 .window-frame, .window-frame:backdrop {
