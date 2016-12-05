@@ -1,0 +1,11 @@
+[Unit]
+Description=Blueman applet
+Requires=xorg.target bluetooth.target
+
+[Service]
+Type=dbus
+ExecStart=/usr/bin/blueman-applet
+BusName=org.blueman.Applet
+
+[Install]
+WantedBy=applications.target
