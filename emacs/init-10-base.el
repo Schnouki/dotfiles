@@ -148,6 +148,12 @@
 ;; Active region becomes the window selection
 (setq select-active-regions t)
 
+;; Save whatever’s in the current (system) clipboard before
+;; replacing it with the Emacs’ text.
+;; https://github.com/dakrone/eos/blob/master/eos.org
+;; http://pragmaticemacs.com/emacs/add-the-system-clipboard-to-the-emacs-kill-ring/
+(setq save-interprogram-paste-before-kill t)
+
 ;; ediff window setup
 ;; - don't open a new frame for the control buffer
 ;; - split horizontally if the current frame is wide enough
