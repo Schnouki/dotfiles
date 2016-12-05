@@ -1352,14 +1352,16 @@ awful.rules.rules = {
                      keys = clientkeys,
                      buttons = clientbuttons } },
     -- Simple rules for floating windows
-    { rule_any = { class = { "BBQScreenClient2", "Galculator", "Gimp", "Gmpc",
+    { rule_any = { class = { "BBQScreenClient2", "Galculator", "Gmpc",
+                             "Gtk-recordMyDesktop",
                              "mpv",
                              "pinentry", "Plugin-container",
                              "Smplayer", "VirtualBox", "Vlc",
                              "Wine" },
                    instance = { "crx_eggkanocgddhmamlbiijnphhppkpkmkl", "pinentry-gtk-2", "popcorntime", "wpa_gui" },
                    name = { "Android Device Monitor", "Gnuplot (window id : 0)", "Minecraft", "Popcorn Time",
-                            "R Graphics: Device 2 (ACTIVE)" } },
+                            "R Graphics: Device 2 (ACTIVE)" },
+                   role = { "pop-up" } },
       properties = { floating = true } },
 
     { rule = { class = "Firefox" },
