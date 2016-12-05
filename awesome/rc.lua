@@ -1,4 +1,5 @@
--- Standard awesome library
+-- Awesome config!
+-- {{{ Imports
 local gears = require("gears")
 local awful = require("awful")
 awful.rules = require("awful.rules")
@@ -31,6 +32,7 @@ require("markup")
 icon_theme = require("icon_theme")
 -- Fangh calendar :)
 fangh_calendar = require("fangh_calendar")
+-- }}}
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -57,10 +59,12 @@ do
 end
 -- }}}
 
+-- {{{ Localization
 -- Requis pour la date en français
 os.setlocale("fr_FR.utf8")
 -- ... mais les nombres doivent être en anglais (séparateur décimal...)
 os.setlocale("C", "numeric")
+-- }}}
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
@@ -1167,6 +1171,7 @@ end
 create_wibox()
 -- }}}
 -- }}}
+
 -- {{{ Mouse bindings
 root.buttons(awful.util.table.join(
     awful.button({ }, 3, function () mymainmenu:toggle() end),
