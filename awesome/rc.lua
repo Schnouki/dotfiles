@@ -12,7 +12,7 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 -- Underscore (https://github.com/jtarchie/underscore-lua)
-local _ = require("underscore")
+local __ = require("underscore")
 -- Filesystem
 local lfs = require("lfs")
 -- Sockets!
@@ -81,19 +81,22 @@ editor_cmd = editor
 modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
-local layouts =
-{
-    awful.layout.suit.tile,            --  1
-    awful.layout.suit.tile.bottom,     --  2
-    awful.layout.suit.fair,            --  3
-    awful.layout.suit.fair.horizontal, --  4
-    awful.layout.suit.max,             --  5
-    awful.layout.suit.max.fullscreen,  --  6
-    awful.layout.suit.magnifier,       --  7
-    awful.layout.suit.floating,        --  8
-    awful.layout.suit.spiral,          --  9
-    awful.layout.suit.spiral.dwindle,  -- 10
+local all_layouts = {
+   { awful.layout.suit.tile,            true }, -- 1
+   { awful.layout.suit.tile.left,       false },
+   { awful.layout.suit.tile.bottom,     true }, -- 2
+   { awful.layout.suit.tile.top,        false },
+   { awful.layout.suit.fair,            true }, -- 3
+   { awful.layout.suit.fair.horizontal, true }, -- 4
+   { awful.layout.suit.spiral,          true }, -- 5
+   { awful.layout.suit.spiral.dwindle,  true }, -- 6
+   { awful.layout.suit.max,             true }, -- 7
+   { awful.layout.suit.max.fullscreen,  true }, -- 8
+   { awful.layout.suit.magnifier,       true }, -- 9
+   { awful.layout.suit.floating,        true }, -- 10
 }
+local layouts =      __.map(__.select(all_layouts, function(entry) return entry[2] end), function(entry) return entry[1] end)
+local menu_layouts = __.map(all_layouts, function(entry) return entry[1] end)
 -- }}}
 
 -- {{{ Wallpaper
@@ -321,9 +324,9 @@ screenshotmenu = {
 
 -- {{{ Layouts menu
 layoutsmenu = {}
-for _, layout in ipairs(layouts) do
+for _, layout in ipairs(menu_layouts) do
    local name = awful.layout.getname(layout)
-   local entry = { name, function() awful.layout.set(name) end, beautiful["layout_" .. name] }
+   local entry = { name, function() awful.layout.set(layout) end, beautiful["layout_" .. name] }
    table.insert(layoutsmenu, entry)
 end
 mylayoutsmenu = awful.menu({ items = layoutsmenu })
@@ -1134,7 +1137,7 @@ function create_wibox()
       left_layout:add(mytaglist[s])
       left_layout:add(mypromptbox[s])
 
-      local my_right_widgets = _.concat({
+      local my_right_widgets = __.concat({
             separator,
             tb_mails, tb_msmtpq, nv_w}, separator,
          cpu_icon, cpu_graph, cputemp_widget, mem_icon, mem_widget, swap_widget, separator,
