@@ -23,6 +23,7 @@ setup_decrypt "smd-loop.gpg" ".smd/loop"
 
 # Setup encrypted tarballs
 setup_decrypt_tarball "calibre.tar.gpg"
+setup_decrypt_tarball "pgweb.tar.gpg"
 setup_decrypt_tarball "weechat.tar.gpg"
 
 # Load Xresources
