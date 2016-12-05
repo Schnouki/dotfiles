@@ -275,7 +275,7 @@ Return the index of the matching item, or nil if not found."
 (use-package avy
   :ensure t
   :bind (("C-;" . avy-goto-word-or-subword-1)
-	 ("C-M-;" . avy-goto-char)
+	 ("C-M-;" . avy-goto-char-timer)
 	 ("C-x C-;" . avy-pop-mark))
   :config
   (progn

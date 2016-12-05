@@ -48,6 +48,14 @@
   :ensure t
   :commands go-add-tags)
 
+(use-package godoctor
+  :ensure t
+  :bind (:map go-mode-map
+              ("C-c d d" . godoctor-godoc)
+              ("C-c d e" . godoctor-extract)
+              ("C-c d r" . godoctor-rename)
+              ("C-c d t" . godoctor-toggle)))
+
 ;; Patched versions of go-packages-native and go-packages-go-list that strip
 ;; "vendor" dirs (https://github.com/dominikh/go-mode.el/issues/135)
 (defun schnouki/go-packages-strip-vendor (packages)

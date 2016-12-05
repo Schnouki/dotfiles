@@ -133,6 +133,9 @@
       `(progn
 	 (set-face-background 'vhl/default-face "#3D5457")))
 
+    (eval-after-load 'go-guru
+      `(progn
+	 (set-face-attribute 'go-guru-hl-identifier-face nil :background ,zenburn-bg-1)))
     )
   )
 

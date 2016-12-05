@@ -54,6 +54,15 @@
 	("pe" "Priorité très basse" tags-todo "+PRIORITY=\"E\""))
 
       org-ditaa-jar-path "/usr/share/java/ditaa/ditaa-0_9.jar")
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((ditaa . t)
+   (dot . t)
+   (emacs-lisp . t)
+   (gnuplot . t)
+   (ledger . t)
+   (python . t)
+   (sh . t)))
 
 (defun schnouki/org-agenda-and-todo-list ()
   "Display agenda and todo list in the current window."

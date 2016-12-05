@@ -35,6 +35,13 @@
   :mode "\\.js\\'"
   :interpreter "node")
 
+(use-package js-doc
+  :ensure t
+  :bind (:map js2-mode-map
+              ;("C-c C-@" . js-doc-describe-tag)
+              ("C-c i"   . js-doc-insert-function-doc)
+              ("@"       . js-doc-insert-tag)))
+
 (use-package coffee-mode
   :ensure t
   :mode "\\.coffee\'"
@@ -101,15 +108,16 @@
   (add-to-list 'haml-block-openers
                "^[ \t]*-[ \t]*elif"))
 
-(use-package handlebars-mode
-  :ensure t
-  :mode "\\.hbs\\'")
+;; (use-package handlebars-mode
+;;   :ensure t
+;;   :mode "\\.hbs\\'")
 
 (use-package web-mode
   :ensure t
-  :mode "\\.tmpl\\'"
+  ;; (kill-new (s-replace "\\" "\\\\" (rx "." (or "tmpl" "hbs") eos)))
+  :mode "\\.\\(?:hbs\\|tmpl\\)\\'"
   :init
-  (setq web-mode-engines-alist '(("go"    . "\\.tmpl\\'"))))
+  (setq web-mode-engines-alist '(("go" . "\\.tmpl\\'"))))
 
 (use-package cuda-mode
   :mode "\\.cu\\'")
