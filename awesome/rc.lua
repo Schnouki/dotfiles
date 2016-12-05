@@ -191,14 +191,14 @@ require("steam")
 steamdir = "/home/schnouki/.local/share/Steam/SteamApps"
 steammenu = { theme = {width = 200 } }
 for _, game in ipairs(steam.get_games(steamdir)) do
-   table.insert(steammenu, { game["name"], "steam steam://rungameid/" .. game["id"],
+   table.insert(steammenu, { game["name"], "steam-native steam://rungameid/" .. game["id"],
                              icon_theme.get("apps", "steam_icon_" .. game["id"]) })
 end
 
 gamesdir = "/home/schnouki/Media/Jeux"
 gamemenu = {
    theme = { width = 200 },
-   { "&steam", "steam", icon_theme.get("apps", "steam") },
+   { "&steam", "steam-native", icon_theme.get("apps", "steam") },
    { "steam &games", steammenu, icon_theme.get("apps", "steam") },
    { "battle for wesnoth", "wesnoth", "/usr/share/icons/wesnoth-icon.png" },
    { "frozen bubble", "frozen-bubble", "/usr/share/pixmaps/frozen-bubble.png" },
