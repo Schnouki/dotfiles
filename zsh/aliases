@@ -42,6 +42,11 @@ alias rm="nocorrect rm"
 alias rd3t="sudo beep -f 392 -l 500 -n -f 440 -l 500 -n -f 349.2 -l 500 -n -f 174.6 -l 500 -n -f 261.6 -l 1000"
 alias rd3t2="sudo beep -f 784 -l 500 -n -f 880 -l 500 -n -f 698.4 -l 500 -n -f 349.2 -l 500 -n -f 523.2 -l 1000"
 
+# Background sounds -- from https://news.ycombinator.com/item?id=12844434
+alias bgsound_pinknoise="play -c 2 -n synth pinknoise band -n 2500 4000 tremolo 0.03 5 reverb 20 gain"
+alias bgsound_ocean="play -n -n --combine merge synth pinknoise band -n 1200 1800 tremolo 50 10 tremolo 0.14 70 tremolo 0.2 50 gain -10"
+alias bgsound_enterprise="play -c2 -n synth whitenoise band -n 100 24 band -n 300 100 gain +20"
+
 # Useless junk
 alias go_home="disper -s; sudo netcfg -d kimsufi-vpn; my-s2ram && sleep 15 && sudo netcfg freebox"
 alias go_work="sudo netcfg -d freebox; my-s2ram && sleep 15 && disper -e && while ! fping -q 8.8.8.8; do sleep 1; done; sudo netcfg kimsufi-vpn"

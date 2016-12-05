@@ -37,3 +37,20 @@ function pacQ() {
 function sshmux() {
     ssh -t $1 'tmux -u attach || tmux -u new'
 }
+
+# Get all the children PIDs of the given PID, recursively.
+function pgrepPP() {
+    local pid=$1
+    local cpids=($(pgrep -P $pid))
+    local cpid
+    echo $pid
+    for cpid in $cpids; do
+        pgrepPP $cpid
+    done
+}
+
+# Set a process and all its children to IDLEPRIO, by PID
+function idleprio() {
+    local pid=$1
+    pgrepPP $pid | xargs schedtool -D
+}
