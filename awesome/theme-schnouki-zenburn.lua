@@ -10,7 +10,7 @@ theme.wallpaper_dir = "/home/schnouki/images/wallpapers"
 
 -- {{{ Styles
 theme.font      = "DejaVu Sans 8"
-theme.taglist_font = "DejaVu Sans 10"
+theme.taglist_font = "DejaVu Sans 8"
 theme.monofont = "DejaVu Sans Mono 8"
 
 -- {{{ Colors

@@ -492,9 +492,10 @@ end
 
 -- Screen helper
 function get_next_screen()
-   local s = mouse.screen + 1
-   if s > screen.count() then s = 1 end
-   return s
+   local s = awful.screen.focused()
+   local idx = s.index + 1
+   if idx > screen.count() then s = 1 end
+   return awful.screen[idx]
 end
 
 -- Switch tag on next screen
@@ -1053,8 +1054,8 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    local tags = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
-    if s.index == 1 then tags = {"‽", "✉", "✪", "➍", "➎", "➏", "➐", "☮", "♫"} end
+    local tags = { "1", "2", "3", "4" }
+    if s.index == 1 then tags = {"‽", "📧", "✪", "💼", "💻", "⌘"} end
     awful.tag(tags, s, awful.layout.layouts[1])
 
     -- Set the last tag to floating
@@ -1128,6 +1129,48 @@ root.buttons(awful.util.table.join(
 ))
 -- }}}
 
+-- {{{ Tag management (from the "tag" doc)
+local function delete_tag()
+    local t = awful.screen.focused().selected_tag
+    if not t then return end
+    t:delete()
+end
+
+local function add_tag()
+    awful.tag.add("NewTag",{screen= awful.screen.focused() }):view_only()
+end
+
+local function rename_tag()
+    awful.prompt.run {
+        prompt       = "New tag name: ",
+        textbox      = awful.screen.focused().mypromptbox.widget,
+        exe_callback = function(new_name)
+            if not new_name or #new_name == 0 then return end
+
+            local t = awful.screen.focused().selected_tag
+            if t then
+                t.name = new_name
+            end
+        end
+    }
+end
+
+local function move_to_new_tag()
+    local c = client.focus
+    if not c then return end
+
+    local t = awful.tag.add(c.class,{screen= c.screen })
+    c:tags({t})
+    t:view_only()
+end
+
+local function move_tag(delta)
+   local t = awful.screen.focused().selected_tag
+   if not t then return end
+   t.index = t.index + delta
+end
+-- }}}
+
 -- {{{ Key bindings
 globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
@@ -1138,6 +1181,19 @@ globalkeys = awful.util.table.join(
               {description = "view next", group = "tag"}),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
               {description = "go back", group = "tag"}),
+
+    awful.key({ modkey,           }, "a", add_tag,
+              {description = "add a tag", group = "tag"}),
+    awful.key({ modkey, "Shift"   }, "a", delete_tag,
+              {description = "delete the current tag", group = "tag"}),
+    awful.key({ modkey, "Control"   }, "a", move_to_new_tag,
+              {description = "add a tag with the focused client", group = "tag"}),
+    awful.key({ modkey, "Shift"   }, "r", rename_tag,
+              {description = "rename the current tag", group = "tag"}),
+    awful.key({ modkey, "Shift"   }, "Next", function () move_tag(1) end,
+              {description = "move right", group="tag"}),
+    awful.key({ modkey, "Shift"   }, "Prior", function () move_tag(-1) end,
+              {description = "move left", group="tag"}),
 
     awful.key({ modkey,           }, "j",
         function ()
@@ -1396,7 +1452,7 @@ awful.rules.rules = {
 
     -- Keep some applications on the last tag of the first screen
     { rule_any = { instance = { "spotify.exe", "spotify", "Steam" } },
-      properties = { floating = true, screen=1, tag="♫" } },
+      properties = { floating = true, tag="⌘" } },
 
     -- Other applications must be floating *and* centered
     { rule_any = { class = {"Arandr", "Pavucontrol" } },
