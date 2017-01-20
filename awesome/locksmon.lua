@@ -1,5 +1,5 @@
 local io, string, setmetatable = require("io"), require("string"), setmetatable
-local naughty, timer, wibox = require("naughty"), timer, require("wibox")
+local gears, naughty, wibox = require("gears"), require("naughty"), require("wibox")
 local lousy, markup = require("lousy"), require("markup")
 
 module("locksmon")
@@ -18,7 +18,7 @@ end
 local LocksMon = {}
 
 function LocksMon:new()
-   local t = timer { timeout = 0.25 }
+   local t = gears.timer { timeout = 0.25 }
    local o = { widget = wibox.widget.textbox(), timer = t, key = nil,
                tries = 4,
                current_cl = lousy.get_caps_lock(),

@@ -3,11 +3,8 @@
 --    By Adrian C. (anrxc)   --
 -------------------------------
 
--- Alternative icon sets and widget icons:
---  * http://awesome.naquadah.org/wiki/Nice_Icons
-
 -- {{{ Main
-theme = {}
+local theme = {}
 theme.wallpaper_dir = "/home/schnouki/images/wallpapers"
 -- }}}
 
@@ -39,7 +36,8 @@ theme.bg_urgent = theme.bg_urgent_ok
 -- }}}
 
 -- {{{ Borders
-theme.border_width  = "1"
+theme.useless_gap   = 0
+theme.border_width  = 2
 theme.border_normal = "#3F3F3F"
 theme.border_focus  = "#6F6F6F"
 theme.border_marked = "#CC9393"
@@ -64,11 +62,18 @@ theme.titlebar_bg_normal = "#3F3F3F"
 -- You can add as many variables as
 -- you wish and access them by using
 -- beautiful.variable in your rc.lua
-theme.fg_widget        = "#7F9F7F"
-theme.fg_center_widget = "#5F7F5F"
-theme.fg_end_widget    = "#CC9393"
-theme.bg_widget        = "#4F4F4F"
+-- theme.fg_widget        = "#7F9F7F"
+-- theme.fg_center_widget = "#5F7F5F"
+-- theme.fg_end_widget    = "#CC9393"
+-- theme.bg_widget        = "#4F4F4F"
+-- theme.border_widget    = "#3F3F3F"
+
+theme.fg_widget        = "#AECF96"
+theme.fg_center_widget = "#88A175"
+theme.fg_end_widget    = "#FF5656"
+theme.bg_widget        = "#494B4F"
 theme.border_widget    = "#3F3F3F"
+
 -- }}}
 
 -- {{{ Mouse finder
@@ -80,8 +85,8 @@ theme.mouse_finder_color = "#CC9393"
 -- Variables set for theming the menu:
 -- menu_[bg|fg]_[normal|focus]
 -- menu_[border_color|border_width]
-theme.menu_height = "15"
-theme.menu_width  = "100"
+theme.menu_height = 15
+theme.menu_width  = 100
 -- }}}
 
 -- {{{ Icons
@@ -94,7 +99,6 @@ theme.taglist_squares_unsel = "/usr/share/awesome/themes/zenburn/taglist/squarez
 -- {{{ Misc
 theme.awesome_icon           = "/usr/share/awesome/themes/zenburn/awesome-icon.png"
 theme.menu_submenu_icon      = "/usr/share/awesome/themes/default/submenu.png"
-theme.tasklist_floating_icon = "/usr/share/awesome/themes/default/tasklist/floatingw.png"
 -- }}}
 
 -- {{{ Layout
@@ -110,6 +114,10 @@ theme.layout_max        = "/usr/share/awesome/themes/zenburn/layouts/max.png"
 theme.layout_fullscreen = "/usr/share/awesome/themes/zenburn/layouts/fullscreen.png"
 theme.layout_magnifier  = "/usr/share/awesome/themes/zenburn/layouts/magnifier.png"
 theme.layout_floating   = "/usr/share/awesome/themes/zenburn/layouts/floating.png"
+theme.layout_cornernw   = "/usr/share/awesome/themes/zenburn/layouts/cornernw.png"
+theme.layout_cornerne   = "/usr/share/awesome/themes/zenburn/layouts/cornerne.png"
+theme.layout_cornersw   = "/usr/share/awesome/themes/zenburn/layouts/cornersw.png"
+theme.layout_cornerse   = "/usr/share/awesome/themes/zenburn/layouts/cornerse.png"
 -- }}}
 
 -- {{{ Titlebar
