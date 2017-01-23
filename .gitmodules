@@ -22,3 +22,6 @@
 [submodule "urxvt/urxvt-perls"]
 	path = urxvt/urxvt-perls
 	url = https://github.com/muennich/urxvt-perls
+[submodule "awesome/eminent"]
+	path = awesome/eminent
+	url = https://github.com/guotsuan/eminent

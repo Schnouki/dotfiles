@@ -19,7 +19,7 @@ local lfs = require("lfs")
 local socket = require("socket")
 
 -- Eminement dynamic tagging
--- TODO
+require("eminent")
 -- Vicious widgets
 vicious = require("vicious")
 vicious.contrib = require("vicious.contrib")
