@@ -1054,8 +1054,8 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    local tags = { "1", "2", "3", "4" }
-    if s.index == 1 then tags = {"‽", "📧", "✪", "💼", "💻", "⌘"} end
+    local tags = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
+    if s.index == 1 then tags = {"‽", "📧", "✪", "💼", "💻", "6", "7", "8", "⌘"} end
     awful.tag(tags, s, awful.layout.layouts[1])
 
     -- Set the last tag to floating
