@@ -1081,21 +1081,15 @@ awful.screen.connect_for_each_screen(function(s)
     s.mywibox = awful.wibar({ position = "top", screen = s })
 
     -- Add widgets to the wibox
-    local s1_right_widgets = {}
-    if s.index == 1 then
-       s1_right_widgets = __.concat(
-          { separator, tb_mails, tb_msmtpq, separator,
-            cpu_icon, cpu_graph, cputemp_widget, mem_icon, mem_widget, swap_widget, separator,
-            net_mon.widget,
-          },
-          { ip_mon and ip_mon.widget or nil },
-          { bat_widget, vol_widget, separator,
-            locks_mon.widget,
-          }
-       )
-    end
     local right_widgets = __.concat(
-       s1_right_widgets,
+       { separator, tb_mails, tb_msmtpq, separator,
+         cpu_icon, cpu_graph, cputemp_widget, mem_icon, mem_widget, swap_widget, separator,
+         net_mon.widget,
+       },
+       { ip_mon and ip_mon.widget or nil },
+       { bat_widget, vol_widget, separator,
+         locks_mon.widget,
+       },
        { mykeyboardlayout },
        { s.index == 1 and wibox.widget.systray() or nil },
        {
