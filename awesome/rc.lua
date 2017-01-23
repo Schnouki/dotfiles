@@ -549,6 +549,32 @@ function resize_client_ratio(ratio, c)
    -- Move and resize!
    awful.client.moveresize(dx, dy, dw, dh, c)
 end
+
+-- Titlebar
+function has_titlebar(c)
+   return awful.titlebar(c).widget ~= nil
+end
+function titlebar_visible(c)
+   local _, size = c:titlebar_top()
+   return size > 0
+end
+function show_titlebar(c)
+   if has_titlebar(c) then
+      awful.titlebar.show(c)
+   else
+      c:emit_signal("request::titlebars")
+   end
+end
+function hide_titlebar(c)
+   awful.titlebar.hide(c)
+end
+function toggle_titlebar(c)
+   if titlebar_visible(c) then
+      hide_titlebar(c)
+   else
+      show_titlebar(c)
+   end
+end
 -- }}}
 -- {{{     Widgets perso
 separator = wibox.widget.imagebox()
@@ -1030,9 +1056,8 @@ persokeys = {
 }
 
 persoclientkeys = {
-   -- TODO
-   -- awful.key({ modkey, "Shift"   }, "t",           toggle_titlebar,
-   --           { description="toggle titlebar", group="client" }),
+   awful.key({ modkey, "Shift"   }, "t",           toggle_titlebar,
+             { description="toggle titlebar", group="client" }),
    awful.key({ modkey            }, "s",           function (c) c.sticky = not c.sticky end,
              { description="toggle sticky", group="client" }),
    awful.key({ modkey, "Control" }, "i",           win_info,
@@ -1401,7 +1426,7 @@ awful.rules.rules = {
     -- Floating clients.
     { rule_any = {
          instance = {
-            "crx_eggkanocgddhmamlbiijnphhppkpkmkl",
+            "crx_eggkanocgddhmamlbiijnphhppkpkmkl", -- Tab Outliner
             "pinentry-gtk-2",
             "popcorntime",
             "wpa_gui" ,
@@ -1517,6 +1542,14 @@ client.connect_signal("request::titlebars", function(c)
         },
         layout = wibox.layout.align.horizontal
     }
+end)
+
+client.connect_signal("property::floating", function(c)
+    if c.floating then
+       show_titlebar(c)
+    else
+       hide_titlebar(c)
+    end
 end)
 
 -- Enable sloppy focus, so that focus follows mouse.
