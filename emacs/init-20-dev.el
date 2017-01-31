@@ -198,7 +198,7 @@
 	(push entry prettify-symbols-alist))
       ;; Enable prettify-symbols-mode
       (prettify-symbols-mode 1))))
-(add-hook 'prog-mode-hook 'schnouki/maybe-enable-prettify-symbols-mode)
+;(add-hook 'prog-mode-hook 'schnouki/maybe-enable-prettify-symbols-mode)
 
 ;; Increase selected region by semantic units
 (use-package expand-region

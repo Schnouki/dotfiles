@@ -34,13 +34,6 @@
 ;; Keep all backup files in a single directory
 (setq backup-directory-alist '(("." . "~/.emacs-backup-files/")))
 
-;; Default font
-(add-to-list 'default-frame-alist
-	     `(font . ,(cond
-			((string-prefix-p "odin" (system-name)) "Mono-7")
-			((string-prefix-p "baldr" (system-name)) "Mono-7.5")
-			(t "Mono-10"))))
-
 ;; Web browser
 ;(setq browse-url-browser-function 'browse-url-firefox)
 (defun schnouki/browse-url-firefox-36 (url &optional new-window)
