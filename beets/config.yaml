@@ -1,6 +1,6 @@
 directory: ~/Music
 library: ~/Music/.library
-plugins: bpd edit fetchart fromfilename mbsync
+plugins: bpd edit fetchart fromfilename info mbsync permissions play replaygain web
 
 ui:
   color: yes
@@ -24,3 +24,9 @@ paths:
   singleton: Non-Album/$artist/$title
   comp: Compilations/$album%aunique{}/$track $title
   albumtype:bootleg: Bootlegs/$albumartist/$year - $album%aunique{}/$track $title
+
+play:
+  command: vlc --qt-start-minimized
+
+replaygain:
+  backend: gstreamer
