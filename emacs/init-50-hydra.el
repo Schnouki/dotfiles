@@ -24,4 +24,15 @@
   ("<left>"  hydra-move-splitter-left "left")
   ("<right>" hydra-move-splitter-right "right"))
 
+;; Flycheck!
+(eval-after-load 'flycheck
+  '(progn
+     (defhydra hydra-flycheck (flycheck-command-map "!")
+       "Browse through Flycheck errors"
+       ("n" flycheck-next-error "next error")
+       ("p" flycheck-previous-error "previous error")
+       ("l" flycheck-list-errors "list errors")
+       ("h" flycheck-display-error-at-point "display error")
+       ("e" flycheck-explain-error-at-point "explain error"))))
+
 ;;; init-50-hydra.el ends here
