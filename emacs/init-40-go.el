@@ -16,6 +16,7 @@
   (add-hook 'before-save-hook 'gofmt-before-save)
 
   :config
+  (add-to-list 'go-guess-gopath-functions #'schnouki/go-hellogopher-gopath)
   (defadvice go-root-and-paths (around schnouki/go-root-and-paths)
     (let* ((root-and-paths ad-do-it)
            (root (car root-and-paths))
@@ -24,6 +25,12 @@
       (setq ad-return-value (cons root (append guessed-paths env-paths)))))
   (ad-activate 'go-root-and-paths)
   (add-hook 'go-mode-hook #'go-set-project))
+
+(defun schnouki/go-hellogopher-gopath ()
+  (let ((d (locate-dominating-file buffer-file-name ".GOPATH")))
+    (if d
+        (list (concat d
+                      (file-name-as-directory ".GOPATH"))))))
 
 (use-package company-go
   :ensure t
