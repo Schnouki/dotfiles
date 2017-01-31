@@ -1,5 +1,6 @@
 %backup%~
 *.el[cd]
+.#*
 
 .python-environments/
 anaconda-mode/
