@@ -10,7 +10,7 @@ windows:
       - clear
     panes:
       - "make run-local"
-      - "webpack -w"
+      - "make run-webpack"
   - options:
       automatic-rename: on
     shell_command_before:
@@ -32,6 +32,3 @@ windows:
       - clear
     panes:
       -
-  - window_name: pgweb
-    panes:
-      - "pgweb"
