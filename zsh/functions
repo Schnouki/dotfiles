@@ -12,10 +12,12 @@ function reload_local_completion() {
 
 function upload_zsh_config() {
     local dest=$1
-    [[ -z "$dest" ]] && echo "Usage: $0 remote_ssh_host" && return 1
+    local port=$2
+    [[ -z "$port" ]] && port="22"
+    [[ -z "$dest" ]] && echo "Usage: $0 remote_ssh_host [port]" && return 1
 
     pushd $HOME &>/dev/null
-    tar cj .config/zsh | ssh -axo "ClearAllForwardings yes" "$dest" \
+    tar cj .config/zsh | ssh -axo "ClearAllForwardings yes" "$dest" -p "$port" \
         "cat | tar xj && \
          rm -f .zshenv && ln -s .config/zsh/profile .zshenv && \
          rm -f .zshrc  && ln -s .config/zsh/zshrc   .zshrc  && \
