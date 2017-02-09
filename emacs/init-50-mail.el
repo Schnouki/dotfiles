@@ -58,7 +58,9 @@
 
       message-citation-line-function 'message-insert-formatted-citation-line
       message-citation-line-format "Le %e %B %Y à %-H:%M %Z, %N a écrit :"
-      message-signature 'schnouki/choose-signature)
+      message-signature 'schnouki/choose-signature
+
+      notmuch-multipart/alternative-discouraged #'schnouki/notmuch-determine-discouraged)
 
 ;; Add some features to message-mode
 (add-hook 'message-setup-hook '(lambda () (footnote-mode t)))
@@ -248,6 +250,18 @@
     (save-restriction
       (when (get-buffer "*notmuch-hello*")
 	(notmuch-hello-update t)))))
+
+;; Allow content preference based on message content
+;; Based on https://notmuchmail.org/pipermail/notmuch/2016/022115.html
+(require 'dash)
+(defun schnouki/notmuch-determine-discouraged (msg)
+  (let* ((headers (plist-get msg :headers))
+	 (from (or (plist-get headers :From) "")))
+    (cond
+     ((--any? (string-match it from) schnouki/notmuch-html-senders)
+      '("text/plain"))
+     (t
+      '("text/html" "multipart/related")))))
 
 ;; Load notmuch!
 (use-package notmuch
