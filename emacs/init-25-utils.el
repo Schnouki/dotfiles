@@ -401,16 +401,12 @@ If third argument START is non-nil, convert words after that index in STRING."
   :ensure t
   :bind ("M-SPC" . shrink-whitespace))
 
-;; Unicode fonts
-(use-package unicode-fonts
+;; Display Emojis
+(use-package emojify
   :ensure t
-  :defer 5
-  :config
-  (progn
-    (setq unicode-fonts-block-font-mapping
-	  '(("Emoticons"
-	     ("Apple Color Emoji" "Noto Emoji" "Symbola" "Quivira"))))
-    (unicode-fonts-setup)))
+  :defer t
+  :init
+  (add-hook 'after-init-hook #'global-emojify-mode))
 
 ;; Colorize strings that represent colors
 (use-package rainbow-mode
