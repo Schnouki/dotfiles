@@ -17,7 +17,7 @@ export QT_STYLE_OVERRIDE=gtk
 
 # Tell Java to anti-alias fonts
 # https://wiki.archlinux.org/index.php/Java#Tips_and_tricks
-export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
+#export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
 
 # Source scripts in /etc/X11/xinit/xinitrc.d/
 if [ -d /etc/X11/xinit/xinitrc.d ]; then
