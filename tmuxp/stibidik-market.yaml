@@ -1,0 +1,32 @@
+session_name: stibidik-market
+start_directory: ~/stibidik/market
+before_script: printf "\033]777;tabbedex;set_tab_name;market\007"
+windows:
+  - window_name: srv
+    focus: on
+    shell_command_before:
+      - workon stibidik-market
+      - clear
+    panes:
+      - ./manage.py runserver
+  - options:
+      automatic-rename: on
+    shell_command_before:
+      - workon stibidik-market
+      - clear
+    panes:
+      -
+  - options:
+      automatic-rename: on
+    shell_command_before:
+      - workon stibidik-market
+      - clear
+    panes:
+      -
+  - options:
+      automatic-rename: on
+    shell_command_before:
+      - workon stibidik-market
+      - clear
+    panes:
+      -

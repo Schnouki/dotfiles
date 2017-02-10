@@ -1,6 +1,6 @@
-session_name: stibidik
+session_name: stibidik-web
 start_directory: ~/stibidik/web/src/stibidik
-before_script: printf "\033]777;tabbedex;set_tab_name;stibidik\007"
+before_script: printf "\033]777;tabbedex;set_tab_name;stibidik-web\007"
 windows:
   - window_name: srv
     focus: on
