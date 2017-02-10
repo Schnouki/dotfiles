@@ -174,6 +174,12 @@
   :mode "\\.plu\\'"
   :init
   (setq plantuml-jar-path "/opt/plantuml/plantuml.jar"))
+(use-package flycheck-plantuml
+  :ensure t
+  :commands (flycheck-plantuml-setup)
+  :init
+  (with-eval-after-load 'flycheck
+    (flycheck-plantuml-setup)))
 
 (use-package toml-mode
   :ensure t
