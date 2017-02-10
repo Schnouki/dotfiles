@@ -96,7 +96,7 @@
     (ido-completing-read
      prompt (cons initial-input collection) nil nil nil 'notmuch-address-history)))
 
-(defun notmuch-mua-mail-url (url)
+(defun notmuch-mua-mail-url (url &optional ignored)
   (interactive (browse-url-interactive-arg "Mailto URL: "))
   (let* ((alist (rfc2368-parse-mailto-url url))
 	 (to (assoc "To" alist))
