@@ -315,8 +315,8 @@ mylayoutsmenu = awful.menu({ items = layoutsmenu })
 
 function safe_cmd(cmd)
    return function()
-      return awful.spawn(cmd, true, nil, { MemoryLimit = "3G"
-                                          --CPUQuota = "400%"
+      return false, awful.spawn(cmd, true, nil, { MemoryLimit = "3G",
+                                                  CPUQuota = "400%"
       })
    end
 end
@@ -1583,9 +1583,8 @@ end)
 local oldspawn = awful.spawn
 awful.spawn = function (cmd, sn_rules, cb, sd_params)
    if sd_params ~= nil then
-      sd_params = __.concat(
-         {"-p"},
-         __.map(sd_params, function(v, k) return k .. "=" .. v end)
+      sd_params = __.flatten(
+         __.map(sd_params, function(v, k) return {"-p", k .. "=" .. v} end)
       )
    else
       sd_params = {}
