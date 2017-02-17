@@ -493,8 +493,8 @@ end
 function get_next_screen()
    local s = awful.screen.focused()
    local idx = s.index + 1
-   if idx > screen.count() then s = 1 end
-   return awful.screen[idx]
+   if idx > screen.count() then idx = 1 end
+   return screen[idx]
 end
 
 -- Switch tag on next screen

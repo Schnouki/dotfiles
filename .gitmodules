@@ -24,4 +24,4 @@
 	url = https://github.com/muennich/urxvt-perls
 [submodule "awesome/eminent"]
 	path = awesome/eminent
-	url = https://github.com/guotsuan/eminent
+	url = git@github.com:Schnouki/eminent.git
