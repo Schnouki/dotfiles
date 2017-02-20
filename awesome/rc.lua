@@ -766,14 +766,20 @@ vicious.register(cputemp_widget.widget, vicious.contrib.sensors,
                     return args[2]
                  end, 10, "Physical id 0")
 
+vicious.cache(vicious.widgets.cpufreq)
 vicious.cache(vicious.widgets.uptime)
+
 cpu_tooltip = awful.tooltip({
       objects = { cpu_graph, cputemp_widget },
       timer_function = function()
          local txt = ""
-         for idx, val in pairs(vicious.widgets.cpu()) do
+         for idx, pct in pairs(vicious.widgets.cpu()) do
             if idx >= 2 then
-               txt = txt .. string.format("Core %d: %d %%\n", idx-1, val)
+               local cpuidx = idx - 2
+               local freq = vicious.widgets.cpufreq("", string.format("cpu%d", cpuidx))
+               local freq_ghz = freq[2]
+               local freq_governor = freq[5]
+               txt = txt .. string.format("Core %d: %d %%\t%s %.2f GHz\n", cpuidx+1, pct, freq_governor, freq_ghz)
             end
          end
 
