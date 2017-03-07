@@ -188,6 +188,11 @@ autoload -Uz zmv
 # virtualenvwrapper is nice
 [[ -e /usr/bin/virtualenvwrapper_lazy.sh ]] && source /usr/bin/virtualenvwrapper_lazy.sh
 
+# Autoquote URLs pasted in ZLE
+autoload -U url-quote-magic && {
+  zle -N self-insert url-quote-magic
+}
+
 # Reset WORDCHARS so it's easier to navigate between words.
 # Default value: export WORDCHARS='*?_-.[]~=/&;!#$%^(){}<>'
 export WORDCHARS=''
