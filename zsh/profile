@@ -146,7 +146,7 @@ zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' list-dirs-first true
 
 # Turn on menu selection only when selections do not fit on screen.
-zstyle ':completion:*' menu select=long-list
+zstyle ':completion:*' menu select=long-list search
 
 # Separate matches into groups.
 zstyle ':completion:*:matches' group yes
@@ -169,12 +169,26 @@ zstyle ':completion:*:*:kill:*' command 'ps -a -w -w -u $USER -o pid,cmd --sort=
 zstyle ':completion:*:*:kill:*:processes' list-colors "=(#b) #([0-9]#)*=39=32"
 
 # Ignore hidden files by default
-zstyle ':completion:*:(all-|other-|)files'  ignored-patterns '*/.*'
-zstyle ':completion:*:(local-|)directories' ignored-patterns '*/.*'
-zstyle ':completion:*:cd:*'                 ignored-patterns '*/.*'
+zstyle ':completion:*:(all-|globbed-|other-|)files' ignored-patterns '(*/|).[^/]##'
+zstyle ':completion:*:(local-|)directories'         ignored-patterns '(*/|).[^/]##'
+zstyle ':completion:*:cd:*'                         ignored-patterns '(*/|).[^/]##'
 
 # Don't complete completion functions/widgets.
 zstyle ':completion:*:functions' ignored-patterns '_*'
+
+# Don't complete uninteresting users.
+zstyle -e ':completion:*:users' users 'local user; getent passwd | while IFS=: read -rA user; do (( user[3] >= 1000 || user[3] == 0 )) && reply+=($user[1]); done'
+
+# Show ignored patterns if needed.
+zstyle '*' single-ignored menu
+
+# cd style.
+zstyle ':completion:*:cd:*' ignore-parents parent pwd # cd never selects the parent directory (e.g.: cd ../<TAB>)
+zstyle ':completion:*:*:cd:*' tag-order local-directories path-directories
+
+# Completion debugging
+bindkey '^Xh' _complete_help
+bindkey '^X?' _complete_debug
 
 ##### Various options
 setopt extendedglob
