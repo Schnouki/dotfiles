@@ -768,7 +768,7 @@ vicious.register(cputemp_widget.widget, vicious.contrib.sensors,
                  function(widget, args)
                     cpu_temp = args[1]
                     return args[2]
-                 end, 10, "Physical id 0")
+                 end, 10, "Package id 0")
 
 vicious.cache(vicious.widgets.cpufreq)
 vicious.cache(vicious.widgets.uptime)
