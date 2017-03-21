@@ -62,6 +62,9 @@ end
 os.setlocale("fr_FR.utf8")
 -- ... mais les nombres doivent être en anglais (séparateur décimal...)
 os.setlocale("C", "numeric")
+
+-- Improve randomness
+math.randomseed( os.time() )
 -- }}}
 
 -- {{{ Variable definitions
@@ -158,7 +161,7 @@ icon_theme.configure_naughty()
 -- Create a launcher widget and a main menu
 myawesomemenu = {
    { "&hotkeys", function() return false, hotkeys_popup.show_help end},
-   { "change &wallpaper", change_wallpapers },
+   { "change &wallpaper", function() return false, change_wallpapers end},
    { "&manual", terminal .. " -e man awesome" },
    { "edit &config", editor_cmd .. " " .. awesome.conffile },
    { "&restart", awesome.restart },
@@ -429,13 +432,13 @@ end
 
 local function change_wallpapers()
    local s
-   for s in awful.screen do
+   for s in screen do
       set_wallpaper(s)
    end
 end
 
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
-screen.connect_signal("property::geometry", set_wallpaper)
+screen.connect_signal("property::geometry", change_wallpapers)
 --   }}}
 -- {{{   Personal stuff
 -- {{{     Helpers
@@ -619,6 +622,7 @@ if ifaces["W"] ~= nil then
             create_wibox()
          end
       end
+      return true
    end
    local clockwarn = gears.timer.start_new(60, clockcheck)
    clockcheck()
@@ -1577,10 +1581,12 @@ mytimer15 = gears.timer.start_new(15, function ()
     if ip_mon then ip_mon:update() end
     tb_mails_update()
     tb_msmtpq_update()
+    return true
 end)
 
 mytimer300 = gears.timer.start_new(300, function()
     change_wallpapers()
+    return true
 end)
 -- }}}
 -- {{{ Run applications in a different (transient) systemd scope
