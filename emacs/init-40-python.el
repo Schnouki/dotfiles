@@ -2,23 +2,12 @@
 ;;; Commentary:
 ;;; Code:
 
-(use-package virtualenvwrapper
-  :ensure t
-  :commands (venv-workon venv-deactivate venv-initialize-interactive-shells venv-initialize-eshell)
+(use-package flycheck-local-flake8
+  :load-path "flycheck-local-flake8"
+  :commands flycheck-local-flake8/flycheck-virtualenv-set-python-executables
   :init
-  (progn
-    (setq venv-location "~/.virtualenvs")
-
-    (defcustom python-venv nil
-      "Name of the virtualenv to work on."
-      :group 'python
-      :safe #'stringp)
-
-    (defun schnouki/setup-venv ()
-      (hack-local-variables)
-      (when python-venv
-	(venv-workon python-venv)))
-    (add-hook 'python-mode-hook 'schnouki/setup-venv)))
+  (add-hook 'flycheck-before-syntax-check-hook
+	    #'flycheck-local-flake8/flycheck-virtualenv-set-python-executables 'local))
 
 (use-package anaconda-mode
   :ensure t
@@ -79,6 +68,6 @@
   :modes python-mode)
 (flycheck-def-config-file-var flycheck-pylint2rc python2-pylint ".pylintrc"
   :safe #'stringp)
-(add-to-list 'flycheck-checkers 'python2-pylint)
+(list-utils-insert-after flycheck-checkers 'python-pylint 'python2-pylint)
 
 ;;; init-40-python.el ends here

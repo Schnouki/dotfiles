@@ -25,3 +25,6 @@
 [submodule "awesome/eminent"]
 	path = awesome/eminent
 	url = git@github.com:Schnouki/eminent.git
+[submodule "emacs/flycheck-local-flake8"]
+	path = emacs/flycheck-local-flake8
+	url = https://github.com/rmuslimov/flycheck-local-flake8
