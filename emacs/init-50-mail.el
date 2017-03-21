@@ -21,9 +21,15 @@
       message-sendmail-envelope-from 'header
       message-default-headers "X-Clacks-Overhead: GNU Terry Pratchett\n"
       gnus-inhibit-images nil
-      notmuch-saved-searches '((:name "home"        :key "h" :query "(tag:inbox or tag:todo or tag:unread)")
+      notmuch-saved-searches `((:name "home"        :key "h" :query "(tag:inbox or tag:todo or tag:unread)")
 			       (:name "unread"      :key "u" :query "tag:unread")
 			       (:name "inbox"       :key "i" :query "tag:inbox")
+			       (:name "archive"     :key "a"
+				:query ,(concat "tag:inbox and ("
+						(string-join (--map (format "folder:schnouki.net/Archives.%d" it)
+								   (number-sequence 2009 (nth 5 (decode-time))))
+							     " or ")
+						")"))
 			       (:name "blabla"      :key "b" :query "tag:blabla")
 			       (:name "drafts"      :key "d" :query "tag:draft")
 			       (:name "sent"        :key "s" :query "tag:sent")
@@ -35,17 +41,12 @@
 			       (:name "d20"                  :query "(tag:d20 and tag:ml)")
 			       (:name "april"                :query "(tag:april and tag:unread)")
 			       (:name "arch"                 :query "(tag:arch and tag:unread)")
-			       (:name "awesome"              :query "(tag:awesome and tag:unread)")
-			       (:name "buddycloud"           :query "(tag:buddycloud and tag:unread)")
-			       (:name "camlistore"           :query "(tag:camlistore and tag:unread)")
 			       (:name "emacs"                :query "(tag:emacs and tag:unread)")
 			       (:name "fsfe"                 :query "(tag:fsfe and tag:unread)")
+			       (:name "guile"                :query "(tag:guile and tag:unread)")
 			       (:name "ldn"                  :query "(tag:ldn and tag:unread)")
 			       (:name "notmuch"              :query "(tag:notmuch and tag:unread)")
-			       (:name "nybicc "              :query "(tag:nybi.cc and tag:unread)")
-			       (:name "prosody"              :query "(tag:prosody and tag:unread)")
-			       (:name "spop"                 :query "(tag:spop and tag:unread")
-			       (:name "xmpp"                 :query "(tag:xmpp and tag:unread)"))
+			       (:name "spop"                 :query "(tag:spop and tag:unread"))
       notmuch-show-all-tags-list t
       notmuch-archive-tags '("-inbox" "-unread" "+archive")
       notmuch-address-command "~/.config/notmuch/addrbook.py"
@@ -253,7 +254,6 @@
 
 ;; Allow content preference based on message content
 ;; Based on https://notmuchmail.org/pipermail/notmuch/2016/022115.html
-(require 'dash)
 (defun schnouki/notmuch-determine-discouraged (msg)
   (let* ((headers (plist-get msg :headers))
 	 (from (or (plist-get headers :From) "")))
