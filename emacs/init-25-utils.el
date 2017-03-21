@@ -6,6 +6,14 @@
 (use-package bind-key
   :ensure t)
 
+;; and which-key, to help
+(use-package which-key
+  :ensure t
+  :diminish which-key-mode
+  :config
+  (which-key-setup-minibuffer)
+  (which-key-mode 1))
+
 ;; Set justification with C-x M-f
 (bind-key "C-x M-f" 'set-justification)
 
@@ -462,5 +470,12 @@ If third argument START is non-nil, convert words after that index in STRING."
   "Make sure the directory of `buffer-file-name' exists."
   (make-directory (file-name-directory buffer-file-name) t))
 (add-hook 'find-file-not-found-functions #'make-parent-directory)
+
+;; EditorConfig
+(use-package editorconfig
+  :ensure t
+  :diminish editorconfig-mode
+  :config
+  (editorconfig-mode 1))
 
 ;;; init-25-utils.el ends here

@@ -4,6 +4,8 @@
 
 (use-package dash
   :ensure t)
+(use-package list-utils
+  :ensure t)
 
 ;; Tabs and indentation
 (setq-default c-basic-offset 4

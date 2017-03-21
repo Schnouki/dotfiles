@@ -114,10 +114,12 @@
 
 (use-package web-mode
   :ensure t
-  ;; (kill-new (s-replace "\\" "\\\\" (rx "." (or "tmpl" "hbs") eos)))
-  :mode "\\.\\(?:hbs\\|tmpl\\)\\'"
+  ;; (kill-new (s-replace "\\" "\\\\" (rx "." (or "tmpl" "hbs" "html") eos)))
+  :mode "\\.\\(?:\\(?:h\\(?:bs\\|tml\\)\\|tmpl\\)\\)\\'"
   :init
-  (setq web-mode-engines-alist '(("go" . "\\.tmpl\\'"))))
+  (setq web-mode-engines-alist '(("go" . "\\.tmpl\\'")
+                                 ("django" . "\\.html\\'"))
+        web-mode-markup-indent-offset 2))
 
 (use-package cuda-mode
   :mode "\\.cu\\'")

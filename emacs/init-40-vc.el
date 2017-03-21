@@ -8,13 +8,12 @@
 	 ("C-M-<" . vc-git-grep))
   :demand t
   :init
-  (progn
-    (setq magit-process-popup-time -1
-          magit-auto-revert-mode-lighter nil
-          magit-last-seen-setup-instructions "1.4.0"
-          magit-revert-buffers 'silent
-          magit-push-always-verify nil
-          vc-follow-symlinks t)))
+  (setq magit-process-popup-time -1
+        magit-auto-revert-mode-lighter nil
+        magit-last-seen-setup-instructions "1.4.0"
+        magit-revert-buffers 'silent
+        magit-push-always-verify nil
+        vc-follow-symlinks t))
 
 (use-package magit-blame
   :ensure magit
