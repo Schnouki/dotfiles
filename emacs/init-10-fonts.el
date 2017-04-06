@@ -3,8 +3,10 @@
 ;;; Code:
 
 ;; Default font
-(add-to-list 'default-frame-alist
-	     '(font . "Fira Mono-7.5"))
-(set-frame-font "Fira Mono-7.5")
+(let ((default-font "Iosevka-8"))
+  (assq-delete-all 'font default-frame-alist)
+  (add-to-list 'default-frame-alist
+	       `(font . ,default-font))
+  (set-frame-font default-font))
 
 ;;; init-10-fonts.el ends here
