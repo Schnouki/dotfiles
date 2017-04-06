@@ -62,6 +62,14 @@
   :bind (:map flycheck-command-map
               ("g" . avy-flycheck-goto-error)))
 
+;; Jump to definition
+(use-package dumb-jump
+  :ensure t
+  :bind (("M-g o" . dumb-jump-go-other-window)
+         ("M-g j" . dumb-jump-go)
+         ("M-g x" . dumb-jump-go-prefer-external)
+         ("M-g z" . dumb-jump-go-prefer-external-other-window)))
+
 ;; Code folding
 (use-package origami
   :ensure t
@@ -247,6 +255,17 @@
 ;; GNU Global
 (use-package ggtags
   :ensure t)
+
+;; Automatically make some buffers read-only
+(use-package auto-read-only
+  :ensure t
+  :diminish auto-read-only-mode
+  :config
+  (--each (list (rx "/.config/emacs/elpa/")
+                (rx "/vendor/")
+                (rx "/" (or ".virtualenvs" "venv" ".venv") "/"))
+    (add-to-list 'auto-read-only-file-regexps it))
+  (auto-read-only-mode 1))
 
 
 ;;; init-20-dev.el ends here

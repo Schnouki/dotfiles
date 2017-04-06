@@ -26,6 +26,10 @@
 (diminish 'auto-revert-mode)
 (bind-key "C-x r RET" 'revert-buffer)
 
+;; And also auto-revert dired buffers (needed since global-auto-revert-mode only
+;; works for buffers associated with files on the disk)
+(add-hook 'dired-mode-hook 'auto-revert-mode)
+
 ;; Copy current line with M-k
 ;; http://www.emacsblog.org/2009/05/18/copying-lines-not-killing/#comment-27462
 (defun schnouki/copy-line ()
@@ -80,15 +84,14 @@ If PREFIX is not nil, force creating a new scratch buffer."
 
 ;; ibuffer
 (bind-key "C-x C-b" 'ibuffer)
-(use-package ibuffer-vc
+(use-package ibuffer-projectile
   :ensure t
   :config
-  (progn
-    (add-hook 'ibuffer-hook
-	      (lambda ()
-		(ibuffer-vc-set-filter-groups-by-vc-root)
-		(unless (eq ibuffer-sorting-mode 'alphabetic)
-		  (ibuffer-do-sort-by-alphabetic))))))
+  (defun schnouki/enable-ibuffer-projectile ()
+    (ibuffer-projectile-set-filter-groups)
+    (unless (eq ibuffer-sorting-mode 'alphabetic)
+      (ibuffer-do-sort-by-alphabetic)))
+  (add-hook 'ibuffer-hook #'schnouki/enable-ibuffer-projectile))
 
 ;; "Smart" home key
 ;; Beginning of indented text --> beginning of "real" text --> beginning of line
