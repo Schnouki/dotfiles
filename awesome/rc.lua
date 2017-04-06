@@ -338,7 +338,6 @@ mymainmenu = awful.menu({ items = { { "&awesome", myawesomemenu, beautiful.aweso
                                     { "&wine", winemenu, icon_theme.get("apps", "wine") },
                                     { "&firefox", safe_cmd("firefox"), icon_theme.get("apps", "firefox") },
                                     { "&chromium", safe_cmd("chromium"), icon_theme.get("apps", "chromium") },
-                                    { "&rambox", safe_cmd("rambox"), icon_theme.get("apps", "rambox") },
                                     { "&gajim", "gajim", icon_theme.get("apps", "gajim") },
                                     { "sp&otify", safe_cmd("spotify"), icon_theme.get("apps", "spotify-client") },
                                     { "&netflix", "chromium https://www.netflix.com/", icon_theme.get("apps", "netflix") },
@@ -605,11 +604,11 @@ if ifaces["W"] ~= nil then
       local new_normal = theme.bg_normal_ok
       local new_focus = theme.bg_focus_ok
       local new_urgent = theme.bg_urgent_ok
-      if at_work and time >= 1730 then
+      if at_work and time >= 1710 then
          new_normal = theme.bg_normal_emerg
          new_focus = theme.bg_focus_emerg
          new_urgent = theme.bg_urgent_emerg
-      elseif at_work and time >= 1700 then
+      elseif at_work and time >= 1645 then
          new_normal = theme.bg_normal_warn
          new_focus = theme.bg_focus_warn
          new_urgent = theme.bg_urgent_warn
@@ -1478,9 +1477,14 @@ awful.rules.rules = {
     { rule = { class = "Firefox" }, except = { instance = "Navigator" },
       properties = { floating = true } },
 
+    -- Firefox: no titlebar for utility windows
+    { rule = { class = "Firefox", type = "utility" },
+      properties = { titlebars_enabled = false }
+    },
+
     -- Keep some applications on the last tag of the first screen
     { rule_any = { instance = { "spotify.exe", "spotify", "Steam" } },
-      properties = { floating = true, tag="⌘" } },
+      properties = { floating = true } }, --, tag="⌘"
 
     -- Other applications must be floating *and* centered
     { rule_any = { class = {"Arandr", "Pavucontrol" } },

@@ -4,7 +4,7 @@ before_script: printf "\033]777;tabbedex;set_tab_name;market\007"
 windows:
   - window_name: srv
     focus: on
-    layout: 7126,197x55,0,0[198x39,0,0{103x39,0,0,1,94x39,104,0,2},198x15,0,40,3]
+    layout: b740,199x56,0,0[200x39,0,0{102x39,0,0,1,97x39,103,0,2},200x16,0,40{102x16,0,40,3,97x16,103,40,8}]
     shell_command_before:
       - workon market
       - clear
@@ -12,6 +12,7 @@ windows:
       - focus: true
       - touch /tmp/q && tail -f -n0 /tmp/q
       - ./manage.py runserver
+      - make webpack-watch
   - options:
       automatic-rename: on
     shell_command_before:
