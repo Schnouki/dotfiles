@@ -35,7 +35,7 @@
 (setq backup-directory-alist '(("." . "~/.emacs-backup-files/")))
 
 ;; Web browser
-(setq browse-url-browser-function 'browse-url-chromium  ; firefox
+(setq browse-url-browser-function 'browse-url-firefox  ;chromium
       browse-url-firefox-new-window-is-tab t)
 
 ;; Display date and time
