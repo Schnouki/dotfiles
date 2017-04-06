@@ -105,8 +105,35 @@
   :ensure t
   :mode "\\.haml\\'"
   :config
+
+  (defvar schnouki/hamlpy-keywords '("elif" "block" "blocktrans"))
+
+  ;; Reset haml-block-openers -- inspired by http://emacs.stackexchange.com/a/10809/2006
+  ;; TODO: make a nice function out of this :)
+  (save-window-excursion
+    (save-excursion
+      (find-variable 'haml-block-openers)
+      (eval-defun nil)))
   (add-to-list 'haml-block-openers
-               "^[ \t]*-[ \t]*elif"))
+               (concat "^[ \t]*[&!]?[-=~][ \t]*\\("
+                       (regexp-opt schnouki/hamlpy-keywords)
+                       "\\)"))
+
+  (defun schnouki/haml-fontify-region-as-ruby (beg end)
+    "Use Ruby's font-lock variables to fontify the region between BEG and END."
+    (let ((keywords ruby-font-lock-keywords))
+      (add-to-list 'ruby-font-lock-keywords
+                   `(,(concat ruby-font-lock-keyword-beg-re
+                              (regexp-opt schnouki/hamlpy-keywords
+                                          'symbols))
+                     (1 font-lock-keyword-face)))
+      (haml-fontify-region beg end keywords
+                           ruby-font-lock-syntax-table
+                           (when (boundp 'ruby-font-lock-syntactic-keywords)
+                             ruby-font-lock-syntactic-keywords)
+                           (when (fboundp 'ruby-syntax-propertize-function)
+                             #'ruby-syntax-propertize-function))))
+  (advice-add 'haml-fontify-region-as-ruby :override #'schnouki/haml-fontify-region-as-ruby))
 
 ;; (use-package handlebars-mode
 ;;   :ensure t
