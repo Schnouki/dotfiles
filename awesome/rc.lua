@@ -329,6 +329,21 @@ winemenu = {
      "/home/schnouki/.wine/drive_c/Program Files (x86)/Balsamiq Mockups 3/icons/mockups_ico_16.png" },
 }
 
+menu_sep = {
+   new = function()
+      return {
+         widget = wibox.widget.base.empty_widget(),
+         theme = {
+            fg_focus = beautiful.fg_normal,
+            bg_focus = beautiful.bg_normal,
+            fg_normal = beautiful.fg_normal,
+            bg_normal = beautiful.bg_normal,
+         },
+         cmd = function() return true, nil end
+      }
+   end,
+}
+
 mymainmenu = awful.menu({ items = { { "&awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "&jeux", gamemenu },
                                     { "&utils", utilsmenu },
@@ -336,13 +351,16 @@ mymainmenu = awful.menu({ items = { { "&awesome", myawesomemenu, beautiful.aweso
                                     { "écran &ext.", screenmenu },
                                     { "&screenshot", screenshotmenu },
                                     { "&wine", winemenu, icon_theme.get("apps", "wine") },
+                                    menu_sep,
                                     { "&firefox", safe_cmd("firefox"), icon_theme.get("apps", "firefox") },
                                     { "&chromium", safe_cmd("chromium"), icon_theme.get("apps", "chromium") },
                                     { "&vivaldi", safe_cmd("vivaldi-stable"), icon_theme.get("apps", "vivaldi") },
+                                    menu_sep,
                                     { "sp&otify", safe_cmd("spotify"), icon_theme.get("apps", "spotify-client") },
                                     { "&gmpc", safe_cmd("gmpc"), icon_theme.get("apps", "gmpc") },
                                     { "&netflix", "chromium https://www.netflix.com/", icon_theme.get("apps", "netflix") },
                                     { "&popcorn time", safe_cmd("popcorntime"), icon_theme.get("apps", "popcorntime", "/usr/share/pixmaps/popcorntime.png") },
+                                    menu_sep,
                                     { "li&bre office", safe_cmd("soffice"), icon_theme.get("apps", "libreoffice-writer") },
                                     { "an&droid studio", safe_cmd("android-studio"), icon_theme.get("apps", "android-studio", "/usr/share/pixmaps/android-studio.png") },
                                     { "pc&manfm", safe_cmd("pcmanfm"), icon_theme.get("apps", "system-file-manager") },
