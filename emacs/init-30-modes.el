@@ -106,7 +106,7 @@
   :mode "\\.haml\\'"
   :config
 
-  (defvar schnouki/hamlpy-keywords '("elif" "block" "blocktrans"))
+  (setq schnouki/hamlpy-keywords '("elif" "block" "blocktrans" "with"))
 
   ;; Reset haml-block-openers -- inspired by http://emacs.stackexchange.com/a/10809/2006
   ;; TODO: make a nice function out of this :)
