@@ -1,12 +1,12 @@
-session_name: stibidik-web
-start_directory: ~/stibidik/web/src/stibidik
-before_script: printf "\033]777;tabbedex;set_tab_name;stibidik-web\007"
+session_name: stibidik-wanted
+start_directory: ~/stibidik/wanted/src/stibidik
+before_script: printf "\033]777;tabbedex;set_tab_name;stibidik-wanted\007"
 windows:
   - window_name: srv
     focus: on
     layout: even-horizontal
     shell_command_before:
-      - source ~/stibidik/web/activate
+      - source ~/stibidik/wanted/activate
       - clear
     panes:
       - "make run-local"
@@ -14,21 +14,21 @@ windows:
   - options:
       automatic-rename: on
     shell_command_before:
-      - source ~/stibidik/web/activate
+      - source ~/stibidik/wanted/activate
       - clear
     panes:
       -
   - options:
       automatic-rename: on
     shell_command_before:
-      - source ~/stibidik/web/activate
+      - source ~/stibidik/wanted/activate
       - clear
     panes:
       -
   - options:
       automatic-rename: on
     shell_command_before:
-      - source ~/stibidik/web/activate
+      - source ~/stibidik/wanted/activate
       - clear
     panes:
       -
