@@ -30,7 +30,7 @@ URxvt.termName:    rxvt-256color
 URxvt.transparent: true
 URxvt.shading:     20
 URxvt.fading:      15
-URxvt.font:        xft:Mono:pixelsize=12.5, xft:Kochi Gothic:antialias=false, xft:Code2000:antialias=false
+URxvt.font:        xft:Iosevka Medium:pixelsize=12.5, xft:Kochi Gothic:antialias=false, xft:Code2000:antialias=false
 
 URxvt.saveLines:         4096
 URxvt.scrollBar:         false
@@ -101,14 +101,14 @@ XTerm*color13:    #AD7FA8
 XTerm*color14:    #34E2E2
 XTerm*color15:    #EEEEEC
 
-XTerm*faceName: DejaVu Sans Mono
-XTerm*faceSize: 8
+XTerm*faceName: Iosevka Medium
+XTerm*faceSize: 7.5
 
 ! rofi -- dmenu clone
 rofi.opacity:  100
 rofi.width:    90
 rofi.lines:    25
-rofi.font:     DejaVu Sans Mono 10
+rofi.font:     Iosevka Medium 10
 rofi.location: 0
 rofi.padding:  5
 
