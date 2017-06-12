@@ -1,1 +1,1 @@
-/etc/systemd/user/dbus.socket
+/usr/lib/systemd/user/dbus.socket
