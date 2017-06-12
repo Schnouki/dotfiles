@@ -27,7 +27,6 @@ export EDITOR="emacsclient -c -a \"\""
 export BROWSER=chromium
 
 # Program-specifig options
-export ACKRC="$XDG_CONFIG_HOME/ackrc"
 
 # Go
 export GOPATH=$HOME/.go
