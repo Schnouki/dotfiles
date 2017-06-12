@@ -84,14 +84,6 @@ If PREFIX is not nil, force creating a new scratch buffer."
 
 ;; ibuffer
 (bind-key "C-x C-b" 'ibuffer)
-(use-package ibuffer-projectile
-  :ensure t
-  :config
-  (defun schnouki/enable-ibuffer-projectile ()
-    (ibuffer-projectile-set-filter-groups)
-    (unless (eq ibuffer-sorting-mode 'alphabetic)
-      (ibuffer-do-sort-by-alphabetic)))
-  (add-hook 'ibuffer-hook #'schnouki/enable-ibuffer-projectile))
 
 ;; "Smart" home key
 ;; Beginning of indented text --> beginning of "real" text --> beginning of line
