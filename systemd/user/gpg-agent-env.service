@@ -1,0 +1,11 @@
+[Unit]
+Description=GnuPG agent environment variables
+Before=environment.target
+IgnoreOnIsolate=true
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/systemctl --user set-environment SSH_AUTH_SOCK=${XDG_RUNTIME_DIR}/gnupg/S.gpg-agent.ssh
+
+[Install]
+WantedBy=default.target environment.target
