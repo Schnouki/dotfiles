@@ -353,6 +353,7 @@ mymainmenu = awful.menu({ items = { { "&awesome", myawesomemenu, beautiful.aweso
                                     { "&wine", winemenu, icon_theme.get("apps", "wine") },
                                     menu_sep,
                                     { "&firefox", safe_cmd("firefox"), icon_theme.get("apps", "firefox") },
+                                    { "firefo&x developer", safe_cmd("firefox-developer"), icon_theme.get("apps", "firefox-developer", "/usr/share/pixmaps/firefox-developer-icon.png") },
                                     { "&chromium", safe_cmd("chromium"), icon_theme.get("apps", "chromium") },
                                     { "&vivaldi", safe_cmd("vivaldi-stable"), icon_theme.get("apps", "vivaldi") },
                                     menu_sep,
@@ -361,7 +362,7 @@ mymainmenu = awful.menu({ items = { { "&awesome", myawesomemenu, beautiful.aweso
                                     { "&netflix", "chromium https://www.netflix.com/", icon_theme.get("apps", "netflix") },
                                     { "&popcorn time", safe_cmd("popcorntime"), icon_theme.get("apps", "popcorntime", "/usr/share/pixmaps/popcorntime.png") },
                                     menu_sep,
-                                    { "li&bre office", safe_cmd("soffice"), icon_theme.get("apps", "libreoffice-writer") },
+                                    { "l&ibre office", safe_cmd("soffice"), icon_theme.get("apps", "libreoffice-writer") },
                                     { "an&droid studio", safe_cmd("android-studio"), icon_theme.get("apps", "android-studio", "/usr/share/pixmaps/android-studio.png") },
                                     { "pc&manfm", safe_cmd("pcmanfm"), icon_theme.get("apps", "system-file-manager") },
                                     { "open &terminal", terminal }
