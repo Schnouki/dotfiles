@@ -609,6 +609,7 @@ ifaces = {}
 if gethost() == "baldr" then
    ifaces["E"] = "enp12s0"
    ifaces["W"] = "wlp3s0"
+   ifaces["U"] = "en%w+u%d+"
 end
 net_mon = netmon.new(ifaces, "8.8.4.4 8.8.8.8 kernel.org google.com online.net yahoo.com wikipedia.org")
 

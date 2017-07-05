@@ -1,5 +1,6 @@
-local io, os, pairs, setmetatable = require("io"), require("os"), pairs, setmetatable
-local wibox = require("wibox")
+local io, os, pairs, setmetatable, string = io, os, pairs, setmetatable, string
+local awful, wibox = require("awful"), require("wibox")
+local print = print
 
 module("netmon")
 
@@ -7,7 +8,7 @@ local colors = {
    up      = "#afd8af", -- green+3,
    no_ping = "#ac7373", -- red-2
    unknown = "#f0dfaf", -- yellow
-   down    = "#1E2320"
+   down    = "#1E2320"  -- black
 }
 
 -- {{{ Internals
@@ -32,14 +33,6 @@ local function new_ping(hosts)
    os.execute(cmd)
 end
 
-local function if_up(ifname)
-   local cmd = "ip -o -4 addr show dev " .. ifname
-   local pipe = io.popen(cmd)
-   local val = pipe:read("*a")
-   pipe:close()
-   return (#val > 0)
-end
-
 local function col(color, text)
    return "<span color=\"" .. color .. "\">" .. text .. "</span>"
 end
@@ -53,22 +46,52 @@ end
 local NetMon = {}
 
 function NetMon:new(ifnames, hosts)
-   local o = { widget = wibox.widget.textbox(),
-               ifnames = ifnames,
-               hosts = hosts }
+   local o = {
+      widget = wibox.widget.textbox(),
+      tooltip = "",
+      ifnames = ifnames,
+      hosts = hosts
+   }
+   o.widget_tooltip = awful.tooltip({
+         objects = { o.widget },
+         timer_function = function() return o.tooltip end
+   })
    setmetatable(o, self)
    self.__index = self
    return o
 end
 
 function NetMon:update()
-   local s = ""
+   local status = {}
+
+   -- Start new pings
+   new_ping(self.hosts)
+
+   -- Get a list of interfaces
+   local pipe = io.popen("ip -o -4 addr show")
+   for line in pipe:lines() do
+      for k, iface in pairs(self.ifnames) do
+         local ifname, addr = line:match("^%d+:%s+(" .. iface .. ")%s+inet%s+(%S+)")
+         if ifname ~= nil then
+            status[k] = { ifname = ifname, addr = addr }
+         end
+      end
+   end
+   pipe:close()
+
+   -- Now the ping results!
+   local net_up = last_ping_result(self.hosts)
+
+   -- Build the result
+   local txt = ""
+   local tooltip = ""
    for k, iface in pairs(self.ifnames) do
-      local if_status = if_up(iface)
+      local if_status = status[k]
       local if_color
       if if_status then
-         local net_up = last_ping_result(self.hosts)
-         new_ping(self.hosts)
+         tooltip = string.format("%s<b>%s</b>: %s (<i>%s</i>)\n",
+                                 tooltip, k, if_status.addr, if_status.ifname)
+         print(tooltip)
          if net_up == nil then
             if_color = "unknown"
          elseif net_up then
@@ -79,9 +102,11 @@ function NetMon:update()
       else
          if_color = "down"
       end
-      s = s .. col(colors[if_color], k)
+      txt = txt .. col(colors[if_color], k)
    end
-   self.widget:set_markup(s)
+
+   self.widget:set_markup(txt)
+   self.tooltip = toltip
 end
 
 function NetMon:ssid(ifname)
