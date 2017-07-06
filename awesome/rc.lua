@@ -17,6 +17,8 @@ local __ = require("underscore")
 local lfs = require("lfs")
 -- Sockets!
 local socket = require("socket")
+-- Promises
+local deferred = require("deferred/deferred")
 
 -- Eminement dynamic tagging
 require("eminent")
@@ -219,29 +221,34 @@ end
 update_connected_screen()
 -- TODO: call update_connected_screen() when the list of connected screens changes
 
--- TODO: make this async
 local function ext_screen_connected()
-   local f = io.popen("xrandr")
-   local line, m
-   for line in f:lines() do
-      m = string.match(line, "^" .. ext_screen .. " connected")
-      if m == nil then
-         f:close()
-         return true
-      end
-   end
-   f:close()
-   return false
+   local d = deferred.new()
+   local found = false
+   awful.spawn.with_line_callback(
+      "xrandr", {
+         stdout = function(line)
+            if found then return end
+            if line:match("^" .. ext_screen .. " connected") then
+               found = true
+            end
+         end,
+         exit = function()
+            d:resolve(found)
+         end
+   })
+   return d
 end
 
 local function auto_set_screen(direction)
    local cmd = "xrandr --output LVDS-1 --auto --output " .. ext_screen
-   if ext_screen_connected() then
-      cmd = cmd .. " --auto --" .. direction .. " LVDS-1"
-   else
-      cmd = cmd .. " --off"
-   end
-   return os.execute(cmd)
+   ext_screen_connected():next(function(connected)
+         if connected then
+            cmd = cmd .. " --auto --" .. direction .. " LVDS-1"
+         else
+            cmd = cmd .. " --off"
+         end
+         os.execute(cmd)
+    end)
 end
 
 local function menu_screen_text()
@@ -702,12 +709,13 @@ if f then
       tb_mails:set_markup(s)
    end
    function tb_mails_update()
-      local p = io.popen("notmuch count tag:unread")
-      local n = tonumber(p:read("*a"))
-      io.close(p)
-      if n then
-         tb_mails_set_count(n)
-      end
+      awful.spawn.easy_async(
+         "notmuch count tag:unread", function(stdout)
+            local n = tonumber(stdout)
+            if n then
+               tb_mails_set_count(n)
+            end
+      end)
    end
    function tb_mails_updating(u)
       if u then tb_mails_color = tb_mails_color_updating
