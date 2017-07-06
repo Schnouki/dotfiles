@@ -1601,8 +1601,12 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 -- {{{ Timers
-mytimer15 = gears.timer.start_new(15, function ()
+mytimer5 = gears.timer.start_new(5, function()
     net_mon:update()
+    return true
+end)
+
+mytimer15 = gears.timer.start_new(15, function ()
     if ip_mon then ip_mon:update() end
     tb_mails_update()
     tb_msmtpq_update()
