@@ -1617,8 +1617,8 @@ end)
 -- {{{ Run applications in a different (transient) systemd scope
 -- This allows awesome to be restarted by systemd without killing the
 -- applications started from it.
-local oldspawn = awful.spawn
-awful.spawn = function (cmd, sn_rules, cb, sd_params)
+local oldspawn = awful.spawn.spawn
+awful.spawn.spawn = function (cmd, sn_rules, cb, sd_params)
    if sd_params ~= nil then
       sd_params = __.flatten(
          __.map(sd_params, function(v, k) return {"-p", k .. "=" .. v} end)
