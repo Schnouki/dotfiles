@@ -28,3 +28,6 @@
 [submodule "emacs/flycheck-local-flake8"]
 	path = emacs/flycheck-local-flake8
 	url = https://github.com/rmuslimov/flycheck-local-flake8
+[submodule "awesome/deferred"]
+	path = awesome/deferred
+	url = https://github.com/zserge/lua-promises
