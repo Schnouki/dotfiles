@@ -1,6 +1,6 @@
-local io, os, pairs, setmetatable, string = io, os, pairs, setmetatable, string
+local io, pairs, print, setmetatable, string = io, pairs, print, setmetatable, string
 local awful, wibox = require("awful"), require("wibox")
-local print = print
+local deferred = require("deferred/deferred")
 
 module("netmon")
 
@@ -12,35 +12,80 @@ local colors = {
 }
 
 -- {{{ Internals
-local status_files = {}
-
-local function last_ping_result(hosts)
-   if status_files[hosts] == nil then
-      return nil
-   else
-      local f = io.open(status_files[hosts])
-      local val = f:read("*a")
-      f:close()
-      return (#val > 0)
-   end
-end
-
-local function new_ping(hosts)
-   if status_files[hosts] == nil then
-      status_files[hosts] = os.tmpname()
-   end
-   local cmd = "( fping -a -t 250 -r 0 " .. hosts .. " 2>/dev/null | sponge " .. status_files[hosts] .. " ) &"
-   os.execute(cmd)
+-- From http://lua-users.org/wiki/StringTrim (trim6)
+local function trim(s)
+  return s:match'^()%s*$' and '' or s:match'^%s*(.*%S)'
 end
 
 local function col(color, text)
    return "<span color=\"" .. color .. "\">" .. text .. "</span>"
 end
 
--- From http://lua-users.org/wiki/StringTrim (trim6)
-local function trim(s)
-  return s:match'^()%s*$' and '' or s:match'^%s*(.*%S)'
+local function get_interfaces(ifnames)
+   local d = deferred.new()
+   local status = {}
+   awful.spawn.with_line_callback(
+      "ip -o -4 addr show", {
+         stdout = function(line)
+            for k, iface in pairs(ifnames) do
+               local ifname, addr = line:match("^%d+:%s+(" .. iface .. ")%s+inet%s+(%S+)")
+               if ifname ~= nil then
+                  status[k] = { ifname = ifname, addr = addr }
+               end
+            end
+         end,
+         exit = function(reason, code)
+            if reason == "exit" and code == 0 then
+               d:resolve(status)
+            else
+               d:reject("interfaces " .. reason .. ": " .. code)
+            end
+         end
+   })
+   return d
 end
+
+local function ping(hosts)
+   local d = deferred.new()
+   awful.spawn.easy_async(
+      "fping -a -t 250 -r 0 " .. hosts,
+      function(stdout, stderr, exitreason, exitcode)
+         if exitreason == "signal" then
+            d:reject("fping " .. exitreason .. ": " .. exitcode )
+         else
+            stdout = trim(stdout)
+            d:resolve(#stdout > 0)
+         end
+      end
+   )
+   return d
+end
+
+local function format_data(ifnames, net_up, status)
+   -- Build the result
+   local txt = ""
+   local tooltip = ""
+   for k, iface in pairs(ifnames) do
+      local if_status = status[k]
+      local if_color
+      if if_status then
+         tooltip = string.format("%s<b>%s</b>: %s (<i>%s</i>)\n",
+                                 tooltip, k, if_status.addr, if_status.ifname)
+         if net_up == nil then
+            if_color = "unknown"
+         elseif net_up then
+            if_color = "up"
+         else
+            if_color = "no_ping"
+         end
+      else
+         if_color = "down"
+      end
+      txt = txt .. col(colors[if_color], k)
+   end
+   return { text = txt, tooltip = tooltip }
+end
+
 -- }}}
 -- {{{ Class definition
 local NetMon = {}
@@ -62,51 +107,22 @@ function NetMon:new(ifnames, hosts)
 end
 
 function NetMon:update()
-   local status = {}
+   deferred.all({
+         ping(self.hosts),
+         get_interfaces(self.ifnames)
+   }):next(
+      function(results)
+         local net_up = results[1]
+         local status = results[2]
 
-   -- Start new pings
-   new_ping(self.hosts)
+         local data = format_data(self.ifnames, net_up, status)
 
-   -- Get a list of interfaces
-   local pipe = io.popen("ip -o -4 addr show")
-   for line in pipe:lines() do
-      for k, iface in pairs(self.ifnames) do
-         local ifname, addr = line:match("^%d+:%s+(" .. iface .. ")%s+inet%s+(%S+)")
-         if ifname ~= nil then
-            status[k] = { ifname = ifname, addr = addr }
-         end
-      end
-   end
-   pipe:close()
-
-   -- Now the ping results!
-   local net_up = last_ping_result(self.hosts)
-
-   -- Build the result
-   local txt = ""
-   local tooltip = ""
-   for k, iface in pairs(self.ifnames) do
-      local if_status = status[k]
-      local if_color
-      if if_status then
-         tooltip = string.format("%s<b>%s</b>: %s (<i>%s</i>)\n",
-                                 tooltip, k, if_status.addr, if_status.ifname)
-         print(tooltip)
-         if net_up == nil then
-            if_color = "unknown"
-         elseif net_up then
-            if_color = "up"
-         else
-            if_color = "no_ping"
-         end
-      else
-         if_color = "down"
-      end
-      txt = txt .. col(colors[if_color], k)
-   end
-
-   self.widget:set_markup(txt)
-   self.tooltip = toltip
+         self.widget:set_markup(data.text)
+         self.tooltip = data.toltip
+      end,
+      function(err)
+         print("Netmon update error: " .. err)
+      end)
 end
 
 function NetMon:ssid(ifname)
