@@ -228,11 +228,12 @@ local function ext_screen_connected()
       "xrandr", {
          stdout = function(line)
             if found then return end
-            if line:match("^" .. ext_screen .. " connected") then
+            local patt = "^" .. ext_screen:gsub("%-", "%%-") .. " connected"
+            if line:match(patt) then
                found = true
             end
          end,
-         exit = function()
+         output_done = function()
             d:resolve(found)
          end
    })
