@@ -201,7 +201,7 @@ Return the index of the matching item, or nil if not found."
     (ido-mode 1)
     (ido-everywhere 1)))
 
-(use-package ido-ubiquitous
+(use-package ido-completing-read+
   :ensure t
   :config
   (ido-ubiquitous-mode 1))
