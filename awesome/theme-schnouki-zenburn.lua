@@ -3,15 +3,19 @@
 --    By Adrian C. (anrxc)   --
 -------------------------------
 
+local dpi = require("beautiful.xresources").apply_dpi
+
 -- {{{ Main
 local theme = {}
 theme.wallpaper_dir = "/home/schnouki/images/wallpapers"
 -- }}}
 
 -- {{{ Styles
-theme.font      = "DejaVu Sans 8"
-theme.taglist_font = "DejaVu Sans 8"
-theme.monofont = "DejaVu Sans Mono 8"
+theme.font         = "DejaVu Sans 6.5"
+theme.taglist_font = "DejaVu Sans 6.5"
+theme.monofont     = "DejaVu Sans Mono 6.5"
+theme.bigfont      = "DejaVu Sans 8"
+theme.wibar_height = dpi(15)
 
 -- {{{ Colors
 theme.fg_normal = "#DCDCCC"
@@ -36,8 +40,8 @@ theme.bg_urgent = theme.bg_urgent_ok
 -- }}}
 
 -- {{{ Borders
-theme.useless_gap   = 0
-theme.border_width  = 2
+theme.useless_gap   = dpi(0)
+theme.border_width  = dpi(2)
 theme.border_normal = "#3F3F3F"
 theme.border_focus  = "#6F6F6F"
 theme.border_marked = "#CC9393"
@@ -85,8 +89,8 @@ theme.mouse_finder_color = "#CC9393"
 -- Variables set for theming the menu:
 -- menu_[bg|fg]_[normal|focus]
 -- menu_[border_color|border_width]
-theme.menu_height = 15
-theme.menu_width  = 100
+theme.menu_height = dpi(15)
+theme.menu_width  = dpi(100)
 -- }}}
 
 -- {{{ Icons

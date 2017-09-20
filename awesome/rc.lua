@@ -360,10 +360,8 @@ mymainmenu = awful.menu({ items = { { "&awesome", myawesomemenu, beautiful.aweso
                                     { "&screenshot", screenshotmenu },
                                     { "&wine", winemenu, icon_theme.get("apps", "wine") },
                                     menu_sep,
-                                    { "&firefox", safe_cmd("firefox"), icon_theme.get("apps", "firefox") },
                                     { "firefo&x developer", safe_cmd("firefox-developer"), icon_theme.get("apps", "firefox-developer", "/usr/share/pixmaps/firefox-developer-icon.png") },
                                     { "&chromium", safe_cmd("chromium"), icon_theme.get("apps", "chromium") },
-                                    { "&vivaldi", safe_cmd("vivaldi-stable"), icon_theme.get("apps", "vivaldi") },
                                     menu_sep,
                                     { "sp&otify", safe_cmd("spotify"), icon_theme.get("apps", "spotify-client") },
                                     { "&gmpc", safe_cmd("gmpc"), icon_theme.get("apps", "gmpc") },
@@ -384,9 +382,6 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
 
--- Keyboard map indicator and switcher
-mykeyboardlayout = awful.widget.keyboardlayout()
-
 -- {{{ Wibar
 -- {{{   Default stuff
 -- Create a textclock widget
@@ -398,7 +393,12 @@ mytextclock_t = awful.tooltip({ objects = { mytextclock },
                                    local txt = os.date("%A %e %B %Y\n%T")
                                    txt = txt .. "\n\n" .. fangh_calendar.format_today()
                                    return txt
-                                end })
+                             end })
+
+month_calendar = awful.widget.calendar_popup.month({
+      font = beautiful.bigfont
+})
+month_calendar:attach(mytextclock, "tr")
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = awful.util.table.join(
@@ -1145,6 +1145,10 @@ awful.screen.connect_for_each_screen(function(s)
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "top", screen = s })
 
+    -- Create the systray
+    s.systray = wibox.widget.systray()
+    s.systray:set_base_size(16)
+
     -- Add widgets to the wibox
     local right_widgets = __.concat(
        { separator, tb_mails, tb_msmtpq, separator,
@@ -1155,12 +1159,11 @@ awful.screen.connect_for_each_screen(function(s)
        { bat_widget, vol_widget, separator,
          locks_mon.widget,
        },
-       { mykeyboardlayout },
-       { s.index == 1 and wibox.widget.systray() or nil },
        {
-            mytextclock_icon,
-            mytextclock,
-            s.mylayoutbox,
+          s.systray,
+          mytextclock_icon,
+          mytextclock,
+          s.mylayoutbox,
        }
     )
     right_widgets.layout = wibox.layout.fixed.horizontal
