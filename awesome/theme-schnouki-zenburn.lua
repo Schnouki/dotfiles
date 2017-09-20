@@ -12,7 +12,7 @@ theme.wallpaper_dir = "/home/schnouki/images/wallpapers"
 
 -- {{{ Styles
 theme.font         = "DejaVu Sans 6.5"
-theme.taglist_font = "DejaVu Sans 6.5"
+theme.taglist_font = "FontAwesome 6.5"
 theme.monofont     = "DejaVu Sans Mono 6.5"
 theme.bigfont      = "DejaVu Sans 8"
 theme.wibar_height = dpi(15)

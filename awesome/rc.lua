@@ -11,6 +11,8 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
 
+-- Font Awesome
+local fa = require("fa")
 -- Underscore (https://github.com/jtarchie/underscore-lua)
 local __ = require("underscore")
 -- Filesystem
@@ -1120,7 +1122,7 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Each screen has its own tag table.
     local tags = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
-    if s.index == 1 then tags = {"‽", "📧", "✪", "💼", "💻", "6", "7", "8", "⌘"} end
+    if s.index == 1 then tags = {fa["gear"], fa["envelope-o"], fa["firefox"], fa["edit"], fa["terminal"], "6", "7", "8", fa["cube"]} end
     awful.tag(tags, s, awful.layout.layouts[1])
 
     -- Set the last tag to floating
