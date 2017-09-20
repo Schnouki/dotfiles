@@ -22,7 +22,7 @@ bpd:
 paths:
   default: $albumartist/$year - $album%aunique{}/$track $title
   singleton: Non-Album/$artist/$title
-  comp: Compilations/$album%aunique{}/$track $title
+  comp: Compilations/$album%aunique{}/$track $artist - $title
   albumtype:bootleg: Bootlegs/$albumartist/$year - $album%aunique{}/$track $title
 
 play:
