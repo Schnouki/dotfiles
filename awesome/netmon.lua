@@ -21,16 +21,25 @@ local function col(color, text)
    return "<span color=\"" .. color .. "\">" .. text .. "</span>"
 end
 
-local function get_interfaces(ifnames)
+local function iface_by_label(ifaces, label)
+   for k, entry in pairs(ifaces) do
+      if entry.label == "label" then
+         return entry.iface
+      end
+   end
+   return ""
+end
+
+local function get_interfaces(ifaces)
    local d = deferred.new()
    local status = {}
    awful.spawn.with_line_callback(
       "ip -o -4 addr show", {
          stdout = function(line)
-            for k, iface in pairs(ifnames) do
-               local ifname, addr = line:match("^%d+:%s+(" .. iface .. ")%s+inet%s+(%S+)")
+            for k, entry in pairs(ifaces) do
+               local ifname, addr = line:match("^%d+:%s+(" .. entry.iface .. ")%s+inet%s+(%S+)")
                if ifname ~= nil then
-                  status[k] = { ifname = ifname, addr = addr }
+                  status[entry.label] = { ifname = ifname, addr = addr }
                end
             end
          end,
@@ -48,7 +57,7 @@ end
 local function ping(hosts)
    local d = deferred.new()
    awful.spawn.easy_async(
-      "fping -a -t 250 -r 0 " .. hosts,
+      "fping -a -r 0 " .. hosts,
       function(stdout, stderr, exitreason, exitcode)
          if exitreason == "signal" then
             d:reject("fping " .. exitreason .. ": " .. exitcode )
@@ -61,16 +70,16 @@ local function ping(hosts)
    return d
 end
 
-local function format_data(ifnames, net_up, status)
+local function format_data(ifaces, net_up, status)
    -- Build the result
    local txt = ""
    local tooltip = ""
-   for k, iface in pairs(ifnames) do
-      local if_status = status[k]
+   for k, entry in pairs(ifaces) do
+      local if_status = status[entry.label]
       local if_color
       if if_status then
          tooltip = string.format("%s<b>%s</b>: %s (<i>%s</i>)\n",
-                                 tooltip, k, if_status.addr, if_status.ifname)
+                                 tooltip, entry.label, if_status.addr, if_status.ifname)
          if net_up == nil then
             if_color = "unknown"
          elseif net_up then
@@ -81,7 +90,7 @@ local function format_data(ifnames, net_up, status)
       else
          if_color = "down"
       end
-      txt = txt .. col(colors[if_color], k)
+      txt = txt .. col(colors[if_color], entry.label)
    end
    return { text = txt, tooltip = tooltip }
 end
@@ -90,11 +99,11 @@ end
 -- {{{ Class definition
 local NetMon = {}
 
-function NetMon:new(ifnames, hosts)
+function NetMon:new(ifaces, hosts)
    local o = {
       widget = wibox.widget.textbox(),
       tooltip = "",
-      ifnames = ifnames,
+      ifaces = ifaces,
       hosts = hosts
    }
    o.widget_tooltip = awful.tooltip({
@@ -109,24 +118,24 @@ end
 function NetMon:update()
    deferred.all({
          ping(self.hosts),
-         get_interfaces(self.ifnames)
+         get_interfaces(self.ifaces)
    }):next(
       function(results)
          local net_up = results[1]
          local status = results[2]
 
-         local data = format_data(self.ifnames, net_up, status)
+         local data = format_data(self.ifaces, net_up, status)
 
          self.widget:set_markup(data.text)
-         self.tooltip = data.toltip
+         self.tooltip = "<p>" .. data.toltip .. "</p>"
       end,
       function(err)
          print("Netmon update error: " .. err)
       end)
 end
 
-function NetMon:ssid(ifname)
-   local iface = self.ifnames[ifname]
+function NetMon:ssid(label)
+   local iface = iface_by_label(label)
    if iface ~= nil then
       local cmd = "iwgetid --raw " .. iface
       local pipe = io.popen(cmd)
@@ -137,8 +146,8 @@ function NetMon:ssid(ifname)
 end
 -- }}}
 
-function new(ifnames, hosts)
-   local w = NetMon:new(ifnames, hosts)
+function new(ifaces, hosts)
+   local w = NetMon:new(ifaces, hosts)
    w:update()
    return w
 end
