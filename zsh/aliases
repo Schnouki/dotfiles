@@ -30,6 +30,13 @@ alias ec="emacsclient -n -c -a \"\""
 alias ecn="emacsclient -n -a \"\""
 alias ecnw="emacsclient -nw -a \"\""
 
+alias ea="exa -F --group-directories-first"
+alias el="ea -l --git --time-style long-iso"
+alias eaa="ea -a"
+alias ela="el -a"
+alias elt="el -s modified"
+alias elta="elt -a"
+
 # Correct options for xfig
 alias xfig='xfig -Portrait -specialtext -latexfonts -startlatexFont default'
 
