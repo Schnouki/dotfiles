@@ -36,6 +36,7 @@
 
 ;; Web browser
 (setq browse-url-browser-function 'browse-url-firefox  ;chromium
+      browse-url-firefox-program "firefox-developer"
       browse-url-firefox-new-window-is-tab t)
 
 ;; Display date and time

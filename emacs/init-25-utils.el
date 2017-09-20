@@ -228,11 +228,13 @@ Return the index of the matching item, or nil if not found."
   (flx-ido-mode 1)
   (setq ido-use-faces nil))
 
-;; Enhanced M-x
-(use-package smex
+;; Alternative M-x with extra features
+(use-package amx
   :ensure t
-  :bind (("M-x" . smex)
-	 ("C-! M-x" . smex-major-mode-commands)))
+  :bind (("M-x" . amx)
+	 ("C-! M-x" . amx-major-mode-commands))
+  :config
+  (amx-mode 1))
 
 ;; ag
 (use-package ag

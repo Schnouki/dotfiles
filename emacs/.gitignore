@@ -17,6 +17,7 @@ var/
 .mc-lists.el
 .org-id-locations
 abbrev_defs
+amx-items
 ede-projects.el
 image-dired
 network-security.data

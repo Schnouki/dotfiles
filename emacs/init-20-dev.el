@@ -224,13 +224,9 @@
 	 ("M-<left>" . smart-backward)
 	 ("M-<right>" . smart-forward)))
 
-(use-package drag-stuff
+(use-package move-text
   :ensure t
-  :diminish drag-stuff-mode
-  :config
-  (progn
-    (setq drag-stuff-modifier '(meta shift))
-    (drag-stuff-global-mode t)))
+  :commands (move-text-up move-text-down))
 
 ;; REST client!
 (use-package restclient
