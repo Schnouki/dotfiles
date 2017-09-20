@@ -41,14 +41,26 @@
 ;; Flycheck
 (use-package flycheck
   :ensure t
-  :config
-  (progn
-    (setq flycheck-check-syntax-automatically (--remove (or (eq it 'mode-enabled)
-							    (eq it 'new-line))
-							flycheck-check-syntax-automatically)))
   :init
-  (progn
-    (add-hook 'after-init-hook #'global-flycheck-mode)))
+  (add-hook 'after-init-hook #'global-flycheck-mode)
+  :config
+  (setq flycheck-check-syntax-automatically (--remove (or (eq it 'mode-enabled)
+                                                          (eq it 'new-line))
+                                                      flycheck-check-syntax-automatically))
+  (defhydra hydra-flycheck
+    (:pre (progn (setq hydra-lv t) (flycheck-list-errors))
+     :post (progn (setq hydra-lv nil) (quit-windows-on "*Flycheck errors*"))
+     :hint nil)
+    "Flycheck errors"
+    ("p" flycheck-previous-error "previous")
+    ("n" flycheck-next-error "next")
+    ("f" flycheck-error-list-set-filter "filter")
+    ("P" flycheck-first-error "first")
+    ("N" (progn (goto-char (point-max)) (flycheck-previous-error)) "last")
+    ("h" flycheck-display-eror-at-point "display")
+    ("e" flycheck-explain-error-at-point "explain")
+    ("q" nil))
+  (bind-key "!" 'hydra-flycheck/body flycheck-command-map))
 
 (use-package flycheck-pos-tip
   :ensure t

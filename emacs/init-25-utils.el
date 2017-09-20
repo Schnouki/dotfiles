@@ -2,11 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-;; bind-key
-(use-package bind-key
-  :ensure t)
-
-;; and which-key, to help
+;; which-key helps a lot
 (use-package which-key
   :ensure t
   :diminish which-key-mode
@@ -33,10 +29,26 @@
 ;; Copy current line with M-k
 ;; http://www.emacsblog.org/2009/05/18/copying-lines-not-killing/#comment-27462
 (defun schnouki/copy-line ()
-  "Copy the current line to the kill-ring."
+  "Copy the current line to the `kill-ring'."
   (interactive)
   (kill-ring-save (line-beginning-position) (+ 1 (line-end-position))))
 (bind-key "M-k" 'schnouki/copy-line)
+
+;; Browse kill ring
+(use-package browse-kill-ring
+  :ensure t
+  :commands browse-kill-ring)
+
+;; Better yank
+(defhydra hydra-yank-pop ()
+  "yank"
+  ("C-y" yank nil)
+  ("M-y" yank-pop nil)
+  ("y" (yank-pop 1) "next")
+  ("Y" (yank-pop -1) "prev")
+  ("l" browse-kill-ring "list"))
+(bind-key "C-y" 'hydra-yank-pop/yank)
+(bind-key "M-y" 'hydra-yank-pop/yank-pop)
 
 ;; Viking-mode
 (use-package viking-mode
