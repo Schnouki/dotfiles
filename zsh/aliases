@@ -81,3 +81,6 @@ alias pac_unreq_norepo="LC_ALL=C pacman -Qtim | filter_pacman_qt"
 
 # Ledger!
 alias led="ledger -f ~/compta/main.ldg"
+
+# youtube-dl with specific config file
+alias ytmusicdl="youtube-dl --config-location ~/.config/youtube-dl/music"

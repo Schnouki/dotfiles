@@ -1,0 +1,7 @@
+# Usage: youtube-dl --config-location ~/.config/youtube-dl/music
+
+# If everything worked as expected…
+#-o "%(album_artist)s - %(release_year)04d - %(album)s/%(track_number)02d - %(artist)s - %(track)s [%(id)s].%(ext)s"
+
+# Harsh reality!
+-o "%(playlist_title)s/%(playlist_index)02d -  %(title)s [%(id)s].%(ext)s"
