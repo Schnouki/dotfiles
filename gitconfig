@@ -1,0 +1,32 @@
+[user]
+	name = Thomas Jost
+	email = schnouki@schnouki.net
+[push]
+	default = simple
+[color]
+	ui = true
+[alias]
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	ag = grep --break --heading --line-number
+	wdiff = diff --color-words
+[diff]
+	algorithm = histogram
+	compactionHeuristic = true
+[rerere]
+	enabled = true
+	autoupdate = true
+[rebase]
+	autosquash = true
+[grep]
+	extendRegexp = true
+	lineNumber = true
+[help]
+	autocorrect = 25
+[credential]
+	helper = store
+[merge]
+	conflictStyle = diff3
+[commit]
+	gpgSign = true
+[magit]
+	hideCampaign = true

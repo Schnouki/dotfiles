@@ -6,20 +6,20 @@ for F in hook.*; do
 done
 
 # Setup dotfiles
-for F in ctags globalrc guile tmux.conf tmuxp Xresources xinitrc; do
+for F in ctags gitconfig globalrc guile tmux.conf tmuxp Xresources xinitrc; do
     setup_file_symlink "$F" ".$F"
 done
 
 # Setup encrypted dotfiles
-setup_decrypt "pws.yaml.gpg" ".config/pws.yaml"
-setup_decrypt "ssh.gpg" ".ssh/config"
 setup_decrypt "gpg.conf.gpg" ".gnupg/gpg.conf"
 setup_decrypt "msmtprc.gpg" ".msmtprc"
-setup_decrypt "offlineimaprc.gpg" ".offlineimaprc"
 setup_decrypt "netrc.gpg" ".netrc"
+setup_decrypt "offlineimaprc.gpg" ".offlineimaprc"
+setup_decrypt "pws.yaml.gpg" ".config/pws.yaml"
 setup_decrypt "pycard.conf.gpg" ".config/pycard.conf"
 setup_decrypt "smd-config.default.gpg" ".smd/config.default"
 setup_decrypt "smd-loop.gpg" ".smd/loop"
+setup_decrypt "ssh.gpg" ".ssh/config"
 
 # Setup encrypted tarballs
 setup_decrypt_tarball "calibre.tar.gpg"
