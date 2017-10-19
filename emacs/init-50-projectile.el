@@ -15,6 +15,13 @@
   :config
   (--each '(".pyc" ".o" ".so" "~" "#" ".min.js")
     (add-to-list 'projectile-globally-ignored-file-suffixes it))
+
+  (defun schnouki/projectile-ag (orig-fun &rest args)
+    (let ((grep-find-ignored-directories (copy-sequence grep-find-ignored-directories)))
+      (apply orig-fun args)))
+  (advice-add 'projectile-ag :around #'schnouki/projectile-ag)
+  ;; (advice-remove 'projectile-ag #'schnouki/projectile-ag)
+
   (projectile-mode 1))
 
 (use-package ibuffer-projectile
