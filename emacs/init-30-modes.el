@@ -101,6 +101,12 @@
   :init
   (setq scss-compile-at-save nil))
 
+(use-package less-css-mode
+  :ensure t
+  :mode "\\.less\\'"
+  :init
+  (setq less-css-compile-at-save nil))
+
 (use-package haml-mode
   :ensure t
   :mode "\\.haml\\'"
