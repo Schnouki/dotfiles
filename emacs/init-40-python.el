@@ -26,6 +26,12 @@
   :ensure t
   :init (add-to-list 'company-backends 'company-inf-python))
 
+(use-package py-autopep8
+  :ensure t
+  :commands (py-autopep8-enable-on-save py-autopep8-buffer)
+  :init
+  (add-hook 'python-mode-hook 'py-autopep8-enable-on-save))
+
 ;; Django helper
 (defun schnouki/use-django-interactive-shell ()
   "Auto-detect Django projects and change the interactive shell to `manage.py shell'."
