@@ -26,6 +26,22 @@
 ;; works for buffers associated with files on the disk)
 (add-hook 'dired-mode-hook 'auto-revert-mode)
 
+;; http://emacsrocks.com/e16.html
+(setq dired-dwim-target t)
+
+;; http://pragmaticemacs.com/emacs/tree-style-directory-views-in-dired-with-dired-subtree/
+(use-package dired-subtree
+  :ensure t
+  :bind (:map dired-mode-map
+	      ("i" . dired-subtree-insert)
+	      ("I" . dired-subtree-remove)))
+
+(use-package dired-collapse
+  :ensure t
+  :commands (dired-collapse dired-collapse-mode)
+  :init
+  (add-hook 'dired-mode-hook 'dired-collapse-mode))
+
 ;; Copy current line with M-k
 ;; http://www.emacsblog.org/2009/05/18/copying-lines-not-killing/#comment-27462
 (defun schnouki/copy-line ()
