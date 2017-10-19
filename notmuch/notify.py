@@ -95,7 +95,7 @@ for c, f, s, t, lc, lf, ls in tab:
     s += " " * (mls-ls)
     line = "{0} {1}  {2}  {3}".format(c, f, s, t)
     txt.append(line)
-txt = '<span font_desc="DejaVu Sans Mono 7.5">' + "\n".join(txt) + '</span>'
+txt = '<span font_desc="DejaVu Sans Mono 6.5">' + "\n".join(txt) + '</span>'
 
 # Display a notification
 Notify.init("notmuch notify")
