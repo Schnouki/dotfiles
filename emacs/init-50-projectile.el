@@ -13,7 +13,7 @@
                                 (format " Pj[%s]"
                                         (projectile-project-name)))))
   :config
-  (--each '(".pyc" ".o" ".so" "~" "#")
+  (--each '(".pyc" ".o" ".so" "~" "#" ".min.js")
     (add-to-list 'projectile-globally-ignored-file-suffixes it))
   (projectile-mode 1))
 
