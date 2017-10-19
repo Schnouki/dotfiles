@@ -64,6 +64,11 @@
    (python . t)
    (sh . t)))
 
+(setq org-file-apps '((auto-mode . emacs)
+		      ("\\.mm\\'" . default)
+		      ("\\.x?html?\\'" . (lambda (url link) (browse-url url)))
+		      ("\\.pdf\\'" . default)))
+
 (defun schnouki/org-agenda-and-todo-list ()
   "Display agenda and todo list in the current window."
   (interactive)
