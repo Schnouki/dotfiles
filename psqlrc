@@ -1,0 +1,17 @@
+-- From https://www.citusdata.com/blog/2017/07/16/customizing-my-postgres-shell-using-psqlrc/
+-- and https://robots.thoughtbot.com/improving-the-command-line-postgres-experience
+
+\set QUIET 1
+\pset null '¤'
+
+\set PROMPT1 '%[%033[1m%]%M %n@%/%R%[%033[0m%]%# '
+\set PROMPT2 '... %R > '
+
+\timing
+
+\x auto
+\set VERBOSITY verbose
+\set HISTFILE ~/.psql_history- :DBNAME
+\set HISTCONTROL ignoredups
+\set COMP_KEYWORD_CASE upper
+\unset QUIET

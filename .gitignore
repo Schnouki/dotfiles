@@ -23,6 +23,7 @@ __pycache__/
 !gtkrc-odin
 !gtkrc-baldr
 !mpd.conf
+!psqlrc
 !python_startup.py
 !tmux.conf
 !Xresources
