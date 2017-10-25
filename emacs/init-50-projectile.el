@@ -22,6 +22,28 @@
   (advice-add 'projectile-ag :around #'schnouki/projectile-ag)
   ;; (advice-remove 'projectile-ag #'schnouki/projectile-ag)
 
+  ;; Set virtualenv packages as Projectile projects -- based on
+  ;; https://github.com/bbatsov/projectile/issues/364#issuecomment-61296248 and
+  ;; https://emacs.stackexchange.com/a/2924
+  (defvar schnouki/projectile-project-root-regexps ()
+    "List of regexps to match against when Projectile is searching for project root directories.")
+
+  (add-to-list 'schnouki/projectile-project-root-regexps
+               "~/\.virtualenvs/[^/]+/\\(local/\\)?lib/python[^/]*/site-packages/[^/]+/?$")
+
+  (defun schnouki/projectile-root-regexp (dir &optional list)
+    (projectile-locate-dominating-file
+     dir
+     (lambda (dir)
+       (--first
+        (if (and
+             (s-equals? (file-remote-p it) (file-remote-p dir))
+             (string-match-p (expand-file-name it) (expand-file-name dir)))
+            dir)
+        (or list schnouki/projectile-project-root-regexps (list))))))
+
+  (add-to-list 'projectile-project-root-files-functions #'schnouki/projectile-root-regexp t)
+
   (projectile-mode 1))
 
 (use-package ibuffer-projectile
