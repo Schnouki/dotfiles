@@ -14,17 +14,21 @@
   :commands anaconda-mode
   :diminish anaconda-mode
   :init
-  (progn
-    (add-hook 'python-mode-hook 'anaconda-mode)
-    (add-hook 'python-mode-hook 'eldoc-mode)))
+  (add-hook 'python-mode-hook 'anaconda-mode)
+  (add-hook 'python-mode-hook 'eldoc-mode))
 
 (use-package company-anaconda
   :ensure t
-  :init (add-to-list 'company-backends 'company-anaconda))
+  :init
+  (add-to-list 'company-backends 'company-anaconda))
 
-(use-package company-inf-python
+(use-package auto-virtualenvwrapper
   :ensure t
-  :init (add-to-list 'company-backends 'company-inf-python))
+  :commands auto-virtualenvwrapper-activate
+  :init
+  (add-hook 'python-mode-hook #'auto-virtualenvwrapper-activate)
+  (add-hook 'window-configuration-change-hook #'auto-virtualenvwrapper-activate)
+  (add-hook 'focus-in-hook #'auto-virtualenvwrapper-activate))
 
 (use-package py-autopep8
   :ensure t
