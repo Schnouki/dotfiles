@@ -188,7 +188,8 @@ Return the index of the matching item, or nil if not found."
 (setq schnouki/immortal-star-buffers `(,(rx string-start "*scratch"
 					    (optional ":" (1+ print))
 					    "*" string-end)
-				       "*anaconda-mode*")
+				       "*anaconda-mode*"
+				       "*pomidor*")
       schnouki/immortal-modes        '(message-mode notmuch-hello-mode notmuch-search-mode
 				       notmuch-show-mode org-agenda-mode inferior-python-mode
 				       jabber-chat-mode jabber-roster-mode))
@@ -502,5 +503,13 @@ If third argument START is non-nil, convert words after that index in STRING."
   :diminish editorconfig-mode
   :config
   (editorconfig-mode 1))
+
+;; Pomodoro
+(use-package pomidor
+  :ensure t
+  :bind ("<f12>" . pomidor)
+  :init
+  (setq pomidor-sound-tick nil
+	pomidor-sound-tack nil))
 
 ;;; init-25-utils.el ends here
