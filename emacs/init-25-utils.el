@@ -184,31 +184,38 @@ Return the index of the matching item, or nil if not found."
 ;; Remove *blabla* buffers, except those that match a regexp in the
 ;; immortal-star-buffers list or a major mode in the immortal-modes list.
 (defvar schnouki/immortal-star-buffers nil)
+(defvar schnouki/immortal-silent-buffers nil)
 (defvar schnouki/immortal-modes nil)
 (setq schnouki/immortal-star-buffers `(,(rx string-start "*scratch"
 					    (optional ":" (1+ print))
 					    "*" string-end)
 				       "*anaconda-mode*"
 				       "*pomidor*")
+      schnouki/immortal-silent-buffers '("*Messages*")
       schnouki/immortal-modes        '(message-mode notmuch-hello-mode notmuch-search-mode
 				       notmuch-show-mode org-agenda-mode inferior-python-mode
 				       jabber-chat-mode jabber-roster-mode))
 (defun schnouki/kill-star-buffers (&optional arg)
   "Remove most star-buffers (`*Messages*', `*Compilation', ...) that are not in the `schnouki/immortal-star-buffers' list.  With prefix argument ARG, kill all star-buffers."
   (interactive "P")
-  (let ((count 0)
-	buf-name buf-mode)
-    (dolist (buf (buffer-list))
-      (setq buf-name (buffer-name buf)
-	    buf-mode (with-current-buffer buf major-mode))
-      (when (and
-	     (string-match "^\\*.+$" buf-name)
-	     (or arg
-		 (and (notany '(lambda (re) (string-match re buf-name)) schnouki/immortal-star-buffers)
-		      (not (memq buf-mode schnouki/immortal-modes)))))
-	(kill-buffer buf)
-	(setq count (1+ count))))
-    (message (concat (int-to-string count) " buffers killed"))))
+  (let ((killed nil))
+    (cl-loop for buf in (buffer-list)
+	     as buf-name = (buffer-name buf)
+	     as buf-mode = (with-current-buffer buf major-mode)
+	     when (and
+		   (string-match "^\\*.+$" buf-name)
+		   (or arg
+		       (and (notany '(lambda (re) (string-match re buf-name)) schnouki/immortal-star-buffers)
+			    (not (memq buf-mode schnouki/immortal-modes)))))
+	     do
+	     (kill-buffer buf)
+	     (when (notany '(lambda (re) (string-match re buf-name)) schnouki/immortal-silent-buffers)
+	       (add-to-list 'killed buf-name))
+	     finally
+	     (when killed
+	       (message (concat (int-to-string (length killed))
+				" buffers killed: "
+				(string-join killed ", ")))))))
 (bind-key "C-x M-k" 'schnouki/kill-star-buffers)
 
 ;; Nicer binding than C-x 5 0 to close the current frame.
