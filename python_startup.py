@@ -73,17 +73,19 @@ if env:
 
     # affichage une fois des modules installés avec pip pour qu'on sache
     # ce qu'on a a dispo dans cet env
-    print("\nVirtualenv '{}' contains:\n".format(env_name))
-    cmd = subprocess.check_output([env + "/bin/pip", "freeze"],
-                                  stderr=subprocess.STDOUT)
-    try:
-        cmd = cmd.decode('utf8')
-    except:
-        pass
+    def show_venv():
+        print("\nVirtualenv '{}' contains:\n".format(env_name))
+        cmd = subprocess.check_output([env + "/bin/pip", "freeze"],
+                                      stderr=subprocess.STDOUT)
+        try:
+            cmd = cmd.decode('utf8')
+        except:
+            pass
 
-    cmd = cmd.strip().split("\n")
-    p = re.compile(r'(^.*\:\s)|((#|@).*$)|(==.*$)')
-    print("'" + "', '".join(sorted(set(os.path.basename(p.sub('', f)) for f in cmd))) + "'\n")
+        cmd = cmd.strip().split("\n")
+        p = re.compile(r'(^.*\:\s)|((#|@).*$)|(==.*$)')
+        print("'" + "', '".join(sorted(set(os.path.basename(p.sub('', f))
+                                           for f in cmd))) + "'\n")
 
 
 # alias pour printer rapidement
@@ -94,12 +96,14 @@ pp = pprint
 TEMP_DIR = os.path.join(tempfile.gettempdir(), 'pythontemp')
 try:
     os.makedirs(TEMP_DIR)
-    TEMP_DIR = path(TEMP_DIR) # si possible un objet path
+    TEMP_DIR = path(TEMP_DIR)  # si possible un objet path
 except Exception as e:
     pass
 
 # avoir un dico persistant pour garder des objets entre deux sessions. Pratique quand
 # on a un gros array numpy qu'on n'a pas envie de se faire chier à se recréer
+
+
 class Store(object):
     def __init__(self, filename):
         object.__setattr__(self, 'DICT', shelve.DbfilenameShelf(filename))
@@ -123,9 +127,13 @@ class Store(object):
         self.DICT.sync()
         self.DICT.close()
 
+
 # Ainsi on peut faire store.foo = 'bar' et récupérer store.foo à la session
 # suivante. Moi je store tout dans un truc temporaire mais si vous voulez
 # garder la persistance entre deux reboots, il suffit de choisir un autre
 # dossier.
 python_version = "py%s" % sys.version_info.major
-store = Store(os.path.join(TEMP_DIR, 'store.%s.db') % python_version)
+try:
+    store = Store(os.path.join(TEMP_DIR, 'store.%s.db') % python_version)
+except Exception:
+    pass
