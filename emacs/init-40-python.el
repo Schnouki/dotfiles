@@ -28,7 +28,9 @@
   :init
   (add-hook 'python-mode-hook #'auto-virtualenvwrapper-activate)
   (add-hook 'window-configuration-change-hook #'auto-virtualenvwrapper-activate)
-  (add-hook 'focus-in-hook #'auto-virtualenvwrapper-activate))
+  (add-hook 'focus-in-hook #'auto-virtualenvwrapper-activate)
+  :config
+  (setq auto-virtualenvwrapper-verbose nil))
 
 (use-package py-autopep8
   :ensure t
