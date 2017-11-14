@@ -55,4 +55,14 @@
       (ibuffer-do-sort-by-alphabetic)))
   (add-hook 'ibuffer-hook #'schnouki/enable-ibuffer-projectile))
 
+(use-package counsel-projectile
+  :ensure t
+  :commands (counsel-projectile-on)
+  :config
+  (setq counsel-projectile-grep-initial-input '(ivy-thing-at-point)
+        counsel-projectile-ag-initial-input '(ivy-thing-at-point)
+        counsel-projectile-rg-initial-input '(ivy-thing-at-point))
+  :init
+  (add-hook 'projectile-mode-hook #'counsel-projectile-on))
+
 ;;; init-50-projectile.el ends here

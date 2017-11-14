@@ -221,56 +221,33 @@ Return the index of the matching item, or nil if not found."
 ;; Nicer binding than C-x 5 0 to close the current frame.
 (bind-key "C-x w" 'delete-frame)
 
-;; ido-mode for better buffer switching, file selection, etc.
-;; http://defn.io/posts/2015-10-12-ido-mode.html
-(use-package ido
-  :config
-  (progn
-    (setq ido-enable-flex-matching t
-	  ido-use-virtual-buffers t
-	  ido-default-file-method 'selected-window
-	  ido-default-buffer-method 'selected-window
-	  magit-completing-read-function #'magit-ido-completing-read
-	  org-completion-use-ido t
-	  org-outline-path-complete-in-steps nil  ; recommended if using ido
-	  )
-    (ido-mode 1)
-    (ido-everywhere 1)))
-
-(use-package ido-completing-read+
+(use-package ivy
   :ensure t
+  :commands (ivy-mode)
+  :bind (("C-! r " . ivy-resume))
   :config
-  (ido-ubiquitous-mode 1))
+  (setq ivy-use-virtual-buffers t
+	magit-completing-read-function 'ivy-completing-read
+	projectile-completion-system 'ivy)
+  :init
+  (defun schnouki/enable-ivy ()
+    (ivy-mode 1))
+  (add-hook 'after-init-hook #'schnouki/enable-ivy))
 
-(use-package ido-vertical-mode
+(use-package swiper
   :ensure t
-  :config
-  (progn
-    (setq ido-vertical-define-keys 'C-n-C-p-up-down-left-right)
-    (ido-vertical-mode 1)))
+  :bind (("C-s" . swiper)))
 
-(use-package ido-clever-match
+(use-package counsel
   :ensure t
-  :config
-  (ido-clever-match-enable))
-
-(use-package ido-occur
-  :ensure t
-  :bind ("C-! o" . ido-occur))
-
-(use-package flx-ido
-  :ensure t
-  :config
-  (flx-ido-mode 1)
-  (setq ido-use-faces nil))
-
-;; Alternative M-x with extra features
-(use-package amx
-  :ensure t
-  :bind (("M-x" . amx)
-	 ("C-! M-x" . amx-major-mode-commands))
-  :config
-  (amx-mode 1))
+  :bind (("M-x" . counsel-M-x)
+	 ("C-x C-f" . counsel-find-file)
+	 ("C-h f" . counsel-describe-function)
+	 ("C-h v" . counsel-describe-variable)
+	 ("C-h l" . counsel-find-library)
+	 ("C-h S" . counsel-info-lookup-symbol)
+	 ("C-x 8 RET" . counsel-unicode-char)
+	 ("C-! s" . counsel-ag)))
 
 ;; ag
 (use-package ag

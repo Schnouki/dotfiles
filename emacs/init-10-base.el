@@ -71,11 +71,6 @@
 ;; Answer "y" rather than "yes"
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-;; Display possible completions in minibuffer
-;; http://www.emacswiki.org/emacs/IcompleteMode
-;; TODO: test Icicles...
-(icomplete-mode 99)
-
 ;; Use "initials" completion style
 (add-to-list 'completion-styles 'initials t)
 

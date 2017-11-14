@@ -92,9 +92,8 @@
       mm-handle))))
 
 (defun schnouki/notmuch-address-selection-function (prompt collection initial-input)
-  (let ((completion-ignore-case t)
-	(ido-enable-fle-matching t))
-    (ido-completing-read
+  (let ((completion-ignore-case t))
+    (completing-read
      prompt (cons initial-input collection) nil nil nil 'notmuch-address-history)))
 
 (defun notmuch-mua-mail-url (url &optional ignored)
