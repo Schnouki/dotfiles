@@ -135,10 +135,9 @@
                      (1 font-lock-keyword-face)))
       (haml-fontify-region beg end keywords
                            ruby-font-lock-syntax-table
-                           (when (boundp 'ruby-font-lock-syntactic-keywords)
-                             ruby-font-lock-syntactic-keywords)
-                           (when (fboundp 'ruby-syntax-propertize-function)
-                             #'ruby-syntax-propertize-function))))
+                            (if (fboundp 'ruby-syntax-propertize)
+                                'ruby-syntax-propertize
+                              'ruby-syntax-propertize-function))))
   (advice-add 'haml-fontify-region-as-ruby :override #'schnouki/haml-fontify-region-as-ruby))
 
 ;; (use-package handlebars-mode
