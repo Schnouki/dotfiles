@@ -225,6 +225,7 @@ Return the index of the matching item, or nil if not found."
 (use-package ivy
   :ensure t
   :commands (ivy-mode)
+  :diminish ivy-mode
   :bind (("C-! r " . ivy-resume))
   :config
   (setq ivy-use-virtual-buffers t
