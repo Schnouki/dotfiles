@@ -191,7 +191,8 @@ Return the index of the matching item, or nil if not found."
 					    "*" string-end)
 				       "*anaconda-mode*"
 				       "*pomidor*")
-      schnouki/immortal-silent-buffers '("*Messages*")
+      schnouki/immortal-silent-buffers `(,(rx string-start "*magit:")
+					 "*Messages*")
       schnouki/immortal-modes        '(message-mode notmuch-hello-mode notmuch-search-mode
 				       notmuch-show-mode org-agenda-mode inferior-python-mode
 				       jabber-chat-mode jabber-roster-mode))
