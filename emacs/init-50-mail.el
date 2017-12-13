@@ -159,21 +159,6 @@
     (notmuch-mua-maybe-set-window-dedicated)
     (message-goto-body)))
 
-(defun schnouki/notmuch-signal-spamham (type &rest to)
-  (with-current-notmuch-show-message
-   (notmuch-show-forward-message)
-   (message-replace-header "To" (mapconcat 'identity to ", "))
-   (message-remove-header "Fcc")
-   (message-sort-headers)
-   (message-hide-headers)
-   (message-goto-to)
-   (set-buffer-modified-p nil)
-   (if (yes-or-no-p (concat "Really flag this as " type "?"))
-       (message-send-and-exit)
-     (progn
-       (message-kill-buffer)
-       (delete-frame)))))
-
 (defun schnouki/notmuch-search-show-thread-inhibit-images ()
   (interactive)
   (let ((gnus-inhibit-images t))
