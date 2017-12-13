@@ -250,32 +250,28 @@
 ;; Load notmuch!
 (use-package notmuch
   :bind (("C-! n" . notmuch)
-	 ("C-! m" . notmuch-mua-new-mail))
+	 ("C-! m" . notmuch-mua-new-mail)
+	 ;; Show-mode keybindings
+	 :map notmuch-show-mode-map
+	 ("b" . schnouki/notmuch-show-bounce)
+	 ("e" . schnouki/notmuch-show-edit-draft)
+	 ("H" . schnouki/notmuch-view-html)
+	 ("r" . nil)
+	 ("R" . nil)
+	 ("ra" . notmuch-show-reply)
+	 ("rs" . notmuch-show-reply-sender)
+	 ;; Search-mode keybindings
+	 :map notmuch-search-mode-map
+	 ("d" . notmuch-search-filter-by-date)
+	 ("C-<return>" . schnouki/notmuch-search-show-thread-inhibit-images))
+
   :config
-  (progn
-    ;; Show-mode keybindings
-    (bind-keys :map notmuch-show-mode-map
-	       ("b" . schnouki/notmuch-show-bounce)
-	       ("e" . schnouki/notmuch-show-edit-draft)
-	       ("H" . schnouki/notmuch-view-html)
-	       ("r" . nil)
-	       ("R" . nil)
-	       ("ra" . notmuch-show-reply)
-	       ("rs" . notmuch-show-reply-sender)
-	       ("SH" . schnouki/notmuch-signal-ham)
-	       ("SS" . schnouki/notmuch-signal-spam))
-
-    ;; Search-mode keybindings
-    (bind-keys :map notmuch-search-mode-map
-	       ("d" . notmuch-search-filter-by-date)
-	       ("C-<return>" . schnouki/notmuch-search-show-thread-inhibit-images))
-
-    ;; Autorefresh notmuch-hello using D-Bus
-    (require 'dbus)
-    (ignore-errors
-      (dbus-register-method :session dbus-service-emacs dbus-path-emacs
-			    dbus-service-emacs "NotmuchNotify"
-			    'schnouki/notmuch-dbus-notify))))
+  ;; Autorefresh notmuch-hello using D-Bus
+  (require 'dbus)
+  (ignore-errors
+    (dbus-register-method :session dbus-service-emacs dbus-path-emacs
+			  dbus-service-emacs "NotmuchNotify"
+			  'schnouki/notmuch-dbus-notify)))
 
 ;; Use ido to read filename when attaching a file
 (eval-after-load 'mml
