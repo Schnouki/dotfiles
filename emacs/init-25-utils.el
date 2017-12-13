@@ -10,6 +10,14 @@
   (which-key-setup-minibuffer)
   (which-key-mode 1))
 
+;; A better *help* buffer
+(use-package helpful
+  :ensure t
+  :bind (("C-h f" . helpful-callable)
+	 ("C-h v" . helpful-variable)
+	 ("C-h k" . helpful-key)
+	 ("C-! ." . helpful-at-point)))
+
 ;; Set justification with C-x M-f
 (bind-key "C-x M-f" 'set-justification)
 
