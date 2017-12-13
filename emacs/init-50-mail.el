@@ -273,15 +273,6 @@
 			  dbus-service-emacs "NotmuchNotify"
 			  'schnouki/notmuch-dbus-notify)))
 
-;; Use ido to read filename when attaching a file
-(eval-after-load 'mml
-  '(progn
-     (defadvice mml-minibuffer-read-file (around ido-mml-minibuffer-read-file)
-       (cl-flet ((read-file-name (prompt &optional dir default-fn mustmatch)
-			      (ido-read-file-name prompt dir default-fn mustmatch)))
-	 ad-do-it))
-     (ad-activate 'mml-minibuffer-read-file)))
-
 ;; Don't try to display PDFs inline when they have a wrong MIME type
 (eval-after-load 'mm-decode
   '(add-to-list 'mm-inline-media-tests '("text/pdf" ignore ignore)))
