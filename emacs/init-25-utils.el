@@ -442,13 +442,15 @@ If third argument START is non-nil, convert words after that index in STRING."
   :diminish rainbow-mode)
 
 ;; Use ImageMagick as much as possible
-(let* ((types '(bmp jpeg png svg))
-       (fix-alist (lambda (alist)
-		    (--map-when (-contains? types (cdr it))
-				(cons (car it) 'imagemagick)
-				alist))))
-  (setq image-type-header-regexps (funcall fix-alist image-type-header-regexps)
-	image-type-file-name-regexps (funcall fix-alist image-type-file-name-regexps)))
+;; (let* ((types '(bmp jpeg png svg))
+;;        (fix-alist (lambda (alist)
+;; 		    (--map-when (-contains? types (cdr it))
+;; 				(cons (car it) 'imagemagick)
+;; 				alist))))
+;;   (setq image-type-header-regexps (funcall fix-alist image-type-header-regexps)
+;; 	image-type-file-name-regexps (funcall fix-alist image-type-file-name-regexps)))
+;; (fboundp 'imagemagick-types)
+;; (imagemagick-types)
 
 (defun schnouki/image-transform-fit-to-window ()
   "Fit the current image to the window."
