@@ -428,6 +428,13 @@ If third argument START is non-nil, convert words after that index in STRING."
   :init
   (add-hook 'after-init-hook #'global-emojify-mode))
 
+(use-package emojify-logos
+  :ensure t
+  :defer t
+  :init
+  (with-eval-after-load 'emojify
+    (require 'emojify-logos)))
+
 ;; Colorize strings that represent colors
 (use-package rainbow-mode
   :ensure t
