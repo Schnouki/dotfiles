@@ -185,14 +185,14 @@ gamemenu = {
    theme = { width = 200 },
    { "&steam", "steam-native", icon_theme.get("apps", "steam") },
    { "steam &games", steammenu, icon_theme.get("apps", "steam") },
-   { "battle for wesnoth", "wesnoth", "/usr/share/icons/wesnoth-icon.png" },
-   { "frozen bubble", "frozen-bubble", "/usr/share/pixmaps/frozen-bubble.png" },
-   { "gplanarity", "gplanarity", "/usr/share/pixmaps/gplanarity.png" },
+   -- { "battle for wesnoth", "wesnoth", "/usr/share/icons/wesnoth-icon.png" },
+   -- { "frozen bubble", "frozen-bubble", "/usr/share/pixmaps/frozen-bubble.png" },
+   { "gplanarity", "gPlanarity", "/usr/share/pixmaps/gplanarity.png" },
    { "hex-a-hop", "hex-a-hop", "/usr/share/hex-a-hop/icon.bmp" },
-   { "kildclient", "kildclient", "/usr/share/pixmaps/kildclient.png" },
+   -- { "kildclient", "kildclient", "/usr/share/pixmaps/kildclient.png" },
    { "kobo deluxe", "kobodl", "/usr/share/pixmaps/kobo-icon.xpm" },
    { "minecraft", "minecraft", icon_theme.get("apps", "minecraft") },
-   { "naev", "naev", "/usr/share/pixmaps/naev.png" },
+   -- { "naev", "naev", "/usr/share/pixmaps/naev.png" },
    { "open ttd", "openttd", icon_theme.get("apps", "openttd") },
    { "quake", "darkplaces-sdl -window -basedir " .. gamesdir .. "/Quake", icon_theme.get("apps", "quake") },
    { "torchlight", "torchlight", "/usr/share/pixmaps/torchlight.png" },
@@ -200,7 +200,7 @@ gamemenu = {
 
 utilsmenu = {
    { "&galculator", "galculator", icon_theme.get("apps", "galculator") },
-   { "qalculate-gtk", "qalculate", "/usr/share/pixmaps/qalculate.png" },
+   -- { "qalculate-gtk", "qalculate", "/usr/share/pixmaps/qalculate.png" },
    { "&disk usage", "mate-disk-usage-analyzer", icon_theme.get("apps", "mate-disk-usage-analyzer") },
    { "g&ucharmap", "gucharmap", icon_theme.get("apps", "accessories-character-map") },
    { "&pavucontrol", "pavucontrol", icon_theme.get("apps", "multimedia-volume-control") },
@@ -335,8 +335,8 @@ function safe_cmd(cmd)
 end
 
 winemenu = {
-   { "&balsamiq", safe_cmd("wine C:\\Program Files (x86)\\Balsamiq Mockups 3\\Balsamiq Mockups 3.exe"),
-     "/home/schnouki/.wine/drive_c/Program Files (x86)/Balsamiq Mockups 3/icons/mockups_ico_16.png" },
+   --{ "&balsamiq", safe_cmd("wine C:\\Program Files (x86)\\Balsamiq Mockups 3\\Balsamiq Mockups 3.exe"),
+   --  "/home/schnouki/.wine/drive_c/Program Files (x86)/Balsamiq Mockups 3/icons/mockups_ico_16.png" },
 }
 
 menu_sep = {
