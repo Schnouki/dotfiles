@@ -269,7 +269,8 @@ Return the index of the matching item, or nil if not found."
 	 ("C-! f"    . ag-project-files)
 	 ("C-! M-f"  . ag-files))
   :config
-  (setq ag-highlight-search t))
+  (setq ag-highlight-search t)
+  (setq-default ag-ignore-list '("*\\.min\\.js")))
 
 ;; wgrep
 (use-package wgrep
