@@ -1,0 +1,6 @@
+{
+    "config": {
+        "vendor-dir": "~/.composer/vendor",
+        "bin-dir": "~/.composer/vendor/bin"
+    }
+}
