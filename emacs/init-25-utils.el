@@ -236,7 +236,9 @@ Return the index of the matching item, or nil if not found."
   :diminish ivy-mode
   :bind (("C-! r " . ivy-resume))
   :config
-  (setq ivy-use-virtual-buffers t
+  (setq ivy-magic-tilde nil
+	ivy-re-builders-alist '((t . ivy--regex-ignore-order))
+	ivy-use-virtual-buffers t
 	magit-completing-read-function 'ivy-completing-read
 	projectile-completion-system 'ivy)
   :init
