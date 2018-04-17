@@ -37,8 +37,12 @@ class AddrBook(object):
             parser = email.parser.Parser()
             for msg in msgs:
                 msg_fn = msg.get_filename()
-                with open(msg_fn, "r") as data:
-                    mail = parser.parse(data, True)
+                try:
+                    with open(msg_fn, "r") as data:
+                        mail = parser.parse(data, True)
+                except UnicodeDecodeError:
+                    with open(msg_fn, "r", encoding="latin9") as data:
+                        mail = parser.parse(data, True)
                 addrs = []
                 for hdr in ("from", "to", "cc", "bcc"):
                     addrs += mail.get_all(hdr, [])
@@ -72,7 +76,9 @@ class AddrBook(object):
                         logging.warning(e)
                         logging.warning("Faulty data: %s", hdr)
                 else:
-                    user = str(BeautifulSoup(hdr[0], "lxml"))
+                    user = str(BeautifulSoup(hdr[0], 'html.parser'))
+                    if '<html>' in user:
+                        logging.warning("Faulty data: %s", user)
 
             if addr not in self._small_db:
                 self._small_db[addr] = {}
