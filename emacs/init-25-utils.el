@@ -58,6 +58,16 @@
   (kill-ring-save (line-beginning-position) (+ 1 (line-end-position))))
 (bind-key "M-k" 'schnouki/copy-line)
 
+;; Copy the region after trimming it
+(defun schnouki/kill-ring-save-trimmed (beg end)
+  "Save the region after trimming it as if killed, but don't kill it."
+  (interactive (list (mark) (point)))
+  (let ((str (filter-buffer-substring beg end)))
+    (kill-new (s-trim str)))
+  (setq deactivate-mark t)
+  nil)
+(bind-key "M-W" 'schnouki/kill-ring-save-trimmed)
+
 ;; Browse kill ring
 (use-package browse-kill-ring
   :ensure t
