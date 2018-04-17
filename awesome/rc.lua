@@ -1604,6 +1604,10 @@ client.connect_signal("property::floating", function(c)
     end
 end)
 
+client.connect_signal("property::fullscreen", function(c)
+    hide_titlebar(c)
+end)
+
 -- Enable sloppy focus, so that focus follows mouse.
 client.connect_signal("mouse::enter", function(c)
     if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
