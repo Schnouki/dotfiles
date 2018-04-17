@@ -15,11 +15,10 @@
 (use-package dtrt-indent
   :ensure t
   :commands dtrt-indent-mode
+  :diminish dtrt-indent-mode
   :defer 3
   :config
-  (progn
-    (dtrt-indent-mode 1)
-    (setq global-mode-string (--remove (eq it 'dtrt-indent-mode-line-info) global-mode-string))))
+  (dtrt-indent-mode 1))
 
 ;; No trailing whitespaces
 (defvar-local enable-delete-trailing-whitespace t
