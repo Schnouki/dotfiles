@@ -9,11 +9,14 @@
 	 ("C-! b" . org-iswitchb)
 	 ("C-! t" . schnouki/org-agenda-and-todo-list))
   :config
-  (progn
-    (bind-key "C-M-g" 'org-plot/gnuplot org-mode-map)
-    (add-to-list 'org-babel-load-languages '(ditaa . t))))
+  (bind-key "C-M-g" 'org-plot/gnuplot org-mode-map)
+  (add-to-list 'org-babel-load-languages '(ditaa . t))
+  :init
+  (add-hook 'org-mode-hook 'turn-on-font-lock))
 
-(add-hook 'org-mode-hook 'turn-on-font-lock)
+(use-package orgtbl-aggregate
+  :ensure t
+  :defer t)
 
 ;; Various parameters
 (setq-default org-tags-column -80)
