@@ -34,9 +34,20 @@
 
 (use-package py-autopep8
   :ensure t
-  :commands (py-autopep8-enable-on-save py-autopep8-buffer)
+  :commands (py-autopep8-buffer)
   :init
-  (add-hook 'python-mode-hook 'py-autopep8-enable-on-save))
+  (defvar-local schnouki/disable-autopep8 nil
+    "When set, disable autopep8 in the buffer.")
+  (defun schnouki/maybe-autopep8-buffer ()
+    "Uses the \"autopep8\" tool to reformat the current buffer, unless disabled."
+    (interactive)
+    (unless schnouki/disable-autopep8
+      (py-autopep8-buffer)))
+  (defun schnouki/maybe-autopep8-enable-on-save ()
+    "Pre-save hook to be used before running maybe-autopep8."
+    (interactive)
+    (add-hook 'before-save-hook 'schnouki/maybe-autopep8-buffer nil t))
+  (add-hook 'python-mode-hook 'schnouki/maybe-autopep8-enable-on-save))
 
 ;; Django helper
 (defun schnouki/use-django-interactive-shell ()
