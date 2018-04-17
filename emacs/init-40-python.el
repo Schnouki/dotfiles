@@ -93,4 +93,8 @@
   :safe #'stringp)
 (list-utils-insert-after flycheck-checkers 'python-pylint 'python2-pylint)
 
+(use-package cython-mode
+  :ensure t
+  :mode "\\.p\\(?:yx\\|x[di]\\)\\'")
+
 ;;; init-40-python.el ends here
