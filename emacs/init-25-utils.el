@@ -528,4 +528,13 @@ If third argument START is non-nil, convert words after that index in STRING."
   (setq pomidor-sound-tick nil
 	pomidor-sound-tack nil))
 
+;; Colorize a buffer using ANSI color codes.
+;; If not enough, consider using tty-format.el or xterm-color…
+;; https://stackoverflow.com/a/23382008/113325
+;; https://github.com/atomontage/xterm-color
+(defun ansi-colorize-buffer ()
+  (interactive)
+  (let ((inhibit-read-only t))
+    (ansi-color-apply-on-region (point-min) (point-max))))
+
 ;;; init-25-utils.el ends here
