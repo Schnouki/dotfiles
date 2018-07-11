@@ -24,6 +24,7 @@ paths:
   singleton: Non-Album/$artist/$title
   comp: Compilations/$album%aunique{}/$track $artist - $title
   albumtype:bootleg: Bootlegs/$albumartist/$year - $album%aunique{}/$track $title
+  albumtype:podcast: Podcasts/$album - $albumartist - $disc/$track $artist - $title
 
 play:
   command: vlc --qt-start-minimized
