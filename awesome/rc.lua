@@ -263,7 +263,7 @@ local function menu_screen_text()
 end
 
 screenmenu = {
-    { "&auto",     function() auto_set_screen("above") end },
+    { "&auto",     function() auto_set_screen("left-of") end },
     { "&clone",    "xrandr --output LVDS-1 --auto --output " .. ext_screen .. " --auto --same-as LVDS-1" },
     { "&left of",  "xrandr --output LVDS-1 --auto --output " .. ext_screen .. " --auto --left-of LVDS-1" },
     { "&right of", "xrandr --output LVDS-1 --auto --output " .. ext_screen .. " --auto --right-of LVDS-1" },
