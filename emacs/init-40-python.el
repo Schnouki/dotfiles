@@ -97,4 +97,7 @@
   :ensure t
   :mode "\\.p\\(?:yx\\|x[di]\\)\\'")
 
+(use-package blacken
+  :ensure t)
+
 ;;; init-40-python.el ends here
