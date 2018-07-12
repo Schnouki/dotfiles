@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: dj_
+# key: dj_
+# --
+from django.utils.translation import ugettext_lazy as _

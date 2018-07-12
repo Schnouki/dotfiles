@@ -63,8 +63,8 @@
    (emacs-lisp . t)
    (gnuplot . t)
    (ledger . t)
-   (python . t)
-   (sh . t)))
+   (python . t)))
+   ;(sh . t)))
 
 (setq org-file-apps '((auto-mode . emacs)
 		      ("\\.mm\\'" . default)

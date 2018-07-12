@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: djpg
+# key: djpg
+# --
+from django.utils.translation import pgettext_lazy
