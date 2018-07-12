@@ -146,8 +146,8 @@
 
 (use-package web-mode
   :ensure t
-  ;; (kill-new (s-replace "\\" "\\\\" (rx "." (or "tmpl" "hbs" "html") eos)))
-  :mode "\\.\\(?:\\(?:h\\(?:bs\\|tml\\)\\|tmpl\\)\\)\\'"
+  ;; (kill-new (s-replace "\\" "\\\\" (rx "." (or "tmpl" "hbs" "html" "liquid") eos)))
+  :mode "\\.\\(?:\\(?:h\\(?:bs\\|tml\\)\\|liquid\\|tmpl\\)\\)\\'"
   :init
   (setq web-mode-engines-alist '(("go" . "\\.tmpl\\'")
                                  ("django" . "\\.html\\'"))
