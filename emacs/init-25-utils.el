@@ -269,18 +269,14 @@ Return the index of the matching item, or nil if not found."
 	 ("C-h l" . counsel-find-library)
 	 ("C-h S" . counsel-info-lookup-symbol)
 	 ("C-x 8 RET" . counsel-unicode-char)
-	 ("C-! s" . counsel-ag)))
+	 ("C-! s" . counsel-rg)))
 
-;; ag
-(use-package ag
+
+;; rg / riprep
+(use-package rg
   :ensure t
-  :bind (("C-! <"    . ag-project)
-	 ("C-! M-< " . ag)
-	 ("C-! f"    . ag-project-files)
-	 ("C-! M-f"  . ag-files))
-  :config
-  (setq ag-highlight-search t)
-  (setq-default ag-ignore-list '("*\\.min\\.js")))
+  :bind (("C-! <"    . rg-project)
+	 ("C-! M-< " . rg)))
 
 ;; wgrep
 (use-package wgrep
@@ -290,12 +286,6 @@ Return the index of the matching item, or nil if not found."
   (setq wgrep-auto-save-buffer t)
   :init
   (add-hook 'grep-setup-hook 'wgrep-setup))
-
-(use-package wgrep-ag
-  :ensure t
-  :commands wgrep-ag-setup
-  :init
-  (add-hook 'ag-mode-hook 'wgrep-ag-setup))
 
 ;; undo-tree
 (use-package undo-tree

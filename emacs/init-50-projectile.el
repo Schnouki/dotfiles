@@ -15,12 +15,7 @@
   :config
   (--each '(".pyc" ".o" ".so" "~" "#" ".min.js")
     (add-to-list 'projectile-globally-ignored-file-suffixes it))
-
-  (defun schnouki/projectile-ag (orig-fun &rest args)
-    (let ((grep-find-ignored-directories (copy-sequence grep-find-ignored-directories)))
-      (apply orig-fun args)))
-  (advice-add 'projectile-ag :around #'schnouki/projectile-ag)
-  ;; (advice-remove 'projectile-ag #'schnouki/projectile-ag)
+  (bind-key "s s" 'projectile-ripgrep 'projectile-command-map)
 
   ;; Set virtualenv packages as Projectile projects -- based on
   ;; https://github.com/bbatsov/projectile/issues/364#issuecomment-61296248 and
@@ -54,5 +49,10 @@
     (unless (eq ibuffer-sorting-mode 'alphabetic)
       (ibuffer-do-sort-by-alphabetic)))
   (add-hook 'ibuffer-hook #'schnouki/enable-ibuffer-projectile))
+
+(use-package ripgrep
+  :ensure t
+  :commands ripgrep-regexp)
+
 
 ;;; init-50-projectile.el ends here
