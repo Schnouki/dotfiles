@@ -40,4 +40,11 @@
 (use-package gitignore-mode
   :ensure t)
 
+;; TODOs
+(use-package magit-todos
+  :ensure t
+  :defer t
+  :config
+  (magit-todos-mode t))
+
 ;;; init-40-vc.el ends here

@@ -274,6 +274,17 @@
     (add-to-list 'auto-read-only-file-regexps it))
   (auto-read-only-mode 1))
 
+;; Highlight TODO and similar keywords
+(use-package hl-todo
+  :ensure t
+  :defer t
+  :commands global-hl-todo-mode
+  :bind (:map hl-todo-mode-map
+	      ("C-! h p" . hl-todo-previous)
+	      ("C-! h n" . hl-todo-next)
+	      ("C-! h o" . hl-todo-occur))
+  :config
+  (global-hl-todo-mode))
 
 ;;; init-20-dev.el ends here
 
