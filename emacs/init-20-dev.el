@@ -163,7 +163,10 @@
 (defun compilation-exit-autoclose (status code msg)
   "Auto-close the compilation window when successful."
   ;; If M-x compile exists with a 0
-  (when (and (eq status 'exit) (zerop code) (not (string= mode-name "Ag")))
+  (when (and
+	 (eq status 'exit)
+	 (zerop code)
+	 (not (-contains? '("Ag" "Ripgrep") mode-name)))
     ;; then bury the *compilation* buffer, so that C-x b doesn't go there
     (bury-buffer)
     ;; and delete the *compilation* window
