@@ -38,3 +38,6 @@ export PYTHONSTARTUP=$HOME/.config/python_startup.py
 
 # 256-color terminal
 [[ $TERM == "xterm" ]] && export TERM="xterm-256color"
+
+# Ripgrep
+export RIPGREP_CONFIG_PATH=$HOME/.config/ripgreprc

@@ -9,24 +9,25 @@ __pycache__/
 # Dotfiles
 !ackrc
 !beets/config.yaml
+!Xresources
 !chromium-flags.conf
 !compton.conf
 !ctags
 !fonts.conf
 !gitconfig
 !globalrc
+!gpgdiff
+!gtkrc-2.0
+!gtkrc-baldr
+!gtkrc-odin
 !guile
 !lftp/rc
 !mimeo.conf
-!gpgdiff
-!gtkrc-2.0
-!gtkrc-odin
-!gtkrc-baldr
 !mpd.conf
 !psqlrc
 !python_startup.py
+!ripgreprc
 !tmux.conf
-!Xresources
 !xinitrc
 !*.gpg
 

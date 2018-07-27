@@ -1,0 +1,6 @@
+# New types
+--type-add
+liquid:*.liquid
+
+# Ignore some files
+--glob=!*.{map,min.js}
