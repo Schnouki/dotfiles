@@ -5,9 +5,3 @@ setup_decrypt "notmuch/config.gpg" ".notmuch-config"
 
 # Decrypt the autotag script and make it executable
 setup_decrypt "notmuch/autotag.py.gpg" ".config/notmuch/autotag.py" 1
-
-# Setup hooks
-setup_file_symlink "notmuch/hook-pre"  ".smd/hooks/pre-pull.d/notmuch-pre"
-setup_file_symlink "notmuch/hook-pre"  ".smd/hooks/pre-push.d/notmuch-pre"
-setup_file_symlink "notmuch/hook-post" ".smd/hooks/post-pull.d/notmuch-post"
-setup_file_symlink "notmuch/hook-post" ".smd/hooks/post-push.d/notmuch-post"

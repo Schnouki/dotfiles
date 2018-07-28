@@ -11,18 +11,18 @@ if (( $(notmuch count $_search_deleted) > 0 )); then
         | xargs -r0 rm -f
 fi
 
-# Move spam to the "Spam" folder
-_search_spam=(tag:spam and path:'schnouki.net/**' and not folder:schnouki.net/Spam)
-if (( $(notmuch count $_search_spam) > 0 )); then
-    notmuch search --exclude=false --output=files --format=text0 $_search_spam \
-        | xargs -r0 mv -t ~/mail/schnouki.net/Spam/new
-fi
+# # Move spam to the "Spam" folder
+# _search_spam=(tag:spam and path:'schnouki.net/**' and not folder:schnouki.net/Junk)
+# if (( $(notmuch count $_search_spam) > 0 )); then
+#     notmuch search --exclude=false --output=files --format=text0 $_search_spam \
+#         | xargs -r0 mv -t ~/mail/schnouki.net/Junk/new
+# fi
 
-# And move ham to the inbox
-# _search_ham=(tag:ham and folder:schnouki.net/Spam)
+# # And move ham to the inbox
+# _search_ham=(tag:ham and folder:schnouki.net/Junk)
 # if (( $(notmuch count $_search_ham) > 0)); then
 #     notmuch search --exclude=false --output=files --format=text0 $_search_ham \
-#         | xargs -r0 mv -t ~/mail/schnouki.net/new
+#         | xargs -r0 mv -t ~/mail/schnouki.net/INBOX/new
 # fi
 
 exit 0
