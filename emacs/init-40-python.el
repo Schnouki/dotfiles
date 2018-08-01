@@ -41,7 +41,7 @@
   (defun schnouki/maybe-autopep8-buffer ()
     "Uses the \"autopep8\" tool to reformat the current buffer, unless disabled."
     (interactive)
-    (unless schnouki/disable-autopep8
+    (unless (or schnouki/disable-autopep8 blacken-mode)
       (py-autopep8-buffer)))
   (defun schnouki/maybe-autopep8-enable-on-save ()
     "Pre-save hook to be used before running maybe-autopep8."
