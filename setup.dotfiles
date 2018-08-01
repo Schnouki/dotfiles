@@ -13,6 +13,7 @@ done
 # Setup encrypted dotfiles
 setup_decrypt "gitspindle.gpg" ".gitspindle"
 setup_decrypt "gpg.conf.gpg" ".gnupg/gpg.conf"
+setup_decrypt "imapfilter.lua.gpg" ".imapfilter/config.lua"
 setup_decrypt "msmtprc.gpg" ".msmtprc"
 setup_decrypt "netrc.gpg" ".netrc"
 setup_decrypt "offlineimaprc.gpg" ".offlineimaprc"
