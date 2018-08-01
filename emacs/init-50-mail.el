@@ -13,7 +13,7 @@
 (setq message-auto-save-directory nil
       send-mail-function 'message-send-mail-with-sendmail ;sendmail-send-it
       message-send-mail-function 'message-send-mail-with-sendmail
-      sendmail-program "/home/schnouki/bin/msmtpq"
+      sendmail-program "msmtpq"
       message-sendmail-extra-arguments (list (concat "--domain=" (system-name)))
       message-send-mail-partially-limit nil
       mail-specify-envelope-from t
