@@ -11,7 +11,7 @@ function hook_update_encrypted_file() {
 
     if [ ! -e "$dst" ] || [ "$src" -nt "$sf" ] || [ "$force" ]; then
         echo "New version of $src found, encrypting it..."
-        rm "$dst"
+        [[ -e "$dst" ]] && rm "$dst"
         gpg2 --quiet --batch --output "$dst" --encrypt "$src"
         touch "$sf"
     fi
