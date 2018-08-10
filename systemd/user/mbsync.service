@@ -1,0 +1,9 @@
+[Unit]
+Description=Mailbox synchronization service
+After=network.target network-online.target dbus.socket
+
+[Service]
+Type=oneshot
+ExecStartPre=/home/schnouki/.config/notmuch/hook-pre
+ExecStart=/usr/bin/mbsync -a
+ExecStartPost=/home/schnouki/.config/notmuch/hook-post
