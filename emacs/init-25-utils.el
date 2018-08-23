@@ -16,7 +16,10 @@
   :bind (("C-h f" . helpful-callable)
 	 ("C-h v" . helpful-variable)
 	 ("C-h k" . helpful-key)
-	 ("C-! ." . helpful-at-point)))
+	 ("C-! ." . helpful-at-point))
+  :init
+  (setq counsel-describe-function-function 'helpful-callable
+	counsel-describe-variable-function 'helpful-variable))
 
 ;; Set justification with C-x M-f
 (bind-key "C-x M-f" 'set-justification)
@@ -379,7 +382,8 @@ Return the index of the matching item, or nil if not found."
   :ensure t
   :commands sudoku
   :init
-  (setq-default sudoku-level "medium"))
+  (setq-default sudoku-level "medium")
+  (setq sudoku-download t))
 
 ;; Deft
 (use-package deft
