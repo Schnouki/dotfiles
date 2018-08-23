@@ -18,4 +18,7 @@
   (setq guess-language-languages '(fr en)
 	guess-language-min-paragraph-length 40))
 
+(use-package flycheck-grammalecte
+  :ensure t)
+
 ;;; init-20-text.el ends here

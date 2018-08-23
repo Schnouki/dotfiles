@@ -13,9 +13,6 @@
 [submodule "zsh/modules/git-annex-zsh-completion"]
 	path = zsh/modules/git-annex-zsh-completion
 	url = git://github.com/Schnouki/git-annex-zsh-completion.git
-[submodule "emacs/pelican-mode"]
-	path = emacs/pelican-mode
-	url = http://git.korewanetadesu.com/pelican-mode.git
 [submodule "urxvt/urxvt-font-size"]
 	path = urxvt/urxvt-font-size
 	url = https://github.com/majutsushi/urxvt-font-size
