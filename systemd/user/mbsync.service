@@ -6,4 +6,4 @@ After=network.target network-online.target dbus.socket
 Type=oneshot
 ExecStartPre=/home/schnouki/.config/notmuch/hook-pre
 ExecStart=/usr/bin/mbsync -a
-ExecStartPost=/home/schnouki/.config/notmuch/hook-post
+ExecStopPost=/home/schnouki/.config/notmuch/hook-post
