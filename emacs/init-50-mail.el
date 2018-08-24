@@ -229,6 +229,24 @@
    (with-current-buffer smtpmail-text-buffer (schnouki/change-smtp)))
 (ad-activate 'smtpmail-via-smtp)
 
+(defun schnouki/choose-drafts-dir ()
+  "Choose the drafts directory to use according to the current From header."
+  ;; Based on notmuch-fcc-header-setup
+  (let* ((from (message-field-value "From"))
+	 (match
+	  (catch 'first-match
+	    (dolist (re-folder schnouki/notmuch-drafts-dirs)
+	      (when (string-match-p (car re-folder) from)
+		(throw 'first-match re-folder))))))
+    (if match
+	(cdr match))))
+
+(defun schnouki/set-drafts-dir-for-save (orig-fun &rest args)
+  (let ((notmuch-draft-folder (schnouki/choose-drafts-dir)))
+    (message "Drafts dir set to Setting the drafts dir to '%s'" notmuch-draft-folder)
+    (apply orig-fun args)))
+(advice-add 'notmuch-draft-save :around #'schnouki/set-drafts-dir-for-save)
+
 ;; Autorefresh notmuch-hello using D-Bus
 (defun schnouki/notmuch-dbus-notify ()
   (save-excursion
