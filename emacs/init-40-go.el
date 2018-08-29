@@ -17,13 +17,15 @@
 
   :config
   (add-to-list 'go-guess-gopath-functions #'schnouki/go-hellogopher-gopath)
-  (defadvice go-root-and-paths (around schnouki/go-root-and-paths)
-    (let* ((root-and-paths ad-do-it)
-           (root (car root-and-paths))
-           (env-paths (cdr root-and-paths))
-           (guessed-paths (split-string (go-guess-gopath) path-separator)))
-      (setq ad-return-value (cons root (append guessed-paths env-paths)))))
-  (ad-activate 'go-root-and-paths)
+
+  (defun schnouki/go--better-guess-gopath (orig-fun &rest args)
+    (let* ((root-and-paths (apply orig-fun args))
+	   (root (car root-and-paths))
+	   (env-paths (cdr root-and-paths))
+	   (guessed-paths (split-string (go-guess-gopath) path-separator)))
+      (cons root (append guessed-paths env-paths))))
+  (advice-add 'go-root-and-paths :around #'schnouki/go--better-guess-gopath)
+
   (add-hook 'go-mode-hook #'go-set-project))
 
 (defun schnouki/go-hellogopher-gopath ()

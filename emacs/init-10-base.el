@@ -92,17 +92,15 @@
 
 ;; Show the matching parenthseis when it is offscreen
 ;; http://www.emacswiki.org/emacs/ShowParenMode#toc1
-(defadvice show-paren-function
-  (after show-matching-paren-offscreen activate)
-  "If the matching paren is offscreen, show the matching line in the
-    echo area. Has no effect if the character before point is not of
-    the syntax class ')'."
-  (interactive)
+(defun schnouki/show-matching-paren-offscreen ()
+  "If the matching paren is offscreen, show the matching line in the echo area.
+Has no effect if the character before point is not of the syntax class ')'."
   (let* ((cb (char-before (point)))
 	 (matching-text (and cb
 			     (char-equal (char-syntax cb) ?\) )
 			     (blink-matching-open))))
     (when matching-text (message matching-text))))
+(advice-add 'show-paren-function :after #'schnouki/show-matching-paren-offscreen)
 
 ;; Highlight current line
 ;; http://www.emacsblog.org/2007/04/09/highlight-the-current-line/

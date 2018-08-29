@@ -390,14 +390,14 @@ Return the index of the matching item, or nil if not found."
   :ensure t
   :bind ("C-! d" . deft)
   :init
-  (progn
-    (setq deft-directory "~/Dropbox/deft"
-	  deft-extension "org"
-	  deft-text-mode 'org-mode
-	  deft-use-filename-as-title t)
-    (defadvice deft-auto-save (around keep-whitespace-on-deft-auto-save activate)
-      (flet ((delete-trailing-whitespace))
-	ad-do-it))))
+  (setq deft-directory "~/Dropbox/deft"
+	deft-extension "org"
+	deft-text-mode 'org-mode
+	deft-use-filename-as-title t)
+  (defun schnouki/deft--disable-dtw (orig-fun &rest args)
+    (flet ((delete-trailing-whitespace))
+      (apply orig-fun args)))
+  (advice-add 'deft-auto-save :around #'schnouki/deft--disable-dtw))
 
 ;; ix.io integration
 (use-package ix

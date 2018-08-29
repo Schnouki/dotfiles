@@ -223,12 +223,6 @@
       (error (concat "Sender address does not match any msmtp account: " account)))))
 (add-hook 'message-send-mail-hook 'schnouki/change-msmtp-account)
 
-(defadvice smtpmail-via-smtp (before schnouki/set-smtp-account
- 				     (&optional recipient smtpmail-text-buffer))
-   "First set SMTP account."
-   (with-current-buffer smtpmail-text-buffer (schnouki/change-smtp)))
-(ad-activate 'smtpmail-via-smtp)
-
 (defun schnouki/choose-drafts-dir ()
   "Choose the drafts directory to use according to the current From header."
   ;; Based on notmuch-fcc-header-setup
