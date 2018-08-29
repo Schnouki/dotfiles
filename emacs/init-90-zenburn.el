@@ -143,8 +143,8 @@
 (defun schnouki/rainbow-mode-zenburn ()
   (make-local-variable 'rainbow-x-colors-font-lock-keywords)
   (add-to-list 'rainbow-x-colors-font-lock-keywords
-	       `(,(regexp-opt (mapcar 'car zenburn-colors-alist) 'words)
-		 (0 (rainbow-colorize-by-assoc zenburn-colors-alist)))
+	       `(,(regexp-opt (mapcar 'car zenburn-default-colors-alist) 'words)
+		 (0 (rainbow-colorize-by-assoc zenburn-default-colors-alist)))
 	       t)
   (rainbow-mode t))
 
