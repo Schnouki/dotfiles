@@ -136,6 +136,13 @@
     (eval-after-load 'go-guru
       `(progn
 	 (set-face-attribute 'go-guru-hl-identifier-face nil :background ,zenburn-bg-1)))
+
+    (eval-after-load 'sudoku
+      `(progn
+	 (set-face-foreground 'sudoku-value-face ,zenburn-blue)
+	 (set-face-foreground 'sudoku-value-pencil-1-face ,zenburn-fg-1)
+	 (set-face-foreground 'sudoku-value-pencil-2-face ,zenburn-fg+1)
+	 (set-face-foreground 'sudoku-autovalue-face ,zenburn-magenta)))
     )
   )
 
