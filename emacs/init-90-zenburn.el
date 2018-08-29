@@ -133,6 +133,47 @@
       `(progn
 	 (set-face-background 'vhl/default-face "#3D5457")))
 
+    ;; markup-faces (includes adoc-mode)
+    (eval-after-load 'markup-faces
+      `(progn
+	 (set-face-attribute 'markup-anchor-face nil :foreground ,zenburn-blue+1)
+	 ;(set-face-attribute 'markup-attribute-face nil )
+         ;(set-face-attribute 'markup-code-face nil )
+         ;(set-face-attribute 'markup-command-face nil )
+         ;(set-face-attribute 'markup-comment-face nil )
+         ;(set-face-attribute 'markup-complex-replacement-face nil )
+         ;(set-face-attribute 'markup-emphasis-face nil )
+         ;(set-face-attribute 'markup-error-face nil )
+         ;(set-face-attribute 'markup-gen-face nil )
+         ;(set-face-attribute 'markup-hide-delimiter-face nil )
+         ;(set-face-attribute 'markup-internal-reference-face nil )
+         (set-face-attribute 'markup-list-face nil :foreground ,zenburn-fg+1 :background ,zenburn-bg-1)
+	 (set-face-attribute 'markup-meta-face nil :foreground ,zenburn-bg+3)
+	 (set-face-attribute 'markup-meta-hide-face nil :foreground ,zenburn-bg+2)
+         ;(set-face-attribute 'markup-meta-face nil )
+         ;(set-face-attribute 'markup-meta-hide-face nil )
+         ;(set-face-attribute 'markup-passthrough-face nil )
+         ;(set-face-attribute 'markup-preprocessor-face nil )
+         ;(set-face-attribute 'markup-reference-face nil )
+         ;(set-face-attribute 'markup-replacement-face nil )
+         ;(set-face-attribute 'markup-secondary-text-face nil )
+         ;(set-face-attribute 'markup-strong-face nil )
+         ;(set-face-attribute 'markup-subscript-face nil )
+         ;(set-face-attribute 'markup-superscript-face nil )
+         ;(set-face-attribute 'markup-table-cell-face nil )
+         ;(set-face-attribute 'markup-table-face nil )
+         ;(set-face-attribute 'markup-table-row-face nil )
+         (set-face-attribute 'markup-title-0-face nil :foreground ,zenburn-orange)
+         (set-face-attribute 'markup-title-1-face nil :foreground ,zenburn-green+4)
+         (set-face-attribute 'markup-title-2-face nil :foreground ,zenburn-blue-1)
+         (set-face-attribute 'markup-title-3-face nil :foreground ,zenburn-yellow-2)
+         (set-face-attribute 'markup-title-4-face nil :foreground ,zenburn-cyan)
+         (set-face-attribute 'markup-typewriter-face nil :inherit font-lock-type-face :background 'unspecified)
+         ;(set-face-attribute 'markup-value-face nil )
+         (set-face-attribute 'markup-verbatim-face nil :inherit font-lock-constant-face :background 'unspecified)
+
+	 ))
+
     (eval-after-load 'go-guru
       `(progn
 	 (set-face-attribute 'go-guru-hl-identifier-face nil :background ,zenburn-bg-1)))
