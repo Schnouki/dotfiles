@@ -58,6 +58,9 @@ else
     zstyle ':vcs_info:*' formats       "${FMT_BRANCH} / "
     zstyle ':vcs_info:*' nvcsformats   ""
 
+    # Use a wrapper with a timeout!
+    zstyle ':vcs_info:git:*:-all-' command "$HOME/.config/zsh/tgit.zsh"
+
     # Detect the UID of user "schnouki" (aka me)
     local my_uid
     my_uid=$(id -u schnouki 2>/dev/null)
