@@ -671,29 +671,26 @@ function win_info ()
    -- Quick little short-circuit.
    if c == nil then return end
 
-   local title, class, instance, role, type = nil, nil, nil, nil, nil
-   title    = c.name
-   class    = c.class
-   instance = c.instance
-   role     = c.role
-   type     = c.type
+   local function mono(text) return markup.font('mono', text) end
 
-   -- We don't want to error on nil.
-   if title    == nil then title    = markup.fg.focus('nil') end
-   if class    == nil then class    = markup.fg.focus('nil') end
-   if instance == nil then instance = markup.fg.focus('nil') end
-   if role     == nil then role     = markup.fg.focus('nil') end
-   if type     == nil then type     = markup.fg.focus('nil') end
+   local attrs = {"role", "type", "title", "class", "instance"}
+   local max_len = 0
+   local text = ""
+   local name, value
+   for _, name in pairs(attrs) do
+      if max_len < #name then max_len = #name end
+   end
 
-   naughty.notify({
-      text = markup.fg.focus('      Role: ') .. role  .. '\n' ..
-             markup.fg.focus('      Type: ') .. type  .. '\n' ..
-             markup.fg.focus('      Title: ') .. title .. '\n' ..
-             markup.fg.focus('    Class: ') .. class .. '\n' ..
-             markup.fg.focus('Instance: ') .. instance,
-      timeout = 5,
-      hover_timeout = 0.5
-   })
+   for _, name in pairs(attrs) do
+      value = c[name]
+      if value == nil then value = markup.fg.focus('nil') end
+      local label = name:gsub("^%l", string.upper)
+      while #label < max_len do label = " " .. label end
+      if #text > 0 then text = text .. "\n" end
+      text = text .. mono(markup.fg.focus(label .. ": ")) .. value
+   end
+
+   naughty.notify({ text = text, timeout = 5, hover_timeout = 0.5 })
 end
 -- }}}
 -- {{{       Mail info
