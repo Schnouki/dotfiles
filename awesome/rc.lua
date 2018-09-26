@@ -1531,6 +1531,11 @@ awful.rules.rules = {
       properties = { floating = true,
                      placement = awful.placement.centered } },
 
+    -- …or near the systray…
+    { rule = { class = "Keybase", width = 360, height = 500 },
+      properties = { floating = true,
+                     placement = awful.placement.closest_corner } },
+
     -- VirtualBox: TODO
     { rule = { class = "VirtualBox" },
       properties = { maximized = true } },
