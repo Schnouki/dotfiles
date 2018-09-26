@@ -673,7 +673,7 @@ function win_info ()
 
    local function mono(text) return markup.font('mono', text) end
 
-   local attrs = {"role", "type", "title", "class", "instance"}
+   local attrs = {"role", "type", "title", "class", "instance", "width", "height"}
    local max_len = 0
    local text = ""
    local name, value
