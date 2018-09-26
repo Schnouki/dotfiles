@@ -1478,6 +1478,7 @@ awful.rules.rules = {
         class = {
            "BBQScreenClient2",
            "Galculator",
+           "gmic_qt",
            "Gmpc",
            "Gtk-recordMyDesktop",
            "mpv",
