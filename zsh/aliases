@@ -84,3 +84,7 @@ alias led="ledger -f ~/compta/main.ldg"
 
 # youtube-dl with specific config file
 alias ytmusicdl="youtube-dl --config-location ~/.config/youtube-dl/music"
+
+# Wine 32-bit
+alias wine32="WINEPREFIX=$HOME/.wine32 WINEARCH=win32 wine"
+alias winetricks32="WINEPREFIX=$HOME/.wine32 WINEARCH=win32 winetricks"
