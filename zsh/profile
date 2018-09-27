@@ -205,6 +205,9 @@ autoload -Uz zmv
 # virtualenvwrapper is nice
 [[ -e /usr/bin/virtualenvwrapper_lazy.sh ]] && source /usr/bin/virtualenvwrapper_lazy.sh
 
+# pyenv is cool too
+which pyenv &>/dev/null && eval "$(pyenv init -)"
+
 # Autoquote URLs pasted in ZLE
 autoload -U url-quote-magic && {
   zle -N self-insert url-quote-magic
