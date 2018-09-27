@@ -52,7 +52,7 @@
     (schnouki/sd-notify (format "STATUS=Loading %s" file))
     (load file)))
 
-(defun schnouki/init-emacs--notify-ready ()
+(defun schnouki/init-emacs--notify-ready (&rest args)
   (schnouki/sd-notify "STATUS=Ready\nREADY=1"))
 
 
