@@ -30,6 +30,18 @@
 (alert (concat "Emacs " emacs-version " is loading…")
        :severity 'low
        :icon "emacs"
-       :title "Emacs")
+       :title "Emacs"
+       :id 'emacs-startup)
+
+(defvar schnouki/init-emacs--ready-alerted nil)
+(defun schnouki/init-emacs--alert-ready (&rest args)
+  (unless schnouki/init-emacs--ready-alerted
+    (alert (concat "Emacs " emacs-version" loaded!")
+	   :severity 'low
+	   :icon "emacs"
+	   :title "Emacs"
+	   :id 'emacs-startup)
+    (setq schnouki/init-emacs--ready-alerted t)))
+(advice-add 'server-start :after #'schnouki/init-emacs--alert-ready)
 
 ;;; init-15-package.el ends here
