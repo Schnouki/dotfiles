@@ -1532,9 +1532,12 @@ awful.rules.rules = {
                      placement = awful.placement.centered } },
 
     -- …or near the systray…
-    { rule = { class = "Keybase", width = 360, height = 500 },
+    { rule = { class = "Keybase", width = 360 },
       properties = { floating = true,
-                     placement = awful.placement.closest_corner } },
+                     border_width = 0,
+                     placement = awful.placement.closest_corner },
+      callback = hide_titlebar
+    },
 
     -- VirtualBox: TODO
     { rule = { class = "VirtualBox" },
