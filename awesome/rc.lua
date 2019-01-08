@@ -364,7 +364,7 @@ mymainmenu = awful.menu({ items = { { "&awesome", myawesomemenu, beautiful.aweso
                                     { "&screenshot", screenshotmenu },
                                     { "&wine", winemenu, icon_theme.get("apps", "wine") },
                                     menu_sep,
-                                    { "firefo&x developer", safe_cmd("firefox-developer"), icon_theme.get("apps", "firefox-developer", "/usr/share/pixmaps/firefox-developer-icon.png") },
+                                    { "firefo&x developer", safe_cmd("firefox-developer-edition"), icon_theme.get("apps", "firefox-developer-edition") },
                                     { "&chromium", safe_cmd("chromium"), icon_theme.get("apps", "chromium") },
                                     menu_sep,
                                     { "sp&otify", safe_cmd("spotify"), icon_theme.get("apps", "spotify-client") },
@@ -1453,6 +1453,7 @@ root.keys(globalkeys)
 
 -- {{{ Rules
 -- Rules to apply to new clients (through the "manage" signal).
+FIREFOX_CLASS = "Firefox Developer Edition"
 awful.rules.rules = {
     -- All clients will match this rule.
     { rule = { },
@@ -1502,21 +1503,20 @@ awful.rules.rules = {
       }, properties = { floating = true }},
 
     -- Add titlebars to dialogs and utility clients
-    { rule_any = {type = { "dialog", "utility" }
-      }, properties = { titlebars_enabled = true }
+    { rule_any = { type = { "dialog", "utility" } },
+      except_any = { class = FIREFOX_CLASS },
+      properties = { titlebars_enabled = true }
     },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
-    -- { rule = { class = "Firefox" },
+    -- { rule = { class = FIREFOX_CLASS },
     --   properties = { screen = 1, tag = "2" } },
 
     -- Firefox: only the main window isn't floating
-    { rule = { class = "Firefox" }, except = { instance = "Navigator" },
-      properties = { floating = true } },
-
-    -- Firefox: no titlebar for utility windows
-    { rule = { class = "Firefox", type = "utility" },
-      properties = { titlebars_enabled = false }
+    { rule = { class = FIREFOX_CLASS },
+      except = { instance = "Navigator" },
+      properties = { floating = true,
+                     titlebars_enabled = false }
     },
 
     -- Keep some applications on the last tag of the first screen
