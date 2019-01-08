@@ -205,7 +205,7 @@ end
 
 -- {{{ Volume control helper
 local function get_new_volume(initial_vol, percent)
-    local new_vol = initial_vol + percent
+    local new_vol = math.floor(initial_vol + percent + .5)
     local vol = math.tointeger(math.floor(new_vol / 100 * 0x10000))
     if vol > 0x10000 then vol = 0x10000 end
     if vol < 0 then vol = 0 end
