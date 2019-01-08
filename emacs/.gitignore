@@ -20,6 +20,7 @@ var/
 abbrev_defs
 amx-items
 ede-projects.el
+forge-database.sqlite
 image-dired
 network-security.data
 places

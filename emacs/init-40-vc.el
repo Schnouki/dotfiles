@@ -19,6 +19,9 @@
   :ensure magit
   :bind (("C-c C-<" . magit-blame)))
 
+(use-package forge
+  :ensure t)
+
 ;; git-annex
 (use-package git-annex
   :ensure t)
