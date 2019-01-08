@@ -289,6 +289,14 @@
   :config
   (global-hl-todo-mode))
 
+;; The all-language autocompleter
+(use-package company-tabnine
+  :ensure t
+  :commands company-tabnine
+  :init
+  (setq company-tabnine-binaries-folder "~/.local/share/TabNine")
+  (add-to-list 'company-backends #'company-tabnine))
+
 ;;; init-20-dev.el ends here
 
 ;; Local Variables:
