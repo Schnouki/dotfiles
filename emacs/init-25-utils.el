@@ -345,7 +345,7 @@ Return the index of the matching item, or nil if not found."
 ;; Google Translate
 (use-package google-translate
   :ensure t
-  :bind ("C-! w" . google-translate-query-translate)
+  :bind ("C-! W" . google-translate-query-translate)
   :init
   (setq google-translate-default-source-language "en"
 	google-translate-default-target-language "fr"
@@ -531,6 +531,15 @@ If third argument START is non-nil, convert words after that index in STRING."
   (interactive)
   (let ((inhibit-read-only t))
     (ansi-color-apply-on-region (point-min) (point-max))))
+
+;; Writeroom
+(use-package writeroom-mode
+  :ensure t
+  :bind (("C-! w " . writeroom-mode)
+	 :map writeroom-mode-map
+	 ("C-<kp-add>" . writeroom-increase-width)
+	 ("C-<kp-subtract>" . writeroom-decrease-width)
+	 ("C-=" . writeroom-adjust-width)))
 
 ;; Memory usage
 (use-package memory-usage
