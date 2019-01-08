@@ -122,7 +122,9 @@ symbol, use that mode instead."
   "Switch to a scratch buffer, letting the user decide its major mode.
 If PREFIX is not nil, force creating a new scratch buffer."
   (interactive "P")
-  (let* ((modes (--map (cdr it) auto-mode-alist))
+  (let* ((modes (->> auto-mode-alist
+		     (-map 'cdr)
+		     -distinct))
 	 (default-mode (symbol-name major-mode))
 	 (prompt (concat "Major mode (" default-mode "): "))
 	 (chosen-mode (completing-read prompt modes nil nil nil nil default-mode)))
@@ -391,8 +393,7 @@ Return the index of the matching item, or nil if not found."
   :bind ("C-! d" . deft)
   :init
   (setq deft-directory "~/Dropbox/deft"
-	deft-extension "org"
-	deft-text-mode 'org-mode
+	deft-extensions '("md" "org" "txt")
 	deft-use-filename-as-title t)
   (defun schnouki/deft--disable-dtw (orig-fun &rest args)
     (flet ((delete-trailing-whitespace))
@@ -530,5 +531,10 @@ If third argument START is non-nil, convert words after that index in STRING."
   (interactive)
   (let ((inhibit-read-only t))
     (ansi-color-apply-on-region (point-min) (point-max))))
+
+;; Memory usage
+(use-package memory-usage
+  :ensure t
+  :commands 'memory-usage)
 
 ;;; init-25-utils.el ends here
