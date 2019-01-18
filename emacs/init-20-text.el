@@ -21,4 +21,18 @@
 (use-package flycheck-grammalecte
   :ensure t)
 
+;; From https://stackoverflow.com/a/2478549/113325
+(defun unfill-paragraph ()
+  "Unfill paragraph at or after point."
+  (interactive)
+  (let ((fill-column (point-max)))
+    (fill-paragraph nil)))
+(bind-key "M-Q" 'unfill-paragraph)
+
+(defun unfill-region ()
+  "Unfill each of the paragraphs in the region."
+  (interactive)
+  (let ((fill-column (point-max)))
+    (fill-region (region-beginning) (region-end) nil)))
+
 ;;; init-20-text.el ends here
