@@ -665,8 +665,8 @@ end
 -- {{{       Client info
 -- Afficher des infos sur le client qui a le focus
 -- d'après http://github.com/MajicOne/awesome-configs/blob/master/rc.lua
-function win_info ()
-   local c = client.focus
+function win_info(c)
+   if c == nil then c = client.focus end
 
    -- Quick little short-circuit.
    if c == nil then return end
@@ -691,6 +691,22 @@ function win_info ()
    end
 
    naughty.notify({ text = text, timeout = 5, hover_timeout = 0.5 })
+end
+
+continuous_win_info = false
+function toggle_continuous_win_info()
+   local text = "Continuous win_info <b>"
+   if continuous_win_info then
+      client.disconnect_signal("focus", win_info)
+      continuous_win_info = false
+      text = text .. "disabled"
+   else
+      client.connect_signal("focus", win_info)
+      continuous_win_info = true
+      text = text .. "enabled"
+   end
+   text = text .. "</b>"
+   naughty.notify({ text=text})
 end
 -- }}}
 -- {{{       Mail info
@@ -1103,6 +1119,8 @@ persoclientkeys = {
              { description="toggle sticky", group="client" }),
    awful.key({ modkey, "Control" }, "i",           win_info,
              { description="show info", group="client" }),
+   awful.key({ modkey, "Control", "Shift"}, "i",   toggle_continuous_win_info,
+             { description="toggle continuous info", group="client" }),
    awful.key({ modkey            }, "KP_Add",      function (c) resize_client_ratio(1.1, c) end,
              { description="increase size by 10%", group="client" }),
    awful.key({ modkey            }, "KP_Subtract", function (c) resize_client_ratio(0.9, c) end,
