@@ -148,6 +148,10 @@ theme.titlebar_maximized_button_normal_active = "/usr/share/awesome/themes/zenbu
 theme.titlebar_maximized_button_focus_inactive  = "/usr/share/awesome/themes/zenburn/titlebar/maximized_focus_inactive.png"
 theme.titlebar_maximized_button_normal_inactive = "/usr/share/awesome/themes/zenburn/titlebar/maximized_normal_inactive.png"
 -- }}}
+
+-- {{{ Notifications
+theme.notification_icon_size = dpi(96)
+-- }}}
 -- }}}
 
 return theme
