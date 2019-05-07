@@ -186,8 +186,10 @@
   :diminish company-mode
   :config
   (setq company-backends (remove 'company-ropemacs company-backends)
-        company-tooltip-limit 20
-        company-tooltip-align-annotations t)
+        company-tooltip-limit 30
+        company-tooltip-align-annotations t
+	company-minimum-prefix-length 3
+	company-idle-delay 0.5)
   (global-company-mode 1))
 
 ;; Display the current function name in the mode line

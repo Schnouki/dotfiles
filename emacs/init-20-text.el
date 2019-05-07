@@ -19,7 +19,9 @@
 	guess-language-min-paragraph-length 40))
 
 (use-package flycheck-grammalecte
-  :ensure t)
+  :ensure t
+  :config
+  (add-to-list 'flycheck-disabled-checkers 'flycheck-grammalecte))
 
 ;; From https://stackoverflow.com/a/2478549/113325
 (defun unfill-paragraph ()

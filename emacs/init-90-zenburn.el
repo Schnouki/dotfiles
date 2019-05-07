@@ -3,8 +3,6 @@
 ;;; For nice gradients: https://vis4.net/blog/posts/avoid-equidistant-hsv-colors/
 ;;; Code:
 
-(use-package color-theme
-  :ensure t)
 (use-package zenburn-theme
   :ensure t
   :config
