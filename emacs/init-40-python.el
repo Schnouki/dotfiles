@@ -6,8 +6,11 @@
   :load-path "flycheck-local-flake8"
   :commands flycheck-local-flake8/flycheck-virtualenv-set-python-executables
   :init
-  (add-hook 'flycheck-before-syntax-check-hook
-	    #'flycheck-local-flake8/flycheck-virtualenv-set-python-executables 'local))
+  (defun schnouki/flycheck-local-flake8-wrapper ()
+    (when (and (buffer-file-name)
+	       (eq major-mode 'python-mode))
+      (flycheck-local-flake8/flycheck-virtualenv-set-python-executables)))
+  (add-hook 'flycheck-before-syntax-check-hook #'schnouki/flycheck-local-flake8-wrapper))
 
 (use-package anaconda-mode
   :ensure t
