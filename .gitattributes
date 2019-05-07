@@ -1,1 +1,2 @@
 *.gpg diff=gpg
+*.tar.gpg -text
