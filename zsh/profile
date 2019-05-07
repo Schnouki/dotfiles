@@ -51,7 +51,7 @@ else
     FMT_BRANCH="%F{magenta}%s:%F{blue}%b%B%F{magenta}%u%c%%b%F{default}"
     FMT_ACTION="(%F{blue}%a%F{default})"
 
-    zstyle ':vcs_info:*' check-for-changes true
+    [[ $(hostname) != "DS413j" ]] && zstyle ':vcs_info:*' check-for-changes true
     zstyle ':vcs_info:*' unstagedstr '*'
     zstyle ':vcs_info:*' stagedstr   '^'
     zstyle ':vcs_info:*' actionformats "${FMT_BRANCH}${FMT_ACTION} / "

@@ -37,6 +37,8 @@ alias ela="el -a"
 alias elt="el -s modified"
 alias elta="elt -a"
 
+alias zbarscreen="zbarimg <(maim -s)"
+
 # Correct options for xfig
 alias xfig='xfig -Portrait -specialtext -latexfonts -startlatexFont default'
 
@@ -89,3 +91,7 @@ alias ytmusicdl="youtube-dl --config-location ~/.config/youtube-dl/music"
 alias wine32="WINEPREFIX=$HOME/.wine32 WINEARCH=win32 wine"
 alias wineconsole32="WINEPREFIX=$HOME/.wine32 WINEARCH=win32 wineconsole"
 alias winetricks32="WINEPREFIX=$HOME/.wine32 WINEARCH=win32 winetricks"
+
+# Xinput stuff
+alias xinput_sgo_off='xinput set-prop "SynPS/2 Synaptics TouchPad" "Synaptics Gestures Only" 0'
+alias xinput_sgo_on='xinput set-prop "SynPS/2 Synaptics TouchPad" "Synaptics Gestures Only" 1'
