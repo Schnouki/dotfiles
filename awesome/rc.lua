@@ -1506,6 +1506,7 @@ awful.rules.rules = {
            "Smplayer",
            "Vlc",
            "Wine",
+           "zoom",
         },
 
         name = {
