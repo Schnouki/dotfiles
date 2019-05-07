@@ -1,6 +1,7 @@
 [user]
 	name = Thomas Jost
 	email = schnouki@schnouki.net
+	signingkey = 3E0B0C49C0478597
 [push]
 	default = simple
 [color]
