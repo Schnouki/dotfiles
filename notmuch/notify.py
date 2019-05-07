@@ -24,7 +24,7 @@ with open(os.path.expanduser("~/.notmuch-config")) as ini:
 exc_tags = config["search"].get("exclude_tags", "").split(";")
 
 db = notmuch.Database(mode=notmuch.Database.MODE.READ_ONLY)
-q = notmuch.Query(db, "tag:unread or tag:todo")
+q = notmuch.Query(db, "(tag:unread or tag:todo) and date:24h.. and not tag:ml")
 q.set_sort(notmuch.Query.SORT.NEWEST_FIRST)
 for tag in exc_tags:
     q.exclude_tag(tag.strip())
