@@ -223,6 +223,12 @@
   :ensure t
   :mode "\\.exs?\\'")
 
+(use-package caddyfile-mode
+  :load-path "~/dev/caddyfile-mode"
+  :mode (("Caddyfile\\'" . caddyfile-mode)
+	 ("caddy\\.conf\\'" . caddyfile-mode)))
+
+
 ;; -----------------------------------------------------------------------------
 ;; Minor modes
 ;; -----------------------------------------------------------------------------
