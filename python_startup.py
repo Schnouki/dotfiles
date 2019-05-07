@@ -3,7 +3,8 @@
 # Source: http://sametmax.com/nouveau-fichier-de-start-up-python/
 
 # faut que ça marche pareil en P2 et P3
-from __future__ import unicode_literals, print_function, absolute_import
+#from __future__ import unicode_literals, print_function, absolute_import
+from __future__ import print_function, absolute_import
 
 # Les imports des modules de la libs standars que j'utilise le plus
 # car à force çe me gave de les réimporter moi-même à chaque session
