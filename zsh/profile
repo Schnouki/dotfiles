@@ -106,6 +106,9 @@ else
         fi
         export ps1_path
     }
+
+    # Display a fortune
+    [[ -o interactive ]] && [[ -e "$(which sfortune)" ]] && sfortune
 fi
 
 ##### Completion
