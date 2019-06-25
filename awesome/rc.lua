@@ -1016,11 +1016,12 @@ function volume_mute() brutal.pulse.toggle() vicious.force({vol_widget}) end
 function volume_update() vicious.force({ vol_widget }) end
 function volume_music_up()   brutal.pulse.add_role( 5, "music") notify_volume() end
 function volume_music_down() brutal.pulse.add_role(-5, "music") notify_volume() end
+function volume_menu() brutal.pulse.menu(volume_update):toggle() end
 
 vol_widget:buttons(awful.util.table.join(
        awful.button({ }, 1, function () awful.spawn("pavucontrol") end),
        awful.button({ }, 2, volume_mute),
-       awful.button({ }, 3, function () brutal.pulse.menu(volume_update):toggle() end),
+       awful.button({ }, 3, volume_menu),
        awful.button({ }, 4, volume_up),
        awful.button({ }, 5, volume_down),
        awful.button({ "Shift" }, 4, volume_music_up),
@@ -1043,6 +1044,7 @@ persokeys = {
    awful.key({ "Shift" }, "XF86AudioLowerVolume", volume_music_down),
    awful.key({ modkey, "Shift" }, "Up",           volume_music_up,   {description="raise music volume", group="audio"}),
    awful.key({ modkey, "Shift" }, "Down",         volume_music_down, {description="lower music volume", group="audio"}),
+   awful.key({ modkey, "Shift" }, "p",            volume_menu,       {description="volume menu",  group="audio"}),
 
    -- Luminosité
    awful.key({ }, "XF86MonBrightnessUp",   function () change_backlight( 5) end),

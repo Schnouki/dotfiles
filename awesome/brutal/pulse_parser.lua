@@ -46,6 +46,13 @@ local profile_line = Cg(TAB * TAB * profile_ident * SP^1 * Ct(profile_value) * L
 local profile_lines = Cf(Ct("") * profile_line^1, rawset)
 local profile_active = TAB * "active profile: <" * C((1 - S">")^1) * ">" * LF
 
+local card_sink_header = TAB * "sinks:" * LF
+local card_sink_name = C((1 - P"/")^1) * "/"
+local card_sink_index = "#" * C((1 - P": ")^1) * ":"
+local card_sink_value = Cg(card_sink_index, "index") * SP^1 * Cg(REST, "desc")
+local card_sink_line = Cg(TAB * TAB * card_sink_name * Ct(card_sink_value) * LF)
+local card_sink_lines = Cf(Ct("") * card_sink_line^1, rawset)
+
 local sink = Ct(Cg(sink_index, "index") *
                    Cg(attrs, "attr") *
                    prop_header *
@@ -62,7 +69,8 @@ local card = Ct(Cg(sink_index, "index") *
                    profile_header *
                    Cg(profile_lines, "profile") *
                    Cg(profile_active, "active_profile") *
-                   sinks^0 *
+                   card_sink_header *
+                   Cg(card_sink_lines, "sinks") *
                    sources^0 *
                    ports^-1)
 

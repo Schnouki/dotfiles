@@ -30,6 +30,7 @@ local awful = require("awful")
 local icon_theme = require("icon_theme")
 
 local parser = require("brutal/pulse_parser")
+local __ = require("underscore")
 -- }}}
 
 
@@ -104,7 +105,7 @@ local function get_sink_inputs_by_role(role)
     for _, sink in ipairs(all_sinks) do
         if sink.prop["media.role"] == role then
             -- Parse volume
-            mtch = string.match(sink.attr.volume, "[%a-]+: (%d+)")
+            local mtch = string.match(sink.attr.volume, "[%a-]+: (%d+)")
             if mtch ~= nil then
                 sink.volume = tonumber(mtch) / 0x10000 * 100
             end
@@ -114,9 +115,36 @@ local function get_sink_inputs_by_role(role)
     return sinks
 end
 
-local function profile_setter(card_id, profile_id, callback)
+local function profile_setter(card, profile_id, callback)
     return function()
-        pacmd("set-card-profile " .. card_id .. " " .. profile_id)
+        local card_name = string.match(card.attr.name, "<(.+)>")
+
+        -- Find inputs currently using this card
+        local card_inputs = {}
+        local input
+        for _, input in ipairs(get_sink_inputs()) do
+            local sink = string.match(input.attr.sink, "<(.*)>")
+            if sink and card["sinks"][sink] then
+                table.insert(card_inputs, input.index)
+            end
+        end
+
+        -- Set profile
+        pacmd("set-card-profile " .. card_name .. " " .. profile_id)
+
+        -- Get the new sink name
+        local new_sink_name = __.chain(get_cards())
+            :find(function(c) return c.index == card.index end)
+            :result("sinks")
+            :keys()
+            :first()
+            :value()
+
+        -- Now move all inputs on this card to the correct sink
+        for _, input in ipairs(card_inputs) do
+            pacmd("move-sink-input " .. input .. " " .. new_sink_name)
+        end
+
         callback()
     end
 end
@@ -141,7 +169,7 @@ local function get_profiles_menu(callback)
         for _, profile in ipairs(profiles) do
             if profile.active then prefix = "✓ " else prefix = "   " end
             table.insert(profiles_menu, { prefix .. profile.name,
-                                          profile_setter(card.index, profile.id, callback) })
+                                          profile_setter(card, profile.id, callback) })
         end
         profiles_menu.theme = { width = 400 }
         table.insert(menu, { card_name, profiles_menu, get_icon(card_icon) })
@@ -152,6 +180,15 @@ end
 local function sink_setter(sink, callback)
     return function()
         pacmd("set-default-sink " .. sink)
+
+        local inputs = get_sink_inputs()
+        local input
+        for _, input in ipairs(inputs) do
+            if not string.match(input.attr.sink, "^" .. sink .. " <.*>") then
+                pacmd("move-sink-input " .. input.index .. " " .. sink)
+            end
+        end
+
         callback()
     end
 end
