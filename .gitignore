@@ -47,7 +47,6 @@ gtk-3.0/bookmarks
 !notmuch
 !systemd
 !terminator
-!tmuxp
 !urxvt
 !youtube-dl
 !zsh
