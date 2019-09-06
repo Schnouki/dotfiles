@@ -48,10 +48,10 @@ for thr in q.search_threads():
 
     from_ = thr.get_authors()
     from_ = from_.split("|", 1)[0]
-    from_ = from_.replace("\t", " ")
+    from_ = from_.replace("\t", " ").strip()
 
     subj_ = thr.get_subject() or "(no subject)"
-    subj_ = subj_.replace("\t", " ")
+    subj_ = subj_.replace("\t", " ").strip()
 
     lf = len(from_)
     if lf > MAX_FROM_LEN:
@@ -72,7 +72,7 @@ for thr in q.search_threads():
     subj_ = subj_.replace('&', '&amp;').replace(
         '<', '&lt;').replace('>', '&gt;')
     tags = [tag.replace('&', '&amp;').replace(
-        '<', '&lt;').replace('>', '&gt;') for tag in tags]
+        '<', '&lt;').replace('>', '&gt;').strip() for tag in tags]
     tags = ["<b>" + tag +
             "</b>" if tag in ("unread", "todo") else tag for tag in tags]
     tags = " ".join(tags)
