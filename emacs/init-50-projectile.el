@@ -4,18 +4,26 @@
 
 (use-package projectile
   :ensure t
-  :init
-  (setq projectile-keymap-prefix (kbd "s-!")
-        projectile-mode-line '(:eval
-                              (if
-                                  (file-remote-p default-directory)
-                                  " Projectile"
-                                (format " Pj[%s]"
-                                        (projectile-project-name)))))
   :config
+  (setq projectile-enable-caching t
+	projectile-sort-order 'recently-active)
+
+  ;; Mode line
+  (defun schnouki/projectile-mode-line ()
+    (if (file-remote-p default-directory)
+	" Pj"
+      (format " Pj[%s]" (projectile-project-name))))
+  (setq projectile-mode-line-function 'schnouki/projectile-mode-line)
+
+  ;; Ignore suffixes
   (--each '(".pyc" ".o" ".so" "~" "#" ".min.js")
     (add-to-list 'projectile-globally-ignored-file-suffixes it))
-  (bind-key "s s" 'projectile-ripgrep 'projectile-command-map)
+
+  ;; Keybindings
+  (bind-key "s-!" 'projectile-command-map projectile-mode-map)
+  (bind-key "s-/" 'projectile-command-map projectile-mode-map)
+  (bind-key "s s" 'deadgrep 'projectile-command-map)
+  (bind-key "b" 'projectile-ibuffer schnouki-prefix-map)
 
   ;; Set virtualenv packages as Projectile projects -- based on
   ;; https://github.com/bbatsov/projectile/issues/364#issuecomment-61296248 and
@@ -54,5 +62,28 @@
   :ensure t
   :commands ripgrep-regexp)
 
+(use-package deadgrep
+  :ensure t
+  :commands deadgrep
+  :config
+  (defun schnouki/deadgrep--guess-type ()
+    (let* ((deadgrep-types (deadgrep--type-list))
+       (ext-to-type (--mapcat (let ((type-name (car it))
+				    (exts (cadr it)))
+				(--map (cons
+					(s-chop-prefix "*." it)
+					type-name)
+				       exts))
+			      deadgrep-types))
+       (file-ext (s-chop-prefix "." (url-file-extension (buffer-name)))))
+      (cdr (assoc file-ext ext-to-type))))
+  (defun schnouki/deadgrep--auto-guess-type (orig-fun &rest args)
+    (let* ((guessed-type (schnouki/deadgrep--guess-type))
+	   (new-type (if guessed-type
+			 (cons 'type guessed-type)
+		       deadgrep--file-type)))
+      (let ((deadgrep--file-type new-type))
+	(apply orig-fun args))))
+  (advice-add 'deadgrep :around #'schnouki/deadgrep--auto-guess-type))
 
 ;;; init-50-projectile.el ends here
