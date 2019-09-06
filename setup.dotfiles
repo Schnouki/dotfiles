@@ -6,7 +6,7 @@ for F in hook.*; do
 done
 
 # Setup dotfiles
-for F in ctags gitconfig globalrc guile psqlrc tmux.conf Xresources xinitrc; do
+for F in ctags gitconfig globalrc guile psqlrc tmux.conf Xmodmap Xresources xinitrc; do
     setup_file_symlink "$F" ".$F"
 done
 for D in imapfilter; do
