@@ -37,4 +37,31 @@
   (let ((fill-column (point-max)))
     (fill-region (region-beginning) (region-end) nil)))
 
+;; Visual line + visual fill column modes
+(defun schnouki/toggle-visual-line-mode ()
+  "Toggle Visual Line and Visual Fill Column modes in the current buffer."
+  (interactive)
+  (cond (visual-line-mode
+	 (message "Disabling Visual Line & Visual Fill Column modes.")
+	 (visual-fill-column-mode -1)
+	 (visual-line-mode -1))
+	(t
+	 (message "Enabling Visual Line & Visual Fill Column modes.")
+	 (visual-line-mode 1)
+	 (visual-fill-column-mode 1))))
+
+(defun schnouki/set-visual-fill-column-width (width)
+  "Set the Visual Fill Column to `WIDTH' in the current buffer.
+
+If called without a prefix argument, the current column is used
+as the new width."
+  (interactive "NFill column: ")
+  (message (format "New column width: %d" (or width (current-column))))
+  (setq visual-fill-column-width (or width (current-column)))
+  (visual-fill-column--adjust-window))
+
+(bind-keys :map schnouki-prefix-map
+	   ("v" . schnouki/toggle-visual-line-mode)
+	   ("V" . schnouki/set-visual-fill-column-width))
+
 ;;; init-20-text.el ends here
