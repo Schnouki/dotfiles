@@ -31,3 +31,7 @@
 	gpgSign = true
 [magit]
 	hideCampaign = true
+[github]
+	user = Schnouki
+[gitlab]
+	user = Schnouki
