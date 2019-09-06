@@ -293,9 +293,4 @@
 ;; Viewers
 (mailcap-add "image/.*" "geeqie %s" '(eq window-system 'x))
 
-;; Other communication services :)
-(use-package twittering-mode
-  :ensure t
-  :commands (twit twittering-mode))
-
 ;;; init-50-mail.el ends here

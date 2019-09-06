@@ -426,17 +426,6 @@ A buffer is considered killable if it is not modified and either visits a file, 
   :config
   (volatile-highlights-mode t))
 
-;; Google thing under point
-(use-package google-this
-  :ensure t
-  :diminish google-this-mode
-  :init
-  (progn
-    (setq google-this-keybind (kbd "C-! g")))
-  :config
-  (progn
-    (google-this-mode 1)))
-
 ;; Google Translate
 (use-package google-translate
   :ensure t
@@ -446,34 +435,6 @@ A buffer is considered killable if it is not modified and either visits a file, 
   (setq google-translate-default-source-language "en"
 	google-translate-default-target-language "fr"
 	google-translate-enable-ido-completion t))
-
-;; Other search engines :)
-(use-package engine-mode
-  :ensure t
-  :config
-  (progn
-    (engine/set-keymap-prefix (kbd "C-! C-!"))
-    (setq engine/browser-function 'eww-browse-url)
-    (defengine duckduckgo
-      "https://duckduckgo.com/html/?q=%s"
-      :keybinding "d")
-    (defengine rfcs
-      "http://pretty-rfc.herokuapp.com/search?q=%s")
-    (defengine stack-overflow
-      "https://stackoverflow.com/search?q=%s"
-      :keybinding "s")
-    (defengine wikipedia
-      "http://www.wikipedia.org/search-redirect.php?language=fr&go=Go&search=%s"
-      :keybinding "w"
-      :docstring "Search Wikipedia FR")
-    (defengine wikipedia
-      "http://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s"
-      :keybinding "W"
-      :docstring "Search Wikipedia EN")
-    (defengine wolfram-alpha
-      "http://www.wolframalpha.com/input/?i=%s"
-      :keybinding "a")
-    (engine-mode 1)))
 
 ;; NSFW
 (use-package sudoku
