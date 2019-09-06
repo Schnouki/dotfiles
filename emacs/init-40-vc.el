@@ -4,8 +4,12 @@
 
 (use-package magit
   :ensure t
-  :bind (("C-<"   . magit-status)
-	 ("C-M-<" . vc-git-grep))
+  :bind (("C-<"      . magit-status)
+	 ("C-\\"     . magit-status)
+	 ("C-c C-<"  . magit-blame)
+	 ("C-c C-\\" . magit-blame)
+	 ("C-M-<"    . vc-git-grep)
+	 ("C-M-\\"   . vc-git-grep))
   :demand t
   :init
   (setq magit-process-popup-time -1
@@ -14,10 +18,6 @@
         magit-revert-buffers 'silent
         magit-push-always-verify nil
         vc-follow-symlinks t))
-
-(use-package magit-blame
-  :ensure magit
-  :bind (("C-c C-<" . magit-blame)))
 
 (use-package forge
   :ensure t)

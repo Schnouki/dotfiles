@@ -261,8 +261,9 @@
 
 ;; Load notmuch!
 (use-package notmuch
-  :bind (("C-! n" . notmuch)
-	 ("C-! m" . notmuch-mua-new-mail)
+  :bind (:map schnouki-prefix-map
+	 ("n" . notmuch)
+	 ("m" . notmuch-mua-new-mail)
 	 ;; Show-mode keybindings
 	 :map notmuch-show-mode-map
 	 ("b" . schnouki/notmuch-show-bounce)

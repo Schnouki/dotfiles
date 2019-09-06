@@ -16,7 +16,8 @@
   :bind (("C-h f" . helpful-callable)
 	 ("C-h v" . helpful-variable)
 	 ("C-h k" . helpful-key)
-	 ("C-! ." . helpful-at-point))
+	 :map schnouki-prefix-map
+	 ("." . helpful-at-point))
   :init
   (setq counsel-describe-function-function 'helpful-callable
 	counsel-describe-variable-function 'helpful-variable))
@@ -249,7 +250,8 @@ Return the index of the matching item, or nil if not found."
   :ensure t
   :commands (ivy-mode)
   :diminish ivy-mode
-  :bind (("C-! r " . ivy-resume))
+  :bind (:map schnouki-prefix-map
+	 ("r " . ivy-resume))
   :config
   (setq ivy-magic-tilde nil
 	ivy-re-builders-alist '((t . ivy--regex-ignore-order))
@@ -274,14 +276,16 @@ Return the index of the matching item, or nil if not found."
 	 ("C-h l" . counsel-find-library)
 	 ("C-h S" . counsel-info-lookup-symbol)
 	 ("C-x 8 RET" . counsel-unicode-char)
-	 ("C-! s" . counsel-rg)))
+	 :map schnouki-prefix-map
+	 ("s" . counsel-rg)))
 
 
 ;; rg / riprep
 (use-package rg
   :ensure t
-  :bind (("C-! <"    . rg-project)
-	 ("C-! M-< " . rg)))
+  :bind (:map schnouki-prefix-map
+	 ("<"    . rg-project)
+	 ("M-< " . rg)))
 
 ;; wgrep
 (use-package wgrep
@@ -345,7 +349,8 @@ Return the index of the matching item, or nil if not found."
 ;; Google Translate
 (use-package google-translate
   :ensure t
-  :bind ("C-! W" . google-translate-query-translate)
+  :bind (:map schnouki-prefix-map
+	 ("W" . google-translate-query-translate))
   :init
   (setq google-translate-default-source-language "en"
 	google-translate-default-target-language "fr"
@@ -390,7 +395,8 @@ Return the index of the matching item, or nil if not found."
 ;; Deft
 (use-package deft
   :ensure t
-  :bind ("C-! d" . deft)
+  :bind (:map schnouki-prefix-map
+	 ("d" . deft))
   :init
   (setq deft-directory "~/Dropbox/deft"
 	deft-extensions '("md" "org" "txt")
@@ -426,10 +432,20 @@ If third argument START is non-nil, convert words after that index in STRING."
 ;; Increment number at point
 (use-package evil-numbers
   :ensure t
-  :bind (("C-! +"             . evil-numbers/inc-at-pt)
-	 ("C-! <kp-add>"      . evil-numbers/inc-at-pt)
-	 ("C-! -"             . evil-numbers/dec-at-pt)
-	 ("C-! <kp-subtract>" . evil-numbers/dec-at-pt)))
+  :commands (evil-numbers/inc-at-pt
+	     evil-numbers/dec-at-pt)
+  :init
+  (defhydra hydra-evil-numbers ()
+    "evil numbers:"
+    ("="             evil-numbers/inc-at-pt "increase")
+    ("<kp-add>"      evil-numbers/inc-at-pt "increase")
+    ("-"             evil-numbers/dec-at-pt "decrease")
+    ("<kp-subtract>" evil-numbers/dec-at-pt "decrease"))
+  (bind-keys :map schnouki-prefix-map
+	     ("="             . hydra-evil-numbers/evil-numbers/inc-at-pt)
+	     ("<kp-add>"      . hydra-evil-numbers/evil-numbers/inc-at-pt)
+	     ("-"             . hydra-evil/numbers/evil-numbers/dec-at-pt)
+	     ("<kp-subtract>" . hydra-evil/numbers/evil-numbers/dec-at-pt)))
 
 ;; Shrink whitespaces
 ;; http://pragmaticemacs.com/emacs/delete-blank-lines-and-shrink-whitespace/
@@ -497,7 +513,8 @@ If third argument START is non-nil, convert words after that index in STRING."
 ;; Weather
 (use-package wttrin
   :ensure t
-  :bind ("C-! x" . wttrin)
+  :bind (:map schnouki-prefix-map
+	 ("x" . wttrin))
   :init
   (setq wttrin-default-cities '("Nancy" "Forbach" "Paris")))
 
@@ -535,7 +552,8 @@ If third argument START is non-nil, convert words after that index in STRING."
 ;; Writeroom
 (use-package writeroom-mode
   :ensure t
-  :bind (("C-! w " . writeroom-mode)
+  :bind (:map schnouki-prefix-map
+	 ("w" . writeroom-mode)
 	 :map writeroom-mode-map
 	 ("C-<kp-add>" . writeroom-increase-width)
 	 ("C-<kp-subtract>" . writeroom-decrease-width)

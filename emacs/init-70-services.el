@@ -4,7 +4,8 @@
 
 (use-package prodigy
   :ensure t
-  :bind ("C-! p" . prodigy)
+  :bind (:map schnouki-prefix-map
+	 ("p" . prodigy))
   :config
   (let ((blogdir (expand-file-name "~/blog")))
     (prodigy-define-service

@@ -3,11 +3,13 @@
 ;;; Code:
 
 (use-package org
+  :ensure t
+  :pin gnu
   :mode ("\\.org\\'" . org-mode)
-  :bind (("C-! l" . org-store-link)
-	 ("C-! a" . org-agenda)
-	 ("C-! b" . org-iswitchb)
-	 ("C-! t" . schnouki/org-agenda-and-todo-list))
+  :bind (:map schnouki-prefix-map
+	 ("l" . org-store-link)
+	 ("a" . org-agenda)
+	 ("t" . schnouki/org-agenda-and-todo-list))
   :config
   (bind-key "C-M-g" 'org-plot/gnuplot org-mode-map)
   (add-to-list 'org-babel-load-languages '(ditaa . t))

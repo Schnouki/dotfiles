@@ -4,7 +4,8 @@
 
 (use-package easy-hugo
   :ensure t
-  :bind ("C-! e" . easy-hugo)
+  :bind (:map schnouki-prefix-map
+	 ("e" . easy-hugo))
   :init
   (setq easy-hugo-basedir "~/blog/"
 	easy-hugo-url "https://schnouki.net"

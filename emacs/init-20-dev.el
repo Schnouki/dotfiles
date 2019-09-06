@@ -151,7 +151,7 @@
 
 ;; Default compilation commands
 (setq-default compile-command "make") ;; I don't want "make -k"
-(bind-key "C-! c" 'compile)
+(bind-key "c" 'compile schnouki-prefix-map)
 
 ;; Compilation: scroll the *compilation* buffer window as output appears, but
 ;; stop scrolling at the first error
