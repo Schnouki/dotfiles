@@ -20,7 +20,10 @@
         vc-follow-symlinks t))
 
 (use-package forge
-  :ensure t)
+  :ensure t
+  :after magit
+  :config
+  (setq forge-add-pullreq-refspec 'ask))
 
 ;; git-annex
 (use-package git-annex
@@ -46,7 +49,7 @@
 ;; TODOs
 (use-package magit-todos
   :ensure t
-  :defer t
+  :after magit
   :config
   (magit-todos-mode t))
 

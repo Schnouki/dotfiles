@@ -228,6 +228,9 @@
   :mode (("Caddyfile\\'" . caddyfile-mode)
 	 ("caddy\\.conf\\'" . caddyfile-mode)))
 
+(use-package d-mode
+  :ensure t)
+
 
 ;; -----------------------------------------------------------------------------
 ;; Minor modes
@@ -255,5 +258,9 @@
 ;; eldoc-mode
 (dolist (hook '(emacs-lisp-mode-hook lisp-mode-hook python-mode-hook))
   (add-hook hook 'eldoc-mode))
+
+;; Format JSON / JSONlines with JQ
+(use-package jq-format
+  :ensure t)
 
 ;;; init-30-modes.el ends here

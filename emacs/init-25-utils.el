@@ -368,7 +368,12 @@ A buffer is considered killable if it is not modified and either visits a file, 
 	 ("C-h S" . counsel-info-lookup-symbol)
 	 ("C-x 8 RET" . counsel-unicode-char)
 	 :map schnouki-prefix-map
-	 ("s" . counsel-rg)))
+	 ("s" . counsel-rg))
+  :init
+  (setq counsel-find-file-ignore-regexp
+	(rx (or (: bos (or "." "#"))
+		(: (or "#" "~") eos)
+		(: ".pyc" eos)))))
 
 
 ;; rg / riprep
@@ -510,6 +515,7 @@ If third argument START is non-nil, convert words after that index in STRING."
   :ensure t
   :defer t
   :init
+  (setq emojify-point-entered-behaviour 'uncover)
   (add-hook 'after-init-hook #'global-emojify-mode))
 
 (use-package emojify-logos
@@ -615,5 +621,9 @@ If third argument START is non-nil, convert words after that index in STRING."
 (use-package memory-usage
   :ensure t
   :commands 'memory-usage)
+
+;; Generate UUIDs
+(use-package uuidgen
+  :ensure t)
 
 ;;; init-25-utils.el ends here

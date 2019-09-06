@@ -5,6 +5,7 @@
 (use-package yasnippet
   :ensure t
   :defer 15
+  :diminish yas-minor-mode
   :config
   (progn
     ;; Snippets dir:

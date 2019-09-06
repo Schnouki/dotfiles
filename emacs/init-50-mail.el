@@ -96,9 +96,14 @@
     (completing-read
      prompt (cons initial-input collection) nil nil nil 'notmuch-address-history)))
 
+(autoload 'browse-url-interactive-arg "browse-url")
 (defun notmuch-mua-mail-url (url &optional ignored)
   (interactive (browse-url-interactive-arg "Mailto URL: "))
-  (let* ((alist (rfc2368-parse-mailto-url url))
+  (let* ((decoded-url (with-temp-buffer
+			(save-excursion (insert url))
+			(require 'xml)
+			(xml-parse-string)))
+	 (alist (rfc2368-parse-mailto-url decoded-url))
 	 (to (assoc "To" alist))
 	 (subject (assoc "Subject" alist))
 	 (body (assoc "Body" alist))

@@ -11,6 +11,7 @@ elpa/
 emojis/
 eshell/
 url/
+transient/
 var/
 
 .emacs.desktop

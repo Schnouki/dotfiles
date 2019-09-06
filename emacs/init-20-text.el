@@ -21,6 +21,7 @@
 (use-package flycheck-grammalecte
   :ensure t
   :config
+  (setq flycheck-grammalecte-download-without-asking t)
   (add-to-list 'flycheck-disabled-checkers 'flycheck-grammalecte))
 
 ;; From https://stackoverflow.com/a/2478549/113325
