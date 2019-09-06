@@ -64,3 +64,9 @@ function transfer() {
     echo ""
 }
 alias transfer=transfer
+
+# View a Markdown file using terminal_markdown_viewer
+function mdless() {
+    mdv "$@" | less -rm
+}
+alias mdless=mdless
