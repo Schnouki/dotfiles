@@ -115,6 +115,21 @@ local function get_sink_inputs_by_role(role)
     return sinks
 end
 
+local function get_default_card()
+    local dump = get_pacmd_dump()
+    local sink_name = dump.default
+
+    local card = __.chain(get_cards())
+        :find(function(c)
+                return __.chain(c["sinks"])
+                    :keys()
+                    :contains(sink_name)
+                    :value()
+             end)
+        :value()
+    return card
+end
+
 local function profile_setter(card, profile_id, callback)
     return function()
         local card_name = string.match(card.attr.name, "<(.+)>")
@@ -148,30 +163,36 @@ local function profile_setter(card, profile_id, callback)
         callback()
     end
 end
+local function get_card_profiles_menu(card, callback)
+    local profiles = {}
+    local profiles_menu = {}
+    local profile_id, profile
+    for profile_id, profile in pairs(card.profile) do
+        table.insert(profiles, {
+                         id = profile_id,
+                         name = profile.name,
+                         prio = profile.priority,
+                         active = card.active_profile == profile_id
+        })
+    end
+    table.sort(profiles, function(a, b) return a.prio > b.prio end)
+    for _, profile in ipairs(profiles) do
+        local prefix = "   "
+        if profile.active then prefix = "✓ " end
+        table.insert(profiles_menu, { prefix .. profile.name,
+                                      profile_setter(card, profile.id, callback) })
+    end
+    profiles_menu.theme = { width = 400 }
+    return profiles_menu
+end
 local function get_profiles_menu(callback)
-    local card, prefix, profile_id, profile
     local cards = get_cards()
-    local menu = { }
+    local menu = {}
+    local card
     for _, card in ipairs(cards) do
         local card_name = card.prop["device.description"]
         local card_icon = card.prop["device.icon_name"]
-        local profiles = {}
-        local profiles_menu = {}
-        for profile_id, profile in pairs(card.profile) do
-            table.insert(profiles, {
-                             id = profile_id,
-                             name = profile.name,
-                             prio = profile.priority,
-                             active = card.active_profile == profile_id
-            })
-        end
-        table.sort(profiles, function(a, b) return a.prio > b.prio end)
-        for _, profile in ipairs(profiles) do
-            if profile.active then prefix = "✓ " else prefix = "   " end
-            table.insert(profiles_menu, { prefix .. profile.name,
-                                          profile_setter(card, profile.id, callback) })
-        end
-        profiles_menu.theme = { width = 400 }
+        local profiles_menu = get_card_profiles_menu(card, callback)
         table.insert(menu, { card_name, profiles_menu, get_icon(card_icon) })
     end
     return menu
@@ -289,9 +310,11 @@ end
 
 -- {{{ Menu builder
 function pulse.menu(callback)
+    local default_card = get_default_card()
     local menu_items = {
-        { "Profiles",     get_profiles_menu(callback) },
-        { "Default sink", get_sinks_menu(callback) }
+        { "Default sink",  get_sinks_menu(callback) },
+        { "Card profiles", get_card_profiles_menu(default_card, callback) },
+        { "All profiles",  get_profiles_menu(callback) }
     }
     return awful.menu({ items = menu_items })
 end
