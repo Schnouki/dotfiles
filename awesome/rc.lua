@@ -263,7 +263,7 @@ local function menu_screen_text()
 end
 
 screenmenu = {
-    { "&auto",     function() auto_set_screen("above") end },
+    { "&auto",     function() auto_set_screen("left-of") end },
     { "&clone",    "xrandr --output LVDS-1 --auto --output " .. ext_screen .. " --auto --same-as LVDS-1" },
     { "&left of",  "xrandr --output LVDS-1 --auto --output " .. ext_screen .. " --auto --left-of LVDS-1" },
     { "&right of", "xrandr --output LVDS-1 --auto --output " .. ext_screen .. " --auto --right-of LVDS-1" },
@@ -369,6 +369,7 @@ mymainmenu = awful.menu({ items = { { "&awesome", myawesomemenu, beautiful.aweso
                                     menu_sep,
                                     { "sp&otify", safe_cmd("spotify"), icon_theme.get("apps", "spotify-client") },
                                     { "&gmpc", safe_cmd("gmpc"), icon_theme.get("apps", "gmpc") },
+                                    { "mellowpla&yer", safe_cmd("MellowPlayer"), icon_theme.get("apps", "mellowplayer") },
                                     { "&netflix", "chromium https://www.netflix.com/", icon_theme.get("apps", "netflix") },
                                     { "&popcorn time", safe_cmd("popcorntime"), icon_theme.get("apps", "popcorntime", "/usr/share/pixmaps/popcorntime.png") },
                                     menu_sep,
@@ -706,7 +707,7 @@ function toggle_continuous_win_info()
       text = text .. "enabled"
    end
    text = text .. "</b>"
-   naughty.notify({ text=text})
+   naughty.notify({ text=text })
 end
 -- }}}
 -- {{{       Mail info
@@ -1632,7 +1633,16 @@ client.connect_signal("property::floating", function(c)
 end)
 
 client.connect_signal("property::fullscreen", function(c)
-    hide_titlebar(c)
+    if c.fullscreen then
+       c._nofs_titlebar = titlebar_visible(c)
+       if c._nofs_titlebar then
+          hide_titlebar(c)
+          local new_geom = awful.placement.maximize(c)
+          c:geometry(new_geom)
+       end
+    elseif c._nofs_titlebar then
+       show_titlebar(c)
+    end
 end)
 
 -- Enable sloppy focus, so that focus follows mouse.
