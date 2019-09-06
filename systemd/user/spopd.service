@@ -1,0 +1,9 @@
+[Unit]
+Description=Spop: a Spotify client daemon
+After=network.target sound.target
+
+[Service]
+ExecStart=/usr/bin/spopd -d
+
+[Install]
+WantedBy=default.target
