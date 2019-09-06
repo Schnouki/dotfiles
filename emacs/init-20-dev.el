@@ -189,7 +189,15 @@
         company-tooltip-limit 30
         company-tooltip-align-annotations t
 	company-minimum-prefix-length 3
-	company-idle-delay 0.5)
+	company-idle-delay 0.5
+	company-show-numbers t)
+  ;; Use the tab-and-go frontend.
+  ;; Allows TAB to select and complete at the same time.
+  (company-tng-configure-default)
+  (setq company-frontends
+	'(company-tng-frontend
+	  company-pseudo-tooltip-frontend
+	  company-echo-metadata-frontend))
   (global-company-mode 1))
 
 ;; Display the current function name in the mode line
@@ -248,6 +256,12 @@
 (use-package restclient
   :ensure t
   :commands restclient-mode)
+(use-package company-restclient
+  :ensure t
+  :commands company-restclient
+  :init
+  (with-eval-after-load 'restclient
+    (add-to-list 'company-backends 'company-restclient)))
 
 ;; Stop Unicode trolls (probably useless, hence commented out)
 (use-package unicode-troll-stopper
