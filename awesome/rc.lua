@@ -311,11 +311,14 @@ local function screenshot(mode)
    os.execute("mimeo " .. fullname)
 end
 screenshotmenu = {
-   { "&Open dir", "geeqie " .. os.getenv("HOME") .. "/Dropbox/Public/Screenshots" },
+   { "&Open screenshots dir", "geeqie " .. os.getenv("HOME") .. "/Dropbox/Public/Screenshots" },
    { "&Full screen", screenshot },
    { "&Active window", function() screenshot("active_window") end },
    { "&Selection", function() screenshot("selection") end },
 }
+local function show_screenshot_menu()
+   awful.menu({ items = screenshotmenu }):show()
+end
 -- }}}
 
 -- {{{ Layouts menu
@@ -1107,8 +1110,10 @@ persokeys = {
              { description="switch to the next MPRIS2 player", group="media" }),
 
    -- Misc
-   awful.key({ modkey          }, "Print", screenshot,
-             { description="take a screenshot with Shutter", group="misc" }),
+   awful.key({ modkey          }, "Print", function () show_screenshot_menu() end,
+             { description="open the screenshot menu", group="misc" }),
+   awful.key({ "Shift", "Mod1" }, "4", function () show_screenshot_menu() end,
+             { description="open the screenshot menu", group="misc" }),
    awful.key({ modkey, "Shift" }, "f",     function() awful.mouse.finder():find() end,
              { description="locate pointer", group="misc" }),
    awful.key({ modkey, "Shift" }, "w",     function () change_wallpapers() end,
