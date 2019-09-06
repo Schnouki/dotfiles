@@ -1,0 +1,10 @@
+[Unit]
+Description=Quiet Anaconda
+Requires=xorg.target
+
+[Service]
+ExecStart=/home/schnouki/bin/quiet_anaconda
+Restart=on-failure
+
+[Install]
+WantedBy=applications.target
