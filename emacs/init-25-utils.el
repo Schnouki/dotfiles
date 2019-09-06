@@ -220,28 +220,119 @@ Return the index of the matching item, or nil if not found."
       schnouki/immortal-modes        '(message-mode notmuch-hello-mode notmuch-search-mode
 				       notmuch-show-mode org-agenda-mode inferior-python-mode
 				       jabber-chat-mode jabber-roster-mode))
-(defun schnouki/kill-star-buffers (&optional arg)
-  "Remove most star-buffers (`*Messages*', `*Compilation', ...) that are not in the `schnouki/immortal-star-buffers' list.  With prefix argument ARG, kill all star-buffers."
+
+(defun schnouki/buffer-immortal-p (buffer)
+  "Check if BUFFER is immortal."
+  (let ((buf-name (buffer-name buffer))
+	(buf-mode (buffer-local-value 'major-mode buffer)))
+    (and
+     (--none? (string-match-p it buf-name) schnouki/immortal-star-buffers)
+     (not (-contains? schnouki/immortal-modes buf-mode)))))
+
+(defun schnouki/kill-star-buffers (&optional kill-all dry-run)
+  "Remove most star-buffers (`*Messages*', `*Compilation', ...)
+that are not in the `schnouki/immortal-star-buffers' list.
+
+With prefix argument KILL-ALL, kill all star-buffers. If DRY-RUN
+is non-nil, don't actually kill the buffers, but return the list
+of buffers that *would* be killed."
   (interactive "P")
   (let ((killed nil))
-    (cl-loop for buf in (buffer-list)
-	     as buf-name = (buffer-name buf)
-	     as buf-mode = (with-current-buffer buf major-mode)
-	     when (and
-		   (string-match "^\\*.+$" buf-name)
-		   (or arg
-		       (and (notany '(lambda (re) (string-match re buf-name)) schnouki/immortal-star-buffers)
-			    (not (memq buf-mode schnouki/immortal-modes)))))
-	     do
-	     (kill-buffer buf)
-	     (when (notany '(lambda (re) (string-match re buf-name)) schnouki/immortal-silent-buffers)
-	       (add-to-list 'killed buf-name))
-	     finally
-	     (when killed
-	       (message (concat (int-to-string (length killed))
-				" buffers killed: "
-				(string-join killed ", ")))))))
+    (-each (buffer-list)
+      (lambda (buf)
+	(let ((buf-name (buffer-name buf)))
+	  (when (and
+		 (s-starts-with? "*" buf-name)
+		 (or kill-all
+		     (schnouki/buffer-immortal-p buf)))
+	    (unless dry-run
+	      (kill-buffer buf))
+	    (when (--none? (string-match-p it buf-name) schnouki/immortal-silent-buffers)
+	      (add-to-list 'killed (cons buf-name buf)))))))
+    (cond
+     (dry-run killed)
+     (killed
+      (message "%d buffers killed: %s"
+	       (length killed)
+	       (string-join (-map 'car killed)  ", "))))))
 (bind-key "C-x M-k" 'schnouki/kill-star-buffers)
+
+;; Kill all buffers visiting files in a directory or its subdirectories.
+(defun schnouki/kill-dir-buffers (&optional directory)
+  "Remove all buffers visiting DIRECTORY or its subdirectories."
+  (interactive "DKill buffers visiting: ")
+  (let ((buffers (->> (buffer-list)
+		      (--map (cons it (if (eq (buffer-local-value 'major-mode it) 'dired-mode)
+					  (buffer-local-value 'dired-directory it)
+					(buffer-file-name it))))
+		      (--filter (cdr it))
+		      (--map (cons (car it) (expand-file-name (cdr it))))
+		      (--filter (s-starts-with? directory (cdr it)))
+		      (-map 'car))))
+    (-each buffers 'kill-buffer)
+    (message (format "Killed %d buffers visiting %s" (length buffers) directory))))
+(bind-key "k" 'schnouki/kill-dir-buffers schnouki-prefix-map)
+
+;; Kill all buffers in a specific major mode.
+(defun schnouki/kill-mode-buffers (&optional mode)
+  "Remove all buffers using MODE."
+  (interactive
+   (let ((all-modes (->> (buffer-list)
+			 (--map (buffer-local-value 'major-mode it))
+			 (-group-by 'identity))))
+     (list
+      (completing-read "Kill buffers in major mode: "
+		       all-modes nil t nil nil (symbol-name major-mode)))))
+  (let ((buffers (->> (buffer-list)
+		      (--filter (string= mode
+					 (buffer-local-value 'major-mode it))))))
+    (-each buffers 'kill-buffer)
+    (message (format "Killed %d buffers using %s" (length buffers) mode))))
+(bind-key "K" 'schnouki/kill-mode-buffers schnouki-prefix-map)
+
+(defun schnouki/killable-buffer-list (buffers)
+    "Filter and return killable buffers from BUFFERS.
+A buffer is considered killable if it is not modified and either visits a file, or is not immortal."
+    (--filter (and (buffer-live-p it)
+		   (not (buffer-modified-p it))
+		   (or (buffer-file-name it)
+		       (not (schnouki/buffer-immortal-p it))))
+	      buffers))
+
+(defun schnouki/sort-buffers-by-display-time (buffers)
+  "Sort BUFFERS by display time."
+  (--sort (time-less-p (buffer-local-value 'buffer-display-time it)
+		       (buffer-local-value 'buffer-display-time other))
+	  buffers))
+
+(defun schnouki/clean-buffer-list (keep-buffers-nb)
+  "Clean buffer list until there are only KEEP-BUFFERS-NB buffers remaining."
+  (interactive
+   (list
+    (or current-prefix-arg
+	(let* ((nb-buffers (length (buffer-list)))
+	       (default-nb (min 100 (/ nb-buffers 2))))
+	  (read-number (format "Number of buffers (out of %d) to keep: " nb-buffers)
+		       default-nb)))))
+  (let* ((nb-buffers (length (buffer-list)))
+	 (nb-buffers-to-kill (- nb-buffers keep-buffers-nb))
+	 (all-killable-buffers (->> (buffer-list)
+				    (schnouki/killable-buffer-list)
+				    (schnouki/sort-buffers-by-display-time)))
+	 (star-killed (schnouki/kill-star-buffers nil t))
+	 (killed-buffers (-map 'cdr star-killed))
+	 (killable-buffers (-difference all-killable-buffers killed-buffers)))
+    (when (< (length killed-buffers) nb-buffers-to-kill)
+      (setq killed-buffers (-concat killed-buffers
+				    (-take (- nb-buffers-to-kill (length killed-buffers))
+					   killable-buffers))))
+    (when (yes-or-no-p
+	   (format "About to kill %d buffers: %s. Continue? "
+		   (length killed-buffers)
+		   (string-join (--map (buffer-name it) killed-buffers) ", ")))
+      (--each killed-buffers (kill-buffer it))
+      (message "Killed %d buffers (out of %d)." (length killed-buffers) nb-buffers))))
+(bind-key "C-x K" 'schnouki/clean-buffer-list)
 
 ;; Nicer binding than C-x 5 0 to close the current frame.
 (bind-key "C-x w" 'delete-frame)
