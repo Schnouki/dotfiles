@@ -8,6 +8,10 @@
 (add-to-list 'package-archives '("elpa" . "http://tromey.com/elpa/"))
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 
+;; Workaround https://debbugs.gnu.org/34341
+(when (version< emacs-version "26.3")
+  (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
+
 ;; Don't auto-activate packages
 (setq package-enable-at-startup nil)
 (package-initialize nil)
