@@ -46,21 +46,21 @@ URxvt.perl-ext:       default,cspace,font-size,url-select,tabbedex
 URxvt.url-launcher:   /usr/bin/xdg-open
 
 ! Tabbedex features
-URxvt.tabbed.new-button:       no
-URxvt.tabbed.autohide:         yes
-URxvt.tabbed.no-tabbedex-keys: yes
+URxvt.tabbedex.new-button:       no
+URxvt.tabbedex.autohide:         yes
+URxvt.tabbedex.no-tabbedex-keys: yes
 
 ! Tabbedex colors
-URxvt.tabbed.tabbar-fg:   244
-URxvt.tabbed.tabbar-bg:   16
-URxvt.tabbed.tab-fg:      255
-URxvt.tabbed.tab-bg:      52
-URxvt.tabbed.bell-tab-fg: 255
-URxvt.tabbed.bell-tab-bg: 160
-URxvt.tabbed.bell-fg:     244
-URxvt.tabbed.bell-bg:     17
-URxvt.tabbed.title-fg:    28
-URxvt.tabbed.title-bg:    16
+URxvt.tabbedex.tabbar-fg:   244
+URxvt.tabbedex.tabbar-bg:   16
+URxvt.tabbedex.tab-fg:      255
+URxvt.tabbedex.tab-bg:      52
+URxvt.tabbedex.bell-tab-fg: 255
+URxvt.tabbedex.bell-tab-bg: 160
+URxvt.tabbedex.bell-fg:     244
+URxvt.tabbedex.bell-bg:     17
+URxvt.tabbedex.title-fg:    28
+URxvt.tabbedex.title-bg:    16
 
 ! Tabbedex keybindings (4-1: Super + Alt)
 URxvt.keysym.4-1-Down:    perl:tabbedex:new_tab
