@@ -61,6 +61,14 @@
   (kill-ring-save (line-beginning-position) (+ 1 (line-end-position))))
 (bind-key "M-k" 'schnouki/copy-line)
 
+;; Kill beginning of line
+(defun schnouki/kill-beginning-of-line ()
+  "Kill the beginning of the current line, up to the point."
+  (interactive)
+  (save-mark-and-excursion
+    (kill-region (line-beginning-position) (point))))
+(bind-key "M-K" 'schnouki/kill-beginning-of-line)
+
 ;; Copy the region after trimming it
 (defun schnouki/kill-ring-save-trimmed (beg end)
   "Save the region after trimming it as if killed, but don't kill it."
