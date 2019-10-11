@@ -367,21 +367,23 @@ A buffer is considered killable if it is not modified and either visits a file, 
 
 (use-package counsel
   :ensure t
-  :bind (("M-x" . counsel-M-x)
-	 ("C-x C-f" . counsel-find-file)
-	 ("C-h f" . counsel-describe-function)
-	 ("C-h v" . counsel-describe-variable)
-	 ("C-h l" . counsel-find-library)
-	 ("C-h S" . counsel-info-lookup-symbol)
-	 ("C-x 8 RET" . counsel-unicode-char)
+  :commands (counsel-mode)
+  :diminish counsel-mode
+  :bind (:map counsel-mode-map
+	 ([remap insert-char] . counsel-unicode-char)
+	 ([remap switch-to-buffer] . counsel-switch-buffer)
+	 ([remap switch-to-buffer-other-window] . counsel-switch-buffer-other-window)
 	 :map schnouki-prefix-map
 	 ("s" . counsel-rg))
+  :custom
+  (counsel-find-file-ignore-regexp
+   (rx (or (: bos (or "." "#"))
+	   (: (or "#" "~") eos)
+	   (: ".pyc" eos))))
   :init
-  (setq counsel-find-file-ignore-regexp
-	(rx (or (: bos (or "." "#"))
-		(: (or "#" "~") eos)
-		(: ".pyc" eos)))))
-
+  (defun schnouki/enable-counsel ()
+    (counsel-mode 1))
+  (add-hook 'after-init-hook #'schnouki/enable-counsel))
 
 ;; rg / riprep
 (use-package rg
