@@ -77,10 +77,16 @@
 ;; Jump to definition
 (use-package dumb-jump
   :ensure t
-  :bind (("M-g o" . dumb-jump-go-other-window)
-         ("M-g j" . dumb-jump-go)
-         ("M-g x" . dumb-jump-go-prefer-external)
-         ("M-g z" . dumb-jump-go-prefer-external-other-window)))
+  :bind (:map schnouki-prefix-map
+	 ("j j" . dumb-jump-go)
+	 ("j o" . dumb-jump-go-other-window)
+	 ("j p" . dumb-jump-back)
+	 ("j i" . dumb-jump-go-prompt)
+	 ("j l" . dumb-jump-quick-look)
+         ("j J" . dumb-jump-go-prefer-external)
+         ("j O" . dumb-jump-go-prefer-external-other-window))
+  :init
+  (setq dumb-jump-selector 'ivy))
 
 ;; Code folding
 (use-package origami
