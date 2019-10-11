@@ -454,7 +454,8 @@ A buffer is considered killable if it is not modified and either visits a file, 
 	 ("d" . deft))
   :init
   (setq deft-directory "~/Dropbox/deft"
-	deft-extensions '("md" "org" "txt")
+	deft-recursive t
+	deft-extensions '("org" "md" "txt")
 	deft-use-filename-as-title t)
   (defun schnouki/deft--disable-dtw (orig-fun &rest args)
     (flet ((delete-trailing-whitespace))
