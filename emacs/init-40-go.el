@@ -12,8 +12,8 @@
               ("C-c C-n" . go-rename)
               ("C-c C-t" . go-add-tags)
               )
-  :init
-  (add-hook 'before-save-hook 'gofmt-before-save)
+  :hook ((before-save . gofmt-before-save)
+	 (go-mode . go-set-project))
 
   :config
   (add-to-list 'go-guess-gopath-functions #'schnouki/go-hellogopher-gopath)
@@ -24,9 +24,7 @@
 	   (env-paths (cdr root-and-paths))
 	   (guessed-paths (split-string (go-guess-gopath) path-separator)))
       (cons root (append guessed-paths env-paths))))
-  (advice-add 'go-root-and-paths :around #'schnouki/go--better-guess-gopath)
-
-  (add-hook 'go-mode-hook #'go-set-project))
+  (advice-add 'go-root-and-paths :around #'schnouki/go--better-guess-gopath))
 
 (defun schnouki/go-hellogopher-gopath ()
   (let ((d (locate-dominating-file buffer-file-name ".GOPATH")))
@@ -42,12 +40,12 @@
 (use-package go-eldoc
   :ensure t
   :commands go-eldoc-setup
-  :init (add-hook 'go-mode-hook 'go-eldoc-setup))
+  :hook (go-mode . go-eldoc-setup))
 
 (use-package go-guru
   :ensure t
   :commands go-guru-hl-identifier-mode
-  :init (add-hook 'go-mode-hook #'go-guru-hl-identifier-mode))
+  :hook (go-mode . go-guru-hl-identifier-mode))
 
 (use-package go-rename
   :ensure t

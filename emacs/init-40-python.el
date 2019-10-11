@@ -16,9 +16,7 @@
   :ensure t
   :commands anaconda-mode
   :diminish anaconda-mode
-  :init
-  (add-hook 'python-mode-hook 'anaconda-mode)
-  (add-hook 'python-mode-hook 'eldoc-mode))
+  :hook python-mode)
 
 (use-package company-anaconda
   :ensure t
@@ -28,12 +26,9 @@
 (use-package auto-virtualenvwrapper
   :ensure t
   :commands auto-virtualenvwrapper-activate
-  :init
-  (add-hook 'python-mode-hook #'auto-virtualenvwrapper-activate)
-  (add-hook 'window-configuration-change-hook #'auto-virtualenvwrapper-activate)
-  (add-hook 'focus-in-hook #'auto-virtualenvwrapper-activate)
-  :config
-  (setq auto-virtualenvwrapper-verbose nil))
+  :hook ((python-mode window-configuration-change focus-in) . auto-virtualenvwrapper-activate)
+  :custom
+  (auto-virtualenvwrapper-verbose nil))
 
 (use-package blacken
   :ensure t)

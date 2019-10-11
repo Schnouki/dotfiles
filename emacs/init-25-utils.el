@@ -51,8 +51,7 @@
 (use-package dired-collapse
   :ensure t
   :commands (dired-collapse dired-collapse-mode)
-  :init
-  (add-hook 'dired-mode-hook 'dired-collapse-mode))
+  :hook dired-mode)
 
 ;; Copy current line with M-k
 ;; http://www.emacsblog.org/2009/05/18/copying-lines-not-killing/#comment-27462
@@ -343,12 +342,12 @@ A buffer is considered killable if it is not modified and either visits a file, 
   :diminish ivy-mode
   :bind (:map schnouki-prefix-map
 	 ("r " . ivy-resume))
-  :config
-  (setq ivy-magic-tilde nil
-	ivy-re-builders-alist '((t . ivy--regex-ignore-order))
-	ivy-use-virtual-buffers t
-	magit-completing-read-function 'ivy-completing-read
-	projectile-completion-system 'ivy)
+  :custom
+  (ivy-magic-tilde nil)
+  (ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
+  (ivy-use-virtual-buffers t)
+  (magit-completing-read-function 'ivy-completing-read)
+  (projectile-completion-system 'ivy)
   :init
   (defun schnouki/enable-ivy ()
     (ivy-mode 1))
@@ -387,10 +386,9 @@ A buffer is considered killable if it is not modified and either visits a file, 
 (use-package wgrep
   :ensure t
   :commands wgrep-setup
-  :config
-  (setq wgrep-auto-save-buffer t)
-  :init
-  (add-hook 'grep-setup-hook 'wgrep-setup))
+  :hook (grep-setup . wgrep-setup)
+  :custom
+  (wgrep-auto-save-buffer t))
 
 ;; undo-tree
 (use-package undo-tree
@@ -514,9 +512,9 @@ If third argument START is non-nil, convert words after that index in STRING."
 (use-package emojify
   :ensure t
   :defer t
-  :init
-  (setq emojify-point-entered-behaviour 'uncover)
-  (add-hook 'after-init-hook #'global-emojify-mode))
+  :hook (after-init . global-emojify-mode)
+  :custom
+  (emojify-point-entered-behaviour 'uncover))
 
 (use-package emojify-logos
   :ensure t
@@ -625,5 +623,14 @@ If third argument START is non-nil, convert words after that index in STRING."
 ;; Generate UUIDs
 (use-package uuidgen
   :ensure t)
+
+;; Keep init-00-custom up-to-date! :)
+(defun schnouki/update-selected-packages ()
+  (interactive)
+  (let* ((output (shell-command-to-string "rg --no-filename --no-line-number --no-heading '^\\(use-package' ~/.config/emacs | awk '{print $2}' | sort -u"))
+	 (lines (s-lines (s-trim output)))
+	 (packages (-map 'intern lines)))
+    (setq package-selected-packages packages)
+    (custom-save-all)))
 
 ;;; init-25-utils.el ends here

@@ -8,35 +8,31 @@
   :mode ("\\.tex\\'" . latex-mode)
   :commands (latex-mode LaTeX-mode plain-tex-mode)
   :init
-  (progn
-    (add-hook 'LaTeX-mode-hook #'LaTeX-preview-setup)
-    (add-hook 'LaTeX-mode-hook #'flyspell-mode)
-    (add-hook 'LaTeX-mode-hook #'turn-on-reftex)
-    (setq TeX-auto-save t
-	  TeX-parse-self t
-	  TeX-save-query nil
-	  TeX-PDF-mode t)
-    (setq-default TeX-master nil)))
+  (add-hook 'LaTeX-mode-hook #'LaTeX-preview-setup)
+  (add-hook 'LaTeX-mode-hook #'flyspell-mode)
+  (add-hook 'LaTeX-mode-hook #'turn-on-reftex)
+  (setq TeX-auto-save t
+	TeX-parse-self t
+	TeX-save-query nil
+	TeX-PDF-mode t)
+  (setq-default TeX-master nil))
 
 (use-package preview
   :commands LaTeX-preview-setup
   :init
-  (progn
-    (setq-default preview-scale 1.4
-		  preview-scale-function '(lambda () (* (/ 10.0 (preview-document-pt)) preview-scale)))))
+  (setq-default preview-scale 1.4
+		preview-scale-function '(lambda () (* (/ 10.0 (preview-document-pt)) preview-scale))))
 
 (use-package reftex
   :commands turn-on-reftex
   :init
-  (progn
-    (setq reftex-plug-into-AUCTeX t)))
+  (setq reftex-plug-into-AUCTeX t))
 
 (use-package bibtex
   :mode ("\\.bib" . bibtex-mode)
   :init
-  (progn
-    (setq bibtex-align-at-equal-sign t)
-    (add-hook 'bibtex-mode-hook (lambda () (set-fill-column 120)))))
+  (setq bibtex-align-at-equal-sign t)
+  (add-hook 'bibtex-mode-hook (lambda () (set-fill-column 120))))
 
 
 ;; Auto-fill for LaTeX

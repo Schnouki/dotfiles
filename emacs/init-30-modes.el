@@ -46,12 +46,11 @@
   :ensure t
   :mode "\\.coffee\'"
   :init
-  (progn
-    (add-hook 'coffee-mode-hook
-	      '(lambda ()
-		 (setq tab-width 4
-		       coffee-tab-width 4)
-		 (local-set-key (kbd "C-c C-c") 'coffee-compile-buffer)))))
+  (add-hook 'coffee-mode-hook
+	    '(lambda ()
+	       (setq tab-width 4
+		     coffee-tab-width 4)
+	       (local-set-key (kbd "C-c C-c") 'coffee-compile-buffer))))
 
 (use-package tide
   :ensure t
@@ -206,8 +205,10 @@
 (use-package plantuml-mode
   :ensure t
   :mode "\\.plu\\'"
-  :init
-  (setq plantuml-jar-path "/opt/plantuml/plantuml.jar"))
+  :config
+  (plantuml-jar-path "/usr/share/java/plantuml/plantuml.jar")
+  (plantuml-default-exec-mode 'jar))
+
 (use-package flycheck-plantuml
   :ensure t
   :commands (flycheck-plantuml-setup)
@@ -240,16 +241,15 @@
 (use-package smerge-mode
   :commands smerge-mode
   :init
-  (progn
-    (setq smerge-command-prefix (kbd "C-c '")))
+  (setq smerge-command-prefix (kbd "C-c '"))
 
-    (defun sm-try-smerge ()
-      (save-excursion
-	(goto-char (point-min))
-	(when (re-search-forward "^<<<<<<< " nil t)
-	  (smerge-mode 1))))
-    (add-hook 'find-file-hook 'sm-try-smerge)
-    (add-hook 'after-revert-hook 'sm-try-smerge))
+  (defun sm-try-smerge ()
+    (save-excursion
+      (goto-char (point-min))
+      (when (re-search-forward "^<<<<<<< " nil t)
+	(smerge-mode 1))))
+  (add-hook 'find-file-hook 'sm-try-smerge)
+  (add-hook 'after-revert-hook 'sm-try-smerge))
 
 ;; geiser, for Scheme REPL and autodoc
 (use-package geiser

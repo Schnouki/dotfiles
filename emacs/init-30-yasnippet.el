@@ -7,14 +7,13 @@
   :defer 15
   :diminish yas-minor-mode
   :config
-  (progn
-    ;; Snippets dir:
-    ;; - make sure the local one (~/.emacs.d/snippets) comes first
-    (setq yas-snippet-dirs
-          (cons "~/.emacs.d/snippets"
-                (cl-remove-if (lambda (item) (string-equal "~/.emacs.d/snippets" item))
-                              yas-snippet-dirs)))
-    (yas-global-mode 1)))
+  ;; Snippets dir:
+  ;; - make sure the local one (~/.emacs.d/snippets) comes first
+  (setq yas-snippet-dirs
+	(cons "~/.emacs.d/snippets"
+	      (cl-remove-if (lambda (item) (string-equal "~/.emacs.d/snippets" item))
+			    yas-snippet-dirs)))
+  (yas-global-mode 1))
 
 ;; Modes that bind something to "<tab>" instead of "TAB"
 ;; -- http://blog.iany.me/2012/03/fix-tab-binding-for-yasnippet-and-auto-complete/

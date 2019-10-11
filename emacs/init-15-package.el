@@ -23,13 +23,17 @@
   (package-install 'use-package))
 
 (require 'use-package)
+(use-package use-package
+  :ensure t)
+(use-package diminish
+  :ensure t)
 
 ;; Notify that Emacs is loading…
 (use-package alert
   :ensure t
   :commands alert
-  :config
-  (setq alert-default-style 'libnotify))
+  :custom
+  (alert-default-style 'libnotify))
 
 (alert (concat "Emacs " emacs-version " is loading…")
        :severity 'low

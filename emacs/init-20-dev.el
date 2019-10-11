@@ -6,6 +6,8 @@
   :ensure t)
 (use-package list-utils
   :ensure t)
+(use-package s
+  :ensure t)
 
 ;; Tabs and indentation
 (setq-default c-basic-offset 4
@@ -40,8 +42,7 @@
 ;; Flycheck
 (use-package flycheck
   :ensure t
-  :init
-  (add-hook 'after-init-hook #'global-flycheck-mode)
+  :hook ((after-init) . global-flycheck-mode)
   :config
   (setq flycheck-check-syntax-automatically (--remove (or (eq it 'mode-enabled)
                                                           (eq it 'new-line))
@@ -269,9 +270,7 @@
   :ensure t
   :commands unicode-troll-stopper-mode
   :diminish unicode-troll-stopper-mode
-  :init
-  (progn
-    (add-hook 'prog-mode-hook #'unicode-troll-stopper-mode)))
+  :hook prog-mode)
 
 ;; Smart Comments
 (use-package smart-comment
