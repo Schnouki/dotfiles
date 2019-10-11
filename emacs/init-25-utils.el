@@ -400,13 +400,14 @@ A buffer is considered killable if it is not modified and either visits a file, 
 
 ;; undo-tree
 (use-package undo-tree
-  :ensure t
+  :load-path "~/dev/undo-tree"
+  :defer nil
+  :bind* (("C-'"  . undo-tree-undo)
+	  ("C-\"" . undo-tree-redo))
   :config
-  (progn
-    ;; Lighter displayed in mode line
-    (setq undo-tree-mode-lighter nil)
-    ;; ...and enable!
-    (global-undo-tree-mode)))
+  (setq undo-tree-mode-lighter nil
+	undo-tree-allow-overridden-bindings t)
+  (global-undo-tree-mode))
 
 ;; goto-last-change
 (use-package goto-last-change
