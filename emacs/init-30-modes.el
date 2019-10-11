@@ -232,6 +232,13 @@
 (use-package d-mode
   :ensure t)
 
+(use-package rust-mode
+  :ensure t
+  :custom
+  (rust-format-on-save t))
+(use-package cargo
+  :ensure t)
+
 
 ;; -----------------------------------------------------------------------------
 ;; Minor modes
