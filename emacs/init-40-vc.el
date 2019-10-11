@@ -22,17 +22,8 @@
 (use-package forge
   :ensure t
   :after magit
-  :config
-  (setq forge-add-pullreq-refspec 'ask))
-
-;; git-annex
-(use-package git-annex
-  :ensure t)
-(use-package magit-annex
-  :ensure t
-  :defer t
-  :init
-  (add-hook 'magit-mode-hook (lambda () (require 'magit-annex))))
+  :custom
+  (forge-add-pullreq-refspec 'ask))
 
 ;; gitflow
 ;; (use-package magit-gitflow
