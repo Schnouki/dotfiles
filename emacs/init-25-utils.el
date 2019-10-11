@@ -421,10 +421,9 @@ A buffer is considered killable if it is not modified and either visits a file, 
 	 ("C-M-;" . avy-goto-char-timer)
 	 ("C-x C-;" . avy-pop-mark))
   :config
-  (progn
-    (avy-setup-default)
-    (setq avy-keys '(?q ?s ?d ?f ?j ?k ?l ?m) ;; AZERTY :)
-	  avy-background t)))
+  (avy-setup-default)
+  (setq ;;avy-keys '(?q ?s ?d ?f ?j ?k ?l ?m) ;; AZERTY :)
+	avy-background t))
 
 (use-package avy-zap
   :ensure t
