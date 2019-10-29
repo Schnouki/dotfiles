@@ -30,11 +30,11 @@
 
 
 ;; Useless :)
-(use-package company-emoji
-  :ensure t
-  :commands company-emoji-init
-  :hook (markdown-mode . company-emoji-init)
-  :custom
-  (company-emoji-insert-unicode nil))
+;; (use-package company-emoji
+;;   :ensure t
+;;   :commands company-emoji-init
+;;   :hook (markdown-mode . company-emoji-init)
+;;   :custom
+;;   (company-emoji-insert-unicode nil))
 
 ;;; init-40-blog.el ends here

@@ -16,6 +16,7 @@ var/
 
 .emacs.desktop
 .emacs.desktop.lock
+.lsp-session-v1
 .mc-lists.el
 .org-id-locations
 abbrev_defs

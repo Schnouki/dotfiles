@@ -220,7 +220,6 @@ Return the index of the matching item, or nil if not found."
 (setq schnouki/immortal-star-buffers `(,(rx string-start "*scratch"
 					    (optional ":" (1+ print))
 					    "*" string-end)
-				       "*anaconda-mode*"
 				       "*pomidor*")
       schnouki/immortal-silent-buffers `(,(rx string-start "*magit:")
 					 "*Messages*")
@@ -232,9 +231,10 @@ Return the index of the matching item, or nil if not found."
   "Check if BUFFER is immortal."
   (let ((buf-name (buffer-name buffer))
 	(buf-mode (buffer-local-value 'major-mode buffer)))
-    (and
-     (--none? (string-match-p it buf-name) schnouki/immortal-star-buffers)
-     (not (-contains? schnouki/immortal-modes buf-mode)))))
+    (or
+     (--any? (string-match-p it buf-name) schnouki/immortal-star-buffers)
+     (-contains? schnouki/immortal-modes buf-mode)
+     (and (get-buffer-process buffer) t))))
 
 (defun schnouki/kill-star-buffers (&optional kill-all dry-run)
   "Remove most star-buffers (`*Messages*', `*Compilation', ...)
@@ -251,7 +251,7 @@ of buffers that *would* be killed."
 	  (when (and
 		 (s-starts-with? "*" buf-name)
 		 (or kill-all
-		     (schnouki/buffer-immortal-p buf)))
+		     (not (schnouki/buffer-immortal-p buf))))
 	    (unless dry-run
 	      (kill-buffer buf))
 	    (when (--none? (string-match-p it buf-name) schnouki/immortal-silent-buffers)
@@ -581,7 +581,7 @@ If third argument START is non-nil, convert words after that index in STRING."
 (use-package wttrin
   :ensure t
   :bind (:map schnouki-prefix-map
-	 ("x" . wttrin))
+	 ("W" . wttrin))
   :init
   (setq wttrin-default-cities '("Nancy" "Forbach" "Paris")))
 
@@ -634,14 +634,5 @@ If third argument START is non-nil, convert words after that index in STRING."
 ;; Generate UUIDs
 (use-package uuidgen
   :ensure t)
-
-;; Keep init-00-custom up-to-date! :)
-(defun schnouki/update-selected-packages ()
-  (interactive)
-  (let* ((output (shell-command-to-string "rg --no-filename --no-line-number --no-heading '^\\(use-package' ~/.config/emacs | awk '{print $2}' | sort -u"))
-	 (lines (s-lines (s-trim output)))
-	 (packages (-map 'intern lines)))
-    (setq package-selected-packages packages)
-    (custom-save-all)))
 
 ;;; init-25-utils.el ends here

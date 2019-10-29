@@ -161,7 +161,7 @@ Has no effect if the character before point is not of the syntax class ')'."
 (require 'desktop)
 (setq desktop-save t
       desktop-load-locked-desktop t
-      desktop-path '("." "~/.config/emacs"))
+      desktop-path '("~/.config/emacs"))
 (desktop-save-mode 1)
 (setq desktop-globals-to-save
       (append '((extended-command-history . 30)

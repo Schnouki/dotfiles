@@ -12,16 +12,16 @@
       (flycheck-local-flake8/flycheck-virtualenv-set-python-executables)))
   (add-hook 'flycheck-before-syntax-check-hook #'schnouki/flycheck-local-flake8-wrapper))
 
-(use-package anaconda-mode
-  :ensure t
-  :commands anaconda-mode
-  :diminish anaconda-mode
-  :hook python-mode)
+;; (use-package anaconda-mode
+;;   :ensure t
+;;   :commands anaconda-mode
+;;   :diminish anaconda-mode
+;;   :hook python-mode)
 
-(use-package company-anaconda
-  :ensure t
-  :init
-  (add-to-list 'company-backends 'company-anaconda))
+;; (use-package company-anaconda
+;;   :ensure t
+;;   :init
+;;   (add-to-list 'company-backends 'company-anaconda))
 
 (use-package auto-virtualenvwrapper
   :ensure t

@@ -205,7 +205,7 @@
 (use-package plantuml-mode
   :ensure t
   :mode "\\.plu\\'"
-  :config
+  :custom
   (plantuml-jar-path "/usr/share/java/plantuml/plantuml.jar")
   (plantuml-default-exec-mode 'jar))
 

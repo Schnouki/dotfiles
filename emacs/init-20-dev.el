@@ -42,7 +42,7 @@
 ;; Flycheck
 (use-package flycheck
   :ensure t
-  :hook ((after-init) . global-flycheck-mode)
+  :hook (after-init . global-flycheck-mode)
   :config
   (setq flycheck-check-syntax-automatically (--remove (or (eq it 'mode-enabled)
                                                           (eq it 'new-line))
@@ -64,10 +64,9 @@
 
 (use-package flycheck-pos-tip
   :ensure t
-  :commands flycheck-pos-tip-error-messages
-  :init
-  (eval-after-load 'flycheck
-    '(setq flycheck-display-error-messages #'flycheck-pos-tip-error-messages)))
+  :after flycheck
+  :config
+  (flycheck-pos-tip-mode t))
 
 (use-package avy-flycheck
   :ensure t
@@ -187,25 +186,53 @@
 ;  '(setq ediff-diff-ok-lines-regexp
 ;	(concat (substring ediff-diff-ok-lines-regexp 0 -2) "\\|.*Pas de fin de ligne\\)")))
 
+;; Completion with LSP
+(use-package lsp-mode
+  :ensure t
+  :commands (lsp lsp-deferred)
+  :hook (prog-mode . lsp-deferred)
+  :custom
+  (lsp-auto-guess-root t)
+  (lsp-prefer-flymake nil))
+
+(use-package lsp-ui
+  :ensure t
+  :hook (lsp-mode . lsp-ui-mode)
+  :custom
+  (lsp-ui-flycheck t)
+  (lsp-ui-doc-delay 0.2)
+  (lsp-ui-doc-include-signature t)
+  (lsp-ui-doc-position 'top)
+  (lsp-ui-doc-alignment 'window))
+
 ;; Company -- complete anything
 (use-package company
   :ensure t
   :diminish company-mode
+  :custom
+  (company-tooltip-limit 30)
+  (company-tooltip-align-annotations t)
+  (company-minimum-prefix-length 3)
+  (company-idle-delay 0.5)
+  (company-show-numbers t)
   :config
-  (setq company-backends (remove 'company-ropemacs company-backends)
-        company-tooltip-limit 30
-        company-tooltip-align-annotations t
-	company-minimum-prefix-length 3
-	company-idle-delay 0.5
-	company-show-numbers t)
-  ;; Use the tab-and-go frontend.
-  ;; Allows TAB to select and complete at the same time.
-  (company-tng-configure-default)
-  (setq company-frontends
-	'(company-tng-frontend
-	  company-pseudo-tooltip-frontend
-	  company-echo-metadata-frontend))
   (global-company-mode 1))
+
+(use-package company-lsp
+  :ensure t
+  :commands company-lsp
+  :after company
+  :config
+  (push 'company-lsp company-backends))
+
+;; ;; The all-language autocompleter
+;; (use-package company-tabnine
+;;   :ensure t
+;;   :commands company-tabnine
+;;   :init
+;;   (setq company-tabnine-binaries-folder "~/.local/share/TabNine")
+;;   (add-to-list 'company-backends #'company-tabnine))
+
 
 ;; Display the current function name in the mode line
 (which-function-mode 1)
@@ -263,12 +290,12 @@
 (use-package restclient
   :ensure t
   :commands restclient-mode)
-(use-package company-restclient
-  :ensure t
-  :commands company-restclient
-  :init
-  (with-eval-after-load 'restclient
-    (add-to-list 'company-backends 'company-restclient)))
+;; (use-package company-restclient
+;;   :ensure t
+;;   :commands company-restclient
+;;   :init
+;;   (with-eval-after-load 'restclient
+;;     (add-to-list 'company-backends 'company-restclient)))
 
 ;; Stop Unicode trolls (probably useless, hence commented out)
 (use-package unicode-troll-stopper
@@ -309,14 +336,6 @@
 	      ("C-! h o" . hl-todo-occur))
   :config
   (global-hl-todo-mode))
-
-;; The all-language autocompleter
-(use-package company-tabnine
-  :ensure t
-  :commands company-tabnine
-  :init
-  (setq company-tabnine-binaries-folder "~/.local/share/TabNine")
-  (add-to-list 'company-backends #'company-tabnine))
 
 ;;; init-20-dev.el ends here
 
