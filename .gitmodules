@@ -1,18 +1,18 @@
 [submodule "urxvt/urxvt-tabbedex"]
 	path = urxvt/urxvt-tabbedex
-	url = git://github.com/mina86/urxvt-tabbedex.git
+	url = https://github.com/mina86/urxvt-tabbedex
 [submodule "zsh/completion/virsh"]
 	path = zsh/completion/virsh
 	url = https://planetcyborg.de/git/repos/jplitza/zsh-virsh-autocomplete
 [submodule "zsh/modules/zsh-syntax-highlighting"]
 	path = zsh/modules/zsh-syntax-highlighting
-	url = git://github.com/zsh-users/zsh-syntax-highlighting.git
+	url = https://github.com/zsh-users/zsh-syntax-highlighting
 [submodule "zsh/modules/zsh-history-substring-search"]
 	path = zsh/modules/zsh-history-substring-search
-	url = git://github.com/zsh-users/zsh-history-substring-search.git
+	url = https://github.com/zsh-users/zsh-history-substring-search
 [submodule "zsh/modules/git-annex-zsh-completion"]
 	path = zsh/modules/git-annex-zsh-completion
-	url = git://github.com/Schnouki/git-annex-zsh-completion.git
+	url = https://github.com/Schnouki/git-annex-zsh-completion
 [submodule "urxvt/urxvt-font-size"]
 	path = urxvt/urxvt-font-size
 	url = https://github.com/majutsushi/urxvt-font-size
@@ -21,7 +21,7 @@
 	url = https://github.com/muennich/urxvt-perls
 [submodule "awesome/eminent"]
 	path = awesome/eminent
-	url = git@github.com:Schnouki/eminent.git
+	url = https://github.com/Schnouki/eminent
 [submodule "emacs/flycheck-local-flake8"]
 	path = emacs/flycheck-local-flake8
 	url = https://github.com/rmuslimov/flycheck-local-flake8

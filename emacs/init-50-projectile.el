@@ -86,4 +86,8 @@
 	(apply orig-fun args))))
   (advice-add 'deadgrep :around #'schnouki/deadgrep--auto-guess-type))
 
+(use-package defproject
+  :ensure t
+  :commands defproject)
+
 ;;; init-50-projectile.el ends here
