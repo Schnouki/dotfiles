@@ -317,7 +317,8 @@ screenshotmenu = {
    { "&Selection", function() screenshot("selection") end },
 }
 local function show_screenshot_menu()
-   awful.menu({ items = screenshotmenu }):show()
+   local m = awful.menu({ items = screenshotmenu })
+   m:show()
 end
 -- }}}
 
