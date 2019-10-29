@@ -30,7 +30,8 @@ URxvt.termName:    rxvt-256color
 URxvt.transparent: true
 URxvt.shading:     20
 URxvt.fading:      15
-URxvt.font:        xft:Iosevka Medium:pixelsize=12.5, xft:Kochi Gothic:antialias=false, xft:Code2000:antialias=false
+URxvt.font:        xft:Iosevka Medium-10, xft:Kochi Gothic:antialias=false, xft:Code2000:antialias=false
+URxvt.letterSpace: -8
 
 URxvt.saveLines:         4096
 URxvt.scrollBar:         false
@@ -102,7 +103,7 @@ XTerm*color14:    #34E2E2
 XTerm*color15:    #EEEEEC
 
 XTerm*faceName: Iosevka Medium
-XTerm*faceSize: 7.5
+XTerm*faceSize: 10
 
 ! rofi -- dmenu clone
 rofi.opacity:  100
