@@ -26,7 +26,10 @@ export XDG_CACHE_HOME=$HOME/.cache
 
 # Programs
 export EDITOR="emacsclient -c -a \"\""
-export BROWSER=firefox-developer-edition
+export BROWSER=firefox
+if [[ $(hostname) == "baldr" ]]; then
+    export BROWSER=firefox-developer-edition
+fi
 
 # Program-specifig options
 

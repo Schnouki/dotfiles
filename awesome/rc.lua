@@ -98,7 +98,7 @@ beautiful.wallpaper = function(s)
 end
 
 -- This is used later as the default terminal and editor to run.
-terminal = "urxvtcd"
+terminal = "terminator"
 editor = "emacsclient -n -c -a \"\""
 editor_cmd = editor
 
@@ -367,17 +367,13 @@ mymainmenu = awful.menu({ items = { { "&awesome", myawesomemenu, beautiful.aweso
                                     { "&screenshot", screenshotmenu },
                                     { "&wine", winemenu, icon_theme.get("apps", "wine") },
                                     menu_sep,
-                                    { "firefo&x developer", safe_cmd("firefox-developer-edition"), icon_theme.get("apps", "firefox-developer-edition") },
+                                    { "&firefox", safe_cmd("firefox"), icon_theme.get("apps", "firefox") },
                                     { "&chromium", safe_cmd("chromium"), icon_theme.get("apps", "chromium") },
                                     menu_sep,
-                                    { "sp&otify", safe_cmd("spotify"), icon_theme.get("apps", "spotify-client") },
                                     { "&gmpc", safe_cmd("gmpc"), icon_theme.get("apps", "gmpc") },
                                     { "mellowpla&yer", safe_cmd("MellowPlayer"), icon_theme.get("apps", "mellowplayer") },
-                                    { "&netflix", "chromium https://www.netflix.com/", icon_theme.get("apps", "netflix") },
-                                    { "&popcorn time", safe_cmd("popcorntime"), icon_theme.get("apps", "popcorntime", "/usr/share/pixmaps/popcorntime.png") },
                                     menu_sep,
                                     { "l&ibre office", safe_cmd("soffice"), icon_theme.get("apps", "libreoffice-writer") },
-                                    { "an&droid studio", safe_cmd("android-studio"), icon_theme.get("apps", "android-studio", "/usr/share/pixmaps/android-studio.png") },
                                     { "pc&manfm", safe_cmd("pcmanfm"), icon_theme.get("apps", "system-file-manager") },
                                     { "open &terminal", terminal }
                                   }
@@ -1479,7 +1475,7 @@ root.keys(globalkeys)
 
 -- {{{ Rules
 -- Rules to apply to new clients (through the "manage" signal).
-FIREFOX_CLASS = "Firefox Developer Edition"
+FIREFOX_CLASS = "Firefox"
 awful.rules.rules = {
     -- All clients will match this rule.
     { rule = { },
