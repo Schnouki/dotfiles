@@ -6,8 +6,8 @@ xrandr | grep -q "VGA1 connected" && \
            --output VGA1  --auto --left-of LVDS1
 
 # Fuck Xorg -- https://bugs.freedesktop.org/show_bug.cgi?id=23705
-[[ $(hostname) == "odin" || $(hostname) == "baldr" ]] && \
-    xrandr --fbmm `xrandr | sed -n '/ connected / {s/.* \([0-9]\+\)mm x \([0-9]\+\)mm/\1x\2/p;q}'`
+[[ $(hostname) == "baldr" ]] && \
+    xrandr --dpi 118
 
 # GTK-2.0 RC files
 export GTK2_RC_FILES="$HOME/.config/gtkrc-2.0:$HOME/.config/gtkrc-$(hostname):/etc/gtk-2.0/gtkrc"
