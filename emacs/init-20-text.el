@@ -4,8 +4,7 @@
 
 ;; https://manuel-uberti.github.io/emacs/2017/02/04/guess-language/
 (use-package flyspell
-  :commands (flyspell-mode flyspell-mode-on flyspell-mode-off)
-  :hook (text-mode . flyspell-mode-on))
+  :commands (flyspell-mode flyspell-mode-on flyspell-mode-off))
 
 (use-package guess-language
   :ensure t

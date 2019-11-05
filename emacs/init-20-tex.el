@@ -9,7 +9,6 @@
   :commands (latex-mode LaTeX-mode plain-tex-mode)
   :init
   (add-hook 'LaTeX-mode-hook #'LaTeX-preview-setup)
-  (add-hook 'LaTeX-mode-hook #'flyspell-mode)
   (add-hook 'LaTeX-mode-hook #'turn-on-reftex)
   (setq TeX-auto-save t
 	TeX-parse-self t
