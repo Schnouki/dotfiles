@@ -630,4 +630,15 @@ If third argument START is non-nil, convert words after that index in STRING."
 (use-package uuidgen
   :ensure t)
 
+;; Frame manipulation
+(use-package transpose-frame
+  :ensure t
+  :bind (:map schnouki-prefix-map
+	 ("t t" . transpose-frame)
+	 ("t f" . flip-frame)
+	 ("t F" . flop-frame)
+	 ("t r" . rotate-frame-clockwise)
+	 ("t R" . rotate-frame-anticlockwise)))
+
+
 ;;; init-25-utils.el ends here
