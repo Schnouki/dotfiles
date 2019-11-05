@@ -10,10 +10,12 @@ function fish_prompt --description 'Write out the prompt'
     set -l hostname_separator (set_color --bold yellow)"@"
     set -l hostname_color (set_color --bold white)
     set -l dir_color (set_color --bold white)
+    set -l venv_color (set_color normal)(set_color cyan)
 
     # Actual logic
-    set -l id_part
+    set -l id_part ""
     set -l prompt $prompt_user
+    set -l venv ""
 
     if test "$USER" = "root"
         # If root, use a different prompt
@@ -30,6 +32,14 @@ function fish_prompt --description 'Write out the prompt'
         end
         set id_part "$id_part$hostname_color"(hostname)
     end
+    if test -n $id_part
+        set id_part $id_part" "
+    end
 
-    echo -n $prefix$id_part $dir_color(prompt_pwd) $prompt$suffix
+    # Virtualenv using VirtualFish
+    if set -q VIRTUAL_ENV
+        set venv $venv_color"("(basename "$VIRTUAL_ENV")") "
+    end
+
+    echo -n $prefix$id_part$dir_color(prompt_pwd) $venv$prompt$suffix
 end
