@@ -44,4 +44,8 @@
 	org-journal-time-prefix "** "
 	org-journal-time-format ""))
 
+(use-package ox-gfm
+  :ensure t
+  :after org)
+
 ;;; init-40-org.el ends here
