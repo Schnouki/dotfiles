@@ -36,7 +36,7 @@
 
 ;; Web browser
 (setq browse-url-browser-function 'browse-url-firefox  ;chromium
-      browse-url-firefox-program "firefox-developer-edition"
+      browse-url-firefox-program "firefox"
       browse-url-firefox-new-window-is-tab t)
 
 ;; Display date and time
@@ -213,12 +213,30 @@ Has no effect if the character before point is not of the syntax class ')'."
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward-angle-brackets)
 
-;;  Move through camelCaseWords and other_long_words
+;; Move through camelCaseWords and other_long_words
 (global-subword-mode 1)
 
 ;; Enable "confusing" commands
 (dolist (feat '(downcase-region upcase-region))
   (put feat 'disabled nil))
+
+;; Prefer vertical splits
+(defun schnouki/split-window-more-sensibly (&optional window)
+  (let ((window (or window (selected-window))))
+    (or (and (window-splittable-p window t)
+	     ;; Split window horizontally.
+	     (with-selected-window window
+	       (split-window-right)))
+	(and (window-splittable-p window)
+	     ;; Split window vertically.
+	     (with-selected-window window
+	       (split-window-below)))
+	(split-window-sensibly window))))
+
+(setq split-window-preferred-function 'schnouki/split-window-more-sensibly
+      split-height-threshold 120
+      window-combination-resize t)
+
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not cl-functions)
