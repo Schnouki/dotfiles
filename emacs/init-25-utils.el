@@ -403,7 +403,7 @@ A buffer is considered killable if it is not modified and either visits a file, 
 ;; undo-tree
 (use-package undo-tree
   :load-path "~/dev/undo-tree"
-  :defer nil
+  :demand t
   :bind* (("C-'"  . undo-tree-undo)
 	  ("C-\"" . undo-tree-redo))
   :config
@@ -476,11 +476,6 @@ A buffer is considered killable if it is not modified and either visits a file, 
 (use-package ix
   :ensure t
   :commands (ix ix-browse ix-delete))
-
-;; Find unbound keys
-(use-package unbound
-  :ensure t
-  :commands describe-unbound-keys)
 
 ;; http://www.emacswiki.org/emacs/CamelCase
 (defun un-camelcase-string (s &optional sep start)
