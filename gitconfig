@@ -25,7 +25,7 @@
 [help]
 	autocorrect = 25
 [credential]
-	helper = store
+	helper = /usr/share/git/credential/netrc/git-credential-netrc -f ~/.netrc
 [merge]
 	conflictStyle = diff3
 [commit]
