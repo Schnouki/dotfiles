@@ -37,13 +37,6 @@
 (use-package gitignore-mode
   :ensure t)
 
-;; TODOs
-(use-package magit-todos
-  :ensure t
-  :after magit
-  :config
-  (magit-todos-mode t))
-
 ;; Use SSH agent
 (setenv "SSH_AUTH_SOCK"
 	(format "/run/user/%d/gnupg/S.gpg-agent.ssh" (user-uid)))
