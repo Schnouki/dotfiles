@@ -39,6 +39,7 @@ __pycache__/
 !ddns
 ddns/key
 !emacs
+!fish
 !fontconfig
 !git
 !gtk-3.0
