@@ -239,6 +239,13 @@
 (use-package cargo
   :ensure t)
 
+(use-package fish-mode
+  :ensure t
+  :commands (fish-mode fish_indent-before-save)
+  :init
+  (add-hook 'fish-mode-hook (lambda ()
+                              (add-hook 'before-save-hook 'fish_indent-before-save))))
+
 
 ;; -----------------------------------------------------------------------------
 ;; Minor modes
