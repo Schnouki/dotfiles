@@ -23,12 +23,12 @@
   hide_window = None
   move_tab_left = None
   move_tab_right = None
-  new_tab = <Ctrl><Alt><Super>Down
+  new_tab = <Primary><Alt>Down
   new_terminator = None
   new_window = None
-  next_tab = <Ctrl><Alt><Super>Right
+  next_tab = <Primary><Alt>Right
   paste = None
-  prev_tab = <Ctrl><Alt><Super>Left
+  prev_tab = <Primary><Alt>Left
   reset = None
   reset_clear = None
   resize_down = None
