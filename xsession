@@ -12,7 +12,13 @@ if [[ $(hostname) == "baldr" ]]; then
 fi
 
 if [[ $(hostname) == "loki" ]]; then
-    xrandr --dpi 120 --output eDP-1 --mode 1920x1080 --output DP-1 --primary --auto --right-of eDP-1
+    if xrandr | egrep '^DP-1 connected' >/dev/null; then
+        xrandr --dpi 120 --output eDP-1 --mode 1920x1080 --output DP-1 --primary --auto --right-of eDP-1
+        echo 'Xft.dpi: 120' | xrdb -merge
+    else
+        xrandr --dpi 288
+        echo 'Xft.dpi: 288' | xrdb -merge
+    fi
     export QT_AUTO_SCREEN_SCALE_FACTOR=1
 fi
 
