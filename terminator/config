@@ -2,7 +2,7 @@
   enabled_plugins = ,
   focus = mouse
   handle_size = 1
-  title_font = Iosevka Medium 10
+  title_font = Iosevka Medium 9
   title_inactive_bg_color = "#a0a0a0"
   title_transmit_bg_color = "#a00000"
   title_transmit_fg_color = "#e0e0e0"
@@ -63,7 +63,7 @@
     cursor_blink = False
     cursor_color = "#c0c0c0"
     delete_binding = automatic
-    font = Iosevka Medium 10
+    font = Iosevka Medium 9
     foreground_color = "#c0c0c0"
     login_shell = True
     scrollback_lines = 2000
