@@ -29,6 +29,8 @@
      (ledger . t)
      (python . t)))
      ;;(sh . t)))
+
+  (require 'ox-md)
   )
 
 (use-package org-journal

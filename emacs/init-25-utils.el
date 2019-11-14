@@ -224,8 +224,7 @@ Return the index of the matching item, or nil if not found."
       schnouki/immortal-silent-buffers `(,(rx string-start "*magit:")
 					 "*Messages*")
       schnouki/immortal-modes        '(message-mode notmuch-hello-mode notmuch-search-mode
-				       notmuch-show-mode org-agenda-mode inferior-python-mode
-				       jabber-chat-mode jabber-roster-mode))
+				       notmuch-show-mode inferior-python-mode))
 
 (defun schnouki/buffer-immortal-p (buffer)
   "Check if BUFFER is immortal."
@@ -640,5 +639,13 @@ If third argument START is non-nil, convert words after that index in STRING."
 	 ("t r" . rotate-frame-clockwise)
 	 ("t R" . rotate-frame-anticlockwise)))
 
+;; Keep init-00-custom up-to-date! :)
+(defun schnouki/update-selected-packages ()
+  (interactive)
+  (let* ((output (shell-command-to-string "rg --no-filename --no-line-number --no-heading '^\\(use-package' ~/.config/emacs | awk '{print $2}' | sort -u"))
+	 (lines (s-lines (s-trim output)))
+	 (packages (-map 'intern lines)))
+    (setq package-selected-packages packages)
+    (custom-save-all)))
 
 ;;; init-25-utils.el ends here
