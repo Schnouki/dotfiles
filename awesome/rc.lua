@@ -481,6 +481,7 @@ function gethost()
    f:close()
    return string.gsub(n, "\n$", "")
 end
+local hostname = gethost()
 
 -- Personal helper library for things written in C
 package.cpath = config_dir .. "/?.so;" .. package.cpath
@@ -620,10 +621,16 @@ locks_mon = locksmon.new()
 -- {{{       Network stuff
 require("netmon")
 ifaces = {}
-if gethost() == "baldr" then
+if hostname == "baldr" then
    ifaces = {
       { label = "E", iface = "enp12s0" },
       { label = "W", iface = "wlp3s0" },
+      { label = "U", iface = "en%w+u%d+" }
+   }
+elseif hostname == "loki" then
+   ifaces = {
+      { label = "E", iface = "ens1" },
+      { label = "W", iface = "wlp59s0" },
       { label = "U", iface = "en%w+u%d+" }
    }
 end
@@ -1179,7 +1186,6 @@ awful.screen.connect_for_each_screen(function(s)
          cpu_icon, cpu_graph, cputemp_widget, mem_icon, mem_widget, swap_widget, separator,
          net_mon.widget,
        },
-       { ip_mon and ip_mon.widget or nil },
        { bat_widget, vol_widget, separator,
          locks_mon.widget,
        },
@@ -1668,7 +1674,6 @@ mytimer5 = gears.timer.start_new(5, function()
 end)
 
 mytimer15 = gears.timer.start_new(15, function ()
-    if ip_mon then ip_mon:update() end
     tb_mails_update()
     tb_msmtpq_update()
     return true
