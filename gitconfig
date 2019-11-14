@@ -36,3 +36,6 @@
 	user = Schnouki
 [gitlab]
 	user = Schnouki
+
+[includeIf "gitdir:~/doist/"]
+	path = ~/.config/git/doist.inc
