@@ -1,0 +1,9 @@
+[Unit]
+Description=Mullvad VPN
+Requires=xorg.target
+
+[Service]
+ExecStart=/usr/bin/mullvad-vpn
+
+[Install]
+WantedBy=applications.target
