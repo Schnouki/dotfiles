@@ -1,0 +1,1 @@
+direnv hook fish | source
