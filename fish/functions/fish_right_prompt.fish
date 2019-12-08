@@ -14,7 +14,7 @@ function fish_right_prompt
     set -l git_unstaged (set_color magenta)"*"
 
     # Actual logic
-    set -l now (date +%X)
+    set -l now (date +%-H:%M:%S)
     set -l prompt $time_color$now
 
     # Git
