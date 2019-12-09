@@ -6,6 +6,7 @@ require("awful.autofocus")
 local wibox = require("wibox")
 -- Theme handling library
 local beautiful = require("beautiful")
+local dpi = require("beautiful.xresources").apply_dpi
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
@@ -1181,7 +1182,7 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Create the systray
     s.systray = wibox.widget.systray()
-    s.systray:set_base_size(16)
+    s.systray:set_base_size(dpi(16))
 
     -- Add widgets to the wibox
     local right_widgets = __.concat(
