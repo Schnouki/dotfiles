@@ -290,6 +290,7 @@ end
 -- {{{ Screenshot menu
 local function screenshot(mode)
    local run_maim = true
+   local retcode = -1
    local cmd = "maim"
    local filename = os.date("%F-%H_%M_%S") .. ".png"
    local fullname = os.getenv("HOME") .. "/Dropbox/Public/Screenshots/" .. filename
@@ -301,14 +302,16 @@ local function screenshot(mode)
          run_maim = false
       end
    elseif mode == "selection" then
-      cmd = cmd .. " -s -c 1,0,0,0.6"
+      cmd = cmd .. " -u -s -c 1,0,0,0.6"
    end
    if run_maim then
       naughty.notify({text = cmd })
       cmd = cmd .. " " .. fullname
-      os.execute(cmd)
+      retcode = os.execute(cmd)
    end
-   os.execute("mimeo " .. fullname)
+   if not run_maim or retcode == 0 then
+      os.execute("mimeo " .. fullname)
+   end
 end
 screenshotmenu = {
    { "&Open screenshots dir", "geeqie " .. os.getenv("HOME") .. "/Dropbox/Public/Screenshots" },
