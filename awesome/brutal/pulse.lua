@@ -168,16 +168,18 @@ local function get_card_profiles_menu(card, callback)
     local profiles_menu = {}
     local profile_id, profile
     for profile_id, profile in pairs(card.profile) do
-        table.insert(profiles, {
-                         id = profile_id,
-                         name = profile.name,
-                         prio = profile.priority,
-                         active = card.active_profile == profile_id
-        })
+        if profile.available ~= "no" then
+            table.insert(profiles, {
+                             id = profile_id,
+                             name = profile.name,
+                             prio = profile.priority,
+                             active = card.active_profile == profile_id
+            })
+        end
     end
     table.sort(profiles, function(a, b) return a.prio > b.prio end)
     for _, profile in ipairs(profiles) do
-        local prefix = "   "
+        local prefix = "    "
         if profile.active then prefix = "✓ " end
         table.insert(profiles_menu, { prefix .. profile.name,
                                       profile_setter(card, profile.id, callback) })
