@@ -3,7 +3,7 @@ Description=MPRIS2 notifications service
 Requires=dbus.socket xorg.target
 
 [Service]
-ExecStart=/home/schnouki/bin/mpris2-info
+ExecStart=/home/schnouki/bin/mpris2-info --journal
 
 [Install]
 WantedBy=applications.target
