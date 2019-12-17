@@ -1,3 +1,6 @@
 *
 !.gitignore
 !*.gpg
+
+!config
+!ignore
