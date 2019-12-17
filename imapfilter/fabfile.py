@@ -58,5 +58,9 @@ def upload(c, uid=1000, gid=1000):
 @task
 def restart(c):
     _ensure_sudo(c)
+    print("Updating the image…")
+    c.sudo("docker pull schnouki/imapfilter")
     print("Restarting the container…")
-    c.sudo("docker restart imapfilter", hide="both")
+    c.sudo("docker service update imapfilter "
+           "--image schnouki/imapfilter:latest "
+           "--force")  #, hide="both")
