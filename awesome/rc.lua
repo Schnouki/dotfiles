@@ -803,10 +803,10 @@ cpu_icon = wibox.widget.imagebox()
 cpu_icon:set_image(config_dir .. "/icons/cpu.png")
 cpu_graph = wibox.widget {
    widget           = wibox.widget.graph,
-   forced_width     = 32,
-   forced_height    = 18,
+   forced_width     = dpi(16),
+   forced_height    = dpi(18),
    background_color = "#000000",
-   color = {type = "linear", from = {0, 0}, to = {0, 18},
+   color = {type = "linear", from = {0, 0}, to = {0, dpi(18)},
             stops = {{0, "#CC6666"}, {0.5, "#CCCC66"}, {1.0, "#66CC66"}}},
 }
 vicious.register(cpu_graph, vicious.widgets.cpu, "$1", 3)
@@ -815,12 +815,12 @@ vicious.cache(vicious.contrib.sensors)
 cputemp_widget = wibox.widget {
    layout        = wibox.container.rotate,
    direction     = "east",
-   forced_width  = 4,
-   forced_height = 18,
+   forced_width  = dpi(2),
+   forced_height = dpi(18),
    wibox.widget {
       widget           = wibox.widget.progressbar,
       background_color = "#000000",
-      color = {type = "linear", from = {18, 0}, to = {0, 0},
+      color = {type = "linear", from = {dpi(18), 0}, to = {0, 0},
                stops = {{0, "#CC6666"}, {0.2, "#CC66CC"}, {1.0, "#66CCCC"}}},
    },
 }
@@ -865,12 +865,12 @@ mem_icon:set_image(config_dir .. "/icons/mem.png")
 mem_widget = wibox.layout {
    layout        = wibox.container.rotate,
    direction     = "east",
-   forced_width  = 8,
-   forced_height = 18,
+   forced_width  = dpi(4),
+   forced_height = dpi(18),
    wibox.widget {
       widget           = wibox.widget.progressbar,
       background_color = "#000000",
-      color = {type = "linear", from = {18, 0}, to = {0, 0},
+      color = {type = "linear", from = {dpi(18), 0}, to = {0, 0},
                stops = {{0, "#CC6666"}, {0.5, "#CCCC66"}, {1.0, "#66CC66"}}},
    },
 }
@@ -878,12 +878,12 @@ vicious.register(mem_widget.widget, vicious.widgets.mem, "$1", 3)
 swap_widget = wibox.layout {
    layout        = wibox.container.rotate,
    direction     = "east",
-   forced_width  = 8,
-   forced_height = 18,
+   forced_width  = dpi(4),
+   forced_height = dpi(18),
    wibox.widget {
       widget           = wibox.widget.progressbar,
       background_color = "#000000",
-      color = {type = "linear", from = {18, 0}, to = {0, 0},
+      color = {type = "linear", from = {dpi(18), 0}, to = {0, 0},
                stops = {{0, "#CC6666"}, {0.5, "#CC66CC"}, {1.0, "#6666CC"}}},
    },
 }
@@ -935,8 +935,8 @@ vicious.register(bat_widget, vicious.widgets.bat,
 vol_widget = wibox.layout {
    layout        = wibox.container.rotate,
    direction     = "east",
-   forced_width  = 10,
-   forced_height = 18,
+   forced_width  = dpi(5),
+   forced_height = dpi(18),
    wibox.widget {
       widget           = wibox.widget.progressbar,
       background_color = "#000000",
