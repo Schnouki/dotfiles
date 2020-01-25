@@ -3,9 +3,10 @@
   focus = mouse
   handle_size = 1
   title_font = Iosevka Medium 9
-  title_inactive_bg_color = "#a0a0a0"
-  title_transmit_bg_color = "#a00000"
-  title_transmit_fg_color = "#e0e0e0"
+  title_inactive_bg_color = "#555753"
+  title_inactive_fg_color = "#babdb6"
+  title_transmit_bg_color = "#2e3436"
+  title_transmit_fg_color = "#babdb6"
   title_use_system_font = False
 [keybindings]
   close_term = None
@@ -55,16 +56,15 @@
 [plugins]
 [profiles]
   [[default]]
-    background_color = "#171717"
     background_darkness = 0.9
     background_type = transparent
     backspace_binding = automatic
     copy_on_selection = True
     cursor_blink = False
-    cursor_color = "#c0c0c0"
+    cursor_color = "#babdb6"
     delete_binding = automatic
     font = Iosevka Medium 9
-    foreground_color = "#c0c0c0"
+    foreground_color = "#babdb6"
     login_shell = True
     scrollback_lines = 2000
     scrollbar_position = hidden
