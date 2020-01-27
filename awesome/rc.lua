@@ -326,6 +326,13 @@ local function show_screenshot_menu()
 end
 -- }}}
 
+-- {{{ rfkill menu
+local function show_rfkill_menu()
+   local m = awful.menu({ items = brutal.rfkill.menu() })
+   m:show()
+end
+-- }}}
+
 -- {{{ Layouts menu
 layoutsmenu = {}
 for _, layout in ipairs(menu_layouts) do
@@ -1126,6 +1133,8 @@ persokeys = {
              { description="locate pointer", group="misc" }),
    awful.key({ modkey, "Shift" }, "w",     function () change_wallpapers() end,
              { description="change wallpaper", group="misc" }),
+   awful.key({ modkey, "Mod1" }, "r", function () show_rfkill_menu() end,
+             { description="open the rfkill menu", group="misc" }),
 }
 
 persoclientkeys = {
