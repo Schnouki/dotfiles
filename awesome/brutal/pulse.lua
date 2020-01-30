@@ -77,6 +77,12 @@ end
 local function get_sink_inputs()
     return parser.parse_pacmd_list_sinks(pacmd("list-sink-inputs"))
 end
+local function get_sources()
+    return parser.parse_pacmd_list_sinks(pacmd("list-sources"))
+end
+local function get_source_outputs()
+    return parser.parse_pacmd_list_sinks(pacmd("list-source-outputs"))
+end
 local function get_cards()
     return parser.parse_pacmd_list_cards(pacmd("list-cards"))
 end
@@ -94,7 +100,14 @@ local function get_sink_name(dump, sink)
     if type(sink) == "string" and dump.profile[sink] then
         return sink
     else
-        return dump.default
+        return dump.default_sink
+    end
+end
+local function get_source_name(dump, source)
+    if type(source) == "string" and dump.profile[source] then
+        return source
+    else
+        return dump.default_source
     end
 end
 
@@ -117,7 +130,7 @@ end
 
 local function get_default_card()
     local dump = get_pacmd_dump()
-    local sink_name = dump.default
+    local sink_name = dump.default_sink
 
     local card = __.chain(get_cards())
         :find(function(c)
@@ -215,11 +228,24 @@ local function sink_setter(sink, callback)
         callback()
     end
 end
-local function get_sinks_menu(callback)
+local function source_setter(source, callback)
+    return function()
+        pacmd("set-default-source " .. sink)
+
+        local outputs = get_source_outputs()
+        local output
+        for _, output in ipairs(outputs) do
+            if not string.match(output.attr.source, "^" .. source .. " <.*>") then
+                pacmd("move-source-output " .. output.index .. " " .. source)
+            end
+        end
+
+        callback()
+    end
+end
+
+local function get_sinks_sources_menu(all_sinks, default_sink, setter, callback)
     local prefix, sink
-    local all_sinks = get_sinks()
-    local dump = get_pacmd_dump()
-    local default_sink = dump.default
     local menu = {}
     local sinks = {}
 
@@ -237,11 +263,25 @@ local function get_sinks_menu(callback)
         local name = sink.name
         if sink.default then prefix = "✓ " else prefix = "   " end
         table.insert(menu, { prefix .. sink.name,
-                             sink_setter(sink.index, callback),
+                             setter(sink.index, callback),
                              get_icon(sink.icon) })
     end
     menu.theme = { width = 250 }
     return menu
+end
+local function get_sinks_menu(callback)
+    local all_sinks = get_sinks()
+    local default_sink = get_pacmd_dump().default_sink
+    local setter = sink_setter
+
+    return get_sinks_sources_menu(all_sinks, default_sink, setter, callback)
+end
+local function get_sources_menu(callback)
+    local all_sources = get_sources()
+    local default_source = get_pacmd_dump().default_source
+    local setter = source_setter
+
+    return get_sinks_sources_menu(all_sources, default_source, setter, callback)
 end
 -- }}}
 
@@ -297,6 +337,24 @@ function pulse.get_role(role)
     return get_sink_inputs_by_role(role)
 end
 
+function pulse.get_default_source()
+    local data = get_pacmd_dump()
+    local source_name = get_source_name(data, nil)
+    if source_name == nil then return end
+    local all_sources = get_sources()
+
+    for _, source in ipairs(all_sources) do
+        local name = string.match(source.attr.name, "<(.+)>")
+        if name == source_name then
+            local mtch = string.match(source.attr.volume, "[%a-]+: (%d+)")
+            if mtch ~= nil then
+                local volume = tonumber(mtch) / 0x10000 * 100
+                return { source.prop["device.description"], volume }
+            end
+        end
+    end
+end
+
 function pulse.toggle(sink)
     local data = get_pacmd_dump()
     sink = get_sink_name(data, sink)
@@ -315,6 +373,7 @@ function pulse.menu(callback)
     local default_card = get_default_card()
     local menu_items = {
         { "Default sink",  get_sinks_menu(callback) },
+        { "Default source",  get_sources_menu(callback) },
         { "Card profiles", get_card_profiles_menu(default_card, callback) },
         { "All profiles",  get_profiles_menu(callback) }
     }

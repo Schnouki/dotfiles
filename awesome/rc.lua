@@ -990,6 +990,15 @@ local function get_volume(include_global_in_text)
       end
       txt = txt .. string.format("<b>%s:</b> %.1f%%", name, volume)
    end
+
+   local source_data = brutal.pulse.get_default_source()
+   if source_data ~= nil then
+      if txt ~= "" then
+         txt = txt .. "\n\n"
+      end
+      txt = txt .. string.format("<b>%s:</b> %.1f%%", source_data[1], source_data[2])
+   end
+
    return global_vol, status, txt
 end
 

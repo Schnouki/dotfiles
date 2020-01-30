@@ -23,11 +23,13 @@ local function pacmd(args)
 end
 
 local res = parser.parse_pacmd_list_cards(pacmd("list-cards"))
---print(inspect.inspect(res))
-
-print(inspect.inspect(__.chain(res)
+-- print(inspect.inspect(res))
+print("Cards", inspect.inspect(__.chain(res)
                       :find(function(card) return card.index == 0 end)
-                         --:result("sinks")
-                         --:keys()
-                         --:first()
+                         -- :result("sinks")
+                         -- :keys()
+                         -- :first()
                          :value()))
+
+local res = parser.parse_pacmd_list_sinks(pacmd("list-sources"))
+print("Sources", inspect.inspect(res))

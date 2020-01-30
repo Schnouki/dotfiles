@@ -48,6 +48,7 @@ local profile_lines = Cf(Ct("") * profile_line^1, rawset)
 local profile_active = TAB * "active profile: <" * C((1 - S">")^1) * ">" * LF
 
 local card_sink_header = TAB * "sinks:" * LF
+local card_source_header = TAB * "sources:" * LF
 local card_sink_name = C((1 - P"/")^1) * "/"
 local card_sink_index = "#" * C((1 - P": ")^1) * ":"
 local card_sink_value = Cg(card_sink_index, "index") * SP^1 * Cg(REST, "desc")
@@ -72,7 +73,8 @@ local card = Ct(Cg(sink_index, "index") *
                    Cg(profile_active, "active_profile") *
                    card_sink_header *
                    Cg(card_sink_lines, "sinks") *
-                   sources^0 *
+                   card_source_header *
+                   Cg(card_sink_lines, "sources") *
                    ports^-1)
 
 local list_cards_parser = LINE * Ct(card^0)
@@ -105,13 +107,22 @@ function parse_pacmd_dump(lines)
          ret["profile"][card] = profile
       end,
       ["set-default-sink"] = function(sink)
-         ret["default"] = sink
+         ret["default_sink"] = sink
+      end,
+      ["set-default-source"] = function(source)
+         ret["default_source"] = source
       end,
       ["set-sink-mute"] = function(sink, val)
          ret["mute"][sink] = val == "yes"
       end,
+      ["set-source-mute"] = function(source, val)
+         ret["mute"][source] = val == "yes"
+      end,
       ["set-sink-volume"] = function(sink, volume)
          ret["volume"][sink] = tonumber(volume) / 0x10000*100
+      end,
+      ["set-source-volume"] = function(source, volume)
+         ret["volume"][source] = tonumber(volume) / 0x10000*100
       end
    }
    for line in lines do
