@@ -1079,11 +1079,11 @@ persokeys = {
    awful.key({ }, "XF86MonBrightnessDown", function () change_backlight(-5) end),
 
    -- F1 - mettre en veille
-   awful.key({ modkey, "Control" }, "F1", function () awful.spawn("gksudo systemctl suspend") end,
+   awful.key({ modkey, "Control" }, "F1", function () awful.spawn("lock-and-suspend") end,
              { description="suspend", group="power management" }),
    -- F2 - verrouiller l'écran
-   awful.key({ }, "XF86ScreenSaver",      function () awful.spawn("xscreensaver-command -lock") end),
-   awful.key({ modkey, "Control" }, "F2", function () awful.spawn("xscreensaver-command -lock") end,
+   awful.key({ }, "XF86ScreenSaver",      function () awful.spawn("lock-screen") end),
+   awful.key({ modkey, "Control" }, "F2", function () awful.spawn("lock-screen") end,
              { description="lock screen", group="power management" }),
    -- F3 - éteindre l'écran
    awful.key({ }, "XF86Battery",          function () awful.spawn("xset dpms force suspend") end),
