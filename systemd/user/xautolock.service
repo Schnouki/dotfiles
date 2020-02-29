@@ -1,0 +1,9 @@
+[Unit]
+Description=Autolock screen after user inactivity
+Requires=xorg.target
+
+[Service]
+ExecStart=/usr/bin/xautolock -time 10 -locker lock-screen
+
+[Install]
+WantedBy=xorg.target

@@ -1,0 +1,10 @@
+[Unit]
+Description=Set DPMS timings
+Requires=xorg.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/xset +dpms dpms 480 600 600
+
+[Install]
+WantedBy=xorg.target
