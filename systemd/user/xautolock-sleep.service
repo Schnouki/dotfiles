@@ -1,0 +1,10 @@
+[Unit]
+Description=Autolock screen before sleep
+Before=sleep.target
+
+[Service]
+Type=oneshot
+ExecStart=-/home/schnouki/bin/locknow-sync
+
+[Install]
+WantedBy=sleep.target

@@ -3,7 +3,10 @@ Description=Autolock screen after user inactivity
 Requires=xorg.target
 
 [Service]
-ExecStart=/usr/bin/xautolock -time 10 -locker lock-screen
+ExecStart=/usr/bin/xautolock -detectsleep -corners 0+0- \
+                             -time 10 -locker "/home/schnouki/bin/lock-screen" \
+                             -notify 30 -notifier "notify-send -u critical -t 15000 -i lock 'LOCKING in 30s'"
+Restart=on-failure
 
 [Install]
 WantedBy=xorg.target
