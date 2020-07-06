@@ -1,0 +1,11 @@
+[Unit]
+Description=Display information about logged AppArmor messages
+Requires=xorg.target
+
+[Service]
+Type=forking
+ExecStart=aa-notify --poll --since-days 1 --wait 60 --file /var/log/audit/audit.log
+Restart=always
+
+[Install]
+WantedBy=applications.target

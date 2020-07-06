@@ -1,0 +1,12 @@
+[Unit]
+Description=Ugly fix to be able to control the brightness of OLED screens via keyboard brightness
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=%h/bin/xbacklightmon
+Restart=on-failure
+RestartSec=1
+
+[Install]
+WantedBy=default.target

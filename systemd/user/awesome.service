@@ -4,7 +4,8 @@ Requires=dbus.socket environment.target
 After=environment.target
 
 [Service]
-ExecStart=/usr/bin/awesome
+ExecStart=/usr/bin/true
+Type=oneshot
 #Restart=on-failure
 TasksMax=infinity
 

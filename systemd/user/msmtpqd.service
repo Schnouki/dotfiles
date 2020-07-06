@@ -1,0 +1,12 @@
+[Unit]
+Description=msmtp queue daemon
+Requires=dbus.socket
+
+[Service]
+Type=notify
+ExecStart=/home/schnouki/bin/msmtpqd -debug -journald
+WatchdogSec=60
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
