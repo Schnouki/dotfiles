@@ -14,10 +14,10 @@ fi
 if [[ $(hostname) == "loki" ]]; then
     _ffx_dir="$HOME/.mozilla/firefox/u97j7qi0.default-release"
     _screen=""
-    if xrandr | egrep '^DP-1 connected' >/dev/null; then
-        _screen="DP-1"
-    elif xrandr | egrep '^DP-3 connected' >/dev/null; then
-        _screen="DP-3"
+    if xrandr | egrep '^DP1 connected' >/dev/null; then
+        _screen="DP1"
+    elif xrandr | egrep '^DP3 connected' >/dev/null; then
+        _screen="DP3"
     fi
     if [[ -z "$_screen" ]]; then
         # 1 screen
@@ -27,7 +27,7 @@ if [[ $(hostname) == "loki" ]]; then
             "$_ffx_dir/user.js"
     else
         # 2 screens
-        xrandr --dpi 120 --output eDP-1 --mode 1920x1080 --output $_screen --primary --auto --right-of eDP-1
+        xrandr --dpi 120 --output eDP1 --mode 1920x1080 --output $_screen --primary --auto --right-of eDP1
         echo 'Xft.dpi: 120' | xrdb -merge
         sed -i 's/user_pref("layout.css.devPixelsPerPx".*/user_pref("layout.css.devPixelsPerPx", "1");/' \
             "$_ffx_dir/user.js"

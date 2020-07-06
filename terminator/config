@@ -1,49 +1,84 @@
 [global_config]
-  enabled_plugins = ,
   focus = mouse
   handle_size = 1
-  title_font = Iosevka Medium 9
-  title_inactive_bg_color = "#555753"
-  title_inactive_fg_color = "#babdb6"
-  title_transmit_bg_color = "#2e3436"
   title_transmit_fg_color = "#babdb6"
+  title_transmit_bg_color = "#2e3436"
+  title_inactive_fg_color = "#babdb6"
+  title_inactive_bg_color = "#555753"
+  enabled_plugins = HostWatch, TerminalShot
   title_use_system_font = False
+  title_font = Iosevka Medium 9
 [keybindings]
-  close_term = None
-  close_window = None
-  copy = None
+  new_tab = <Primary><Alt>Down
   cycle_next = None
   cycle_prev = None
-  full_screen = None
+  go_up = <Alt><Super>Up
   go_down = <Alt><Super>Down
   go_left = <Alt><Super>Left
   go_right = <Alt><Super>Right
-  go_up = <Alt><Super>Up
-  group_all = None
-  group_tab = None
-  hide_window = None
-  move_tab_left = None
-  move_tab_right = None
-  new_tab = <Primary><Alt>Down
-  new_terminator = None
-  new_window = None
-  next_tab = <Primary><Alt>Right
+  split_horiz = <Alt><Super>o
+  split_vert = <Alt><Super>e
+  close_term = None
+  copy = None
   paste = None
-  prev_tab = <Primary><Alt>Left
-  reset = None
-  reset_clear = None
+  toggle_scrollbar = None
+  search = <Alt><Super>f
+  close_window = None
+  resize_up = None
   resize_down = None
   resize_left = None
   resize_right = None
-  resize_up = None
-  scaled_zoom = None
-  search = <Alt><Super>f
-  split_horiz = <Alt><Super>o
-  split_vert = <Alt><Super>e
-  toggle_scrollbar = None
+  move_tab_right = None
+  move_tab_left = None
   toggle_zoom = None
+  scaled_zoom = None
+  next_tab = <Primary><Alt>Right
+  prev_tab = <Primary><Alt>Left
+  full_screen = None
+  reset = None
+  reset_clear = None
+  hide_window = None
+  group_all = None
   ungroup_all = None
+  group_tab = None
   ungroup_tab = None
+  new_window = None
+  new_terminator = None
+[profiles]
+  [[default]]
+    visible_bell = True
+    urgent_bell = True
+    background_color = "#000000"
+    background_darkness = 0.9
+    background_type = transparent
+    backspace_binding = automatic
+    delete_binding = automatic
+    cursor_blink = False
+    cursor_color = "#babdb6"
+    font = Iosevka Medium 9
+    foreground_color = "#babdb6"
+    scrollbar_position = hidden
+    scrollback_lines = 2000
+    login_shell = True
+    use_system_font = False
+    copy_on_selection = True
+  [[prod_host]]
+    visible_bell = True
+    urgent_bell = True
+    background_color = "#200000"
+    background_darkness = 0.9
+    background_type = transparent
+    backspace_binding = automatic
+    delete_binding = automatic
+    cursor_blink = False
+    cursor_color = "#babdb6"
+    font = Iosevka Medium 9
+    foreground_color = "#ffd0d0"
+    scrollbar_position = hidden
+    scrollback_lines = 2000
+    login_shell = True
+    use_system_font = False
+    copy_on_selection = True
 [layouts]
   [[default]]
     [[[child1]]]
@@ -54,20 +89,6 @@
       parent = ""
       type = Window
 [plugins]
-[profiles]
-  [[default]]
-    background_darkness = 0.9
-    background_type = transparent
-    backspace_binding = automatic
-    copy_on_selection = True
-    cursor_blink = False
-    cursor_color = "#babdb6"
-    delete_binding = automatic
-    font = Iosevka Medium 9
-    foreground_color = "#babdb6"
-    login_shell = True
-    scrollback_lines = 2000
-    scrollbar_position = hidden
-    urgent_bell = True
-    use_system_font = False
-    visible_bell = True
+  [[HostWatch]]
+    patterns = [^@]+@([a-zA-Z0-9.-]+)
+    profile_patterns = ^ip-172-16-.+":"prod_host,
