@@ -71,6 +71,22 @@
 ;; Answer "y" rather than "yes"
 (defalias 'yes-or-no-p 'y-or-n-p)
 
+(defmacro with-yes-or-no (answer &rest body)
+  "Ensure that `yes-or-no-p' and `y-or-n-p' will always return ANSWER while running BODY."
+  ;; Based on https://www.emacswiki.org/emacs/YesOrNoP#toc2
+  (declare (indent defun) (debug (body)))
+  `(cl-letf (((symbol-function 'y-or-n-p) (lambda (&rest args) ,answer))
+	     ((symbol-function 'yes-or-no-p) (lambda (&rest args) ,answer)))
+     ,@body))
+
+;; Helper to add things in "default" lists (for buffer-local variables)
+(defun add-to-default-list (list-var element)
+  "Add ELEMENT to the default value of LIST-VAR if it isn't there yet."
+  (let ((current-list (default-value list-var)))
+    (if (memq element current-list)
+	current-list
+      (setq-default list-var (cons element current-list)))))
+
 ;; Use "initials" completion style
 (add-to-list 'completion-styles 'initials t)
 
@@ -161,7 +177,15 @@ Has no effect if the character before point is not of the syntax class ')'."
 (require 'desktop)
 (setq desktop-save t
       desktop-load-locked-desktop t
+      desktop-restore-frames nil
+      desktop-restore-eager nil
       desktop-path '("~/.config/emacs"))
+
+(defvar schnouki/desktop-was-read nil)
+(defun schnouki/desktop-after-read-hook ()
+  (setq schnouki/desktop-was-read t))
+(add-hook 'desktop-after-read-hook #'schnouki/desktop-after-read-hook)
+
 (desktop-save-mode 1)
 (setq desktop-globals-to-save
       (append '((extended-command-history . 30)

@@ -10,6 +10,7 @@ auto-save-list/
 elpa/
 emojis/
 eshell/
+request/
 url/
 transient/
 var/
@@ -21,6 +22,7 @@ var/
 .org-id-locations
 abbrev_defs
 amx-items
+bookmarks
 ede-projects.el
 forge-database.sqlite
 image-dired

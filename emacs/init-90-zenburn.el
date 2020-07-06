@@ -183,7 +183,7 @@
 	 (set-face-foreground 'sudoku-value-pencil-2-face ,zenburn-fg+1)
 	 (set-face-foreground 'sudoku-autovalue-face ,zenburn-magenta)))
     )
-  )
+)
 
 ;; rainbow-mode with zenburn colors!
 (defun schnouki/rainbow-mode-zenburn ()
