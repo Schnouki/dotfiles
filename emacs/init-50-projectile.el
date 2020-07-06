@@ -47,6 +47,19 @@
 
   (add-to-list 'projectile-project-root-files-functions #'schnouki/projectile-root-regexp t)
 
+  (defun schnouki/projectile-magit ()
+    "Open a magit-status buffer in a known project."
+    (interactive)
+    (let ((projects (projectile-relevant-known-projects)))
+      (if projects
+	  (projectile-completing-read
+	   "Open magit in project: " projects
+	   :action (lambda (project)
+		     (magit-status project)))
+	(user-error "There are no known projects"))))
+  (bind-key "\\" 'schnouki/projectile-magit projectile-command-map)
+  (bind-key "<" 'schnouki/projectile-magit projectile-command-map)
+
   (projectile-mode 1))
 
 (use-package ibuffer-projectile
@@ -63,7 +76,8 @@
   :commands ripgrep-regexp)
 
 (use-package deadgrep
-  :ensure t
+  ;;:ensure t
+  :load-path "~/dev/deadgrep"
   :commands deadgrep
   :config
   (defun schnouki/deadgrep--guess-type ()

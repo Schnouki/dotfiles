@@ -12,6 +12,9 @@
       (flycheck-local-flake8/flycheck-virtualenv-set-python-executables)))
   (add-hook 'flycheck-before-syntax-check-hook #'schnouki/flycheck-local-flake8-wrapper))
 
+(use-package flycheck-mypy
+  :ensure t)
+
 ;; (use-package anaconda-mode
 ;;   :ensure t
 ;;   :commands anaconda-mode
@@ -32,43 +35,6 @@
 
 (use-package blacken
   :ensure t)
-
-(use-package py-autopep8
-  :ensure t
-  :commands (py-autopep8-buffer)
-  :init
-  (defvar-local schnouki/enable-autopep8 nil
-    "When set, enable autopep8 in the buffer.")
-  (defun schnouki/maybe-autopep8-buffer ()
-    "Uses the \"autopep8\" tool to reformat the current buffer, unless disabled."
-    (interactive)
-    (when (and
-	   schnouki/enable-autopep8
-	   (not schnouki/enable-yapf-mode)
-	   (not blacken-mode))
-      (py-autopep8-buffer)))
-  (defun schnouki/maybe-autopep8-enable-on-save ()
-    "Pre-save hook to be used before running maybe-autopep8."
-    (interactive)
-    (add-hook 'before-save-hook 'schnouki/maybe-autopep8-buffer nil t))
-  (add-hook 'python-mode-hook 'schnouki/maybe-autopep8-enable-on-save))
-
-
-(use-package yapfify
-  :ensure t
-  :commands (yapf-mode)
-  :init
-  (defvar-local schnouki/enable-yapf-mode nil
-    "When set, enable yapf-mode in the buffer.")
-  (defun schnouki/maybe-yapf-mode ()
-    "Pre-save hook to be used before running maybe-autopep8."
-    (interactive)
-    (when (and
-	   schnouki/enable-yapf-mode
-	   (not schnouki/enable-autopep8)
-	   (not blacken-mode))
-      (yapf-mode t)))
-  (add-hook 'python-mode-hook 'schnouki/maybe-yapf-mode))
 
 ;; Django helper
 (defun schnouki/use-django-interactive-shell ()

@@ -12,7 +12,7 @@
 	 ("C-M-\\"   . vc-git-grep))
   :demand t
   :init
-  (setq magit-process-popup-time -1
+  (setq magit-process-popup-time 2
         magit-auto-revert-mode-lighter nil
         magit-last-seen-setup-instructions "1.4.0"
         magit-revert-buffers 'silent

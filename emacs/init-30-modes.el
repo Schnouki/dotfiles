@@ -6,6 +6,8 @@
 (use-package lua-mode
   :ensure t
   :mode "\\.lua\\'")
+(use-package fennel-mode
+  :ensure t)
 
 (use-package haskell-mode
   :ensure t
@@ -145,12 +147,12 @@
 
 (use-package web-mode
   :ensure t
-  ;; (kill-new (s-replace "\\" "\\\\" (rx "." (or "tmpl" "hbs" "html" "liquid") eos)))
-  :mode "\\.\\(?:\\(?:h\\(?:bs\\|tml\\)\\|liquid\\|tmpl\\)\\)\\'"
+  ;; (kill-new (format "\"%s\"" (s-replace "\\" "\\\\" (rx "." (or "tmpl" "hbs" "html" "liquid" "mako") eos))))
+  :mode "\\.\\(?:\\(?:h\\(?:bs\\|tml\\)\\|liquid\\|mako\\|tmpl\\)\\)\\'"
   :init
-  (setq web-mode-engines-alist '(("go" . "\\.tmpl\\'")
-                                 ("django" . "\\.html\\'"))
-        web-mode-markup-indent-offset 2))
+  (setq web-mode-engines-alist '(("django" . "\\.html\\'")
+				 ("go" . "\\.tmpl\\'")
+				 ("mako" . "\\.mako\\'"))))
 
 (use-package cuda-mode
   :mode "\\.cu\\'")
@@ -246,6 +248,16 @@
   (add-hook 'fish-mode-hook (lambda ()
                               (add-hook 'before-save-hook 'fish_indent-before-save))))
 
+(use-package qml-mode
+  :ensure t)
+
+(use-package nim-mode
+  :ensure t)
+(use-package flycheck-nim
+  :ensure t)
+
+(use-package scad-mode
+  :ensure t)
 
 ;; -----------------------------------------------------------------------------
 ;; Minor modes
@@ -254,16 +266,47 @@
 ;; smerge-mode, as suggested in the doc
 (use-package smerge-mode
   :commands smerge-mode
+  :bind ("C-c '" . hydra-smerge/body)
   :init
-  (setq smerge-command-prefix (kbd "C-c '"))
-
-  (defun sm-try-smerge ()
+  (defun schnouki/maybe-enable-smerge ()
     (save-excursion
       (goto-char (point-min))
       (when (re-search-forward "^<<<<<<< " nil t)
 	(smerge-mode 1))))
-  (add-hook 'find-file-hook 'sm-try-smerge)
-  (add-hook 'after-revert-hook 'sm-try-smerge))
+  (add-hook 'find-file-hook 'schnouki/maybe-enable-smerge)
+  (add-hook 'after-revert-hook 'schnouki/maybe-enable-smerge)
+
+  :config
+  (defhydra hydra-smerge (:hint nil
+			  :pre (smerge-mode 1)
+			  :post (smerge-auto-leave))
+    "
+^Move^       ^Keep^               ^Diff^                 ^Other^
+^^-----------^^-------------------^^---------------------^^-------
+_n_ext       _b_ase               _<_: upper/base        _C_ombine
+_p_rev       _u_pper (mine)       _=_: upper/lower       _r_esolve
+^^           _l_ower (other)      _>_: base/lower        _k_ill current
+^^           _a_ll                _R_efine
+^^           _RET_: current       _E_diff
+"
+      ("n" smerge-next)
+      ("p" smerge-prev)
+      ("b" smerge-keep-base)
+      ("u" smerge-keep-upper)
+      ("l" smerge-keep-lower)
+      ("a" smerge-keep-all)
+      ("RET" smerge-keep-current)
+      ("\C-m" smerge-keep-current)
+      ("<" smerge-diff-base-upper)
+      ("=" smerge-diff-upper-lower)
+      (">" smerge-diff-base-lower)
+      ("R" smerge-refine)
+      ("E" smerge-ediff)
+      ("C" smerge-combine-with-next)
+      ("r" smerge-resolve)
+      ("k" smerge-kill-current)
+      ("q" nil "cancel" :color blue)))
+
 
 ;; geiser, for Scheme REPL and autodoc
 (use-package geiser

@@ -193,11 +193,27 @@
   :hook (prog-mode . lsp-deferred)
   :custom
   (lsp-auto-guess-root t)
-  (lsp-prefer-flymake nil))
+  (lsp-prefer-flymake nil)
+  (lsp-clients-emmy-lua-jar-path "/usr/lib/lua-emmy-language-server/EmmyLua-LS-all.jar")
+  :config
+  (defun schnouki/lsp--disable-y-or-n-p (orig-fun &rest args)
+    (if schnouki/desktop-was-read
+	;; OK, proceed!
+	(apply orig-fun args)
+      ;; Still reading desktop time: turn y-or-no-p into a no-op
+      (with-yes-or-no nil
+	(apply orig-fun args))))
+  (advice-add 'lsp :around #'schnouki/lsp--disable-y-or-n-p)
+  (advice-add 'lsp--ask-about-watching-big-repo :around #'schnouki/lsp--disable-y-or-n-p))
+
+(setq schnouki/desktop-was-read nil)
 
 (use-package lsp-ui
   :ensure t
   :hook (lsp-mode . lsp-ui-mode)
+  :bind (:map lsp-ui-mode-map
+	      ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
+	      ([remap xref-find-references] . lsp-ui-peek-find-references))
   :custom
   (lsp-ui-flycheck t)
   (lsp-ui-doc-delay 0.2)
@@ -223,7 +239,8 @@
   :commands company-lsp
   :after company
   :config
-  (push 'company-lsp company-backends))
+  (push 'company-lsp company-backends)
+  (add-to-list 'company-lsp-filter-candidates '(lsp-emmy-lua . t)))
 
 ;; ;; The all-language autocompleter
 ;; (use-package company-tabnine
