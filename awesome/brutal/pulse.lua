@@ -283,6 +283,65 @@ local function get_sources_menu(callback)
 
     return get_sinks_sources_menu(all_sources, default_source, setter, callback)
 end
+
+local function sink_port_setter(sink, port, callback)
+    return function()
+        pacmd("set-sink-port " .. sink .. " " .. port)
+        callback()
+    end
+end
+local function source_port_setter(source, port, callback)
+    return function()
+        pacmd("set-source-port " .. source .. " " .. port)
+        callback()
+    end
+end
+
+local function get_ports_menu(all_sinks, setter, callback)
+    local prefix, sink
+    local menu = {}
+    local sinks = {}
+
+    for _, sink in ipairs(all_sinks) do
+        if sink.ports ~= nil then
+            local ports = {}
+            local ports_menu = {}
+            local port, port_id
+            for port_id, port in pairs(sink.ports) do
+                if port.available ~= "no" then
+                    table.insert(ports, {
+                                     id = port_id,
+                                     name = port.name,
+                                     prio = port.priority,
+                                     active = sink.active_port == port_id
+                    })
+                end
+            end
+            table.sort(ports, function(a, b) return a.prio > b.prio end)
+
+            for _, port in ipairs(ports) do
+                local prefix = "    "
+                if port.active then prefix = "✓ " end
+                table.insert(ports_menu, { prefix .. port.name,
+                                           setter(sink.index, port.id, callback) })
+            end
+            ports_menu.theme = { width = 400 }
+            table.insert(menu, { sink.prop["device.description"],
+                                 ports_menu })
+        end
+    end
+    menu.theme = { width = 250 }
+    return menu
+end
+local function get_sink_ports_menu(callback)
+    local all_sinks = get_sinks()
+    return get_ports_menu(all_sinks, sink_port_setter, callback)
+end
+local function get_source_ports_menu(callback)
+    local all_sources = get_sources()
+    return get_ports_menu(all_sources, source_port_setter, callback)
+end
+
 -- }}}
 
 -- {{{ Pulseaudio widget type
@@ -375,6 +434,8 @@ function pulse.menu(callback)
         { "Default sink",  get_sinks_menu(callback) },
         { "Default source",  get_sources_menu(callback) },
         { "Card profiles", get_card_profiles_menu(default_card, callback) },
+        { "Sink port", get_sink_ports_menu(callback) },
+        { "Source port", get_source_ports_menu(callback) },
         { "All profiles",  get_profiles_menu(callback) }
     }
     return awful.menu({ items = menu_items })

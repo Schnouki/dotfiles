@@ -47,6 +47,17 @@ local profile_line = Cg(TAB * TAB * profile_ident * SP^1 * Ct(profile_value) * L
 local profile_lines = Cf(Ct("") * profile_line^1, rawset)
 local profile_active = TAB * "active profile: <" * C((1 - S">")^1) * ">" * LF
 
+local port_header = TAB * "ports:" * LF
+local port_ident = C((1 - P": ")^1) * ":"
+local port_name = C((1 - P" (priority")^1)
+local port_prio = " (priority " * INT
+local port_avail = (1 - P", available")^0 * ", available: " * C((1 - P")")^1)
+local port_value = Cg(port_name, "name") * Cg(port_prio, "priority") * Cg(port_avail, "available") * REST
+local port_props = TAB * TAB * TAB * LINE
+local port_line = Cg(TAB * TAB * port_ident * SP^1 * Ct(port_value) * LF) * port_props^0
+local port_lines = Cf(Ct("") * port_line^1, rawset)
+local port_active = TAB * "active port: <" * C((1 - S">")^1) * ">" * LF
+
 local card_sink_header = TAB * "sinks:" * LF
 local card_source_header = TAB * "sources:" * LF
 local card_sink_name = C((1 - P"/")^1) * "/"
@@ -59,7 +70,9 @@ local sink = Ct(Cg(sink_index, "index") *
                    Cg(attrs, "attr") *
                    prop_header *
                    Cg(prop_lines, "prop") *
-                   ports^-1)
+                   (port_header *
+                       Cg(port_lines, "ports") *
+                       Cg(port_active, "active_port"))^-1)
 
 local list_sinks_parser = LINE * Ct(sink^0)
 

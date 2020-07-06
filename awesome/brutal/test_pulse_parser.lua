@@ -33,3 +33,6 @@ print("Cards", inspect.inspect(__.chain(res)
 
 local res = parser.parse_pacmd_list_sinks(pacmd("list-sources"))
 print("Sources", inspect.inspect(res))
+
+local res = parser.parse_pacmd_list_sinks(pacmd("list-sink-inputs"))
+print("Sink inputs", inspect.inspect(res))
