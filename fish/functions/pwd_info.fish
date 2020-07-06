@@ -2,7 +2,7 @@ function pwd_info -a separator -d "Print easy-to-parse information the current w
     set -l home ~
     set -l git_root (command git rev-parse --show-toplevel ^ /dev/null)
 
-    command pwd -P | awk -v home="$home" -v git_root="$git_root" -v separator="$separator" '
+    command pwd -P | awk -v home="$home" -v git_root="$git_root" -v separator="$separator" -v dir_length="$fish_prompt_pwd_dir_length" '
         function base(string) {
             sub(/^\/?.*\//, "", string)
             return string
@@ -10,7 +10,7 @@ function pwd_info -a separator -d "Print easy-to-parse information the current w
         function dirs(string, printLastName,   prefix, path) {
             len = split(string, parts, "/")
             for (i = 1; i < len; i++) {
-                name = substr(parts[i], 1, 1)
+                name = dir_length == 0 ? parts[i] : substr(parts[i], 1, dir_length ? dir_length : 1)
                 if (parts[i] == "" || name == ".") {
                     continue
                 }
