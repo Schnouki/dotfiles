@@ -587,6 +587,19 @@ end
 function next_screen_viewprev()
    awful.tag.viewprev(get_next_screen())
 end
+
+-- Swap focused screen with the next one
+function swap_screens()
+   local s1, s2 = awful.screen.focused(), get_next_screen()
+   if s1 == s2 then return end
+   local t1, t2 = s1.tags, s2.tags
+   local ts1, ts2 = s1.selected_tags, s2.selected_tags
+   local t
+   for _, t in ipairs(t1) do t.screen = s2 end
+   for _, t in ipairs(t2) do t.screen = s1 end
+   s1.selected_tags = ts2
+   s2.select_tags = ts1
+end
 -- }}}
 -- {{{     Window management
 -- Fenêtres "transient"
@@ -1370,6 +1383,8 @@ globalkeys = awful.util.table.join(
               {description = "focus the next screen", group = "screen"}),
     awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1) end,
               {description = "focus the previous screen", group = "screen"}),
+    awful.key({ modkey, "Control" }, "s", swap_screens,
+              {description = "swap screens", group = "screen"}),
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
               {description = "jump to urgent client", group = "client"}),
     awful.key({ modkey,           }, "Tab",
