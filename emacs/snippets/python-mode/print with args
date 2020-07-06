@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: print with args
+# key: pa
+# --
+print("$1", $2)
+$0
