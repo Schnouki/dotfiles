@@ -6,8 +6,11 @@
 (use-package which-key
   :ensure t
   :diminish which-key-mode
+  :custom
+  (which-key-show-docstrings t)
+  (which-key-max-description-length nil)
   :config
-  (which-key-setup-minibuffer)
+  (which-key-setup-side-window-bottom)
   (which-key-mode 1))
 
 ;; A better *help* buffer
@@ -452,24 +455,10 @@ A buffer is considered killable if it is not modified and either visits a file, 
 (use-package sudoku
   :ensure t
   :commands sudoku
-  :init
-  (setq-default sudoku-level "medium")
-  (setq sudoku-download t))
-
-;; Deft
-(use-package deft
-  :ensure t
-  :bind (:map schnouki-prefix-map
-	 ("d" . deft))
-  :init
-  (setq deft-directory "~/Dropbox/deft"
-	deft-recursive t
-	deft-extensions '("org" "md" "txt")
-	deft-use-filename-as-title t)
-  (defun schnouki/deft--disable-dtw (orig-fun &rest args)
-    (flet ((delete-trailing-whitespace))
-      (apply orig-fun args)))
-  (advice-add 'deft-auto-save :around #'schnouki/deft--disable-dtw))
+  :custom
+  (sudoku-download t)
+  (sudoku-level 'medium)
+  (sudoku-style 'unicode))
 
 ;; ix.io integration
 (use-package ix
@@ -647,5 +636,9 @@ If third argument START is non-nil, convert words after that index in STRING."
 	 (packages (-map 'intern lines)))
     (setq package-selected-packages packages)
     (custom-save-all)))
+
+;; Open file in Docker containers
+(use-package docker-tramp
+  :ensure t)
 
 ;;; init-25-utils.el ends here

@@ -9,17 +9,13 @@
 (use-package guess-language
   :ensure t
   :defer t
+  :commands (guess-language guess-language-buffer)
   ;;:diminish guess-language-mode
   :hook text-mode
   :custom
-  (guess-language-languages '(fr en))
+  (guess-language-languages '(en fr))
   (guess-language-min-paragraph-length 40))
 
-(use-package flycheck-grammalecte
-  :ensure t
-  :config
-  (setq flycheck-grammalecte-download-without-asking t)
-  (add-to-list 'flycheck-disabled-checkers 'flycheck-grammalecte))
 
 ;; From https://stackoverflow.com/a/2478549/113325
 (defun unfill-paragraph ()
@@ -36,17 +32,9 @@
     (fill-region (region-beginning) (region-end) nil)))
 
 ;; Visual line + visual fill column modes
-(defun schnouki/toggle-visual-line-mode ()
-  "Toggle Visual Line and Visual Fill Column modes in the current buffer."
-  (interactive)
-  (cond (visual-line-mode
-	 (message "Disabling Visual Line & Visual Fill Column modes.")
-	 (visual-fill-column-mode -1)
-	 (visual-line-mode -1))
-	(t
-	 (message "Enabling Visual Line & Visual Fill Column modes.")
-	 (visual-line-mode 1)
-	 (visual-fill-column-mode 1))))
+(use-package visual-fill-column
+  :ensure t)
+
 
 (defun schnouki/set-visual-fill-column-width (width)
   "Set the Visual Fill Column to `WIDTH' in the current buffer.
@@ -58,8 +46,67 @@ as the new width."
   (setq visual-fill-column-width (or width (current-column)))
   (visual-fill-column--adjust-window))
 
+(defun schnouki/toggle-visual-fill-column-center-text ()
+  "Toggle the value of `visual-fill-column-center-text'."
+  (interactive)
+  (setq visual-fill-column-center-text (not visual-fill-column-center-text))
+  (when visual-fill-column-mode
+    (visual-fill-column--set-margins)))
+
+
+(define-minor-mode schnouki/visual-text-mode
+  "Display text using both Visual Line and Visual Fill Column modes."
+  :init-value nil
+  :lighter " VT"
+  :keymap nil
+  (if schnouki/visual-text-mode
+      (schnouki/visual-text-mode--enable)
+    (schnouki/visual-text-mode--disable)))
+
+(defun schnouki/visual-text-mode--maybe-disable ()
+  "Disable `schnouki/visual-text-mode' if its requirements are no longer met."
+  (unless (and visual-line-mode visual-fill-column-mode)
+    (schnouki/visual-text-mode--disable)))
+
+(defun schnouki/visual-text-mode--enable ()
+  "Set up `schnouki/visual-text-mode' for the current buffer."
+  (unless visual-line-mode
+    (visual-line-mode 1))
+  (unless visual-fill-column-mode
+    (visual-fill-column-mode 1))
+  (add-hook 'visual-line-mode-off-hook #'schnouki/visual-text-mode--maybe-disable 0 t)
+  (add-hook 'visual-fill-column-mode-off-hook #'schnouki/visual-text-mode--maybe-disable 0 t))
+
+(defun schnouki/visual-text-mode--disable ()
+  "Disable `schnouki/visual-text-mode' for the current buffer."
+  (remove-hook 'visual-line-mode-off-hook #'schnouki/visual-text-mode--maybe-disable t)
+  (remove-hook 'visual-fill-column-off-mode-hook #'schnouki/visual-text-mode--maybe-disable t)
+  (when visual-fill-column-mode
+    (visual-fill-column-mode -1))
+  (when visual-line-mode
+    (visual-line-mode -1)))
+
+(defun schnouki/toggle-visual-text-mode ()
+  "Toggle `schnouki/visual-text-mode' in the current buffer."
+  (interactive)
+  (if schnouki/visual-text-mode
+      (schnouki/visual-text-mode -1)
+    (schnouki/visual-text-mode 1)))
+
+(defun schnouki/turn-on-visual-text-mode ()
+  (schnouki/visual-text-mode 1))
+
+(add-hook 'text-mode-hook #'schnouki/turn-on-visual-text-mode)
+
+(defun schnouki/set-wider-fill-column ()
+  "Set a wider `fill-column' in some text modes."
+  (setq-local fill-column 120))
+(add-hook 'markdown-mode-hook #'schnouki/set-wider-fill-column)
+(add-hook 'org-mode-hook #'schnouki/set-wider-fill-column)
+
 (bind-keys :map schnouki-prefix-map
-	   ("v" . schnouki/toggle-visual-line-mode)
-	   ("V" . schnouki/set-visual-fill-column-width))
+	   ("v v" . schnouki/toggle-visual-text-mode)
+	   ("v c" . schnouki/toggle-visual-fill-column-center-text)
+	   ("v w" . schnouki/set-visual-fill-column-width))
 
 ;;; init-20-text.el ends here
