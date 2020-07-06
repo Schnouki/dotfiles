@@ -1335,7 +1335,7 @@ end
 
 -- {{{ Key bindings
 globalkeys = awful.util.table.join(
-    awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
+    awful.key({ modkey,           }, "F1",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev,
               {description = "view previous", group = "tag"}),
@@ -1371,7 +1371,7 @@ globalkeys = awful.util.table.join(
     ),
     awful.key({ modkey,           }, "w", function () mymainmenu:show() end,
               {description = "show main menu", group = "awesome"}),
-    awful.key({ modkey, "Control" }, "w", function () mylayoutmenu:show() end,
+    awful.key({ modkey, "Control" }, "w", function () mylayoutsmenu:show() end,
               {description = "show layouts menu", group = "awesome" }),
 
     -- Layout manipulation
@@ -1577,19 +1577,23 @@ awful.rules.rules = {
             "popcorntime",
             "wpa_gui" ,
         },
-        class = {
-           "BBQScreenClient2",
-           "Galculator",
-           "gmic_qt",
-           "Gmpc",
-           "Gtk-recordMyDesktop",
-           "mpv",
-           "pinentry",
-           "Plugin-container",
-           "Smplayer",
-           "Vlc",
-           "Wine",
-           "zoom",
+         class = {
+            "anbox",
+            "BBQScreenClient2",
+            "Galculator",
+            "Gcolor3",
+            "gmic_qt",
+            "Gmpc",
+            "Gtk-recordMyDesktop",
+            "mpv",
+            "pinentry",
+            "Plugin-container",
+            "rdesktop",
+            "Smplayer",
+            "tic80",
+            "Vlc",
+            "Wine",
+            "zoom",
         },
 
         name = {
@@ -1599,8 +1603,8 @@ awful.rules.rules = {
            "Popcorn Time",
         },
         role = {
-          "AlarmWindow",  -- Thunderbird's calendar.
-          "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
+           "AlarmWindow",  -- Thunderbird's calendar.
+           "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
         }
       }, properties = { floating = true }},
 
@@ -1622,7 +1626,7 @@ awful.rules.rules = {
     },
 
     -- Keep some applications on the last tag of the first screen
-    { rule_any = { instance = { "spotify.exe", "spotify", "Steam" } },
+    { rule_any = { instance = { "spotify.exe", "spotify" } },
       properties = { floating = true } }, --, tag="⌘"
 
     -- Other applications must be floating *and* centered
@@ -1638,6 +1642,13 @@ awful.rules.rules = {
       properties = { floating = true,
                      border_width = 0,
                      placement = awful.placement.closest_corner },
+      callback = hide_titlebar
+    },
+
+    -- Steam
+    { rule = { class = "Steam" },
+      properties = { flating = true,
+                     border_width = 0 },
       callback = hide_titlebar
     },
 
