@@ -1,6 +1,17 @@
-directory: ~/Music
-library: ~/Music/.library
-plugins: bpd edit fetchart fromfilename info mbsync permissions play replaygain web
+directory: ~/annex/music
+library: ~/annex/music/.library
+plugins:
+  - bandcamp
+  - bpd
+  - edit
+  - fetchart
+  - fromfilename
+  - info
+  - mbsync
+  - permissions
+  - play
+  - replaygain
+  - web
 
 ui:
   color: yes
