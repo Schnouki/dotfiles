@@ -14,9 +14,6 @@
 	algorithm = histogram
 	compactionHeuristic = true
 	noprefix = true
-[rerere]
-	enabled = true
-	autoupdate = true
 [rebase]
 	autosquash = true
 [grep]
@@ -39,3 +36,11 @@
 
 [includeIf "gitdir:~/doist/"]
 	path = ~/.config/git/doist.inc
+[cola]
+	spellcheck = false
+	theme = flat-dark-blue
+	icontheme = dark
+[init]
+	templatedir = ~/.config/git/templates
+[pull]
+	ff = only
