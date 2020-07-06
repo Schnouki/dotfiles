@@ -1,3 +1,7 @@
+-- If LuaRocks is installed, make sure that packages installed through it are
+-- found (e.g. lgi). If LuaRocks is not installed, do nothing.
+pcall(require, "luarocks.loader")
+
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
@@ -18,6 +22,8 @@ local fa = require("fa")
 local __ = require("underscore")
 -- Filesystem
 local lfs = require("lfs")
+-- Posix
+local posix = require("posix")
 -- Sockets!
 local socket = require("socket")
 -- Promises
@@ -146,6 +152,24 @@ local function client_menu_toggle_fn()
         end
     end
 end
+
+local function spawn_deferred(cmd, with_shell)
+   local d = deferred.new()
+   local func = awful.spawn.easy_async
+   if with_shell then func = awful.spawn.easy_async_with_shell end
+   func(cmd, function(stdout, stderr, reason, code)
+           if reason == "signal" then code = -code end
+           d:resolve({ code = code, stdout = stdout, stderr=stderr })
+   end)
+   return d
+end
+-- }}}
+
+-- {{{ Set correct $PATH
+spawn_deferred({"fish", "-c", "env | grep '^PATH='"}):next(function(res)
+      local path = string.sub(res.stdout, 6, -2)
+      posix.stdlib.setenv("PATH", path)
+end)
 -- }}}
 
 -- {{{ Menu
@@ -251,7 +275,7 @@ local function auto_set_screen(direction)
          else
             cmd = cmd .. " --off"
          end
-         os.execute(cmd)
+         awful.spawn(cmd)
     end)
 end
 
@@ -291,10 +315,10 @@ end
 -- {{{ Screenshot menu
 local function screenshot(mode)
    local run_maim = true
-   local retcode = -1
    local cmd = "maim"
    local filename = os.date("%F-%H_%M_%S") .. ".png"
    local fullname = os.getenv("HOME") .. "/Dropbox/Public/Screenshots/" .. filename
+   local d = deferred.new()
    if mode == "active_window" then
       local c = client.focus
       if c ~= nil and c.content ~= nil then
@@ -308,11 +332,15 @@ local function screenshot(mode)
    if run_maim then
       naughty.notify({text = cmd })
       cmd = cmd .. " " .. fullname
-      retcode = os.execute(cmd)
+      d = spawn_deferred(cmd)
+   else
+      d:resolve({ code =0 })
    end
-   if not run_maim or retcode == 0 then
-      os.execute("mimeo " .. fullname)
-   end
+   d:next(function(res)
+         if res.code == 0 then
+            awful.spawn({"mimeo", fullname})
+         end
+   end)
 end
 screenshotmenu = {
    { "&Open screenshots dir", "geeqie " .. os.getenv("HOME") .. "/Dropbox/Public/Screenshots" },
@@ -485,14 +513,7 @@ screen.connect_signal("property::geometry", change_wallpapers)
 --   }}}
 -- {{{   Personal stuff
 -- {{{     Helpers
--- TODO: create a helper in lousy
-function gethost()
-   local f = io.popen("/bin/hostname")
-   local n = f:read("*a") or "none"
-   f:close()
-   return string.gsub(n, "\n$", "")
-end
-local hostname = gethost()
+local hostname = socket.dns.gethostname()
 
 -- Personal helper library for things written in C
 package.cpath = config_dir .. "/?.so;" .. package.cpath
@@ -504,13 +525,15 @@ local function round(n)
    if d >= 0.5 then return i+1 else return i end
 end
 local function get_backlight()
-   local p = io.popen("light")
-   local n = round(tonumber(p:read("*a")))
-   p:close()
-   return n
+   local d = deferred.new()
+   spawn_deferred("light"):next(function(res)
+         local n = round(tonumber(res.stdout))
+         d:resolve(n)
+   end)
+   return d
 end
 local function set_backlight(lvl)
-   os.execute("light -S " .. lvl)
+   return spawn_deferred("sudo light -S " .. lvl)
 end
 
 local backlight_notif_id = nil
@@ -524,16 +547,29 @@ function change_backlight(offset)
    if dt < min_dt then return end
    backlight_time = new_time
 
-   local new_bl = get_backlight() + offset
-   if new_bl < min_bl then new_bl = min_bl
-   elseif new_bl > 100 then new_bl = 100 end
-   set_backlight(new_bl)
-   local notif = naughty.notify({
-         text = "Backlight level: " .. get_backlight() .. "%",
-         replaces_id = backlight_notif_id,
-         icon = icon_theme.get("notifications", "notification-display-brightness")
-   })
-   backlight_notif_id = notif.id
+   local function notify(text)
+      local notif = naughty.notify({
+            text = text,
+            replaces_id = backlight_notif_id,
+            icon = icon_theme.get("notifications", "notification-display-brightness")
+      })
+      backlight_notif_id = notif.id
+   end
+
+   get_backlight():next(function(bl)
+         local new_bl = bl + offset
+         if new_bl < min_bl then new_bl = min_bl
+         elseif new_bl > 100 then new_bl = 100 end
+         return set_backlight(new_bl)
+   end):next(function(res)
+         if res.code == 0 then
+            return get_backlight()
+         else
+            notify("Could not change backlight level: " .. res.stderr .. " (" .. res.code .. ")")
+         end
+   end):next(function(bl)
+         notify("Backlight level: " .. bl .. "%")
+   end)
 end
 
 -- Screen helper
@@ -730,8 +766,7 @@ end
 -- }}}
 -- {{{       Mail info
 -- Widget with number of unread mails if notmuch is available
-local f = io.open("/usr/bin/notmuch")
-if f then
+if lfs.attributes("/usr/bin/notmuch", "mode") == "file" then
    tb_mails = wibox.widget.textbox()
    tb_mails_color_normal   = "#7cb8bb" -- blue-1
    tb_mails_color_updating = "#ac7373" -- red-2
@@ -800,7 +835,7 @@ tb_msmtpq_update()
 -- {{{       Media player control
 function mpris2(command)
    return function()
-      os.execute("~/bin/mpris2-control " .. command .. " &")
+      awful.spawn({"mpris2-control", command})
    end
 end
 -- }}}
