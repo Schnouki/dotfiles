@@ -35,6 +35,7 @@ hook_update_encrypted_tarball() {
 }
 
 # Check for sensitive configuration files: SSH, GnuPG, etc.
+hook_update_encrypted_file ".atlas/auth" "atlas-auth.gpg"
 hook_update_encrypted_file ".gitspindle" "gitspindle.gpg"
 hook_update_encrypted_file ".gnupg/gpg.conf" "gpg.conf.gpg"
 hook_update_encrypted_file ".msmtprc" "msmtprc.gpg"
