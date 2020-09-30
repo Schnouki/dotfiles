@@ -15,5 +15,6 @@ setup_file_symlink "zsh/logout"  ".zlogout"
 # Setup ~/.config/zsh/private
 setup_decrypt "zsh/private.gpg" ".config/zsh/private"
 
-# Setup ~/.config/fish/conf.d/private.fish
+# Setup ~/.config/fish/conf.d/ private files
+setup_decrypt "fish/conf.d/doist.fish.gpg" ".config/fish/conf.d/doist.fish"
 setup_decrypt "fish/conf.d/private.fish.gpg" ".config/fish/conf.d/private.fish"
