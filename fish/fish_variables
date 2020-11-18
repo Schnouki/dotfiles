@@ -11,6 +11,12 @@ SETUVAR __fish_init_2_39_8:\x1d
 SETUVAR __fish_init_2_3_0:\x1d
 SETUVAR __fish_init_3_x:\x1d
 SETUVAR __fish_initialized:3100
+SETUVAR _fisher_fishpkg_2F_fish_2D_git_2D_util_files:/home/schnouki/\x2econfig/fish/functions/git_ahead\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/git_branch_name\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/git_is_detached_head\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/git_is_dirty\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/git_is_empty\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/git_is_repo\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/git_is_staged\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/git_is_stashed\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/git_is_tag\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/git_is_touched\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/git_repository_root\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/git_untracked_files\x2efish
+SETUVAR _fisher_fishpkg_2F_fish_2D_pwd_2D_info_files:/home/schnouki/\x2econfig/fish/functions/pwd_info\x2efish
+SETUVAR _fisher_franciscolourenco_2F_done_files:/home/schnouki/\x2econfig/fish/conf\x2ed/done\x2efish
+SETUVAR _fisher_jethrokuan_2F_z_files:/home/schnouki/\x2econfig/fish/functions/__z\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/__z_add\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/__z_clean\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/__z_complete\x2efish\x1e/home/schnouki/\x2econfig/fish/conf\x2ed/z\x2efish
+SETUVAR _fisher_laughedelic_2F_pisces_files:/home/schnouki/\x2econfig/fish/functions/_pisces_append\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/_pisces_backspace\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/_pisces_bind_pair\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/_pisces_complete\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/_pisces_insert_identical\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/_pisces_insert_left\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/_pisces_insert_right\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/_pisces_jump\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/_pisces_lookup\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/_pisces_remove\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/_pisces_should_insert\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/_pisces_skip\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/key_bindings\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/uninstall\x2efish
+SETUVAR _fisher_plugins:fishpkg/fish\x2dgit\x2dutil\x1efishpkg/fish\x2dpwd\x2dinfo\x1efranciscolourenco/done\x1ejethrokuan/z\x1elaughedelic/pisces
 SETUVAR fish_color_autosuggestion:969896
 SETUVAR fish_color_cancel:\x2dr
 SETUVAR fish_color_command:b294bb
@@ -40,4 +46,6 @@ SETUVAR fish_pager_color_completion:normal
 SETUVAR fish_pager_color_description:B3A06D\x1eyellow
 SETUVAR fish_pager_color_prefix:white\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
 SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
+SETUVAR fish_user_paths:/home/schnouki/\x2epoetry/bin
+SETUVAR pisces_only_insert_at_eol:1
 SETUVAR pisces_pairs:\x28\x2c\x29\x1e\x5b\x2c\x5d\x1e\x7b\x2c\x7d\x1e\x22\x2c\x22\x1e\x27\x2c\x27
