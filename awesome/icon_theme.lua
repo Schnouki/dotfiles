@@ -2,7 +2,8 @@ local ipairs = ipairs
 local lfs, os, string, table = require("lfs"), require("os"), require("string"), require("table")
 local naughty = require("naughty")
 
-module("icon_theme")
+local M  = {}
+_ENV = M
 
 local base_dirs = {"/usr/share/icons", os.getenv("XDG_DATA_HOME") .. "/icons"}
 local exts = {"png", "xpm", "svg", "gif"}
@@ -59,3 +60,5 @@ function configure_naughty()
    naughty.config.icon_dirs = dirs
    naughty.config.icon_formats = exts
 end
+
+return M

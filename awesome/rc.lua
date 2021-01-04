@@ -30,18 +30,18 @@ local socket = require("socket")
 local deferred = require("deferred/deferred")
 
 -- Eminement dynamic tagging
-require("eminent")
+local eminent = require("eminent")
 -- Vicious widgets
-vicious = require("vicious")
+local vicious = require("vicious")
 vicious.contrib = require("vicious.contrib")
 -- Custom widgets based on Vicious
-brutal = require("brutal")
+local brutal = require("brutal")
 -- Markup functions
-require("markup")
+local markup = require("markup")
 -- Icon theme
-icon_theme = require("icon_theme")
+local icon_theme = require("icon_theme")
 -- Fangh calendar :)
-fangh_cal = require("fangh_calendar")
+local fangh_calendar = require("fangh_calendar")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -197,7 +197,7 @@ myawesomemenu = {
    { "&quit", function() awesome.quit() end}
 }
 
-require("steam")
+local steam = require("steam")
 steamdir = "/home/schnouki/.local/share/Steam/SteamApps"
 steammenu = { theme = {width = 200 } }
 for _, game in ipairs(steam.get_games(steamdir)) do
@@ -517,7 +517,7 @@ local hostname = socket.dns.gethostname()
 
 -- Personal helper library for things written in C
 package.cpath = config_dir .. "/?.so;" .. package.cpath
-require("lousy")
+local lousy = require("lousy")
 
 -- Backlight helper
 local function round(n)
@@ -675,11 +675,11 @@ end
 separator = wibox.widget.imagebox()
 separator:set_image(config_dir .. "/icons/separator.png")
 
-require("locksmon")
+local locksmon = require("locksmon")
 locks_mon = locksmon.new()
 
 -- {{{       Network stuff
-require("netmon")
+local netmon = require("netmon")
 ifaces = {}
 if hostname == "baldr" then
    ifaces = {

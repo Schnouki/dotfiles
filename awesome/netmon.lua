@@ -2,7 +2,8 @@ local io, pairs, print, setmetatable, string = io, pairs, print, setmetatable, s
 local awful, wibox = require("awful"), require("wibox")
 local deferred = require("deferred/deferred")
 
-module("netmon")
+local M = {}
+_ENV = M
 
 local colors = {
    up      = "#afd8af", -- green+3,
@@ -151,3 +152,5 @@ function new(ifaces, hosts)
    w:update()
    return w
 end
+
+return M

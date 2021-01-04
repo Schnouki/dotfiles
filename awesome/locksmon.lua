@@ -2,7 +2,8 @@ local io, string, setmetatable = require("io"), require("string"), setmetatable
 local gears, naughty, wibox = require("gears"), require("naughty"), require("wibox")
 local lousy, markup = require("lousy"), require("markup")
 
-module("locksmon")
+local M = {}
+_ENV = M
 
 -- {{{ Colors
 local colors = {
@@ -87,3 +88,5 @@ function new()
    w:update()
    return w
 end
+
+return M

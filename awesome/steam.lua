@@ -5,7 +5,8 @@ local table = require("table")
 
 local lfs = require("lfs")
 
-module("steam")
+local M = {}
+_ENV = M
 
 local function get_all_acf(path)
    local filenames = {}
@@ -44,3 +45,5 @@ function get_games(path)
    table.sort(games, function(a, b) return a["name"] < b["name"] end)
    return games
 end
+
+return M

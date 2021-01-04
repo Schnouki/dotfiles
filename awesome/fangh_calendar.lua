@@ -6,7 +6,8 @@
 local ipairs = ipairs
 local os = require("os")
 
-module("fangh_calendar")
+local M = {}
+_ENV = M
 
 local calendar = {
    {name="Décade de Sbroz", dur=10},
@@ -101,3 +102,5 @@ end
 function format_today()
    return format_date(get_day())
 end
+
+return M

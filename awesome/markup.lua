@@ -5,7 +5,8 @@
 -- local tostring, beautiful = tostring, require('beautiful').get()
 local tostring, beautiful = tostring, require('beautiful')
 
-module('markup')
+local M = {}
+_ENV = M
 
 fg = {}
 bg = {}
@@ -81,3 +82,5 @@ function    normal(text) return bg.normal(fg.normal(text))          end
 function fg.urgent(text) return fg.color(beautiful.fg_urgent, text) end
 function bg.urgent(text) return bg.color(beautiful.bg_urgent, text) end
 function    urgent(text) return bg.urgent(fg.urgent(text))          end
+
+return M
