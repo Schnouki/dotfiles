@@ -2,6 +2,10 @@
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
 
+local package = require("package")
+package.path = "/home/schnouki/.luarocks/share/lua/5.3/?.lua;/home/schnouki/.luarocks/share/lua/5.3/?/init.lua;" .. package.path
+package.cpath = "/home/schnouki/.luarocks/lib/lua/5.3/?.so;" .. package.cpath
+
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
