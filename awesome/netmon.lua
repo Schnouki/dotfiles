@@ -1,4 +1,4 @@
-local io, pairs, print, setmetatable, string = io, pairs, print, setmetatable, string
+local io, ipairs, pairs, print, setmetatable, string, table = io, ipairs, pairs, print, setmetatable, string, table
 local awful, wibox = require("awful"), require("wibox")
 local deferred = require("deferred/deferred")
 
@@ -40,38 +40,40 @@ local function get_interfaces(ifaces)
             for k, entry in pairs(ifaces) do
                local ifname, addr = line:match("^%d+:%s+(" .. entry.iface .. ")%s+inet%s+(%S+)")
                if ifname ~= nil then
-                  status[entry.label] = { ifname = ifname, addr = addr }
+                  table.insert(status, { label = entry.label, ifname = ifname, addr = addr })
                end
             end
          end,
-         exit = function(reason, code)
-            if reason == "exit" and code == 0 then
-               d:resolve(status)
-            else
-               d:reject("interfaces " .. reason .. ": " .. code)
-            end
+         output_done = function()
+            d:resolve(status)
          end
    })
    return d
 end
 
-local function ping(hosts)
+local function ping(hosts, if_data)
    local d = deferred.new()
    awful.spawn.easy_async(
-      "fping -a -r 0 " .. hosts,
+      "fping -a -r 0 " .. hosts .. " -I " .. if_data.ifname,
       function(stdout, stderr, exitreason, exitcode)
          if exitreason == "signal" then
-            d:reject("fping " .. exitreason .. ": " .. exitcode )
+            d:reject("fping " .. if_data.ifname .. ": " .. exitcode .. ": " .. exitreason)
          else
             stdout = trim(stdout)
-            d:resolve(#stdout > 0)
+            if_data.ping = #stdout > 0
+            d:resolve(if_data)
          end
       end
    )
    return d
 end
 
-local function format_data(ifaces, net_up, status)
+local function format_data(ifaces, results)
+   local status = {}
+   for _, entry in ipairs(results) do
+      status[entry.label] = entry
+   end
+
    -- Build the result
    local txt = ""
    local tooltip = ""
@@ -81,9 +83,9 @@ local function format_data(ifaces, net_up, status)
       if if_status then
          tooltip = string.format("%s<b>%s</b>: %s (<i>%s</i>)\n",
                                  tooltip, entry.label, if_status.addr, if_status.ifname)
-         if net_up == nil then
+         if if_status.ping == nil then
             if_color = "unknown"
-         elseif net_up then
+         elseif if_status.ping then
             if_color = "up"
          else
             if_color = "no_ping"
@@ -117,22 +119,23 @@ function NetMon:new(ifaces, hosts)
 end
 
 function NetMon:update()
-   deferred.all({
-         ping(self.hosts),
-         get_interfaces(self.ifaces)
-   }):next(
-      function(results)
-         local net_up = results[1]
-         local status = results[2]
-
-         local data = format_data(self.ifaces, net_up, status)
-
-         self.widget:set_markup(data.text)
-         self.tooltip = "<p>" .. data.toltip .. "</p>"
-      end,
-      function(err)
-         print("Netmon update error: " .. err)
-      end)
+   get_interfaces(self.ifaces)
+      :next(
+         function(if_data)
+            return deferred.map(if_data, function(iface) return ping(self.hosts, iface) end)
+         end,
+         function(err)
+            print("Netmon update error: " .. err)
+           end)
+      :next(
+         function(results)
+            local data = format_data(self.ifaces, results)
+            self.widget:set_markup(data.text)
+            self.tooltip = "<p>" .. data.toltip .. "</p>"
+         end,
+         function(err)
+            print("Netmon update error: " .. err)
+           end)
 end
 
 function NetMon:ssid(label)

@@ -693,7 +693,7 @@ if hostname == "baldr" then
    }
 elseif hostname == "loki" then
    ifaces = {
-      { label = "E", iface = "ens1" },
+      { label = "E", iface = "enp%d+s%d+" },
       { label = "W", iface = "wlp59s0" },
       { label = "U", iface = "en%w+u%d+" }
    }
