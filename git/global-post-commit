@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Log commit message as a 'highlight' in RescueTime premium
+~/.config/git/rescuetime-post-commit || true
+
+# Log commit to Exist.io
+pueue add --label exist.io "~/.nimble/bin/exist_git_hook commit"

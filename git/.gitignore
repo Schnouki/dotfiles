@@ -2,5 +2,7 @@
 !.gitignore
 !*.gpg
 
+!global-post-commit
 !config
 !ignore
+!templates/hooks/

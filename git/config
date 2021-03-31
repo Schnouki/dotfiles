@@ -42,5 +42,6 @@
 	icontheme = dark
 [init]
 	templatedir = ~/.config/git/templates
+	defaultBranch = main
 [pull]
 	ff = only
