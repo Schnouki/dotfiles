@@ -1,7 +1,7 @@
 directory: ~/annex/music
 library: ~/annex/music/.library
 plugins:
-  - bandcamp
+  # - bandcamp
   - bpd
   - edit
   - fetchart
