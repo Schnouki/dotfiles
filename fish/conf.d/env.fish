@@ -1,11 +1,12 @@
 # Paths
 set PATH \
     $HOME/bin \
+    $HOME/.local/bin \
     $HOME/.cabal/bin \
     $HOME/.go/bin \
-    $HOME/.local/bin \
     $HOME/.gem/ruby/2.5.0/bin \
     $HOME/.composer/vendor/bin \
+    $HOME/.nimble/bin \
     $PATH
 
 set -gx XDG_DATA_HOME $HOME/.local/share
