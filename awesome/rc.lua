@@ -202,10 +202,10 @@ myawesomemenu = {
 }
 
 local steam = require("steam")
-steamdir = "/home/schnouki/.local/share/Steam/SteamApps"
+steamdir = "/home/schnouki/.local/share/Steam/steamapps"
 steammenu = { theme = {width = 200 } }
 for _, game in ipairs(steam.get_games(steamdir)) do
-   table.insert(steammenu, { game["name"], "steam-native steam://rungameid/" .. game["id"],
+   table.insert(steammenu, { game["name"], "prime-run steam-native steam://rungameid/" .. game["id"],
                              icon_theme.get("apps", "steam_icon_" .. game["id"]) })
 end
 
@@ -412,7 +412,8 @@ mymainmenu = awful.menu({ items = { { "&awesome", myawesomemenu, beautiful.aweso
                                     { "&wine", winemenu, icon_theme.get("apps", "wine") },
                                     menu_sep,
                                     { "&firefox", safe_cmd("firefox"), icon_theme.get("apps", "firefox") },
-                                    { "&chromium", safe_cmd("chromium"), icon_theme.get("apps", "chromium") },
+                                    { "&vivaldi", safe_cmd("vivaldi-stable"), icon_theme.get("apps", "vivaldi") },
+                                    { "thunder&bird", safe_cmd("thunderbird"), icon_theme.get("apps", "thunderbird") },
                                     menu_sep,
                                     { "&gmpc", safe_cmd("gmpc"), icon_theme.get("apps", "gmpc") },
                                     { "mellowpla&yer", safe_cmd("MellowPlayer"), icon_theme.get("apps", "mellowplayer") },
@@ -1194,8 +1195,10 @@ persokeys = {
              { description="locate pointer", group="misc" }),
    awful.key({ modkey, "Shift" }, "w",     function () change_wallpapers() end,
              { description="change wallpaper", group="misc" }),
-   awful.key({ modkey, "Mod1" }, "r", function () show_rfkill_menu() end,
+   awful.key({ modkey, "Mod1"  }, "r", function () show_rfkill_menu() end,
              { description="open the rfkill menu", group="misc" }),
+   awful.key({ modkey          }, "e", function () awful.spawn("rofimoji") end,
+             { description="open the emoji selector", group="misc" }),
 }
 
 persoclientkeys = {
