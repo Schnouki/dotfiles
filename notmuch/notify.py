@@ -48,10 +48,10 @@ for thr in q.search_threads():
 
     from_ = thr.get_authors()
     from_ = from_.split("|", 1)[0]
-    from_ = from_.replace("\t", " ").strip()
+    from_ = " ".join(from_.strip().split())
 
     subj_ = thr.get_subject() or "(no subject)"
-    subj_ = subj_.replace("\t", " ").strip()
+    subj_ = " ".join(subj_.strip().split())
 
     lf = len(from_)
     if lf > MAX_FROM_LEN:
