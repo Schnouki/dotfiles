@@ -4,4 +4,5 @@
 ~/.config/git/rescuetime-post-commit || true
 
 # Log commit to Exist.io
-pueue add --label exist.io "~/.nimble/bin/exist_git_hook commit"
+DATE_TODAY=$(date +"%Y-%m-%d")
+pueue add --label exist.io "~/.nimble/bin/exist_git_hook --date:$DATE_TODAY commit"
