@@ -40,6 +40,7 @@ __pycache__/
 !ddns
 ddns/key
 !emacs
+!fennel
 !fish
 !fontconfig
 !git
