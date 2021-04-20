@@ -6,6 +6,11 @@ local package = require("package")
 package.path = "/home/schnouki/.luarocks/share/lua/5.3/?.lua;/home/schnouki/.luarocks/share/lua/5.3/?/init.lua;" .. package.path
 package.cpath = "/home/schnouki/.luarocks/lib/lua/5.3/?.so;" .. package.cpath
 
+-- Embed Fennel
+local fennel = require("fennel")
+fennel.path = fennel.path .. ";.config/awesome/?.fnl;.config/awesome/?/init.fnl"
+table.insert(package.loaders or package.searchers, fennel.searcher)
+
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
@@ -212,7 +217,7 @@ end
 gamesdir = "/home/schnouki/Media/Jeux"
 gamemenu = {
    theme = { width = 200 },
-   { "&steam", "steam-native", icon_theme.get("apps", "steam") },
+   { "&steam", "prime-run steam-native", icon_theme.get("apps", "steam") },
    { "steam &games", steammenu, icon_theme.get("apps", "steam") },
    -- { "battle for wesnoth", "wesnoth", "/usr/share/icons/wesnoth-icon.png" },
    -- { "frozen bubble", "frozen-bubble", "/usr/share/pixmaps/frozen-bubble.png" },
