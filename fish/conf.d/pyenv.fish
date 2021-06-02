@@ -1,4 +1,7 @@
-if test -d $HOME/.pyenv
-    set -x PATH "$HOME/.pyenv/bin:$PATH"
-    pyenv init - fish | source
+if test -d $PYENV_ROOT
+    set -x PATH \
+        $PYENV_ROOT/bin \
+        $PYENV_ROOT/shims \
+        $PATH
+    pyenv init - --no-rehash fish | source
 end
