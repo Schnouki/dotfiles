@@ -77,18 +77,21 @@ local sink = Ct(Cg(sink_index, "index") *
 local list_sinks_parser = LINE * Ct(sink^0)
 
 
-local card = Ct(Cg(sink_index, "index") *
-                   Cg(attrs, "attr") *
-                   prop_header *
-                   Cg(prop_lines, "prop") *
-                   profile_header *
-                   Cg(profile_lines, "profile") *
-                   Cg(profile_active, "active_profile") *
-                   card_sink_header *
-                   Cg(card_sink_lines, "sinks") *
-                   card_source_header *
-                   Cg(card_sink_lines, "sources") *
-                   ports^-1)
+local card = Ct(Cg(sink_index, "index")
+                * Cg(attrs, "attr")
+                * prop_header
+                * Cg(prop_lines, "prop")
+                * profile_header
+                * Cg(profile_lines, "profile")
+                * Cg(profile_active, "active_profile")
+                * (card_sink_header
+                   * Cg(card_sink_lines, "sinks")
+                  )^-1
+                * (card_source_header
+                   * Cg(card_sink_lines, "sources")
+                  )^-1
+                * ports^-1
+)
 
 local list_cards_parser = LINE * Ct(card^0)
 

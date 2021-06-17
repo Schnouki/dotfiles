@@ -134,7 +134,7 @@ local function get_default_card()
 
     local card = __.chain(get_cards())
         :find(function(c)
-                return __.chain(c["sinks"])
+                return __.chain(c["sinks"] or {})
                     :keys()
                     :contains(sink_name)
                     :value()
