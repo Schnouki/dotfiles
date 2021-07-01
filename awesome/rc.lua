@@ -751,7 +751,7 @@ function win_info(c)
 
    local function mono(text) return markup.font('mono', text) end
 
-   local attrs = {"role", "type", "title", "class", "instance", "width", "height"}
+   local attrs = {"role", "type", "name", "class", "instance", "width", "height"}
    local max_len = 0
    local text = ""
    local name, value
@@ -766,6 +766,11 @@ function win_info(c)
       while #label < max_len do label = " " .. label end
       if #text > 0 then text = text .. "\n" end
       text = text .. mono(markup.fg.focus(label .. ": ")) .. value
+   end
+
+   if c.size_hints ~= nil then
+      text = text .. "\n\n" .. mono(markup.fg.focus("Min size: ") .. string.format("%dx%d", c.size_hints.min_width, c.size_hints.min_height))
+      text = text .. "\n" .. mono(markup.fg.focus("Max size: ") .. string.format("%dx%d", c.size_hints.max_width, c.size_hints.max_height))
    end
 
    naughty.notify({ text = text, timeout = 5, hover_timeout = 0.5 })
