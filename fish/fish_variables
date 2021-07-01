@@ -12,12 +12,10 @@ SETUVAR __fish_init_2_39_8:\x1d
 SETUVAR __fish_init_2_3_0:\x1d
 SETUVAR __fish_init_3_x:\x1d
 SETUVAR __fish_initialized:3100
-SETUVAR _fisher_fishpkg_2F_fish_2D_git_2D_util_files:/home/schnouki/\x2econfig/fish/functions/git_ahead\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/git_branch_name\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/git_is_detached_head\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/git_is_dirty\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/git_is_empty\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/git_is_repo\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/git_is_staged\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/git_is_stashed\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/git_is_tag\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/git_is_touched\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/git_repository_root\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/git_untracked_files\x2efish
-SETUVAR _fisher_fishpkg_2F_fish_2D_pwd_2D_info_files:/home/schnouki/\x2econfig/fish/functions/pwd_info\x2efish
 SETUVAR _fisher_franciscolourenco_2F_done_files:/home/schnouki/\x2econfig/fish/conf\x2ed/done\x2efish
 SETUVAR _fisher_jethrokuan_2F_z_files:/home/schnouki/\x2econfig/fish/functions/__z\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/__z_add\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/__z_clean\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/__z_complete\x2efish\x1e/home/schnouki/\x2econfig/fish/conf\x2ed/z\x2efish
 SETUVAR _fisher_jorgebucaran_2F_autopair_2E_fish_files:/home/schnouki/\x2econfig/fish/functions/_autopair_backspace\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/_autopair_insert_left\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/_autopair_insert_right\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/_autopair_insert_same\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/_autopair_tab\x2efish\x1e/home/schnouki/\x2econfig/fish/conf\x2ed/autopair\x2efish
-SETUVAR _fisher_plugins:fishpkg/fish\x2dgit\x2dutil\x1efishpkg/fish\x2dpwd\x2dinfo\x1efranciscolourenco/done\x1ejethrokuan/z\x1ejorgebucaran/autopair\x2efish
+SETUVAR _fisher_plugins:fishpkg/fish\x2dpwd\x2dinfo\x1efranciscolourenco/done\x1ejethrokuan/z\x1ejorgebucaran/autopair\x2efish\x1efishpkg/fish\x2dgit\x2dutil
 SETUVAR fish_color_autosuggestion:969896
 SETUVAR fish_color_cancel:\x2dr
 SETUVAR fish_color_command:b294bb
