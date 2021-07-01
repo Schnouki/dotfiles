@@ -2,15 +2,21 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Links to GitHub issues and PRs using [[ghi:123]], [[ghpr:user/repo#123]]...
+;; Links to GitHub issues and PRs using ghi:123, ghpr:user/repo#123, ghpr:#123, ghi:repo#123...
 (defvar schnouki/org-gh-default-user nil)
 (defvar schnouki/org-gh-default-repo nil)
 
 (defun schnouki/org-gh-parse-url (path)
-  (let* ((m (s-match (rx bos (opt
-			      (opt (group (1+ graph)) "/")
-			      (group (1+ graph)) "#")
-			 (group (1+ num)) eos)
+  (let* ((m (s-match (rx bos
+			 (or
+			  (opt
+			   (opt (group (1+ graph))
+				"/")
+			   (group (1+ graph))
+			   "#")
+			  "#")
+			 (group (1+ num))
+			 eos)
 		     path))
 	 (user (or (nth 1 m) schnouki/org-gh-default-user))
 	 (repo (or (nth 2 m) schnouki/org-gh-default-repo))
