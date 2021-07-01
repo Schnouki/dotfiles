@@ -192,9 +192,11 @@
   :commands (lsp lsp-deferred)
   :hook (prog-mode . lsp-deferred)
   :custom
-  (lsp-auto-guess-root t)
-  (lsp-prefer-flymake nil)
+  (lsp-auto-guess-root nil)
+  (lsp-auto-select-workspace nil)
   (lsp-clients-emmy-lua-jar-path "/usr/lib/lua-emmy-language-server/EmmyLua-LS-all.jar")
+  (lsp-enable-file-watchers nil)
+  (lsp-prefer-flymake nil)
   :config
   (defun schnouki/lsp--disable-y-or-n-p (orig-fun &rest args)
     (if schnouki/desktop-was-read
