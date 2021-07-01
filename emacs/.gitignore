@@ -1,5 +1,5 @@
 %backup%~
-*.el[cd]
+*.el[cdn]
 .#*
 *.cache
 
@@ -8,6 +8,7 @@
 anaconda-mode/
 auto-save-list/
 elpa/
+eln-cache/
 emojis/
 eshell/
 request/

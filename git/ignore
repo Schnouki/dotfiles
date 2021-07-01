@@ -2,5 +2,6 @@
 *.swp
 .dir-locals.el
 .dir-locals-2.el
+.python-version
 .workon
 .venv
