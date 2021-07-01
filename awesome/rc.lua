@@ -207,11 +207,11 @@ myawesomemenu = {
 }
 
 local steam = require("steam")
-steamdir = "/home/schnouki/.local/share/Steam/steamapps"
+steamdir = "/home/schnouki/.local/share/Steam"
 steammenu = { theme = {width = 200 } }
 for _, game in ipairs(steam.get_games(steamdir)) do
    table.insert(steammenu, { game["name"], "prime-run steam-native steam://rungameid/" .. game["id"],
-                             icon_theme.get("apps", "steam_icon_" .. game["id"]) })
+                             game["icon"] }) --icon_theme.get("apps", "steam_icon_" .. game["id"]) })
 end
 
 gamesdir = "/home/schnouki/Media/Jeux"
