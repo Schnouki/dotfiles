@@ -42,6 +42,16 @@
 ;;   :init
 ;;   (add-hook 'magit-mode-hook 'turn-on-magit-gitflow))
 
+
+(use-package git-link
+  :ensure t
+  :bind (:map schnouki-magit-prefix-map
+	 ("g g" . git-link)
+	 ("g c" . git-link-commit)
+	 ("g h" . git-link-homepage))
+  :custom
+  (git-link-use-commit t))
+
 ;; gitignore
 (use-package gitignore-mode
   :ensure t)
