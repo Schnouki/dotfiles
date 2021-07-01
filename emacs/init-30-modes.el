@@ -9,18 +9,6 @@
 (use-package fennel-mode
   :ensure t)
 
-(use-package haskell-mode
-  :ensure t
-  :mode "\\.hs\\'")
-
-(use-package groovy-mode
-  :ensure t
-  :mode "\\.groovy\\'\\|\\.gradle\\'")
-
-(use-package kotlin-mode
-  :ensure t
-  :mode "\\.kt\\'")
-
 (use-package python
   :mode ("\\.py'" . python-mode)
   :init
@@ -64,10 +52,6 @@
               (add-hook 'before-save-hook 'tide-format-before-save nil t))
             ))
 
-(use-package actionscript-mode
-  :ensure t
-  :mode "\\.as\'")
-
 (use-package php-mode
   :ensure t
   :mode "\\.php[345]?\\'")
@@ -108,43 +92,6 @@
   :init
   (setq less-css-compile-at-save nil))
 
-(use-package haml-mode
-  :ensure t
-  :mode "\\.haml\\'"
-  :config
-
-  (setq schnouki/hamlpy-keywords '("elif" "block" "blocktrans" "with"))
-
-  ;; Reset haml-block-openers -- inspired by http://emacs.stackexchange.com/a/10809/2006
-  ;; TODO: make a nice function out of this :)
-  (save-window-excursion
-    (save-excursion
-      (find-variable 'haml-block-openers)
-      (eval-defun nil)))
-  (add-to-list 'haml-block-openers
-               (concat "^[ \t]*[&!]?[-=~][ \t]*\\("
-                       (regexp-opt schnouki/hamlpy-keywords)
-                       "\\)"))
-
-  (defun schnouki/haml-fontify-region-as-ruby (beg end)
-    "Use Ruby's font-lock variables to fontify the region between BEG and END."
-    (let ((keywords ruby-font-lock-keywords))
-      (add-to-list 'ruby-font-lock-keywords
-                   `(,(concat ruby-font-lock-keyword-beg-re
-                              (regexp-opt schnouki/hamlpy-keywords
-                                          'symbols))
-                     (1 font-lock-keyword-face)))
-      (haml-fontify-region beg end keywords
-                           ruby-font-lock-syntax-table
-                            (if (fboundp 'ruby-syntax-propertize)
-                                'ruby-syntax-propertize
-                              'ruby-syntax-propertize-function))))
-  (advice-add 'haml-fontify-region-as-ruby :override #'schnouki/haml-fontify-region-as-ruby))
-
-;; (use-package handlebars-mode
-;;   :ensure t
-;;   :mode "\\.hbs\\'")
-
 (use-package web-mode
   :ensure t
   ;; (kill-new (format "\"%s\"" (s-replace "\\" "\\\\" (rx "." (or "tmpl" "hbs" "html" "liquid" "mako") eos))))
@@ -161,10 +108,6 @@
   :mode (("/CMakeLists\\.txt\\'" . cmake-mode)
 	 ("\\.cmake\\'" . cmake-mode)))
 
-(use-package vala-mode
-  :ensure t
-  :mode "\\.vala\\'")
-
 (use-package pkgbuild-mode
   :ensure t
   :mode "/PKGBUILD\\'")
@@ -172,10 +115,6 @@
 (use-package dockerfile-mode
   :ensure t
   :mode "/Dockerfile\\'")
-
-(use-package puppet-mode
-  :ensure t
-  :mode "\\.pp\\'")
 
 (use-package gnuplot
   :mode "\\.gp\\'\\|\\.plot\\'"
@@ -185,20 +124,12 @@
   :ensure t
   :mode "\\.dot\\'")
 
-(use-package es-mode
-  :ensure t
-  :commands es-mode)
-
 (use-package po-mode
   :mode "\\.pot?\\'")
 (use-package po-compat
   :commands po-find-file-coding-system
   :init
   (modify-coding-system-alist 'file "\\.po\\'\\|\\.po\\." 'po-find-file-coding-system))
-
-(use-package bats-mode
-  :ensure t
-  :mode "\\.bats\\'")
 
 (use-package systemd
   :ensure t
@@ -307,10 +238,6 @@ _p_rev       _u_pper (mine)       _=_: upper/lower       _r_esolve
       ("k" smerge-kill-current)
       ("q" nil "cancel" :color blue)))
 
-
-;; geiser, for Scheme REPL and autodoc
-(use-package geiser
-  :ensure t)
 
 ;; eldoc-mode
 (dolist (hook '(emacs-lisp-mode-hook lisp-mode-hook python-mode-hook))
