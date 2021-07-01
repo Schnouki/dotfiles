@@ -354,6 +354,10 @@
   :config
   (global-hl-todo-mode))
 
+;; So long, perf issues with minified code...
+(when (require 'so-long nil :noerror)
+  (global-so-long-mode 1))
+
 ;;; init-20-dev.el ends here
 
 ;; Local Variables:
