@@ -28,6 +28,7 @@ ede-projects.el
 forge-database.sqlite
 image-dired
 network-security.data
+org-roam.db
 places
 recentf
 server

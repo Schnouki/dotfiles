@@ -2,6 +2,6 @@
 # name: source block
 # key: src
 # --
-#+BEGIN_SRC ${1::$$(yas-choose-value (-map #'car org-src-lang-modes))}
-$0
+#+BEGIN_SRC ${1:language}
+`yas-selected-text`$0
 #+END_SRC

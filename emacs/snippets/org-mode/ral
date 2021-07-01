@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
-# name: New ROAM_ALIAS line
+# name: New roal_alias line
 # key: ral
 # --
-#+ROAM_ALIAS: "$1"
+#+roam_alias: "$1"
 $0

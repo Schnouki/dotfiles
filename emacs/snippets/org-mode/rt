@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: New roam_tags line
+# key: rt
+# --
+#+roam_tags: $1
+$0
