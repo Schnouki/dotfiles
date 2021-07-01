@@ -181,6 +181,10 @@ Has no effect if the character before point is not of the syntax class ')'."
       desktop-restore-eager nil
       desktop-path '("~/.config/emacs"))
 
+(with-eval-after-load 'dash
+  (setq desktop-modes-not-to-save (-union desktop-modes-not-to-save
+					  '(prog-mode))))
+
 (defvar schnouki/desktop-was-read nil)
 (defun schnouki/desktop-after-read-hook ()
   (setq schnouki/desktop-was-read t))
