@@ -16,7 +16,6 @@
   (guess-language-languages '(en fr))
   (guess-language-min-paragraph-length 40))
 
-
 ;; From https://stackoverflow.com/a/2478549/113325
 (defun unfill-paragraph ()
   "Unfill paragraph at or after point."
@@ -93,10 +92,14 @@ as the new width."
       (schnouki/visual-text-mode -1)
     (schnouki/visual-text-mode 1)))
 
-(defun schnouki/turn-on-visual-text-mode ()
-  (schnouki/visual-text-mode 1))
+(setq schnouki/no-visual-text-modes
+      '(yaml-mode))
 
-(add-hook 'text-mode-hook #'schnouki/turn-on-visual-text-mode)
+(defun schnouki/maybe-turn-on-visual-text-mode ()
+  (unless (apply #'derived-mode-p schnouki/no-visual-text-modes)
+    (schnouki/visual-text-mode 1)))
+
+(add-hook 'text-mode-hook #'schnouki/maybe-turn-on-visual-text-mode)
 
 (defun schnouki/set-wider-fill-column ()
   "Set a wider `fill-column' in some text modes."
