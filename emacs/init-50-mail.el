@@ -63,6 +63,7 @@
 
       notmuch-multipart/alternative-discouraged #'schnouki/notmuch-determine-discouraged)
 
+
 ;; Add some features to message-mode
 (add-hook 'message-setup-hook '(lambda () (footnote-mode t)))
 
@@ -297,5 +298,21 @@
 
 ;; Viewers
 (mailcap-add "image/.*" "geeqie %s" '(eq window-system 'x))
+
+
+;; Write HTML emails with org-mode
+(use-package org-mime
+  :ensure t
+  :bind (:map message-mode-map
+	 ("C-c M-o" . org-mime-htmlize)
+	 :map org-mode-map
+	 ("C-c M-o" . org-mime-org-buffer-htmlize))
+  :custom
+  (org-mime-export-options (list :section-numbers nil
+				 :with-author nil
+				 :with-toc nil
+				 :with-latex 'dvipng
+				 :preserve-breaks t))
+  (org-mime-library 'mml))
 
 ;;; init-50-mail.el ends here
