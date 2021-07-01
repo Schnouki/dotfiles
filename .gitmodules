@@ -28,3 +28,6 @@
 [submodule "awesome/deferred"]
 	path = awesome/deferred
 	url = https://github.com/zserge/lua-promises
+[submodule "emacs/ligature.el"]
+	path = emacs/ligature.el
+	url = https://github.com/mickeynp/ligature.el
