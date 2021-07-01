@@ -397,13 +397,6 @@ Prioritize directories, but make sure .dotfiles are last."
     (counsel-mode 1))
   (add-hook 'after-init-hook #'schnouki/enable-counsel))
 
-;; rg / riprep
-(use-package rg
-  :ensure t
-  :bind (:map schnouki-prefix-map
-	 ("<"    . rg-project)
-	 ("M-< " . rg)))
-
 ;; wgrep
 (use-package wgrep
   :ensure t
@@ -437,7 +430,16 @@ Prioritize directories, but make sure .dotfiles are last."
   :config
   (avy-setup-default)
   (setq ;;avy-keys '(?q ?s ?d ?f ?j ?k ?l ?m) ;; AZERTY :)
-	avy-background t))
+   avy-background t))
+
+;; ace-window
+(use-package ace-window
+  :ensure t
+  :bind (("M-o" . ace-window))
+  :custom
+  (aw-scope 'frame)
+  (aw-minibuffer-flag t)
+  )
 
 (use-package avy-zap
   :ensure t
@@ -469,6 +471,12 @@ Prioritize directories, but make sure .dotfiles are last."
   (sudoku-download t)
   (sudoku-level 'medium)
   (sudoku-style 'unicode))
+
+(use-package crossword
+  :ensure t
+  :commands crossword
+  :custom
+  (crossword-save-path "~/.cache/crosswords/"))
 
 ;; ix.io integration
 (use-package ix
@@ -519,13 +527,6 @@ If third argument START is non-nil, convert words after that index in STRING."
   :hook (after-init . global-emojify-mode)
   :custom
   (emojify-point-entered-behaviour 'uncover))
-
-(use-package emojify-logos
-  :ensure t
-  :defer t
-  :init
-  (with-eval-after-load 'emojify
-    (require 'emojify-logos)))
 
 ;; Colorize strings that represent colors
 (use-package rainbow-mode
@@ -592,14 +593,6 @@ If third argument START is non-nil, convert words after that index in STRING."
   :config
   (editorconfig-mode 1))
 
-;; Pomodoro
-(use-package pomidor
-  :ensure t
-  :bind ("<f12>" . pomidor)
-  :init
-  (setq pomidor-sound-tick nil
-	pomidor-sound-tack nil))
-
 ;; Colorize a buffer using ANSI color codes.
 ;; If not enough, consider using tty-format.el or xterm-color…
 ;; https://stackoverflow.com/a/23382008/113325
@@ -632,11 +625,11 @@ If third argument START is non-nil, convert words after that index in STRING."
 (use-package transpose-frame
   :ensure t
   :bind (:map schnouki-prefix-map
-	 ("t t" . transpose-frame)
-	 ("t f" . flip-frame)
-	 ("t F" . flop-frame)
-	 ("t r" . rotate-frame-clockwise)
-	 ("t R" . rotate-frame-anticlockwise)))
+	 ("p t" . transpose-frame)
+	 ("p f" . flip-frame)
+	 ("p F" . flop-frame)
+	 ("p r" . rotate-frame-clockwise)
+	 ("p R" . rotate-frame-anticlockwise)))
 
 ;; Keep init-00-custom up-to-date! :)
 (defun schnouki/update-selected-packages ()
