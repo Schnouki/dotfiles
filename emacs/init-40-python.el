@@ -36,5 +36,11 @@
   :ensure t
   :mode "\\.p\\(?:yx\\|x[di]\\)\\'")
 
+;; Pyright language server
+(use-package lsp-pyright
+  :after lsp-mode
+  :ensure t
+  :init
+  (add-to-list 'lsp-disabled-clients 'pyls))
 
 ;;; init-40-python.el ends here
