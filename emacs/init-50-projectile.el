@@ -76,8 +76,8 @@
   :commands ripgrep-regexp)
 
 (use-package deadgrep
-  ;;:ensure t
-  :load-path "~/dev/deadgrep"
+  :ensure t
+  ;;:load-path "~/dev/deadgrep"
   :commands deadgrep
   :config
   (defun schnouki/deadgrep--guess-type ()
