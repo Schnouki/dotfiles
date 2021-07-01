@@ -2,14 +2,23 @@
 ;;; Commentary:
 ;;; Code:
 
+(defvar schnouki-magit-prefix-map (make-sparse-keymap)
+  "Prefix map for Magit and other Git-related commands.")
+
+(bind-key "<" schnouki-magit-prefix-map schnouki-prefix-map)
+(bind-key "\\" schnouki-magit-prefix-map schnouki-prefix-map)
+
 (use-package magit
   :ensure t
   :bind (("C-<"      . magit-status)
 	 ("C-\\"     . magit-status)
-	 ("C-c C-<"  . magit-blame)
-	 ("C-c C-\\" . magit-blame)
-	 ("C-M-<"    . vc-git-grep)
-	 ("C-M-\\"   . vc-git-grep))
+	 :map schnouki-magit-prefix-map
+	 ("<" . magit-dispatch)
+	 ("\\" . magit-dispatch)
+	 ("f" . magit-file-dispatch)
+	 ("l" . magit-log-buffer-file)
+	 ("b" . magit-blame)
+	 )
   :demand t
   :init
   (setq magit-process-popup-time 2
