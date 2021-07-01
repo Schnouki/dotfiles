@@ -346,6 +346,15 @@ A buffer is considered killable if it is not modified and either visits a file, 
 ;; Nicer binding than C-x 5 0 to close the current frame.
 (bind-key "C-x w" 'delete-frame)
 
+(defun schnouki/ivy-sort-file-function (x y)
+  "Compare two files X and Y.
+Prioritize directories, but make sure .dotfiles are last."
+  (let ((is-x-dot? (s-starts-with? "." x))
+	(is-y-dot? (s-starts-with? "." y)))
+    (if (xor is-x-dot? is-y-dot?)
+	is-y-dot?
+      (ivy-sort-file-function-default x y))))
+
 (use-package ivy
   :ensure t
   :commands (ivy-mode)
@@ -355,6 +364,7 @@ A buffer is considered killable if it is not modified and either visits a file, 
   :custom
   (ivy-magic-tilde nil)
   (ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
+  (ivy-sort-functions-alist '((t . schnouki/ivy-sort-file-function)))
   (ivy-use-virtual-buffers t)
   (magit-completing-read-function 'ivy-completing-read)
   (projectile-completion-system 'ivy)
