@@ -223,6 +223,13 @@
   (lsp-ui-doc-position 'top)
   (lsp-ui-doc-alignment 'window))
 
+;; Use nimlsp from nimble
+(with-eval-after-load-feature (lsp lsp-nim)
+  (let ((client (gethash 'nimls lsp-clients)))
+    (setf (lsp--client-new-connection client)
+	  (lsp-stdio-connection "~/.nimble/bin/nimlsp"))))
+
+
 ;; Company -- complete anything
 (use-package company
   :ensure t
