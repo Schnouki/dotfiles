@@ -307,12 +307,7 @@
 (use-package restclient
   :ensure t
   :commands restclient-mode)
-;; (use-package company-restclient
-;;   :ensure t
-;;   :commands company-restclient
-;;   :init
-;;   (with-eval-after-load 'restclient
-;;     (add-to-list 'company-backends 'company-restclient)))
+(use-package restclient-jq)
 
 ;; Stop Unicode trolls (probably useless, hence commented out)
 (use-package unicode-troll-stopper
