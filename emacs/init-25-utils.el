@@ -639,6 +639,8 @@ If third argument START is non-nil, convert words after that index in STRING."
 	 (packages (-map 'intern lines)))
     (setq package-selected-packages packages)
     (custom-save-all)))
+;; (schnouki/update-selected-packages)
+;; (package-autoremove)
 
 ;; Open file in Docker containers
 (use-package docker-tramp
