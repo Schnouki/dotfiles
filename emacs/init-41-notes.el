@@ -76,7 +76,7 @@
       "%?"
       :file-name "doist/snippets/%(format-time-string \"%yw%W\" (schnouki/get-beginning-of-week))"
       :head ,(concat "#+TITLE: Snippets %(format-time-string \"%yw%W\" (schnouki/get-beginning-of-week))\n"
-		    "#+OPTIONS: toc:nil ^:nil H:0\n\n"
+		    "#+OPTIONS: toc:nil ^:nil \n:t num:0 H:0\n\n"
 		    "* Meetings\n* Posts\n* Weekly commitment\nI commit to <...> by the end of the week.\n* Snippets\n")
       :unnarrowed t
       :immediate-finish t
