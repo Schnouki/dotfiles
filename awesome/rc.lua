@@ -388,6 +388,7 @@ function safe_cmd(cmd)
    end
 end
 
+wallpapermenu = {}
 winemenu = {
    --{ "&balsamiq", safe_cmd("wine C:\\Program Files (x86)\\Balsamiq Mockups 3\\Balsamiq Mockups 3.exe"),
    --  "/home/schnouki/.wine/drive_c/Program Files (x86)/Balsamiq Mockups 3/icons/mockups_ico_16.png" },
@@ -414,7 +415,8 @@ mymainmenu = awful.menu({ items = { { "&awesome", myawesomemenu, beautiful.aweso
                                     { "&layouts", layoutsmenu },
                                     { "écran &ext.", screenmenu },
                                     { "&screenshot", screenshotmenu },
-                                    { "&wine", winemenu, icon_theme.get("apps", "wine") },
+                                    { "&wallpaper", wallpapermenu },
+                                    { "wi&ne", winemenu, icon_theme.get("apps", "wine") },
                                     menu_sep,
                                     { "&firefox", safe_cmd("firefox"), icon_theme.get("apps", "firefox") },
                                     { "&vivaldi", safe_cmd("vivaldi-stable"), icon_theme.get("apps", "vivaldi") },
@@ -518,6 +520,32 @@ local function change_wallpapers()
       set_wallpaper(s)
    end
 end
+
+local function wallpaper_dir_setter(dir)
+   return function()
+      beautiful.wallpaper_dir = dir
+      change_wallpapers()
+   end
+end
+
+local function add_wallpaper_subdirs(dir)
+   local fn
+   for fn in lfs.dir(dir) do
+      if string.sub(fn, 1, 1) ~= "." then
+         local full_fn = dir .. "/" .. fn
+         local mode = lfs.attributes(full_fn, "mode")
+         if mode == "directory" then
+            table.insert(wallpapermenu, { "&" .. fn, wallpaper_dir_setter(full_fn) })
+         end
+      end
+   end
+end
+
+if beautiful.wallpaper_dir then
+   table.insert(wallpapermenu, { "&default", wallpaper_dir_setter(beautiful.wallpaper_dir) })
+end
+add_wallpaper_subdirs("/home/schnouki/images/wallpapers/wallhaven")
+
 
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", change_wallpapers)
