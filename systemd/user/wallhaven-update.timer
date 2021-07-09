@@ -1,0 +1,10 @@
+[Unit]
+Description=Wallpaper update timer
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=1day
+Unit=wallhaven-update.service
+
+[Install]
+WantedBy=timers.target
