@@ -65,7 +65,7 @@
 
 
 ;; Add some features to message-mode
-(add-hook 'message-setup-hook '(lambda () (footnote-mode t)))
+(add-hook 'message-setup-hook #'(lambda () (footnote-mode t)))
 
 ;; Useful functions
 (defun notmuch-search-filter-by-date (days)

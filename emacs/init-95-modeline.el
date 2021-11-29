@@ -38,7 +38,6 @@
 	    (cons which-func
 		  (cdr cell))))
 
-  (sml/setup)
-  (display-battery-mode 1))
+  (sml/setup))
 
 ;;; init-95-modeline.el ends here

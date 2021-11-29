@@ -74,6 +74,10 @@
               ("g" . avy-flycheck-goto-error)))
 
 ;; Jump to definition
+(use-package xref
+  :custom
+  (xref-show-definitions-function #'xref-show-definitions-completing-read))
+
 (use-package dumb-jump
   :ensure t
   :bind (:map schnouki-prefix-map
@@ -84,76 +88,10 @@
 	 ("j l" . dumb-jump-quick-look)
          ("j J" . dumb-jump-go-prefer-external)
          ("j O" . dumb-jump-go-prefer-external-other-window))
+  :commands (dumb-jump-xref-activate)
   :init
-  (setq dumb-jump-selector 'ivy))
-
-;; Code folding
-(use-package origami
-  :ensure t
-  :commands origami-mode
-  :bind (:map origami-mode-map
-              ("C-: :" . origami-recursively-toggle-node)
-              ("C-: a" . origami-toggle-all-nodes)
-              ("C-: t" . origami-toggle-node)
-              ("C-: o" . origami-show-only-node)
-              ("C-: u" . origami-undo)
-              ("C-: U" . origami-redo)
-              ("C-: C-r" . origami-reset)
-              )
-  :config
-  (setq origami-show-fold-header t)
-  (let ((tbp (assoc 'triple-braces origami-parser-alist)))
-    (setf (cdr tbp) #'schnouki/origami-triple-braces-parser))
-  :init
-  (setq schnouki/triple-braces-regex
-        (rx line-start (0+ blank)
-            (or "//" "/*" "#" "--" ";;")
-            (0+ blank) (or (seq "{{{" (0+ any))
-                           "}}}")))
-  (defun schnouki/origami-triple-braces-parser (create)
-    (lambda (content)
-      (let ((positions (origami-get-positions content schnouki/triple-braces-regex))
-            nodes)
-        ;; Make it more readble: conver to a list of plists, each having :start,
-        ;; :end, :offset and :children (which is a list with the same
-        ;; structure).
-        (cl-labels ((make-node ()
-                               (let* ((start (car positions))
-                                      (start-offset (s-index-of "{{{" (car start)))
-                                      (start-pos (+ (cdr start) start-offset))
-                                      (offset (- (length (car start)) start-offset))
-                                      (next (cadr positions))
-                                      (node `(:start ,start-pos :offset ,offset))
-                                      children)
-                                 (!cdr positions)
-                                 (while (s-contains? "{{{" (car next))
-                                   (setq children (cons (make-node) children)
-                                         next (car positions)))
-                                 (plist-put node :end (+ (cdr next) (s-index-of "}}}" (car next))))
-                                 (when children
-                                   (plist-put node :children (reverse children)))
-                                 (!cdr positions)
-                                 node))
-                    (build (nodes)
-                           (--map (funcall create
-                                           (plist-get it :start)
-                                           (plist-get it :end)
-                                           (plist-get it :offset)
-                                           (build (plist-get it :children)))
-                                  nodes)))
-          (while positions
-            (setq nodes (cons (make-node) nodes)))
-          (build (reverse nodes))))))
-  (defun schnouki/enable-origami-mode ()
-    "Enable origami-mode, and set the fold-style to 'triple-braces' if it makes sense."
-    (when (and (not (local-variable-p 'origami-fold-style))
-               (save-mark-and-excursion
-                (goto-char (point-min))
-                (search-forward "{{{" nil t)))
-      (message "Enabling triple braces folding with Origami")
-      (setq-local origami-fold-style 'triple-braces))
-    (origami-mode 1))
-  (add-hook 'prog-mode-hook 'schnouki/enable-origami-mode))
+  (setq dumb-jump-selector 'ivy)
+  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
 
 ;; Default compilation commands
 (setq-default compile-command "make") ;; I don't want "make -k"
@@ -277,7 +215,7 @@
 							("is" . ?≡)
 							("in" . ?∈)
 							("not in" . ?∉)))
-					(javascript-mode . (("===" . ?≡)
+					(Javascript-mode . (("===" . ?≡)
 							    ("!==" . ?≢)))))
 
 (defun schnouki/maybe-enable-prettify-symbols-mode ()
@@ -331,10 +269,6 @@
   :ensure t
   :bind ("M-;" . smart-comment))
 
-;; GNU Global
-(use-package ggtags
-  :ensure t)
-
 ;; Automatically make some buffers read-only
 (use-package auto-read-only
   :ensure t
@@ -363,7 +297,3 @@
   (global-so-long-mode 1))
 
 ;;; init-20-dev.el ends here
-
-;; Local Variables:
-;; origami-fold-style: triple-braces
-;; End:

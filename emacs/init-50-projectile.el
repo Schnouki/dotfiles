@@ -79,6 +79,10 @@
   :ensure t
   ;;:load-path "~/dev/deadgrep"
   :commands deadgrep
+  :bind (:map deadgrep-mode-map
+	 ("C-x C-q" . deadgrep-edit-mode)
+	 :map deadgrep-edit-mode-map
+	 ("C-c C-c" . deadgrep-mode))
   :config
   (defun schnouki/deadgrep--guess-type ()
     (let* ((deadgrep-types (deadgrep--type-list))

@@ -101,9 +101,6 @@
 				 ("go" . "\\.tmpl\\'")
 				 ("mako" . "\\.mako\\'"))))
 
-(use-package cuda-mode
-  :mode "\\.cu\\'")
-
 (use-package cmake-mode
   :mode (("/CMakeLists\\.txt\\'" . cmake-mode)
 	 ("\\.cmake\\'" . cmake-mode)))
@@ -115,10 +112,6 @@
 (use-package dockerfile-mode
   :ensure t
   :mode "/Dockerfile\\'")
-
-(use-package gnuplot
-  :mode "\\.gp\\'\\|\\.plot\\'"
-  :commands gnuplot-make-buffer)
 
 (use-package graphviz-dot-mode
   :ensure t
@@ -161,6 +154,7 @@
   :load-path "~/dev/caddyfile-mode"
   :mode (("Caddyfile\\'" . caddyfile-mode)
 	 ("caddy\\.conf\\'" . caddyfile-mode)))
+(use-package loop :ensure t)
 
 (use-package d-mode
   :ensure t)
@@ -179,9 +173,6 @@
   (add-hook 'fish-mode-hook (lambda ()
                               (add-hook 'before-save-hook 'fish_indent-before-save))))
 
-(use-package qml-mode
-  :ensure t)
-
 (use-package nim-mode
   :ensure t)
 (use-package flycheck-nim
@@ -191,6 +182,9 @@
   :ensure t)
 
 (use-package jq-mode
+  :ensure t)
+
+(use-package nix-mode
   :ensure t)
 
 ;; -----------------------------------------------------------------------------

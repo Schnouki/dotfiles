@@ -168,9 +168,9 @@ Has no effect if the character before point is not of the syntax class ')'."
 	      (add-hook 'ediff-suspend-hook restore-window-configuration 'append))))
 
 ;; Remember the last visited line in a file
-(setq-default save-place t)
 (require 'saveplace)
 (setq save-place-file "~/.config/emacs/places")
+(save-place-mode t)
 
 ;; Save opened files and other stuff
 ;; http://www.xsteve.at/prg/emacs/power-user-tips.html
