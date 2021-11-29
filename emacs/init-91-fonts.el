@@ -1,4 +1,4 @@
-;;; 10-fonts --- Fonts!
+;;; 91-fonts --- Fonts!
 ;;; Commentary:
 ;;; Code:
 
@@ -10,4 +10,4 @@
   (set-frame-font default-font)
   (set-face-attribute 'fixed-pitch nil :font default-font))
 
-;;; init-10-fonts.el ends here
+;;; init-91-fonts.el ends here
