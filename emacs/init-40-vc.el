@@ -20,28 +20,25 @@
 	 ("b" . magit-blame)
 	 )
   :demand t
-  :init
-  (setq magit-process-popup-time 2
-        magit-auto-revert-mode-lighter nil
-        magit-last-seen-setup-instructions "1.4.0"
-        magit-revert-buffers 'silent
-        magit-push-always-verify nil
-        vc-follow-symlinks t))
-
-(use-package forge
-  :ensure t
-  :after magit
   :custom
-  (forge-add-pullreq-refspec 'ask))
+  (magit-process-popup-time 2)
+  (vc-follow-symlinks t)
+  :config
 
-;; gitflow
-;; (use-package magit-gitflow
-;;   :ensure t
-;;   :commands turn-on-magit-gitflow
-;;   :diminish magit-gitflow-mode
-;;   :init
-;;   (add-hook 'magit-mode-hook 'turn-on-magit-gitflow))
+  (setq schnouki/magit-process-buffer-tail t)
+  (defun schnouki/toggle-magit-process-buffer-tail ()
+    (interactive)
+    (setq schnouki/magit-process-buffer-tail (not schnouki/magit-process-buffer-tail)))
 
+  (defun schnouki/magit-process--maybe-tail-buffer (proc string)
+    (let ((window (get-buffer-window (process-buffer proc))))
+      (when window
+	(with-selected-window window
+	  (end-of-buffer)
+	  (recenter -1 t)))))
+
+  (advice-add #'magit-process-filter :after #'schnouki/magit-process--maybe-tail-buffer)
+  )
 
 (use-package git-link
   :ensure t
