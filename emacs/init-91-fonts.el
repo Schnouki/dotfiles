@@ -3,7 +3,7 @@
 ;;; Code:
 
 ;; Default font
-(let ((default-font "Iosevka-8"))
+(let ((default-font "Iosevka-12"))
   (assq-delete-all 'font default-frame-alist)
   (add-to-list 'default-frame-alist
 	       `(font . ,default-font))

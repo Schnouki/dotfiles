@@ -7,11 +7,12 @@ __pycache__/
 !hook*
 
 # Dotfiles
+!applications/Makefile
 !beets/config.yaml
 !Xmodmap
 !Xresources
 !chromium-flags.conf
-!ctags
+!electron-flags.conf
 !fonts.conf
 !gitconfig
 !globalrc
@@ -43,13 +44,16 @@ ddns/key
 !fennel
 !fish
 !fontconfig
+!foot
 !git
 !gtk-3.0
 gtk-3.0/bookmarks
 !imapfilter
+!mako
 !mozilla
 !mpDris2
 !notmuch
+!sway
 !systemd
 !terminator
 !urxvt

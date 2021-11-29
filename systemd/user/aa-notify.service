@@ -1,6 +1,6 @@
 [Unit]
 Description=Display information about logged AppArmor messages
-Requires=xorg.target
+Requires=graphical-session.target
 
 [Service]
 Type=forking

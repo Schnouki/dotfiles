@@ -1,6 +1,6 @@
 [Unit]
 Description=Mullvad VPN
-Requires=xorg.target
+Requires=graphical-session.target
 
 [Service]
 ExecStart=/usr/bin/mullvad-vpn

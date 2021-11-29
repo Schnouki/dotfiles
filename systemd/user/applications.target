@@ -1,4 +1,4 @@
 [Unit]
 Description=Start user applications
 IgnoreOnIsolate=true
-Requires=dbus.socket xorg.target window-manager.service
+Requires=dbus.socket environment.target graphical-session.target 

@@ -12,6 +12,9 @@ done
 for D in imapfilter; do
     setup_dir_symlink "$D" ".$D"
 done
+for D in applications; do
+    setup_dir_symlink "$D" ".local/share/$D"
+done
 
 # Setup encrypted dotfiles
 setup_decrypt "atlas-auth.gpg" ".atlas/auth"

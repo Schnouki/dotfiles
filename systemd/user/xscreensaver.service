@@ -1,9 +1,0 @@
-[Unit]
-Description=X Screensaver
-Requires=xorg.target
-
-[Service]
-ExecStart=/usr/bin/xscreensaver -no-splash
-
-[Install]
-WantedBy=xorg.target

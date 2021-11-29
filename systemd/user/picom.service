@@ -1,9 +1,0 @@
-[Unit]
-Description=X compositor
-Requires=xorg.target
-
-[Service]
-ExecStart=/usr/bin/picom
-
-[Install]
-WantedBy=applications.target

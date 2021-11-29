@@ -1,0 +1,10 @@
+[Unit]
+Description=Autostart graphical applications
+Requires=environment.target graphical-session.target
+
+[Service]
+ExecStartPre=/usr/bin/sleep 2
+ExecStart=/usr/bin/systemctl --user start applications.target
+
+[Install]
+WantedBy=graphical-session.target

@@ -1,6 +1,6 @@
 [Unit]
 Description=WPA Graphical User Interface
-Requires=xorg.target
+Requires=graphical-session.target
 
 [Service]
 ExecStartPre=/usr/bin/sleep 2

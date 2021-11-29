@@ -1,6 +1,6 @@
 [Unit]
 Description=Time-tracking application.
-Requires=xorg.target
+Requires=graphical-session.target
 
 [Service]
 ExecStartPre=/usr/bin/sleep 2

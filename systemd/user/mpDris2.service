@@ -1,6 +1,6 @@
 [Unit]
 Description=MPRIS2 support for MPD
-Requires=mpd.service dbus.socket xorg.target
+Requires=mpd.service dbus.socket graphical-session.target
 After=mpd.service
 
 [Service]

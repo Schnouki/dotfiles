@@ -1,6 +1,6 @@
 [Unit]
 Description=Blueman applet
-Requires=xorg.target bluetooth.target
+Requires=graphical-session.target bluetooth.target
 
 [Service]
 Type=dbus

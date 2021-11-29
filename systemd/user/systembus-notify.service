@@ -1,0 +1,10 @@
+[Unit]
+Description=System bus notification daemon
+Requires=dbus.socket
+
+[Service]
+ExecStart=/usr/bin/systembus-notify
+Restart=on-failure
+
+[Install]
+WantedBy=applications.target

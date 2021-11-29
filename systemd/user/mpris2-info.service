@@ -1,6 +1,6 @@
 [Unit]
 Description=MPRIS2 notifications service
-Requires=xorg.target
+Requires=graphical-session.target
 
 [Service]
 Type=dbus

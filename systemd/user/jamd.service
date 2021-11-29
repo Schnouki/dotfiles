@@ -1,6 +1,6 @@
 [Unit]
 Description=Just Another Mounter Daemon
-Requires=dbus.socket xorg.target
+Requires=dbus.socket graphical-session.target
 
 [Service]
 ExecStart=/home/schnouki/bin/jamd
