@@ -172,31 +172,36 @@
 (use-package company
   :ensure t
   :diminish company-mode
+  :hook (prog-mode . company-mode-on)
   :custom
   (company-tooltip-limit 30)
   (company-tooltip-align-annotations t)
   (company-minimum-prefix-length 3)
   (company-idle-delay 0.5)
-  (company-show-numbers t)
+  (company-show-quick-access t)
   :config
-  (global-company-mode 1))
+  ;; TabNine and LSP fight against each other. To make them play well, keep them
+  ;; separate. If that's not enough, the alternative is to use something like
+  ;; https://github.com/karta0807913/emacs.d/blob/master/lisp/init-tabnine-capf.el.
+  (setq company-backends (cons '(company-tabnine :separate company-capf)
+                               (remove 'company-capf company-backends)))
+  )
 
-(use-package company-lsp
+;; the all-language autocompleter
+(use-package company-tabnine
   :ensure t
-  :commands company-lsp
-  :after company
-  :config
-  (push 'company-lsp company-backends)
-  (add-to-list 'company-lsp-filter-candidates '(lsp-emmy-lua . t)))
+  :commands company-tabnine
+  :custom
+  (company-tabnine-binaries-folder "~/.local/share/TabNine"))
 
-;; ;; The all-language autocompleter
-;; (use-package company-tabnine
-;;   :ensure t
-;;   :commands company-tabnine
-;;   :init
-;;   (setq company-tabnine-binaries-folder "~/.local/share/TabNine")
-;;   (add-to-list 'company-backends #'company-tabnine))
 
+;; tree-sitter -- faster, fine-grained code highlighting, and much more
+(use-package tree-sitter
+  :ensure t)
+(use-package tree-sitter-langs
+  :ensure t)
+(global-tree-sitter-mode 1)
+(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 
 ;; Display the current function name in the mode line
 (which-function-mode 1)
