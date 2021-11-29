@@ -1,7 +1,0 @@
-style "user-font" {
-	font_name = "Sans 7.5"
-}
-
-widget_class "*" style "user-font"
-
-gtk-font-name="Sans 7.5"
