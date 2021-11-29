@@ -5,6 +5,7 @@
   title_transmit_bg_color = "#2e3436"
   title_inactive_fg_color = "#babdb6"
   title_inactive_bg_color = "#555753"
+  inactive_color_offset = 1.0
   enabled_plugins = HostWatch, TerminalShot
   title_use_system_font = False
   title_font = Iosevka Medium 9
