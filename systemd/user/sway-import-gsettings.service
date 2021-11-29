@@ -1,0 +1,11 @@
+[Unit]
+Description=Apply GTK 3 settings
+BindsTo=sway-session.target
+After=sway-session.target
+
+[Service]
+Type=oneshot
+ExecStart=/home/schnouki/.config/sway/import-gsettings
+
+[Install]
+WantedBy=sway-session.target

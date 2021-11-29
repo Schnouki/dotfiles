@@ -260,6 +260,7 @@ bar {
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
     status_command while date +'%Y-%m-%d %-H:%M:%S %p'; do sleep 1; done
+    icon_theme "Numix-Circle"
 
     colors {
         statusline #ffffff
@@ -279,4 +280,4 @@ hide_edge_borders smart
 include /etc/sway/config.d/*
 
 # Systemd integration -- https://github.com/swaywm/sway/wiki/Systemd-integration
-exec "systemctl --user start sway-session.target"
+exec "systemctl --user import-environment; systemctl --user start sway-session.target"
