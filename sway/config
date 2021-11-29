@@ -13,8 +13,9 @@ set $right l
 # (pass to "swaymsg exec -- " to open it on the original workspace that the
 # command was run on)
 set $term foot
-set $editor "emacsclient -n -c -a \"\""
-set $menu dmenu_path | dmenu | xargs swaymsg exec --
+set $editor /home/schnouki/bin/eclient
+set $menu fuzzel --font="Iosevka Aile:size=16" --icon-theme="Numix-Circle"
+set $fman pcmanfm
 
 ### Output configuration
 #
@@ -55,15 +56,18 @@ focus output $out_ext
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
 input * {
-  xkb_layout fr,us
-  xkb_variant oss,qwerty-fr
-  xkb_options grp:shifts_toggle
+    xkb_layout fr,us
+    xkb_variant oss,qwerty-fr
+    repeat_delay 450
+    repeat_rate 45
+}
+input type:touchpad {
+    dwt enabled
 }
 input "1452:591:Keychron_K4_Keychron_K4" {
-  xkb_layout us
-  xkb_variant qwerty-fr
-  #xkb_switch_layout us
-  xkb_numlock enabled
+    xkb_layout us
+    xkb_variant qwerty-fr
+    xkb_numlock enabled
 }
 
 
@@ -242,13 +246,30 @@ bindsym $mod+r mode "resize"
     bindsym XF86AudioLowerVolume exec "pactl set-sink-volume @DEFAULT_SINK@ -5%"
     bindsym XF86AudioMute exec "pactl set-sink-mute @DEFAULT_SINK@ toggle"
 
-    bindsym XF86AudioStop exec "mpris2-control stop"
-    bindsym XF86AudioPlay exec "mpris2-control playpause"
-    bindsym XF86AudioPrev exec "mpris2-control prev"
-    bindsym XF86AudioNext exec "mpris2-control next"
+    bindsym XF86AudioStop exec "/home/schnouki/bin/mpris2-control stop"
+    bindsym XF86AudioPlay exec "/home/schnouki/bin/mpris2-control playpause"
+    bindsym XF86AudioPrev exec "/home/schnouki/bin/mpris2-control prev"
+    bindsym XF86AudioNext exec "/home/schnouki/bin/mpris2-control next"
 
-    bindsym $mod+Shift+i exec "mpris2-control info"
-    bindsym $mod+Shift+o exec "mpris2-control nextplayer"
+    bindsym $mod+Shift+i exec "/home/schnouki/bin/mpris2-control info"
+    bindsym $mod+Shift+o exec "/home/schnouki/bin/mpris2-control nextplayer"
+
+
+#
+# Screenshot:
+#
+mode "screenshot" {
+    set $grimshot /home/schnouki/.config/sway/grimshot
+    bindsym a exec $grimshot save active; mode "default"
+    bindsym o exec $grimshot save output; mode "default"
+    bindsym p exec $grimshot save area; mode "default"
+    bindsym s exec $grimshot save screen; mode "default"
+    bindsym w exec $grimshot save window; mode "default"
+    bindsym b exec $fman /home/schnouki/Dropbox/Public/Screenshots; mode "default"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+p mode "screenshot"
 
 #
 # Status Bar:
