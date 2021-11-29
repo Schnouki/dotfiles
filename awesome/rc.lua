@@ -389,6 +389,7 @@ function safe_cmd(cmd)
 end
 
 wallpapermenu = {}
+
 winemenu = {
    --{ "&balsamiq", safe_cmd("wine C:\\Program Files (x86)\\Balsamiq Mockups 3\\Balsamiq Mockups 3.exe"),
    --  "/home/schnouki/.wine/drive_c/Program Files (x86)/Balsamiq Mockups 3/icons/mockups_ico_16.png" },
@@ -426,6 +427,7 @@ mymainmenu = awful.menu({ items = { { "&awesome", myawesomemenu, beautiful.aweso
                                     { "&gmpc", safe_cmd("gmpc"), icon_theme.get("apps", "gmpc") },
                                     { "mellowpla&yer", safe_cmd("MellowPlayer"), icon_theme.get("apps", "mellowplayer") },
                                     menu_sep,
+                                    { "&obsidian", safe_cmd("obsidian"), icon_theme.get("apps", "obsidian") },
                                     { "l&ibre office", safe_cmd("soffice"), icon_theme.get("apps", "libreoffice-writer") },
                                     { "pc&manfm", safe_cmd("pcmanfm"), icon_theme.get("apps", "system-file-manager") },
                                     { "open &terminal", terminal }
@@ -542,6 +544,7 @@ local function add_wallpaper_subdirs(dir)
 end
 
 if beautiful.wallpaper_dir then
+   table.insert(wallpapermenu, { "&update", change_wallpapers })
    table.insert(wallpapermenu, { "&default", wallpaper_dir_setter(beautiful.wallpaper_dir) })
 end
 add_wallpaper_subdirs("/home/schnouki/images/wallpapers/wallhaven")
@@ -733,7 +736,7 @@ elseif hostname == "loki" then
       { label = "U", iface = "en%w+u%d+" }
    }
 end
-net_mon = netmon.new(ifaces, "8.8.4.4 8.8.8.8 kernel.org google.com online.net yahoo.com wikipedia.org")
+net_mon = netmon.new(ifaces, "8.8.4.4 8.8.8.8 kernel.org google.com yahoo.com wikipedia.org")
 
 -- Time-based indications using theme colors
 if ifaces["W"] ~= nil then
@@ -797,9 +800,14 @@ function win_info(c)
       text = text .. mono(markup.fg.focus(label .. ": ")) .. value
    end
 
-   if c.size_hints ~= nil then
-      text = text .. "\n\n" .. mono(markup.fg.focus("Min size: ") .. string.format("%dx%d", c.size_hints.min_width, c.size_hints.min_height))
-      text = text .. "\n" .. mono(markup.fg.focus("Max size: ") .. string.format("%dx%d", c.size_hints.max_width, c.size_hints.max_height))
+   if c.size_hints ~= nil and (c.size_hints.min_width ~= nil or c.size_hints.max_width ~= nil) then
+      text = text .. "\n"
+      if c.size_hints.min_width ~= nil then
+         text = text .. "\n" .. mono(markup.fg.focus("Min size: ") .. string.format("%dx%d", c.size_hints.min_width, c.size_hints.min_height))
+      end
+      if c.size_hints.max_height ~= nil then
+         text = text .. "\n" .. mono(markup.fg.focus("Max size: ") .. string.format("%dx%d", c.size_hints.max_width, c.size_hints.max_height))
+      end
    end
 
    naughty.notify({ text = text, timeout = 5, hover_timeout = 0.5 })

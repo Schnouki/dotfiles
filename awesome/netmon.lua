@@ -54,7 +54,7 @@ end
 local function ping(hosts, if_data)
    local d = deferred.new()
    awful.spawn.easy_async(
-      "fping -a -r 0 " .. hosts .. " -I " .. if_data.ifname,
+      "fping -a -r 0 -t 1000 " .. hosts .. " -I " .. if_data.ifname,
       function(stdout, stderr, exitreason, exitcode)
          if exitreason == "signal" then
             d:reject("fping " .. if_data.ifname .. ": " .. exitcode .. ": " .. exitreason)
@@ -81,8 +81,8 @@ local function format_data(ifaces, results)
       local if_status = status[entry.label]
       local if_color
       if if_status then
-         tooltip = string.format("%s<b>%s</b>: %s (<i>%s</i>)\n",
-                                 tooltip, entry.label, if_status.addr, if_status.ifname)
+         tooltip = tooltip .. string.format("<b>%s</b>: %s (<i>%s</i>)\n",
+                                            entry.label, if_status.addr, if_status.ifname)
          if if_status.ping == nil then
             if_color = "unknown"
          elseif if_status.ping then
@@ -131,7 +131,7 @@ function NetMon:update()
          function(results)
             local data = format_data(self.ifaces, results)
             self.widget:set_markup(data.text)
-            self.tooltip = "<p>" .. data.toltip .. "</p>"
+            self.tooltip = "<p>" .. data.tooltip .. "</p>"
          end,
          function(err)
             print("Netmon update error: " .. err)
