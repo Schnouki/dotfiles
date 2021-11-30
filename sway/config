@@ -17,6 +17,8 @@ set $editor /home/schnouki/bin/eclient
 set $menu fuzzel --font="Iosevka Aile:size=16" --icon-theme="Numix-Circle"
 set $fman pcmanfm
 
+set $wobsock $XDG_RUNTIME_DIR/wob.sock
+
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
@@ -242,9 +244,9 @@ bindsym $mod+r mode "resize"
 #
 # Media shortcuts:
 #
-    bindsym XF86AudioRaiseVolume exec "pactl set-sink-volume @DEFAULT_SINK@ +5%"
-    bindsym XF86AudioLowerVolume exec "pactl set-sink-volume @DEFAULT_SINK@ -5%"
-    bindsym XF86AudioMute exec "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+    bindsym XF86AudioRaiseVolume exec pamixer --unmute --increase 5 && pamixer --get-volume > $wobsock
+    bindsym XF86AudioLowerVolume exec pamixer --unmute --decrease 5 && pamixer --get-volume > $wobsock
+    bindsym XF86AudioMute exec pamixer --toggle-mute && ( pamixer --get-mute && echo 0 > $wobsock ) || pamixer --get-volume > $wobsock
 
     bindsym XF86AudioStop exec "/home/schnouki/bin/mpris2-control stop"
     bindsym XF86AudioPlay exec "/home/schnouki/bin/mpris2-control playpause"
@@ -254,6 +256,11 @@ bindsym $mod+r mode "resize"
     bindsym $mod+Shift+i exec "/home/schnouki/bin/mpris2-control info"
     bindsym $mod+Shift+o exec "/home/schnouki/bin/mpris2-control nextplayer"
 
+#
+# Brightness control:
+#
+    bindsym XF86MonBrightnessUp exec light -A 5 && light -G | cut -d'.' -f1 > $wobsock
+    bindsym XF86MonBrightnessDown exec light -U 5 && light -G | cut -d'.' -f1 > $wobsock
 
 #
 # Screenshot:
