@@ -248,13 +248,13 @@ bindsym $mod+r mode "resize"
     bindsym XF86AudioLowerVolume exec pamixer --unmute --decrease 5 && pamixer --get-volume > $wobsock
     bindsym XF86AudioMute exec pamixer --toggle-mute && ( pamixer --get-mute && echo 0 > $wobsock ) || pamixer --get-volume > $wobsock
 
-    bindsym XF86AudioStop exec "/home/schnouki/bin/mpris2-control stop"
-    bindsym XF86AudioPlay exec "/home/schnouki/bin/mpris2-control playpause"
-    bindsym XF86AudioPrev exec "/home/schnouki/bin/mpris2-control prev"
-    bindsym XF86AudioNext exec "/home/schnouki/bin/mpris2-control next"
+    bindsym XF86AudioStop exec /home/schnouki/bin/mpris2-control stop
+    bindsym XF86AudioPlay exec /home/schnouki/bin/mpris2-control playpause
+    bindsym XF86AudioPrev exec /home/schnouki/bin/mpris2-control prev
+    bindsym XF86AudioNext exec /home/schnouki/bin/mpris2-control next
 
-    bindsym $mod+Shift+i exec "/home/schnouki/bin/mpris2-control info"
-    bindsym $mod+Shift+o exec "/home/schnouki/bin/mpris2-control nextplayer"
+    bindsym $mod+Shift+i exec /home/schnouki/bin/mpris2-control info
+    bindsym $mod+Shift+o exec /home/schnouki/bin/mpris2-control nextplayer
 
 #
 # Brightness control:
