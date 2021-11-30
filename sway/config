@@ -301,8 +301,26 @@ bar {
 #
 # Theme:
 #
-font Iosevka Aile 12
+font pango:Iosevka Aile 12
 hide_edge_borders smart
+
+#
+# App rules:
+#
+for_window [shell="xwayland"] title_format "%title <small>[XWayland]</small>"
+# for_window [app_id=".*"] title_format "%title <small>[%app_id]</small>"
+
+for_window [app_id="galculator"] floating enable
+for_window [app_id="pavucontrol"] floating enable
+
+for_window [app_id="firefox" title="Firefox - Indicateur de partage"] {
+    floating enable
+    sticky enable
+    border none
+    inhibit_idle open
+    move absolute position 922 px 0 px  # Width: 75px --> (1920 - 75) / 2 = 922.5.
+}
+for_window [app_id="firefox" title="Incrustation vidéo"] floating enable
 
 # Run basic stuff
 include /etc/sway/config.d/*
