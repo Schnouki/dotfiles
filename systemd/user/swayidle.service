@@ -1,0 +1,11 @@
+[Unit]
+Description=Idle manager for Wayland
+BindsTo=sway-session.target
+After=sway-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/swayidle -w
+
+[Install]
+WantedBy=sway-session.target

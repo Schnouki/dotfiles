@@ -54,6 +54,7 @@ gtk-3.0/bookmarks
 !mpDris2
 !notmuch
 !sway
+!swayidle
 !systemd
 !terminator
 !urxvt
