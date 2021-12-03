@@ -175,9 +175,7 @@ workspace 10 output $out_int
     bindsym $mod+Mod1+$right workspace next_on_output
     bindsym $mod+Mod1+Left workspace prev_on_output
     bindsym $mod+Mod1+Right workspace next_on_output
-    
-    
-    
+
 #
 # Layout stuff:
 #
@@ -279,6 +277,39 @@ mode "screenshot" {
 bindsym $mod+p mode "screenshot"
 
 #
+# Theme:
+#
+font pango:Iosevka Aile 12
+hide_edge_borders smart
+
+# Zenburn colors
+# See also: https://thomashunter.name/i3-configurator/
+set $zb-fg-05 #989890
+set $zb-fg    #dcdccc
+
+set $zb-bg-1  #2b2b2b
+set $zb-bg    #3f3f3f
+set $zb-bg+1  #4f4f4f
+
+set $zb-red-6 #6c3333
+set $zb-red-4 #8c5353
+set $zb-red+1 #dca3a3
+
+set $zb-blue-5 #366060
+set $zb-blue-2 #6ca0a3
+set $zb-blue+2 #ace0e3
+
+set $zb-yellow-6 #907f4f
+set $zb-yellow-4 #b09f6f
+set $zb-yellow   #f0dfaf
+
+# class                 border      background  text
+client.focused          $zb-blue-2  $zb-blue-5  $zb-blue+2
+client.focused_inactive $zb-fg-05   $zb-bg      $zb-fg
+client.unfocused        $zb-bg+1    $zb-bg-1    $zb-fg-05
+client.urgent           $zb-red-4   $zb-red-6   $zb-red+1
+
+#
 # Status Bar:
 #
 # Read `man 5 sway-bar` for more information about this section.
@@ -291,18 +322,18 @@ bar {
     icon_theme "Numix-Circle"
 
     colors {
-        statusline #ffffff
-        background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
+        background $zb-bg-1
+        statusline $zb-fg
+        separator  $zb-fg-05
+
+        #                  border        background    text
+        focused_workspace  $zb-blue-2    $zb-blue-5    $zb-blue+2
+        active_workspace   $zb-fg-05     $zb-bg        $zb-fg
+        inactive_workspace $zb-bg+1      $zb-bg-1      $zb-fg-05
+        urgent_workspace   $zb-red-4     $zb-red-6     $zb-red+1
+        binding_mode       $zb-yellow-6  $zb-yellow-4  $zb-yellow
     }
 }
-
-
-#
-# Theme:
-#
-font pango:Iosevka Aile 12
-hide_edge_borders smart
 
 #
 # App rules:
