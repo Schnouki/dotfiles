@@ -61,4 +61,4 @@ hook_update_encrypted_file ".config/zsh/private" "zsh/private.gpg"
 hook_update_encrypted_tarball "Calibre" "calibre.tar.gpg" ~/.config/calibre/*
 hook_update_encrypted_tarball "Pgweb" "pgweb.tar.gpg" ~/.pgweb/**/**
 hook_update_encrypted_tarball "Tmuxp" "tmuxp.tar.gpg" ~/.tmuxp/*
-hook_update_encrypted_tarball "Weechat" "weechat.tar.gpg" ~/.weechat/*.conf
+hook_update_encrypted_tarball "Weechat" "weechat.tar.gpg" ~/.config/weechat/*.conf
