@@ -187,6 +187,15 @@
 (use-package nix-mode
   :ensure t)
 
+(use-package slime
+  :ensure t
+  :config
+  (setq inferior-lisp-program "sbcl"
+	slime-contribs '(slime-fancy slime-quicklisp))
+  (load (expand-file-name "~/.quicklisp/slime-helper.el"))
+  (slime-setup))
+
+
 ;; -----------------------------------------------------------------------------
 ;; Minor modes
 ;; -----------------------------------------------------------------------------
