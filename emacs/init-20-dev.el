@@ -129,6 +129,7 @@
   :ensure t
   :commands (lsp lsp-deferred)
   :hook (prog-mode . lsp-deferred)
+  :limit-process t
   :custom
   (lsp-auto-guess-root nil)
   (lsp-auto-select-workspace nil)
@@ -154,6 +155,7 @@
   :bind (:map lsp-ui-mode-map
 	      ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
 	      ([remap xref-find-references] . lsp-ui-peek-find-references))
+  :limit-process t
   :custom
   (lsp-ui-flycheck t)
   (lsp-ui-doc-delay 0.2)
@@ -191,6 +193,7 @@
 (use-package company-tabnine
   :ensure t
   :commands company-tabnine
+  :limit-process t
   :custom
   (company-tabnine-binaries-folder "~/.local/share/TabNine"))
 
