@@ -1,3 +1,19 @@
 font=Iosevka Aile 12
+padding=12
 default-timeout=5000
 layer=overlay
+
+icons=1
+icon-path=/usr/share/icons/Numix-Circle:/usr/share/icons/Numix
+max-icon-size=96
+
+background-color=#5f5f5f
+text-color=#fffffd
+border-color=#7f7f7f
+progress-color=over #7f7f7f
+
+[urgency="critical"]
+background-color=#6c3333
+text-color=#ecb3b3
+border-color=#8c5353
+progress-color=over #8c5353
