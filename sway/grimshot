@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
 
-/usr/share/sway/scripts/grimshot --notify "$@" \
-    ~/Dropbox/Public/Screenshots/$(date +"%F-%H_%M_%S").png \
-    | exec xargs -r viewnior
+/usr/share/sway-git/scripts/grimshot --notify save "$@" - \
+    | exec swappy -f - -o ~/Dropbox/Public/Screenshots/$(date +"%F-%H_%M_%S").png

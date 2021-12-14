@@ -265,11 +265,11 @@ bindsym $mod+r mode "resize"
 #
 mode "screenshot" {
     set $grimshot /home/schnouki/.config/sway/grimshot
-    bindsym a exec $grimshot save active; mode "default"
-    bindsym o exec $grimshot save output; mode "default"
-    bindsym p exec $grimshot save area; mode "default"
-    bindsym s exec $grimshot save screen; mode "default"
-    bindsym w exec $grimshot save window; mode "default"
+    bindsym a exec $grimshot active; mode "default"
+    bindsym o exec $grimshot output; mode "default"
+    bindsym p exec $grimshot area; mode "default"
+    bindsym s exec $grimshot screen; mode "default"
+    bindsym w exec $grimshot window; mode "default"
     bindsym b exec $fman /home/schnouki/Dropbox/Public/Screenshots; mode "default"
     bindsym Return mode "default"
     bindsym Escape mode "default"
