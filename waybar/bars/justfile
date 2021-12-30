@@ -1,0 +1,9 @@
+set positional-arguments
+
+# build bars
+build:
+    nimble build -d:release
+
+# run bars (dev mode)
+dev *arg:
+    nimble run -- "$@"

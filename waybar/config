@@ -10,6 +10,7 @@
     ],
     // "modules-center": ["wlr/taskbar"],
     "modules-right": [
+        "custom/bars",
         "pulseaudio",
         //"cpu",
         //"memory",
@@ -46,6 +47,11 @@
     },
 
     // Right modules
+    "custom/bars": {
+        "exec": "$HOME/.config/waybar/bars/bars",
+        "return-type": "json",
+        "format": "{}",
+    },
     "pulseaudio": {
         "format": "{icon} {volume}%",
         "format-bluetooth": "{icon} {volume}%",
