@@ -313,32 +313,6 @@ client.unfocused        $zb-bg+1    $zb-bg-1    $zb-fg-05
 client.urgent           $zb-red-4   $zb-red-6   $zb-red+1
 
 #
-# Status Bar:
-#
-# Read `man 5 sway-bar` for more information about this section.
-bar {
-    position top
-
-    # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
-    status_command while date +'%Y-%m-%d %-H:%M:%S %p'; do sleep 1; done
-    icon_theme "Numix-Circle"
-
-    colors {
-        background $zb-bg-1
-        statusline $zb-fg
-        separator  $zb-fg-05
-
-        #                  border        background    text
-        focused_workspace  $zb-blue-2    $zb-blue-5    $zb-blue+2
-        active_workspace   $zb-fg-05     $zb-bg        $zb-fg
-        inactive_workspace $zb-bg+1      $zb-bg-1      $zb-fg-05
-        urgent_workspace   $zb-red-4     $zb-red-6     $zb-red+1
-        binding_mode       $zb-yellow-6  $zb-yellow-4  $zb-yellow
-    }
-}
-
-#
 # App rules:
 #
 for_window [shell="xwayland"] title_format "%title <small>[XWayland]</small>"

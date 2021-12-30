@@ -1,0 +1,96 @@
+* {
+    border: none;
+    border-radius: 0;
+    font-family: "Iosevka Aile", "Iosevka", monospace;
+    font-size: 12pt;
+    min-height: 0;
+}
+
+/* Colorscheme inspired by Zenburn (from Emacs) */
+@define-color zb_fg_m1  #656555;
+@define-color zb_fg_m05 #989890;
+@define-color zb_fg     #dcdccc;
+
+@define-color zb_bg_m1  #2b2b2b;
+@define-color zb_bg     #3f3f3f;
+@define-color zb_bg_p1  #4f4f4f;
+
+@define-color zb_red_m6 #6c3333;
+@define-color zb_red_m4 #8c5353;
+@define-color zb_red_p1 #dca3a3;
+
+@define-color zb_green_m4 #3f5f3f;
+
+@define-color zb_blue_m5 #366060;
+@define-color zb_blue_m2 #6ca0a3;
+@define-color zb_blue_p2 #ace0e3;
+
+@define-color zb_yellow_m6 #907f4f;
+@define-color zb_yellow_m4 #b09f6f;
+@define-color zb_yellow    #f0dfaf;
+@define-color zb_yellow_p1 #ffefbf;
+
+window#waybar {
+    background: @zb_bg_m1;
+    color: @zb_fg;
+}
+
+tooltip {
+    background: @zb_bg_m1;
+    border: 1px solid @zb_fg_m05;
+}
+tooltip label {
+    color: @zb_fg;
+}
+
+widget > * {
+    padding: 0 6pt;
+}
+/*
+.modules-right widget + widget {
+    border-left: 1px solid @zb_fg_m1;
+}
+*/
+
+
+#workspaces {
+  padding: 0
+}
+#workspaces button {
+    padding: 0 4pt;
+    background: transparent;
+    color: @zb_fg_m05;
+    border: 1px solid @zb_bg_p1;
+}
+#workspaces button.focused {
+    background: @zb_blue_m5;
+    color: @zb_blue_p2;
+    border-color: @zb_blue_m2;
+}
+#workspaces button.visible:not(.focused) {
+    background: @zb_bg;
+    color: @zb_fg;
+    border-color: @zb_fg_m05
+}
+#workspaces button.urgent {
+    background: @zb_red_m6;
+    color: @zb_red_p1;
+    border-color: @zb_red_m4;
+}
+
+#mode {
+    background: @zb_yellow_m4;
+    color: @zb_yellow_p1;
+    border: 1px solid @zb_yellow_m6;
+}
+
+#battery.charging {
+    background-color: @zb_green_m4;
+}
+#battery.warning:not(.charging) {
+    background-color: @zb_yellow_m4;
+    color: @zb_bg_m1;
+}
+#battery.critical:not(.charging) {
+    background: @zb_red_m4;
+}

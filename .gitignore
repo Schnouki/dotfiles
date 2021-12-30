@@ -58,5 +58,6 @@ gtk-3.0/bookmarks
 !systemd
 !terminator
 !urxvt
+!waybar
 !youtube-dl
 !zsh
