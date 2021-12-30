@@ -195,6 +195,9 @@
   (load (expand-file-name "~/.quicklisp/slime-helper.el"))
   (slime-setup))
 
+(use-package just-mode
+  :ensure t)
+
 
 ;; -----------------------------------------------------------------------------
 ;; Minor modes
