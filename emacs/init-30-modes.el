@@ -30,7 +30,9 @@
   :bind (:map js2-mode-map
               ;("C-c C-@" . js-doc-describe-tag)
               ("C-c i"   . js-doc-insert-function-doc)
-              ("@"       . js-doc-insert-tag)))
+              ("@"       . js-doc-insert-tag))
+  :custom
+  (js2-ignored-warnings '("msg.missing.semi")))
 
 (use-package coffee-mode
   :ensure t
