@@ -103,6 +103,9 @@ workspace 10 output $out_int
     # Stick/unstick the focused floating window
     bindsym $mod+Shift+s sticky toggle
 
+    # Toggle the border for the focused window
+    bindsym $mod+Shift+b border toggle
+
     # Start your launcher
     bindsym $mod+d exec $menu
 
@@ -351,10 +354,17 @@ for_window [app_id="firefox" title="Firefox - Indicateur de partage"] {
     inhibit_idle open
     move absolute position 922 px 0 px  # Width: 75px --> (1920 - 75) / 2 = 922.5.
 }
-for_window [app_id="firefox" title="Incrustation vidéo"] floating enable
+for_window [app_id="firefox" title="Incrustation vidéo"] {
+    floating enable
+    border normal
+    inhibit_idle visible
+}
 
 # Run basic stuff
 include /etc/sway/config.d/*
 
 # Systemd integration -- https://github.com/swaywm/sway/wiki/Systemd-integration
 exec "systemctl --user import-environment; systemctl --user start sway-session.target"
+
+# Emacs: refresh environment after each reload
+exec_always "emacsclient -ue '(schnouki/refresh-env)'"
