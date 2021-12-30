@@ -641,9 +641,25 @@ If third argument START is non-nil, convert words after that index in STRING."
     (custom-save-all)))
 ;; (schnouki/update-selected-packages)
 ;; (package-autoremove)
+;; (package-install-selected-packages)
 
 ;; Open file in Docker containers
 (use-package docker-tramp
   :ensure t)
+
+;; Refresh environment variables, e.g. when sway is reloaded
+(defun schnouki/refresh-env ()
+  (require 'dash)
+  (require 's)
+  (let ((env-vars '("SWAYSOCK" "I3SOCK")))
+    (-as-> (with-output-to-string
+	      (with-current-buffer standard-output
+		(call-process "systemctl" nil t nil "--user" "show-environment")))
+	   env
+     (s-lines env)
+     (-remove #'s-blank-str? env)
+     (--map (s-split-up-to "=" it 1) env)
+     (--filter (-contains? env-vars (car it)) env)
+     (--each env (apply #'setenv it)))))
 
 ;;; init-25-utils.el ends here
