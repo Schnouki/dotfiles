@@ -1,14 +1,29 @@
 import chroma
 
+type
+  ColorType* = enum
+    CpuColors, MemColors, SwapColors
+
+
 # ColorHCL = ColorPolarLUV
 #   h: hue angle, 0.0 to 360.0
 #   c: chroma
 #   l: luminance
 
 const
-  COLORS = @[
+  CPU_COLORS_DEF = @[
     (0.1, "3f5f3f".parseHex.polarLUV),  # zb-green-4
     (0.5, "b09f6f".parseHex.polarLUV),  # zb-yellow-4
+    (0.9, "8c5353".parseHex.polarLUV),  # zb-red-4
+  ]
+  MEM_COLORS_DEF = @[
+    (0.5, "4c7073".parseHex.polarLUV),  # zb-blue-4
+    (0.8, "9f6f4f".parseHex.polarLUV),  # zb-orange-4
+    (0.9, "8c5353".parseHex.polarLUV),  # zb-red-4
+  ]
+  SWAP_COLORS_DEF = @[
+    (0.5, "4c7073".parseHex.polarLUV),  # zb-blue-4
+    (0.8, "9f6f4f".parseHex.polarLUV),  # zb-orange-4
     (0.9, "8c5353".parseHex.polarLUV),  # zb-red-4
   ]
 
@@ -34,11 +49,11 @@ proc interpolate(c1, c2: ColorPolarLUV, a: float): ColorPolarLUV =
   result.l = c1.l + a * (c2.l - c1.l)
 
 
-proc findColor(v: float): ColorPolarLUV =
+proc findColor(colors: seq[(float, ColorPolarLUV)], v: float): ColorPolarLUV =
   var pv = -1.0
-  var pc = COLORS[0][1]
+  var pc = colors[0][1]
 
-  for nv, nc in COLORS.items:
+  for nv, nc in colors.items:
     if pv < 0 and v <= nv:
       return nc
     if pv <= v and v <= nv:
@@ -51,5 +66,9 @@ proc findColor(v: float): ColorPolarLUV =
   return pc
 
 
-proc getBarColor*(v: float): string =
-  return findColor(v).color().toHtmlHex()
+proc getBarColor*(t: ColorType, v: float): string =
+  let colors = case t
+               of CpuColors: CPU_COLORS_DEF
+               of MemColors: MEM_COLORS_DEF
+               of SwapColors: SWAP_COLORS_DEF
+  return findColor(colors, v).color().toHtmlHex()

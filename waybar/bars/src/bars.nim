@@ -19,51 +19,82 @@ proc writeHelp() =
 
 
 proc runTextMode(delay: int) =
-  var st1 = getCpuStats()
+  var cst1 = getCpuStats()
 
   while true:
     sleep(delay)
-    let st2 = getCpuStats()
-    var line = ""
-    for cpu, cst in st2.pairs:
-      let usage = usagePct(st1[cpu], cst) * 100.0
-      line &= &"{cpu}: {usage:5.1f}%  "
+    let cst2 = getCpuStats()
+    var line = "CPU: "
+    for cpu, cst in cst2.pairs:
+      let usage = usagePct(cst1[cpu], cst) * 100.0
+      line &= &"{usage:5.1f}% "
+    cst1 = cst2
+
+    let mst = getMemStat()
+    let memUsage = mst.memUsagePct * 100.0
+    let memUnavail = mst.memUnavailPct * 100.0
+    let swapUsage = mst.swapUsagePct * 100.0
+    line &= &"\nMem: {memUsage:.1f}% (unavailable: {memUnavail:.1f}%)  Swap: {swapUsage:.1f}%"
+
     echo line
-    st1 = st2
+
+
+proc getRune(t: ColorType, v: float): string =
+  let idx = (v * len(RUNES).float).int
+  let r = RUNES[idx.clamp(0, len(RUNES)-1)]
+  let col = getBarColor(t, v)
+  return &"<span color=\"{col}\">{r}</span>"
+
+
+proc updateBar(b: seq[string], t: ColorType, v: float): seq[string] =
+  return b[1..^1] & getRune(t, v)
 
 
 proc asBar(d: seq[string]): string =
   return "⎹<span font_desc=\"Bars\">" & d.join() & "</span>⎸"
 
 
-proc getRune(v: float): string =
-  let idx = (v * len(RUNES).float).int
-  let r = RUNES[idx.clamp(0, len(RUNES)-1)]
-  let col = getBarColor(v)
-  return &"<span color=\"{col}\">{r}</span>"
-
-
 proc runGraphMode(delay, size: int) =
-  var st1 = getCpuStats()
+  var cst1 = getCpuStats()
 
-  let bars = newOrderedTable[string, seq[string]]()
-  for cpu in st1.keys:
-    bars[cpu] = sequtils.repeat("\u3000", size)
+  let cpuBars = newOrderedTable[string, seq[string]]()
+  for cpu in cst1.keys:
+    cpuBars[cpu] = sequtils.repeat("\u3000", size)
+
+  var memUsageBar = sequtils.repeat("\u3000", size)
+  var memUnavailBar = sequtils.repeat("\u3000", size)
+  var swapUsageBar = sequtils.repeat("\u3000", size)
 
   sleep(500)
   while true:
-    let st2 = getCpuStats()
     var tooltip = newSeq[string]()
-    for cpu, cst in st2.pairs:
-      let usage = usagePct(st1[cpu], cst)
-      let bar = bars[cpu][1..^1] & getRune(usage)
-      bars[cpu] = bar
+
+    # CPU
+    let cst2 = getCpuStats()
+    for cpu, cst in cst2.pairs:
+      let usage = usagePct(cst1[cpu], cst)
+      let bar = cpuBars[cpu].updateBar(CpuColors, usage)
+      cpuBars[cpu] = bar
       tooltip.add(&"{cpu:5}: {usage * 100.0:5.1f}% " & bar.asBar())
+    cst1 = cst2
 
-    let j = %* {"text": "" & bars["cpu"].asBar(), "tooltip": "<tt>" & tooltip.join("\n") & "</tt>"}
-    echo j
+    # Memory
+    let mst = getMemStat()
+    let memUsage = mst.memUsagePct
+    let memUnavail = mst.memUnavailPct
+    let swapUsage = mst.swapUsagePct
+    memUsageBar = memUsageBar.updateBar(MemColors, memUsage)
+    memUnavailBar = memUnavailBar.updateBar(MemColors, memUnavail)
+    swapUsageBar = swapUsageBar.updateBar(SwapColors, swapUsage)
+    tooltip.add("")
+    tooltip.add(&"Mem (free):  {memUsage * 100.0:5.1f}% " & memUsageBar.asBar())
+    tooltip.add(&"Mem (avail): {memUnavail * 100.0:5.1f}% " & memUnavailBar.asBar())
+    tooltip.add(&"Swap:        {swapUsage * 100.0:5.1f}% " & swapUsageBar.asBar())
 
-    st1 = st2
+    # Output
+    let text = "" & cpuBars["cpu"].asBar() & "" & memUnavailBar.asBar()
+    echo(%* {"text": text, "tooltip": "<tt>" & tooltip.join("\n") & "</tt>"})
+
     sleep(delay)
 
 

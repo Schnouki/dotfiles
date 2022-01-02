@@ -15,6 +15,13 @@ type
 
   CpuStats* = OrderedTableRef[string, CpuStat]
 
+  MemStat* = ref object
+    memTotal*: uint
+    memFree*: uint
+    memAvail*: uint
+    swapTotal*: uint
+    swapFree*: uint
+
 
 proc getCpuStats*(): CpuStats =
   result = newOrderedTable[string, CpuStat]()
@@ -51,3 +58,32 @@ proc usagePct*(a, b: CpuStat): float =
   )
   let idle = (b.idle - a.idle)
   return (total - idle).float / total.float
+
+
+proc getMemStat*(): MemStat =
+  result = MemStat()
+  for line in "/proc/meminfo".lines:
+    let words = line.splitWhitespace()
+    case words[0]
+    of "MemTotal:":
+      result.memTotal = words[1].parseUInt()
+    of "MemFree:":
+      result.memFree = words[1].parseUInt()
+    of "MemAvailable:":
+      result.memAvail = words[1].parseUInt()
+    of "SwapTotal:":
+      result.swapTotal = words[1].parseUInt()
+    of "SwapFree:":
+      result.swapFree = words[1].parseUInt()
+
+
+proc memUsagePct*(m: MemStat): float =
+  return (m.memTotal - m.memFree).float / m.memTotal.float
+
+
+proc memUnavailPct*(m: MemStat): float =
+  return (m.memTotal - m.memAvail).float / m.memTotal.float
+
+
+proc swapUsagePct*(m: MemStat): float =
+  return (m.swapTotal - m.swapFree).float / m.swapTotal.float
