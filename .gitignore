@@ -7,7 +7,7 @@ __pycache__/
 !hook*
 
 # Dotfiles
-!applications/Makefile
+!applications/justfile
 !beets/config.yaml
 !Xmodmap
 !Xresources
