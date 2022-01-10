@@ -1,6 +1,3 @@
-[submodule "urxvt/urxvt-tabbedex"]
-	path = urxvt/urxvt-tabbedex
-	url = https://github.com/mina86/urxvt-tabbedex
 [submodule "zsh/completion/virsh"]
 	path = zsh/completion/virsh
 	url = https://planetcyborg.de/git/repos/jplitza/zsh-virsh-autocomplete
@@ -13,12 +10,6 @@
 [submodule "zsh/modules/git-annex-zsh-completion"]
 	path = zsh/modules/git-annex-zsh-completion
 	url = https://github.com/Schnouki/git-annex-zsh-completion
-[submodule "urxvt/urxvt-font-size"]
-	path = urxvt/urxvt-font-size
-	url = https://github.com/majutsushi/urxvt-font-size
-[submodule "urxvt/urxvt-perls"]
-	path = urxvt/urxvt-perls
-	url = https://github.com/muennich/urxvt-perls
 [submodule "emacs/flycheck-local-flake8"]
 	path = emacs/flycheck-local-flake8
 	url = https://github.com/rmuslimov/flycheck-local-flake8
