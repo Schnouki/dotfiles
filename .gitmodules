@@ -19,15 +19,9 @@
 [submodule "urxvt/urxvt-perls"]
 	path = urxvt/urxvt-perls
 	url = https://github.com/muennich/urxvt-perls
-[submodule "awesome/eminent"]
-	path = awesome/eminent
-	url = https://github.com/Schnouki/eminent
 [submodule "emacs/flycheck-local-flake8"]
 	path = emacs/flycheck-local-flake8
 	url = https://github.com/rmuslimov/flycheck-local-flake8
-[submodule "awesome/deferred"]
-	path = awesome/deferred
-	url = https://github.com/zserge/lua-promises
 [submodule "emacs/ligature.el"]
 	path = emacs/ligature.el
 	url = https://github.com/mickeynp/ligature.el
