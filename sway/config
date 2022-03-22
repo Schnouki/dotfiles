@@ -14,7 +14,7 @@ set $right l
 # command was run on)
 set $term foot
 set $editor /home/schnouki/bin/eclient
-set $menu fuzzel --font="Iosevka Aile:size=16" --icon-theme="Numix-Circle"
+set $menu fuzzel --font="Iosevka Aile:size=16" --icon-theme="Numix-Circle" --background-color=3f3f3fdf --text-color=dcdcccff --selection-color=366060df --selection-text-color=ace0e3ff --border-color=6ca0a3df --match-color=dca3a3ff
 set $fman pcmanfm
 
 set $wobsock $XDG_RUNTIME_DIR/wob.sock
