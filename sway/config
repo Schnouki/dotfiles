@@ -74,11 +74,11 @@ input "1452:591:Keychron_K4_Keychron_K4" {
 
 
 ### Workspaces
-workspace 1 output $out_ext
-workspace 2 output $out_ext
-workspace 3 output $out_ext
-workspace 4 output $out_ext
-workspace 5 output $out_ext
+workspace 1 output $out_ext $out_int
+workspace 2 output $out_ext $out_int
+workspace 3 output $out_ext $out_int
+workspace 4 output $out_ext $out_int
+workspace 5 output $out_ext $out_int
 
 workspace 6 output $out_int
 workspace 7 output $out_int
