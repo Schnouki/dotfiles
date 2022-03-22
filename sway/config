@@ -342,3 +342,6 @@ exec "systemctl --user import-environment; systemctl --user start sway-session.t
 
 # Emacs: refresh environment after each reload
 exec_always "emacsclient -ue '(schnouki/refresh-env)'"
+
+# Mako seems to sometimes have trouble after sway restarts. So just in case...
+exec_always "systemctl --user restart mako"
