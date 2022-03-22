@@ -262,8 +262,11 @@ Has no effect if the character before point is not of the syntax class ')'."
 	(split-window-sensibly window))))
 
 (setq split-window-preferred-function 'schnouki/split-window-more-sensibly
-      split-height-threshold 120
+      split-width-threshold 120
+      split-height-threshold 100
       window-combination-resize t)
+
+;; (message "Window size: %sx%s" (window-total-width) (window-total-height))
 
 
 ;; Local Variables:
