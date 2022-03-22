@@ -54,6 +54,10 @@ function setup_decrypt() {
     src="$HOME/.config/$1"
     dst="$HOME/$2"
     exe="$3"
+    if [[ ! -x /usr/bin/gpg2 ]]; then
+	echo "! gpg2 not found: ignoring $1"
+	return
+    fi
 
     # Status file name
     sf="$HOME/.config/.last_update_$(echo "$src" | md5sum | cut -d' ' -f1)"
@@ -73,6 +77,10 @@ function setup_decrypt() {
 function setup_decrypt_tarball() {
     local src sf cs
     src="$HOME/.config/$1"
+    if [[ ! -x /usr/bin/gpg2 ]]; then
+	echo "! gpg2 not found: ignoring $1"
+	return
+    fi
 
     # Status file name
     sf="$HOME/.config/.last_update_$(echo "$src" | md5sum | cut -d' ' -f1)"

@@ -12,4 +12,4 @@ unset PROFILE_LOADED
 . ~/.config/zsh/plugins
 . ~/.config/zsh/keys
 
-. ~/.config/zsh/private
+[[ -f ~/.config/zsh/private ]] && . ~/.config/zsh/private
