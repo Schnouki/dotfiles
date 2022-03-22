@@ -1,102 +1,161 @@
-{
-    "layer": "top",
-    "position": "top",
-    //"height": 30,
+[
+    // Laptop screen
+    {
+        "output": "eDP-1",
+        "position": "top",
+        //"height": 30,
 
-    "modules-left": [
-        "idle_inhibitor",
-        "sway/workspaces",
-        "sway/mode",
-    ],
-    // "modules-center": ["wlr/taskbar"],
-    "modules-right": [
-        "custom/bars",
-        "pulseaudio",
-        //"cpu",
-        //"memory",
-        "temperature",
-        //"keyboard-state",
-        "battery",
-        "clock",
-        "tray",
-    ],
+        "modules-left": [
+            "sway/workspaces",
+            "idle_inhibitor",
+            "sway/mode",
+        ],
+        // "modules-center": ["wlr/taskbar"],
+        "modules-right": [
+            "custom/timew",
+            "custom/bars",
+            "temperature",
+            "pulseaudio",
+            "battery",
+            "clock",
+            "tray",
+        ],
 
-    // Left modules (Sway)
-    // "ipc": true,
-    "idle_inhibitor": {
-        "format": "{icon}",
-        "format-icons": {
-            "activated": "",
-            "deactivated": "",
-        }
-    },
-    "sway/workspaces": {
-    },
-    "sway/mode": {
-    },
-
-    // Center modules
-    "wlr/taskbar": {
-        "format": "{icon} {title}",
-        "icon-size": 12,
-        "icon-theme": "Numix-Circle",
-        "tooltip-format": "{title}\n{app_id}",
-        "on-click": "minimize-raise",
-        "on-click-middle": "close",
-        "on-click-right": "minimize",
-    },
-
-    // Right modules
-    "custom/bars": {
-        "exec": "$HOME/.config/waybar/bars/bars",
-        "return-type": "json",
-        "format": "{}",
-    },
-    "pulseaudio": {
-        "format": "{icon} {volume}%",
-        "format-bluetooth": "{icon} {volume}%",
-        "format-muted": "",
-        "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": ["", ""]
+        // Left modules (Sway)
+        "idle_inhibitor": {
+            "format": "{icon}",
+            "format-icons": {
+                "activated": "",
+                "deactivated": "",
+            }
         },
-        "scroll-step": 5,
-        "on-click": "pavucontrol"
-    },
-    "temperature": {
-        "hwmon-path": "/sys/devices/platform/coretemp.0/hwmon/hwmon6/temp1_input",
-        "critical-threshold": 90,
-        "format": "{icon} {temperatureC}°C",
-        "format-icons": ["", "", "", "", ""],
-    },
-    "keyboard-state": {
-        "device-path": "/dev/input/by-id/usb-Keychron_K4_Keychron_K4-event-kbd",
-    },
-    "battery": {
-        "design-capacity": false,
-        "states": {
-            "warning": 30,
-            "critical": 15,
+
+        // Center modules
+        "wlr/taskbar": {
+            "format": "{icon} {title}",
+            "icon-size": 12,
+            "icon-theme": "Numix-Circle",
+            "tooltip-format": "{title}\n{app_id}",
+            "on-click": "minimize-raise",
+            "on-click-middle": "close",
+            "on-click-right": "minimize",
         },
-        "format": "{icon} {capacity}%",
-        "format-icons": ["", "", "", "", ""]
+
+        // Right modules
+        "custom/timew": {
+            "exec": "$HOME/.config/waybar/timew/tww.py",
+            "return-type": "json",
+            "restart-interval": 1,
+            "format": " {}",
+            "on-click": "$HOME/.config/waybar/timew/timew-ui.py",
+        },
+        "custom/bars": {
+            "exec": "$HOME/.config/waybar/bars/bars",
+            "return-type": "json",
+            "restart-interval": 1,
+            "format": "{}",
+        },
+        "pulseaudio": {
+            "format": "{icon} {volume}%",
+            "format-bluetooth": "{icon} {volume}%",
+            "format-muted": "",
+            "format-icons": {
+                "headphone": "",
+                "hands-free": "",
+                "headset": "",
+                "phone": "",
+                "portable": "",
+                "car": "",
+                "default": ["", ""]
+            },
+            "scroll-step": 5,
+            "on-click": "pavucontrol"
+        },
+        "temperature": {
+            "hwmon-path-abs": "/sys/devices/platform/coretemp.0/hwmon",
+            "input-filename": "temp1_input",
+            "critical-threshold": 90,
+            "format": "{icon} {temperatureC}°C",
+            "format-icons": ["", "", "", "", ""],
+        },
+        "keyboard-state": {
+            "device-path": "/dev/input/by-id/usb-Keychron_K4_Keychron_K4-event-kbd",
+        },
+        "battery": {
+            "design-capacity": false,
+            "states": {
+                "warning": 30,
+                "critical": 15,
+            },
+            "format": "{icon} {capacity}%",
+            "format-icons": ["", "", "", "", ""]
+        },
+        "clock": {
+            "interval": 1,
+            "format": "{:%Y-%m-%d %H:%M:%S}",
+            "tooltip-format": "<big>{:%B %Y}</big>\n<tt>{calendar}</tt>",
+            "today-format": "<b>{}</b>",
+        },
+        "tray": {
+            "icon-size": 24,
+            "spacing": 2,
+        },
     },
-    "clock": {
-        "interval": 1,
-        "format": "{:%Y-%m-%d %H:%M:%S}",
-        "tooltip-format": "<big>{:%B %Y}</big>\n<tt>{calendar}</tt>",
-        "today-format": "<b>{}</b>",
-    },
-    "tray": {
-        "icon-size": 24,
-        "spacing": 2,
-    },
-}
+
+    // External screen(s)
+    {
+        "output": "!eDP-1",
+        "position": "top",
+        //"height": 30,
+
+        "modules-left": [
+            "sway/workspaces",
+            "sway/mode",
+        ],
+        // "modules-center": ["wlr/taskbar"],
+        "modules-right": [
+            "pulseaudio",
+            "clock",
+        ],
+
+        // Left modules (Sway)
+
+        // Center modules
+        "wlr/taskbar": {
+            "format": "{icon} {title}",
+            "icon-size": 12,
+            "icon-theme": "Numix-Circle",
+            "tooltip-format": "{title}\n{app_id}",
+            "on-click": "minimize-raise",
+            "on-click-middle": "close",
+            "on-click-right": "minimize",
+        },
+
+        // Right modules
+        "pulseaudio": {
+            "format": "{icon} {volume}%",
+            "format-bluetooth": "{icon} {volume}%",
+            "format-muted": "",
+            "format-icons": {
+                "headphone": "",
+                "hands-free": "",
+                "headset": "",
+                "phone": "",
+                "portable": "",
+                "car": "",
+                "default": ["", ""]
+            },
+            "scroll-step": 5,
+            "on-click": "pavucontrol"
+        },
+        "clock": {
+            "interval": 1,
+            "format": "{:%Y-%m-%d %H:%M:%S}",
+            "tooltip-format": "<big>{:%B %Y}</big>\n<tt>{calendar}</tt>",
+            "today-format": "<b>{}</b>",
+        },
+    }
+]
 
 // Local Variables:
 // mode: js
