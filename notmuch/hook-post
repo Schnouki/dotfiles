@@ -6,7 +6,7 @@ notmuch new
 new=$(notmuch count tag:new)
 LD_PRELOAD=/usr/lib/nosync/nosync.so $CONFIGDIR/autotag.py || echo "Autotag failed."
 
-awesome_end_update
+#awesome_end_update
 dbus-send --session --dest="org.gnu.Emacs" "/org/gnu/Emacs" "org.gnu.Emacs.NotmuchNotify"
 [[ $new > 0 ]] && $CONFIGDIR/notify.py
 
