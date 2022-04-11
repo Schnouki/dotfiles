@@ -20,7 +20,6 @@ done
 setup_decrypt "atlas-auth.gpg" ".atlas/auth"
 setup_decrypt "gitspindle.gpg" ".gitspindle"
 setup_decrypt "gpg.conf.gpg" ".gnupg/gpg.conf"
-setup_decrypt "git/rescuetime-post-commit.gpg" ".config/git/rescuetime-post-commit"
 setup_decrypt "imapfilter/config.lua.gpg" ".config/imapfilter/config.lua"
 setup_decrypt "mbsyncrc.gpg" ".mbsyncrc"
 setup_decrypt "mpdasrc.gpg" ".config/mpdasrc"

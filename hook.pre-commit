@@ -51,7 +51,6 @@ hook_update_encrypted_file ".config/emacs/init-99-private.el" "emacs/init-99-pri
 hook_update_encrypted_file ".config/fish/conf.d/doist.fish" "fish/conf.d/doist.fish.gpg"
 hook_update_encrypted_file ".config/fish/conf.d/private.fish" "fish/conf.d/private.fish.gpg"
 hook_update_encrypted_file ".config/git/credentials" "git/credentials.gpg"
-hook_update_encrypted_file ".config/git/rescuetime-post-commit" "git/rescuetime-post-commit.gpg"
 hook_update_encrypted_file ".config/imapfilter/config.lua" "imapfilter/config.lua.gpg"
 hook_update_encrypted_file ".config/mpdasrc" "mpdasrc.gpg"
 hook_update_encrypted_file ".config/notmuch/autotag.py" "notmuch/autotag.py.gpg"

@@ -1,8 +1,5 @@
 #!/bin/sh
 
-# Log commit message as a 'highlight' in RescueTime premium
-~/.config/git/rescuetime-post-commit || true
-
 # Log commit to Exist.io
 DATE_TODAY=$(date +"%Y-%m-%d")
 pueue add --group git --label exist.io "~/.nimble/bin/exist_git_hook --date:$DATE_TODAY commit"
