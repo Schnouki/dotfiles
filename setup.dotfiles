@@ -27,7 +27,6 @@ setup_decrypt "msmtprc.gpg" ".msmtprc"
 setup_decrypt "netrc.gpg" ".netrc"
 setup_decrypt "npmrc.gpg" ".npmrc"
 setup_decrypt "pws.yaml.gpg" ".config/pws.yaml"
-setup_decrypt "pycard.conf.gpg" ".config/pycard.conf"
 setup_decrypt "ssh.gpg" ".ssh/config"
 setup_decrypt "transifexrc.gpg" ".transifexrc"
 
