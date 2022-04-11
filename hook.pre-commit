@@ -1,61 +1,140 @@
-#!/usr/bin/env zsh
+#!/usr/bin/python3
 
-zparseopts -D -- f=force
+import argparse
+import hashlib
+import subprocess as subp
+from pathlib import Path
 
-# Helper functions
-function hook_update_encrypted_file() {
-    local src dst sf
-    src="$HOME/$1"
-    dst="$HOME/.config/$2"
-    sf="$HOME/.config/.last_update_$(echo "$dst" | md5sum | cut -d' ' -f1)"
-
-    if [ ! -e "$dst" ] || [ "$src" -nt "$sf" ] || [ "$force" ]; then
-        echo "New version of $src found, encrypting it..."
-        [[ -e "$dst" ]] && rm "$dst"
-        gpg2 --quiet --batch --output "$dst" --encrypt "$src"
-        touch "$sf"
-    fi
+FILES = {
+    ".atlas/auth": "atlas-auth.gpg",
+    ".gitspindle": "gitspindle.gpg",
+    ".gnupg/gpg.conf": "gpg.conf.gpg",
+    ".msmtprc": "msmtprc.gpg",
+    ".netrc": "netrc.gpg",
+    ".npmrc": "npmrc.gpg",
+    ".mbsyncrc": "mbsyncrc.gpg",
+    ".notmuch-config": "notmuch/config.gpg",
+    ".ssh/config": "ssh.gpg",
+    ".transifexrc": "transifexrc.gpg",
+    ".config/pws.yaml": "pws.yaml.gpg",
+    ".config/emacs/init-99-private.el": "emacs/init-99-private.el.gpg",
+    ".config/fish/conf.d/doist.fish": "fish/conf.d/doist.fish.gpg",
+    ".config/fish/conf.d/private.fish": "fish/conf.d/private.fish.gpg",
+    ".config/imapfilter/config.lua": "imapfilter/config.lua.gpg",
+    ".config/mpdasrc": "mpdasrc.gpg",
+    ".config/notmuch/autotag.py": "notmuch/autotag.py.gpg",
+    ".config/zsh/private": "zsh/private.gpg",
 }
 
-hook_update_encrypted_tarball() {
-    local srcname src dst sf cs gcs
-    srcname=$1
-    dst="$HOME/.config/$2"
-    src=(${@:3})
-    sf="$HOME/.config/.last_update_$(echo "$dst" | md5sum | cut -d' ' -f1)"
-    cs=$(tar c -C "$HOME" ${src/$HOME\//} | tar xO | md5sum | cut -d' ' -f1)
-    [[ ! -e "$sf" ]] && touch "$sf"
-    gcs=$(cat "$sf")
-
-    if [ ! -e "$dst" ] || [ "$cs" != "$gcs" ] || [ "$force" ]; then
-        echo "New version of $srcname found, encrypting it..."
-        tar c -C "$HOME" ${src/$HOME\//} | gpg2 --quiet --batch --encrypt > "$dst"
-        echo "$cs" > "$sf"
-    fi
+TARBALLS = {
+    "Calibre": ("calibre.tar.gpg", ".config/calibre/*"),
+    "Pgweb": ("pgweb.tar.gpg", ".pgweb/**/**"),
+    "Tmuxp": ("tmuxp.tar.gpg", ".tmuxp/*"),
+    "Weechat": ("weechat.tar.gpg", ".config/weechat/*.conf"),
 }
 
-# Check for sensitive configuration files: SSH, GnuPG, etc.
-hook_update_encrypted_file ".atlas/auth" "atlas-auth.gpg"
-hook_update_encrypted_file ".gitspindle" "gitspindle.gpg"
-hook_update_encrypted_file ".gnupg/gpg.conf" "gpg.conf.gpg"
-hook_update_encrypted_file ".msmtprc" "msmtprc.gpg"
-hook_update_encrypted_file ".netrc" "netrc.gpg"
-hook_update_encrypted_file ".npmrc" "npmrc.gpg"
-hook_update_encrypted_file ".mbsyncrc" "mbsyncrc.gpg"
-hook_update_encrypted_file ".notmuch-config" "notmuch/config.gpg"
-hook_update_encrypted_file ".ssh/config" "ssh.gpg"
-hook_update_encrypted_file ".transifexrc" "transifexrc.gpg"
-hook_update_encrypted_file ".config/pws.yaml" "pws.yaml.gpg"
-hook_update_encrypted_file ".config/emacs/init-99-private.el" "emacs/init-99-private.el.gpg"
-hook_update_encrypted_file ".config/fish/conf.d/doist.fish" "fish/conf.d/doist.fish.gpg"
-hook_update_encrypted_file ".config/fish/conf.d/private.fish" "fish/conf.d/private.fish.gpg"
-hook_update_encrypted_file ".config/imapfilter/config.lua" "imapfilter/config.lua.gpg"
-hook_update_encrypted_file ".config/mpdasrc" "mpdasrc.gpg"
-hook_update_encrypted_file ".config/notmuch/autotag.py" "notmuch/autotag.py.gpg"
-hook_update_encrypted_file ".config/pycard.conf" "pycard.conf.gpg"
-hook_update_encrypted_file ".config/zsh/private" "zsh/private.gpg"
+HOME = Path.home()
+CONFIG = HOME / ".config"
 
-hook_update_encrypted_tarball "Calibre" "calibre.tar.gpg" ~/.config/calibre/*
-hook_update_encrypted_tarball "Pgweb" "pgweb.tar.gpg" ~/.pgweb/**/**
-hook_update_encrypted_tarball "Tmuxp" "tmuxp.tar.gpg" ~/.tmuxp/*
-hook_update_encrypted_tarball "Weechat" "weechat.tar.gpg" ~/.config/weechat/*.conf
+
+def md5(buf: bytes) -> str:
+    hh = hashlib.md5()
+    hh.update(buf)
+    return hh.hexdigest()
+
+
+def get_last_update_filename(name: str) -> str:
+    dst_name = CONFIG / name
+    dst_hash = md5(str(dst_name).encode() + b"\n")
+    return f".last_update_{dst_hash}"
+
+
+def update_encrypted_files(force: bool):
+    for src, dst in FILES.items():
+        src_p = HOME / src
+        dst_p = CONFIG / dst
+        uf_p = CONFIG / get_last_update_filename(dst)
+
+        if not src_p.exists():
+            print(f"Missing source file: {src}")
+            continue
+
+        if (
+            force
+            or not dst_p.exists()
+            or not uf_p.exists()
+            or src_p.stat().st_mtime > uf_p.stat().st_mtime
+        ):
+            print(f"New version of {src} found, encrypting it...")
+            subp.run(
+                ["gpg2", "--quiet", "--batch", "--output", dst_p, "--encrypt", src_p],
+                check=True,
+            )
+            uf_p.touch()
+
+
+def update_encrypted_tarballs(force: bool):
+    for name, (dst, pattern) in TARBALLS.items():
+        src_ps = sorted(list(HOME.glob(pattern)))
+        dst_p = CONFIG / dst
+        uf_p = CONFIG / get_last_update_filename(dst)
+
+        tar_cmd = ["tar", "c", "-C", HOME]
+        tar_cmd += [p.relative_to(HOME) for p in src_ps]
+        tar_data = subp.run(tar_cmd, check=True, capture_output=True).stdout
+        tar_hh = md5(tar_data)
+        uf_hh = "" if not uf_p.exists() else uf_p.read_text()
+
+        if force or not dst_p.exists() or not uf_p.exists() or tar_hh != uf_hh:
+            print(f"New version of {name} found, encrypting it...")
+            dst_p.unlink(missing_ok=True)
+            subp.run(
+                ["gpg2", "--quiet", "--batch", "--output", dst_p, "--encrypt"],
+                check=True,
+                input=tar_data,
+            )
+            uf_p.write_text(tar_hh)
+
+
+def list_update_files():
+    dir_names = {p.name for p in CONFIG.glob(".last_update_*")}
+    known_names = {get_last_update_filename(dst): src for src, dst in FILES.items()}
+    known_names.update(
+        {
+            get_last_update_filename(data[0]): f"{name} tarball"
+            for name, data in TARBALLS.items()
+        }
+    )
+    known_names_set = set(known_names.keys())
+
+    present_names = dir_names & known_names_set
+    missing_names = known_names_set - dir_names
+    unknown_names = dir_names - known_names_set
+
+    if present_names:
+        print("PRESENT UPDATE FILES:")
+        for name in present_names:
+            print(f"{known_names[name]}: {name}")
+        print()
+    if missing_names:
+        print("MISSING UPDATE FILES:")
+        for name in missing_names:
+            print(f"{known_names[name]}: {name}")
+        print()
+    if unknown_names:
+        print("UNKNOWN UPDATE FILES:")
+        for name in unknown_names:
+            print(name)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser("Dotfiles pre-commit hook")
+    parser.add_argument("-f", "--force", action="store_true", help="Force update")
+    parser.add_argument("-l", "--list", action="store_true", help="List update files")
+    args = parser.parse_args()
+
+    if args.list:
+        list_update_files()
+    else:
+        update_encrypted_files(args.force)
+        update_encrypted_tarballs(args.force)
