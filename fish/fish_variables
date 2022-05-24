@@ -11,11 +11,11 @@ SETUVAR __fish_classic_git_prompt_initialized:\x1d
 SETUVAR __fish_init_2_39_8:\x1d
 SETUVAR __fish_init_2_3_0:\x1d
 SETUVAR __fish_init_3_x:\x1d
-SETUVAR __fish_initialized:3100
+SETUVAR __fish_initialized:3400
 SETUVAR _fisher_franciscolourenco_2F_done_files:/home/schnouki/\x2econfig/fish/conf\x2ed/done\x2efish
 SETUVAR _fisher_jethrokuan_2F_z_files:/home/schnouki/\x2econfig/fish/functions/__z\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/__z_add\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/__z_clean\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/__z_complete\x2efish\x1e/home/schnouki/\x2econfig/fish/conf\x2ed/z\x2efish
 SETUVAR _fisher_jorgebucaran_2F_autopair_2E_fish_files:/home/schnouki/\x2econfig/fish/functions/_autopair_backspace\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/_autopair_insert_left\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/_autopair_insert_right\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/_autopair_insert_same\x2efish\x1e/home/schnouki/\x2econfig/fish/functions/_autopair_tab\x2efish\x1e/home/schnouki/\x2econfig/fish/conf\x2ed/autopair\x2efish
-SETUVAR _fisher_plugins:fishpkg/fish\x2dpwd\x2dinfo\x1efishpkg/fish\x2dgit\x2dutil\x1efranciscolourenco/done\x1ejethrokuan/z\x1ejorgebucaran/autopair\x2efish
+SETUVAR _fisher_plugins:franciscolourenco/done\x1ejethrokuan/z\x1ejorgebucaran/autopair\x2efish\x1eIkeLutra/fish\x2dpwd\x2dinfo\x1edamani42/fish\x2dgit\x2dutil
 SETUVAR fish_color_autosuggestion:969896
 SETUVAR fish_color_cancel:\x2dr
 SETUVAR fish_color_command:b294bb
@@ -45,3 +45,4 @@ SETUVAR fish_pager_color_completion:normal
 SETUVAR fish_pager_color_description:B3A06D\x1eyellow
 SETUVAR fish_pager_color_prefix:white\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
 SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
+SETUVAR fish_pager_color_selected_background:\x2dr
