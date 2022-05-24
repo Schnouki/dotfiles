@@ -6,6 +6,7 @@ from pathlib import Path
 import subprocess as subp
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
@@ -13,14 +14,19 @@ RESP_STOP = 42
 RESP_EDIT = 43
 RESP_START = 44
 
+NB_PREVIOUS = 5
+
+
 @dataclass(frozen=True)
 class TWStatus:
     stopped: bool
     tags: list[str]
 
     @classmethod
-    def get(cls) -> "TWStatus":
-        pr = subp.run(["timew", "get", "dom.tracked.1.json"], capture_output=True, check=True)
+    def get(cls, n=1) -> "TWStatus":
+        pr = subp.run(
+            ["timew", "get", f"dom.tracked.{n}.json"], capture_output=True, check=True
+        )
         data = json.loads(pr.stdout)
         return cls(stopped="end" in data, tags=data.get("tags", []))
 
@@ -32,23 +38,29 @@ def get_tags() -> list[str]:
     return list(tags_data.keys())
 
 
+def get_prev_tags() -> list[frozenset[str]]:
+    pr = subp.run(
+        ["timew", "get", "dom.tracked.count"], capture_output=True, check=True
+    )
+    max_n = int(pr.stdout)
+
+    tag_sets = list()
+    for n in range(1, max_n + 1):
+        status = TWStatus.get(n)
+        tag_set = frozenset(status.tags)
+        if tag_set not in tag_sets:
+            tag_sets.append(tag_set)
+        if len(tag_sets) >= NB_PREVIOUS:
+            break
+    return tag_sets
+
 
 def main():
     all_tags = get_tags()
     st = TWStatus.get()
+    prev_tags = get_prev_tags()
 
-    dlg = Gtk.Dialog(title="Timewarrior", modal=True, use_header_bar=True)
-    dlg.set_resizable(False)
-
-    content = dlg.get_content_area()
-
-    dlg.add_button("Start", RESP_START)
-    if not st.stopped:
-        dlg.add_button("Edit", RESP_EDIT)
-        dlg.add_button("Stop", RESP_STOP)
-    dlg.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
-    dlg.set_default_response(RESP_START)
-
+    # Tags view management
     tags_store = Gtk.ListStore(str)
     tags_iters = {}
     for tw_tag in all_tags:
@@ -56,17 +68,12 @@ def main():
         tags_iters[tw_tag] = tag_iter
     tags_store.append([""])
 
-    view = Gtk.TreeView(model=tags_store, headers_visible=False, reorderable=False)
-    content.add(view)
-
-    sel = view.get_selection()
+    tree_view = Gtk.TreeView(model=tags_store, headers_visible=False, reorderable=False)
+    sel = tree_view.get_selection()
     sel.set_mode(Gtk.SelectionMode.MULTIPLE)
-    if st.tags:
-        for tw_tag in st.tags:
-            tag_iter = tags_iters[tw_tag]
-            sel.select_iter(tag_iter)
 
     cell = Gtk.CellRendererText(editable=True)
+
     def on_edit(cr, path, new_text):
         tree_iter = tags_store.get_iter_from_string(path)
         prev_text = tags_store.get_value(tree_iter, 0)
@@ -80,8 +87,51 @@ def main():
     cell.connect("edited", on_edit)
 
     col = Gtk.TreeViewColumn("Tag", cell, text=0)
-    view.append_column(col)
+    tree_view.append_column(col)
 
+    # Helper: select a list of tags
+    def select_tags(tags: list[str]):
+        sel.unselect_all()
+        for tw_tag in tags:
+            tag_iter = tags_iters[tw_tag]
+            sel.select_iter(tag_iter)
+
+    def on_select_tags_btn(btn, tags: list[str]):
+        select_tags(tags)
+
+    # Build the dialog
+    dlg = Gtk.Dialog(title="Timewarrior", modal=True, use_header_bar=True)
+    dlg.set_resizable(False)
+
+    content = dlg.get_content_area()
+    box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
+    content.add(box)
+
+    dlg.add_button("Start", RESP_START)
+    if not st.stopped:
+        dlg.add_button("Edit", RESP_EDIT)
+        dlg.add_button("Stop", RESP_STOP)
+    dlg.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
+    dlg.set_default_response(RESP_START)
+
+    prev_frm = Gtk.Frame(label="Previous entries")
+    box.pack_start(prev_frm, True, True, 0)
+    prev_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0, margin=6)
+    prev_frm.add(prev_box)
+
+    for btn_tags in prev_tags:
+        btn = Gtk.Button(label=", ".join(sorted(btn_tags)))
+        btn.connect("clicked", on_select_tags_btn, btn_tags)
+        prev_box.pack_start(btn, True, True, 0)
+
+    next_frm = Gtk.Frame(label="Tags for next entry")
+    box.pack_start(next_frm, True, True, 0)
+    next_frm.add(tree_view)
+
+    if st.tags:
+        select_tags(st.tags)
+
+    # Run!
     dlg.show_all()
     resp = dlg.run()
 
