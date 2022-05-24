@@ -3,7 +3,10 @@
 import argparse
 import hashlib
 import subprocess as subp
+import os
+import tempfile
 from pathlib import Path
+
 
 FILES = {
     ".atlas/auth": "atlas-auth.gpg",
@@ -36,6 +39,51 @@ TARBALLS = {
 HOME = Path.home()
 CONFIG = HOME / ".config"
 
+_filters = {}
+
+
+def filter(filename):
+    def wrapper(func):
+        _filters[filename] = func
+        return func
+
+    return wrapper
+
+
+class TempPath(os.PathLike):
+    def __init__(self):
+        self.tmpf = tempfile.NamedTemporaryFile()
+
+    def __fspath__(self):
+        return self.tmpf.name
+
+    @property
+    def path(self):
+        return Path(self.tmpf.name)
+
+
+@filter(".netrc")
+def filter_netrc(fp: Path) -> os.PathLike:
+    data = fp.read_text()
+    new_data = []
+    machine, login = "", ""
+    for line in data.splitlines():
+        words = line.strip().split()
+        if words[0] == "machine":
+            machine, login = words[1], ""
+        elif words[0] == "login":
+            login = words[1]
+        elif (
+            words[0] == "password"
+            and machine.endswith(".amazonaws.com")
+            and login == "aws"
+        ):
+            line = "\tpassword ***"
+        new_data.append(line)
+    outp = TempPath()
+    outp.path.write_text("\n".join(new_data))
+    return outp
+
 
 def md5(buf: bytes) -> str:
     hh = hashlib.md5()
@@ -66,8 +114,14 @@ def update_encrypted_files(force: bool):
             or src_p.stat().st_mtime > uf_p.stat().st_mtime
         ):
             print(f"New version of {src} found, encrypting it...")
+
+            if filter_func := _filters.get(src):
+                print(f"  applying {filter_func.__name__}...")
+                src_p = filter_func(src_p)
+
+            dst_p.unlink(missing_ok=True)
             subp.run(
-                ["gpg2", "--quiet", "--batch", "--output", dst_p, "--encrypt", src_p],
+                ["gpg2", "--quiet", "--batch", "--output", dst_p, "--encrypt", Path(src_p)],
                 check=True,
             )
             uf_p.touch()
