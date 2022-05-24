@@ -10,10 +10,18 @@
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 	ag = grep --break --heading --line-number
 	wdiff = diff --color-words
+        dft = difftool
 [diff]
 	algorithm = histogram
 	compactionHeuristic = true
 	noprefix = true
+        tool = difftastic
+[difftool]
+        prompt = false
+[difftool "difftastic"]
+        cmd = difft "$LOCAL" "$REMOTE"
+[pager]
+        difftool = true
 [rebase]
 	autosquash = true
 [grep]
