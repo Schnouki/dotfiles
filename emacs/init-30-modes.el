@@ -160,6 +160,9 @@
 
 (use-package d-mode
   :ensure t)
+(use-package dfmt
+  :ensure t
+  :hook (d-mode . dfmt-setup-keys))
 
 (use-package rust-mode
   :ensure t
