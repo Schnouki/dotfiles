@@ -22,9 +22,7 @@
 	  ("^:S:web/src/stibidik/" ":Sw:")
 	  ("^~/doist/"             ":D:")
 	  ("^:D:Todoist/"          ":TD:")
-	  ("^:TD:libs/ist_libs/"   ":TDi:")
 	  ("^:D:twist/"            ":TW:")
-	  ("^:TW:libs/ist_libs/"   ":TWi:")
 	  ))
 
   ;; Move which-func indicator to just after the file name
