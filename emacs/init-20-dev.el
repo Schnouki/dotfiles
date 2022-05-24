@@ -262,7 +262,8 @@
 (use-package restclient
   :ensure t
   :commands restclient-mode)
-(use-package restclient-jq)
+(use-package restclient-jq
+  :ensure t)
 
 ;; Stop Unicode trolls (probably useless, hence commented out)
 (use-package unicode-troll-stopper
