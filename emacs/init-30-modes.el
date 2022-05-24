@@ -194,10 +194,11 @@
 
 (use-package slime
   :ensure t
+  :custom
+  (slime-contribs '(slime-fancy slime-quicklisp))
+  (slime-repl-auto-right-margin t)
   :config
-  (setq inferior-lisp-program "sbcl"
-	slime-contribs '(slime-fancy slime-quicklisp))
-  (load (expand-file-name "~/.quicklisp/slime-helper.el"))
+  (load (expand-file-name "~/.roswell/helper.el"))
   (slime-setup))
 
 (use-package just-mode

@@ -8,6 +8,7 @@ set PATH \
     $HOME/.go/bin \
     $HOME/.luarocks/bin \
     $HOME/.nimble/bin \
+    $HOME/.roswell/bin \
     $PATH
 
 set -gx XDG_DATA_HOME $HOME/.local/share
