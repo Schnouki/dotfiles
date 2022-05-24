@@ -10,7 +10,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 RESP_STOP = 42
-RESP_CONTINUE = 43
+RESP_EDIT = 43
 RESP_START = 44
 
 @dataclass(frozen=True)
@@ -22,7 +22,7 @@ class TWStatus:
     def get(cls) -> "TWStatus":
         pr = subp.run(["timew", "get", "dom.tracked.1.json"], capture_output=True, check=True)
         data = json.loads(pr.stdout)
-        return cls(stopped="end" in data, tags=data["tags"])
+        return cls(stopped="end" in data, tags=data.get("tags", []))
 
 
 def get_tags() -> list[str]:
@@ -34,29 +34,37 @@ def get_tags() -> list[str]:
 
 
 def main():
-    tags = get_tags()
+    all_tags = get_tags()
     st = TWStatus.get()
 
     dlg = Gtk.Dialog(title="Timewarrior", modal=True, use_header_bar=True)
     dlg.set_resizable(False)
 
+    content = dlg.get_content_area()
+
     dlg.add_button("Start", RESP_START)
-    if st.stopped:
-        dlg.add_button("Continue (" + " ".join(st.tags) + ")", RESP_CONTINUE)
-    else:
+    if not st.stopped:
+        dlg.add_button("Edit", RESP_EDIT)
         dlg.add_button("Stop", RESP_STOP)
     dlg.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
     dlg.set_default_response(RESP_START)
 
     tags_store = Gtk.ListStore(str)
-    for tag in tags:
-        tags_store.append([tag])
+    tags_iters = {}
+    for tw_tag in all_tags:
+        tag_iter = tags_store.append([tw_tag])
+        tags_iters[tw_tag] = tag_iter
     tags_store.append([""])
 
-    content = dlg.get_content_area()
     view = Gtk.TreeView(model=tags_store, headers_visible=False, reorderable=False)
     content.add(view)
-    view.get_selection().set_mode(Gtk.SelectionMode.MULTIPLE)
+
+    sel = view.get_selection()
+    sel.set_mode(Gtk.SelectionMode.MULTIPLE)
+    if st.tags:
+        for tw_tag in st.tags:
+            tag_iter = tags_iters[tw_tag]
+            sel.select_iter(tag_iter)
 
     cell = Gtk.CellRendererText(editable=True)
     def on_edit(cr, path, new_text):
@@ -78,13 +86,20 @@ def main():
     resp = dlg.run()
 
     if resp == RESP_START:
-        sel = view.get_selection()
         model, paths = sel.get_selected_rows()
         tags = [model.get_value(model.get_iter(path), 0) for path in paths]
         subp.run(["timew", "start"] + tags, check=True)
 
-    elif resp == RESP_CONTINUE:
-        subp.run(["timew", "continue"])
+    elif resp == RESP_EDIT:
+        model, paths = sel.get_selected_rows()
+        all_new_tags = [model.get_value(model.get_iter(path), 0) for path in paths]
+        new_tags = [tag for tag in all_new_tags if tag not in st.tags]
+        old_tags = [tag for tag in st.tags if tag not in all_new_tags]
+
+        if new_tags:
+            subp.run(["timew", "tag", "@1"] + new_tags)
+        if old_tags:
+            subp.run(["timew", "untag", "@1"] + old_tags)
 
     elif resp == RESP_STOP:
         subp.run(["timew", "stop"])
