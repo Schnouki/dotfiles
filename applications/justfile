@@ -16,7 +16,7 @@ electron_scaling FILE:
     just add_args "{{FILE}}" --force-device-scale-factor=1.25
 
 obsidian: (prepare "obsidian")
-    just electron_scaling obsidian
+    just electron_wayland obsidian
 
 steam: (prepare "steam")
     just add_runner steam prime-run
