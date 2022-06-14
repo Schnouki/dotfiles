@@ -192,14 +192,13 @@
 (use-package nix-mode
   :ensure t)
 
-(use-package slime
+(use-package sly
   :ensure t
-  :custom
-  (slime-contribs '(slime-fancy slime-quicklisp))
-  (slime-repl-auto-right-margin t)
   :config
   (load (expand-file-name "~/.roswell/helper.el"))
-  (slime-setup))
+  (sly-setup))
+(use-package sly-quicklisp
+  :ensure t)
 
 (use-package just-mode
   :ensure t)
