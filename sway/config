@@ -15,7 +15,7 @@ set $right l
 set $term foot
 set $editor /home/schnouki/bin/eclient
 set $menu fuzzel --font="Iosevka Aile:size=16" --icon-theme="Numix-Circle" --background-color=3f3f3fdf --text-color=dcdcccff --selection-color=366060df --selection-text-color=ace0e3ff --border-color=6ca0a3df --match-color=dca3a3ff
-set $fman pcmanfm
+set $fman thunar
 
 set $wobsock $XDG_RUNTIME_DIR/wob.sock
 
@@ -88,6 +88,8 @@ workspace 7 output $out_int
 workspace 8 output $out_int
 workspace 9 output $out_int
 workspace 10 output $out_int
+
+workspace_auto_back_and_forth yes
 
 
 ### Key bindings
@@ -313,7 +315,13 @@ bindsym $mod+p mode "screenshot"
 # Theme:
 #
 font pango:Iosevka Aile 12
-hide_edge_borders smart
+seat * xcursor_theme posy-black
+#hide_edge_borders smart
+#gaps outer 0px
+#gaps inner 12px
+smart_borders no_gaps
+smart_gaps inverse_outer
+
 
 # Zenburn colors
 # See also: https://thomashunter.name/i3-configurator/
@@ -351,13 +359,7 @@ for_window [shell="xwayland"] title_format "%title <small>[XWayland]</small>"
 for_window [app_id="galculator"] floating enable
 for_window [app_id="pavucontrol"] floating enable
 
-for_window [app_id="firefox" title="Firefox - Indicateur de partage"] {
-    floating enable
-    sticky enable
-    border none
-    inhibit_idle open
-    move absolute position 922 px 0 px  # Width: 75px --> (1920 - 75) / 2 = 922.5.
-}
+for_window [app_id="firefox" title="Firefox - Indicateur de partage"] kill
 for_window [app_id="firefox" title="Incrustation vidéo"] {
     floating enable
     border normal
