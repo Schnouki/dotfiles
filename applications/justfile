@@ -1,4 +1,4 @@
-default: obsidian steam steam-native vivaldi-stable
+default: knossos obsidian steam steam-native vivaldi-stable
 
 prepare FILE:
     cp "/usr/share/applications/{{FILE}}.desktop" "{{FILE}}.desktop"
@@ -14,6 +14,9 @@ electron_wayland FILE:
 
 electron_scaling FILE:
     just add_args "{{FILE}}" --force-device-scale-factor=1.25
+
+knossos: (prepare "knossos")
+    just add_runner knossos prime-run
 
 obsidian: (prepare "obsidian")
     just electron_wayland obsidian
