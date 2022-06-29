@@ -1,4 +1,4 @@
-default: knossos obsidian steam steam-native vivaldi-stable
+default: knossos obsidian steam steam-native vivaldi-stable steam-games
 
 prepare FILE:
     cp "/usr/share/applications/{{FILE}}.desktop" "{{FILE}}.desktop"
@@ -31,5 +31,9 @@ vivaldi-stable: (prepare "vivaldi-stable")
     sed -i "s!/usr/bin/vivaldi-stable!${HOME}/bin/vivaldi-stable!g" vivaldi-stable.desktop
     just electron_wayland vivaldi-stable
 
+steam-games:
+    ./make_steam_desktop_files.py
+
 clean:
-    rm -f obsidisan.desktop steam.desktop steam-native.desktop vivaldi-stable.desktop
+    rm -rf obsidisan.desktop steam.desktop steam-native.desktop vivaldi-stable.desktop \
+        steamgame_*.desktop steam_icons/

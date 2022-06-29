@@ -8,6 +8,7 @@ __pycache__/
 
 # Dotfiles
 !applications/justfile
+!applications/make_steam_desktop_files.py
 !beets/config.yaml
 !Xmodmap
 !Xresources
