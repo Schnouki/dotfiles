@@ -170,19 +170,6 @@
 	  (lsp-stdio-connection "~/.nimble/bin/nimlsp"))))
 
 
-(defun schnouki/use-tabnine-and-capf (&optional global)
-  "Update company-backends to use TabNine and LSP at the same time.
-If `GLOBAL' is set, this is done globally."
-  ;; TabNine and LSP fight against each other. To make them play well, keep them
-  ;; separate. If that's not enough, the alternative is to use something like
-  ;; https://github.com/karta0807913/emacs.d/blob/master/lisp/init-tabnine-capf.el.
-  (let ((combined-backend '(company-tabnine :separate company-capf)))
-    (unless global
-      (make-local-variable 'company-backends))
-    (setq company-backends (cons combined-backend
-				 (remove combined-backend company-backends)))))
-
-(add-hook 'lsp-completion-mode-hoook #'schnouki/use-tabnine-and-capf)
 
 ;; Company -- complete anything
 (use-package company
@@ -194,18 +181,7 @@ If `GLOBAL' is set, this is done globally."
   (company-tooltip-align-annotations t)
   (company-minimum-prefix-length 3)
   (company-idle-delay 0.5)
-  (company-show-quick-access t)
-  :config
-  (schnouki/use-tabnine-and-capf t))
-
-
-;; the all-language autocompleter
-(use-package company-tabnine
-  :ensure t
-  :commands company-tabnine
-  :limit-process t
-  :custom
-  (company-tabnine-binaries-folder "~/.local/share/TabNine"))
+  (company-show-quick-access t))
 
 
 ;; tree-sitter -- faster, fine-grained code highlighting, and much more

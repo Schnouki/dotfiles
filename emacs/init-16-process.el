@@ -33,7 +33,6 @@ adjusts its OOM score."
 
 (advice-add 'make-process :filter-args #'schnouki/filter-make-process-args)
 ;;(advice-remove 'make-process #'schnouki/filter-make-process-args)
-;;(company-tabnine-restart-server)
 
 (require 'use-package)
 
