@@ -365,6 +365,7 @@ Prioritize directories, but make sure .dotfiles are last."
   (ivy-magic-tilde nil)
   (ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
   (ivy-sort-functions-alist '((t . schnouki/ivy-sort-file-function)))
+  (ivy-use-selectable-prompt t)
   (ivy-use-virtual-buffers t)
   (magit-completing-read-function 'ivy-completing-read)
   (projectile-completion-system 'ivy)
@@ -660,5 +661,9 @@ If third argument START is non-nil, convert words after that index in STRING."
      (--map (s-split-up-to "=" it 1) env)
      (--filter (-contains? env-vars (car it)) env)
      (--each env (apply #'setenv it)))))
+
+;; GUI for pueue
+(use-package pueue
+  :ensure t)
 
 ;;; init-25-utils.el ends here
