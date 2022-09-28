@@ -16,6 +16,7 @@ url/
 transient/
 var/
 
+.dap-breakpoints
 .emacs.desktop
 .emacs.desktop.lock
 .lsp-session-v1

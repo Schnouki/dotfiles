@@ -43,4 +43,7 @@
   :init
   (add-to-list 'lsp-disabled-clients 'pyls))
 
+(with-eval-after-load-feature dap-mode
+  (require 'dap-python))
+
 ;;; init-40-python.el ends here

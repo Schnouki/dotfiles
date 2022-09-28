@@ -170,6 +170,11 @@
 	  (lsp-stdio-connection "~/.nimble/bin/nimlsp"))))
 
 
+;; DAP - Debug Adapter Protocol
+(use-package dap-mode
+  :ensure t
+  :config
+  (dap-auto-configure-mode t))
 
 ;; Company -- complete anything
 (use-package company
