@@ -18,9 +18,9 @@ alias sctlu="systemctl --user"
 alias jctl="journalctl"
 alias jctlu="journalctl --user"
 
-alias ec="emacsclient -n -c -a \"\""
-alias ecn="emacsclient -n -a \"\""
-alias ecnw="emacsclient -nw -a \"\""
+alias ec="eclient -n -c"
+alias ecn="eclient -n"
+alias ecnw="eclient -nw"
 
 alias ea="exa -F --group-directories-first"
 alias el="ea -l --git --time-style long-iso"
