@@ -68,6 +68,8 @@ def filter_netrc(fp: Path) -> os.PathLike:
     new_data = []
     machine, login = "", ""
     for line in data.splitlines():
+        if not line.strip():
+            continue
         words = line.strip().split()
         if words[0] == "machine":
             machine, login = words[1], ""
@@ -133,7 +135,11 @@ def update_encrypted_tarballs(force: bool):
         dst_p = CONFIG / dst
         uf_p = CONFIG / get_last_update_filename(dst)
 
-        tar_cmd = ["tar", "c", "-C", HOME]
+        # Inspired by https://github.com/maxmcd/reptar
+        tar_cmd = ["tar",
+                   "--sort=name",
+                   "--mtime='1970-01-01 00:00:00Z'",
+                   "-c", "-C", HOME]
         tar_cmd += [p.relative_to(HOME) for p in src_ps]
         tar_data = subp.run(tar_cmd, check=True, capture_output=True).stdout
         tar_hh = md5(tar_data)
