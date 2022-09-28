@@ -127,6 +127,7 @@ def main():
     next_frm = Gtk.Frame(label="Tags for next entry")
     box.pack_start(next_frm, True, True, 0)
     next_frm.add(tree_view)
+    tree_view.grab_focus()
 
     if st.tags:
         select_tags(st.tags)
