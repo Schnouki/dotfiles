@@ -1,0 +1,14 @@
+[Unit]
+Description=Wallpaper daemon for Wayland
+BindsTo=sway-session.target
+After=sway-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/swww init --no-daemon
+ExecStartPost=%h/.config/sway/random-swww
+ExecReload=%h/.config/sway/random-swww
+Restart=on-failure
+
+[Install]
+WantedBy=sway-session.target

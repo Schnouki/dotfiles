@@ -1,0 +1,10 @@
+[Unit]
+Description=Wallpaper randomization timer
+
+[Timer]
+OnStartupSec=5m
+OnActiveSec=5m
+Unit=random-swww.service
+
+[Install]
+WantedBy=timers.target
