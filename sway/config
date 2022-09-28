@@ -10,6 +10,7 @@ set $term foot
 set $editor /home/schnouki/bin/eclient
 set $menu fuzzel --font="Iosevka Aile:size=16" --icon-theme="Numix-Circle" --background-color=3f3f3fdf --text-color=dcdcccff --selection-color=366060df --selection-text-color=ace0e3ff --border-color=6ca0a3df --match-color=dca3a3ff
 set $fman thunar
+set $lock /home/schnouki/.config/swayidle/lock.sh
 
 set $wobsock $XDG_RUNTIME_DIR/wob.sock
 
@@ -107,6 +108,9 @@ workspace_auto_back_and_forth yes
 
     # Start your launcher
     bindsym $mod+d exec $menu
+
+    # Lock screen
+    bindsym $mod+Ctrl+Escape exec $lock
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
