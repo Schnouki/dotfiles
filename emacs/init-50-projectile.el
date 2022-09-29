@@ -5,7 +5,7 @@
 (use-package projectile
   :ensure t
   :config
-  (setq projectile-enable-caching t
+  (setq projectile-enable-caching nil
 	projectile-sort-order 'recently-active)
 
   ;; Mode line
