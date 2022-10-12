@@ -7,26 +7,26 @@
 [color]
 	ui = true
 [alias]
-	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 	ag = grep --break --heading --line-number
+	dft = difftool --tool difftastic
+	dftu = difftool --tool difftastic-inline
+	fp = fetch --prune
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	upp = !git fetch --prune && git checkout main && git pull
 	wdiff = diff --color-words
-        dft = difftool --tool difftastic
-        dftu = difftool --tool difftastic-inline
-        fp = fetch --prune
-        upp = !git fetch --prune && git checkout main && git pull
 [diff]
 	algorithm = histogram
 	compactionHeuristic = true
 	noprefix = true
-        tool = difftastic
+	tool = difftastic
 [difftool]
-        prompt = false
+	prompt = false
 [difftool "difftastic"]
-        cmd = difft "$LOCAL" "$REMOTE"
+	cmd = difft "$LOCAL" "$REMOTE"
 [difftool "difftastic-inline"]
-        cmd = difft --display=inline "$LOCAL" "$REMOTE"
+	cmd = difft --display=inline "$LOCAL" "$REMOTE"
 [pager]
-        difftool = true
+	difftool = true
 [rebase]
 	autosquash = true
 [grep]
