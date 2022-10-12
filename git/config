@@ -1,11 +1,3 @@
-[user]
-	name = Thomas Jost
-	email = schnouki@schnouki.net
-	signingkey = 3E0B0C49C0478597
-[push]
-	default = simple
-[color]
-	ui = true
 [alias]
 	ag = grep --break --heading --line-number
 	dft = difftool --tool difftastic
@@ -14,6 +6,12 @@
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 	upp = !git fetch --prune && git checkout main && git pull
 	wdiff = diff --color-words
+[color]
+	ui = true
+[commit]
+	gpgSign = true
+[credential]
+	helper = /usr/share/git/credential/netrc/git-credential-netrc -f ~/.netrc
 [diff]
 	algorithm = histogram
 	compactionHeuristic = true
@@ -25,41 +23,38 @@
 	cmd = difft "$LOCAL" "$REMOTE"
 [difftool "difftastic-inline"]
 	cmd = difft --display=inline "$LOCAL" "$REMOTE"
-[pager]
-	difftool = true
-[rebase]
-	autosquash = true
-[grep]
-	extendRegexp = true
-	lineNumber = true
-[help]
-	autocorrect = 25
-[credential]
-	helper = /usr/share/git/credential/netrc/git-credential-netrc -f ~/.netrc
-[merge]
-	conflictStyle = diff3
-[commit]
-	gpgSign = true
-[magit]
-	hideCampaign = true
-[github]
-	user = Schnouki
-[gitlab]
-	user = Schnouki
-
-[includeIf "gitdir:~/doist/"]
-	path = ~/.config/git/doist.inc
-[cola]
-	spellcheck = false
-	theme = flat-dark-blue
-	icontheme = dark
-[init]
-	templatedir = ~/.config/git/templates
-	defaultBranch = main
-[pull]
-	ff = only
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[includeIf "gitdir:~/doist/"]
+	path = ~/.config/git/doist.inc
+[init]
+	templatedir = ~/.config/git/templates
+	defaultBranch = main
+[github]
+	user = Schnouki
+[gitlab]
+	user = Schnouki
+[grep]
+	extendRegexp = true
+	lineNumber = true
+[help]
+	autocorrect = 25
+[magit]
+	hideCampaign = true
+[merge]
+	conflictStyle = diff3
+[pager]
+	difftool = true
+[pull]
+	ff = only
+[push]
+	default = simple
+[rebase]
+	autosquash = true
+[user]
+	name = Thomas Jost
+	email = schnouki@schnouki.net
+	signingkey = 3E0B0C49C0478597
