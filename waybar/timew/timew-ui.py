@@ -14,7 +14,8 @@ RESP_STOP = 42
 RESP_EDIT = 43
 RESP_START = 44
 
-NB_PREVIOUS = 5
+PREVIOUS_COLUMNS = 2
+PREVIOUS_ROWS = 5
 
 
 @dataclass(frozen=True)
@@ -43,6 +44,7 @@ def get_prev_tags() -> list[frozenset[str]]:
         ["timew", "get", "dom.tracked.count"], capture_output=True, check=True
     )
     max_n = int(pr.stdout)
+    nb_previous = PREVIOUS_COLUMNS * PREVIOUS_ROWS
 
     tag_sets = list()
     for n in range(1, max_n + 1):
@@ -50,7 +52,7 @@ def get_prev_tags() -> list[frozenset[str]]:
         tag_set = frozenset(status.tags)
         if tag_set not in tag_sets:
             tag_sets.append(tag_set)
-        if len(tag_sets) >= NB_PREVIOUS:
+        if len(tag_sets) >= nb_previous:
             break
     return tag_sets
 
@@ -116,13 +118,14 @@ def main():
 
     prev_frm = Gtk.Frame(label="Previous entries")
     box.pack_start(prev_frm, True, True, 0)
-    prev_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0, margin=6)
-    prev_frm.add(prev_box)
+    prev_grid = Gtk.Grid(column_homogeneous=True)
+    prev_frm.add(prev_grid)
 
-    for btn_tags in prev_tags:
+    for i, btn_tags in enumerate(prev_tags):
         btn = Gtk.Button(label=", ".join(sorted(btn_tags)))
         btn.connect("clicked", on_select_tags_btn, btn_tags)
-        prev_box.pack_start(btn, True, True, 0)
+        top, left = divmod(i, PREVIOUS_COLUMNS)
+        prev_grid.attach(btn, left, top, 1, 1)
 
     next_frm = Gtk.Frame(label="Tags for next entry")
     box.pack_start(next_frm, True, True, 0)
