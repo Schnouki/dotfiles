@@ -10,8 +10,10 @@
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 	ag = grep --break --heading --line-number
 	wdiff = diff --color-words
-        dft = difftool -t difftastic
-        dftu = difftool -t difftastic-inline
+        dft = difftool --tool difftastic
+        dftu = difftool --tool difftastic-inline
+        fp = fetch --prune
+        upp = !git fetch --prune && git checkout main && git pull
 [diff]
 	algorithm = histogram
 	compactionHeuristic = true
