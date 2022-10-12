@@ -3,7 +3,7 @@ Description=Wallpaper randomization timer
 
 [Timer]
 OnStartupSec=5m
-OnActiveSec=5m
+OnUnitActiveSec=5m
 Unit=random-swww.service
 
 [Install]
