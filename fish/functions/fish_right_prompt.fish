@@ -1,4 +1,8 @@
 function fish_right_prompt
+    if test "$__tp_transient" = 1
+        return
+    end
+
     set -l last_status $status
     set -l last_duration $CMD_DURATION
 

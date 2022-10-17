@@ -23,7 +23,7 @@ function fish_prompt --description 'Write out the prompt'
     set -l suffix " "(set_color normal)
     set -l prompt_user (set_color --bold yellow)"❯"
     set -l prompt_root (set_color --bold red)"❯"
-    set -l normal_user "schnouki"
+    set -l normal_user schnouki
     set -l other_user_color (set_color --bold green)
     set -l hostname_separator (set_color --bold yellow)"@"
     set -l hostname_color (set_color --bold white)
@@ -39,7 +39,7 @@ function fish_prompt --description 'Write out the prompt'
         _hydro_prompt_pwd
     end
 
-    if test "$USER" = "root"
+    if test "$USER" = root
         # If root, use a different prompt
         set prompt $prompt_root
     else if test "$USER" != "$normal_user"
