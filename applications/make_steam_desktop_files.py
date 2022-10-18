@@ -11,7 +11,7 @@ import slugify
 STEAM_BASE_DIR = "~/.local/share/Steam"
 DESKTOP_TEMPLATE = """[Desktop Entry]
 Name={name}
-Comment=Play this game on Steam
+Comment=Play {name} on Steam
 Exec=prime-run steam steam://rungameid/{appid}
 Icon={icon_path}
 Terminal=false
@@ -36,6 +36,8 @@ def main():
     for acf_file in acf_files:
         process_acf(app_dir, steam_dir, acf_file)
 
+    cleanup_steam_desktop_files(app_dir)
+
 
 def process_acf(app_dir: Path, steam_dir: Path, acf_file: Path):
     acf_data = parse_acf(acf_file)
@@ -45,7 +47,7 @@ def process_acf(app_dir: Path, steam_dir: Path, acf_file: Path):
         return
     slug_name = slugify.slugify(name, separator="_")
     icon_path = steam_dir / "appcache" / "librarycache" / f"{appid}_icon.jpg"
-    png_icon_path = app_dir / "steam_icons" / f"{appid}.png"
+    png_icon_path = app_dir / "steam_icons" / f"{slug_name}.png"
     if not png_icon_path.is_file():
         png_icon_path.parent.mkdir(parents=True, exist_ok=True)
         with Image.open(icon_path) as im:
@@ -78,6 +80,17 @@ def parse_acf(acf_file: Path) -> dict[str, str]:
             if len(tab) == 2:
                 data[tab[0]] = tab[1]
     return data
+
+
+def cleanup_steam_desktop_files(app_dir: Path):
+    for file_path in app_dir.glob("*.desktop"):
+        if file_path.name.startswith("steamgame_"):
+            continue
+        # Steam desktop files are executable
+        if file_path.stat().st_mode & 0o700 != 0o700:
+            continue
+        if "steam steam://rungameid/" in file_path.read_text():
+            file_path.unlink()
 
 
 if __name__ == "__main__":
