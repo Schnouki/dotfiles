@@ -11,7 +11,7 @@ img_folder_txt = Path("~/.config/sway/swww_folder").expanduser().read_text().str
 img_folder = Path(img_folder_txt).expanduser()
 
 query_cp = subp.run(["swww", "query"], check=True, capture_output=True, text=True)
-outputs = [line.split()[0] for line in query_cp.stdout.splitlines()]
+outputs = [line.split()[0].rstrip(":") for line in query_cp.stdout.splitlines()]
 
 imgs = [img for img in img_folder.iterdir() if img.is_file()]
 random.shuffle(imgs)
