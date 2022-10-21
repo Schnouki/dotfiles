@@ -28,6 +28,7 @@ setup_decrypt "netrc.gpg" ".netrc"
 setup_decrypt "npmrc.gpg" ".npmrc"
 setup_decrypt "pws.yaml.gpg" ".config/pws.yaml"
 setup_decrypt "ssh.gpg" ".ssh/config"
+setup_decrypt "swww/choose-folder.gpg" ".config/swww/choose-folder"
 setup_decrypt "transifexrc.gpg" ".transifexrc"
 
 # Setup encrypted tarballs

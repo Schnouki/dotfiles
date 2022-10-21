@@ -5,4 +5,4 @@ After=swww.service
 
 [Service]
 Type=oneshot
-ExecStart=%h/.config/sway/random-swww
+ExecStart=%h/.config/swww/random-swww

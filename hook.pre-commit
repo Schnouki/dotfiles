@@ -26,6 +26,7 @@ FILES = {
     ".config/imapfilter/config.lua": "imapfilter/config.lua.gpg",
     ".config/mpdasrc": "mpdasrc.gpg",
     ".config/notmuch/autotag.py": "notmuch/autotag.py.gpg",
+    ".config/swww/choose-folder": "swww/choose-folder.gpg",
     ".config/zsh/private": "zsh/private.gpg",
 }
 

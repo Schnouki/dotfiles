@@ -7,7 +7,7 @@ import subprocess as subp
 TRANSITION = "simple"
 TRANSITION_SPEED = "50"
 
-img_folder_txt = Path("~/.config/sway/swww_folder").expanduser().read_text().strip()
+img_folder_txt = Path("~/.config/swww/images").expanduser().read_text().strip()
 img_folder = Path(img_folder_txt).expanduser()
 
 query_cp = subp.run(["swww", "query"], check=True, capture_output=True, text=True)
