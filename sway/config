@@ -8,7 +8,7 @@ set $mod Mod4
 # command was run on)
 set $term foot
 set $editor /home/schnouki/bin/eclient -n -c
-set $menu fuzzel --font="Iosevka Aile:size=16" --icon-theme="Numix-Circle" --background-color=3f3f3fdf --text-color=dcdcccff --selection-color=366060df --selection-text-color=ace0e3ff --border-color=6ca0a3df --match-color=dca3a3ff
+set $menu fuzzel
 set $fman thunar
 set $emoji rofimoji --selector="wofi"
 set $lock /home/schnouki/.config/swayidle/lock.sh

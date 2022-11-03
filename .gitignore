@@ -46,6 +46,7 @@ ddns/key
 !fish
 !fontconfig
 !foot
+!fuzzel
 !git
 !gtk-3.0
 gtk-3.0/bookmarks
