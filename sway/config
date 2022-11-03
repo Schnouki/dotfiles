@@ -12,6 +12,7 @@ set $menu fuzzel --font="Iosevka Aile:size=16" --icon-theme="Numix-Circle" --bac
 set $fman thunar
 set $emoji rofimoji --selector="wofi"
 set $lock /home/schnouki/.config/swayidle/lock.sh
+set $wallpaper_config /home/schnouki/.config/swww/choose-folder
 
 set $wobsock $XDG_RUNTIME_DIR/wob.sock
 
@@ -109,6 +110,9 @@ workspace_auto_back_and_forth yes
 
     # Start your launcher
     bindsym $mod+d exec $menu
+
+    # Wallpaper config
+    bindsym $mod+Shift+d exec $wallpaper_config
 
     # Emoji typer
     bindsym $mod+period exec $emoji

@@ -58,7 +58,10 @@ widget > * {
 button {
     border: none;
     border-radius: 0;
-    color: @zb_fg_m05;
+    color: @zb_fg;
+}
+button label {
+    color: inherit;
 }
 button:hover {
     background: @zb_bg_p1;
@@ -76,6 +79,7 @@ button:hover {
 }
 #workspaces button:hover {
     color: @zb_blue_p2;
+    background: transparent;
     border-color: @zb_blue_m2;
 }
 #workspaces button.focused {
