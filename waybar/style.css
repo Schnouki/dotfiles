@@ -1,7 +1,7 @@
 * {
     border: none;
     border-radius: 0;
-    font-family: "Iosevka Aile", "Iosevka", monospace;
+    font-family: FontAwesome, "Iosevka Aile", "Iosevka", monospace;
     font-size: 12pt;
     min-height: 0;
 }
@@ -33,6 +33,8 @@
 window#waybar {
     background: @zb_bg_m1;
     color: @zb_fg;
+    transition-property: background-color;
+    transition-duration: .5s;
 }
 
 tooltip {
@@ -53,14 +55,28 @@ widget > * {
 */
 
 
+button {
+    border: none;
+    border-radius: 0;
+    color: @zb_fg_m05;
+}
+button:hover {
+    background: @zb_bg_p1;
+    color: @zb_fg;
+}
+
 #workspaces {
-  padding: 0
+    padding: 0
 }
 #workspaces button {
     padding: 0 4pt;
     background: transparent;
-    color: @zb_fg_m05;
+    color: @zb_fg;
     border: 1px solid @zb_bg_p1;
+}
+#workspaces button:hover {
+    color: @zb_blue_p2;
+    border-color: @zb_blue_m2;
 }
 #workspaces button.focused {
     background: @zb_blue_m5;
