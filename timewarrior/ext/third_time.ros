@@ -1,0 +1,89 @@
+#!/bin/sh
+#|-*- mode:lisp -*-|#
+#|
+exec ros -Q -- $0 "$@"
+|#
+(progn ;;init forms
+  (ros:ensure-asdf)
+  #+quicklisp(ql:quickload '(:cl-date-time-parser
+                             :jonathan
+                             :local-time
+                             :str)
+                           :silent t)
+  )
+
+(defpackage :ros.script.third_time.3874383480
+  (:use :cl))
+(in-package :ros.script.third_time.3874383480)
+
+(defun parse-config-line (line)
+  (destructuring-bind (key value) (str:split ":" line :limit 2)
+    (cons (str:trim key) (str:trim value))))
+
+(defun parse-entry-line (line)
+  (jonathan:parse line :as :plist))
+
+(defun parse-comma-list (val)
+  (mapcar #'str:trim (str:split #\, val)))
+
+(defun read-timewarrior-data ()
+  (loop with config = nil
+        with entries = nil
+        for line = (read-line nil nil nil)
+        while line
+        do (cond
+             ((str:starts-with? "{" line)
+              (push (parse-entry-line line) entries))
+             ((and (not (str:empty? line))
+                   (not (str:starts-with? "{" line))
+                   (not (str:starts-with? "[" line))
+                   (not (str:starts-with? "]" line)))
+              (push (parse-config-line line) config)))
+        finally (return (list :config config :entries entries))))
+
+(defun get-config-value (data key &optional default)
+  (or (cdr (assoc key (getf data :config) :test #'string=))
+      default))
+
+(defun get-entry-unix-time (entry key)
+  (let ((val (getf entry key)))
+    (local-time:timestamp-to-unix
+     (if val
+         (local-time:universal-to-timestamp (cl-date-time-parser:parse-date-time val))
+         (local-time:now)))))
+
+(defun get-duration (entry)
+  (- (get-entry-unix-time entry :|end|)
+     (get-entry-unix-time entry :|start|)))
+
+(defun format-duration (duration)
+  (multiple-value-bind (hours mm) (floor duration 3600)
+    (multiple-value-bind (minutes seconds) (floor mm 60)
+      (format nil "~d:~2,'0d:~2,'0d" hours minutes seconds))))
+
+(defun compute-durations (entries rest-tags)
+  (loop with work-time = 0
+        with rest-time = 0
+        for entry in entries
+        for duration = (get-duration entry)
+        do (if (intersection rest-tags (getf entry :|tags|) :test #'string=)
+               (setf rest-time (+ rest-time duration))
+               (setf work-time (+ work-time duration)))
+        finally (return (list :work work-time :rest rest-time))))
+
+(defun main (&rest argv)
+  (declare (ignorable argv))
+  (let* ((data (read-timewarrior-data))
+         (entries (getf data :entries))
+         (rest-tags (parse-comma-list (get-config-value data "third_time.rest_tags" "rest")))
+         (rest-fraction (parse-integer (get-config-value data "third_time.rest_fraction" "3")))
+         (durations (compute-durations entries rest-tags))
+         (work-time (getf durations :work))
+         (earned-rest-time (floor work-time rest-fraction))
+         (actual-rest-time (getf durations :rest))
+         (remaining-rest-time (- earned-rest-time actual-rest-time)))
+    (format t "Work time: ~a~%" (format-duration work-time))
+    (format t "Rest time: ~a~%~%" (format-duration earned-rest-time))
+    (format t "Remaining rest time: ~a~%" (format-duration remaining-rest-time))))
+
+;;; vim: set ft=lisp lisp:
