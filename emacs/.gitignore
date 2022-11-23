@@ -11,6 +11,7 @@ elpa/
 eln-cache/
 emojis/
 eshell/
+persist/
 request/
 url/
 transient/
@@ -28,6 +29,7 @@ bookmarks
 ede-projects.el
 forge-database.sqlite
 image-dired
+mastodon.plstore
 network-security.data
 org-roam.db
 places
