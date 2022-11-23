@@ -1,6 +1,3 @@
-[submodule "zsh/completion/virsh"]
-	path = zsh/completion/virsh
-	url = https://planetcyborg.de/git/repos/jplitza/zsh-virsh-autocomplete
 [submodule "zsh/modules/zsh-syntax-highlighting"]
 	path = zsh/modules/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting
@@ -10,9 +7,6 @@
 [submodule "zsh/modules/git-annex-zsh-completion"]
 	path = zsh/modules/git-annex-zsh-completion
 	url = https://github.com/Schnouki/git-annex-zsh-completion
-[submodule "emacs/flycheck-local-flake8"]
-	path = emacs/flycheck-local-flake8
-	url = https://github.com/rmuslimov/flycheck-local-flake8
 [submodule "emacs/ligature.el"]
 	path = emacs/ligature.el
 	url = https://github.com/mickeynp/ligature.el
