@@ -91,10 +91,13 @@
             "format-icons": ["", "", "", "", ""]
         },
         "clock": {
-            "interval": 1,
-            "format": "{:%Y-%m-%d %H:%M:%S}",
-            "tooltip-format": "<big>{:%B %Y}</big>\n<tt>{calendar}</tt>",
-            "today-format": "<b>{}</b>",
+            "interval": 10,
+            "format": "{:%Y-%m-%d %H:%M}",
+            "tooltip-format": "<big>{:%A %e %B %Y}</big>\n\n<tt>{calendar}</tt>",
+            "today-format": "<span color='#cc9393'><b>{}</b></span>",
+            "calendar-weeks-pos": "left",
+            "format-calendar-weekdays": "<span color='#f0dfaf'><b>{}</b></span>",
+            "format-calendar-weeks": "<span color='#8cd0d3'><small>w{:%W}</small></span>",
         },
         "tray": {
             "icon-size": 24,
@@ -149,10 +152,13 @@
             "on-click": "pavucontrol"
         },
         "clock": {
-            "interval": 1,
-            "format": "{:%Y-%m-%d %H:%M:%S}",
-            "tooltip-format": "<big>{:%B %Y}</big>\n<tt>{calendar}</tt>",
-            "today-format": "<b>{}</b>",
+            "interval": 10,
+            "format": "{:%Y-%m-%d %H:%M}",
+            "tooltip-format": "<big>{:%A %e %B %Y}</big>\n\n<tt>{calendar}</tt>",
+            "today-format": "<span color='#cc9393'><b>{}</b></span>",
+            "calendar-weeks-pos": "left",
+            "format-calendar-weekdays": "<span color='#f0dfaf'><b>{}</b></span>",
+            "format-calendar-weeks": "<span color='#8cd0d3'><small>w{:%W}</small></span>",
         },
     }
 ]
