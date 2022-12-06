@@ -5,7 +5,7 @@ import random
 import subprocess as subp
 
 TRANSITION = "simple"
-TRANSITION_SPEED = "50"
+TRANSITION_DURATION = "3"
 
 img_folder_txt = Path("~/.config/swww/images").expanduser().read_text().strip()
 img_folder = Path(img_folder_txt).expanduser()
@@ -23,8 +23,8 @@ for out, img in zip(outputs, imgs):
             "img",
             "--transition-type",
             TRANSITION,
-            "--transition-speed",
-            TRANSITION_SPEED,
+            "--transition-duration",
+            TRANSITION_DURATION,
             "--outputs",
             out,
             img,
