@@ -6,15 +6,12 @@ for F in hook.*; do
 done
 
 # Setup dotfiles
-for F in ctags gitconfig globalrc guile inputrc psqlrc tmux.conf Xmodmap Xresources xinitrc xsession; do
+for F in guile inputrc psqlrc tmux.conf Xresources xinitrc xsession; do
     setup_file_symlink "$F" ".$F"
 done
-for D in imapfilter; do
-    setup_dir_symlink "$D" ".$D"
-done
-for D in applications; do
-    setup_dir_symlink "$D" ".local/share/$D"
-done
+setup_dir_symlink "imapfilter" ".imapfilter"
+setup_dir_symlink "applications" ".local/share/applications"
+setup_dir_symlink "git/config" ".gitconfig"
 
 # Setup encrypted dotfiles
 setup_decrypt "atlas-auth.gpg" ".atlas/auth"

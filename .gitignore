@@ -10,13 +10,11 @@ __pycache__/
 !applications/justfile
 !applications/make_steam_desktop_files.py
 !beets/config.yaml
-!Xmodmap
 !Xresources
 !chromium-flags.conf
 !electron-flags.conf
 !fonts.conf
 !gitconfig
-!globalrc
 !gpgdiff
 !gtkrc-2.0
 !gtkrc-2.0-numix-dark

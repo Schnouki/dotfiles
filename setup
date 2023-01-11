@@ -4,7 +4,7 @@
 
 # Helper functions
 function setup_file_symlink() {
-    local target link
+    local target link actual_target
     target="$HOME/.config/$1"
     link="$HOME/$2"
 
@@ -12,8 +12,9 @@ function setup_file_symlink() {
         ln -s "$target" "$link"
     elif [ -L "$link" ]; then
         # Correct target?
-        if [ "$(readlink "$link")" != "$target" ]; then
-            echo "~/$link points to a wrong target :("
+        actual_target=$(readlink "$link")
+        if [ "$actual_target" != "$target" ]; then
+            echo "~/$link points to a wrong target :( ($actual_target; should be $target)"
             exit 1
         fi
     else
@@ -23,7 +24,7 @@ function setup_file_symlink() {
 }
 
 function setup_dir_symlink() {
-    local target link
+    local target link actual_target
     target="$HOME/.config/$1"
     link="$HOME/$2"
 
@@ -31,8 +32,9 @@ function setup_dir_symlink() {
         ln -s "$target" "$link"
     elif [ -L "$link" ]; then
         # Correct target?
-        if [ "$(readlink "$link")" != "$target" ]; then
-            echo "$link points to a wrong target :("
+        actual_target=$(readlink "$link")
+        if [ "$actual_target" != "$target" ]; then
+            echo "$link points to a wrong target :( ($actual_target; should be $target)"
             exit 1
         fi
     elif [ -d "$link" ]; then
@@ -65,7 +67,7 @@ function setup_decrypt() {
     if [ ! -e "$dst" ] || [ ! -e "$sf" ] || [ "$src" -nt "$sf" ]; then
         echo "Decrypting $dst"
         gpg2 --output "$dst" --decrypt "$src" || exit 1
-        if [ "$exe" ]; then 
+        if [ "$exe" ]; then
             chmod 0700 "$dst"
         else
             chmod 0600 "$dst"
@@ -93,7 +95,7 @@ function setup_decrypt_tarball() {
     fi
 }
 
-for S in setup.*; do 
+for S in setup.*; do
     echo "Running $S..."
     source ./$S || exit 1
 done
