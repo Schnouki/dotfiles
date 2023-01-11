@@ -303,4 +303,15 @@
 (when (require 'so-long nil :noerror)
   (global-so-long-mode 1))
 
+;; Full-featured terminal emulator
+(use-package vterm
+  :ensure t
+  :bind (:map vterm-mode-map
+	      ("C-q" . vterm-send-next-key)
+	 :map schnouki-prefix-map
+	      ("v v" . vterm)
+	      ("v o" . vterm-other-window))
+  :hook ((vterm-mode . #'schnouki/disable-hl-line-mode-locally)
+	 (vterm-copy-mode . #'schnouki/enable-hl-line-mode)))
+
 ;;; init-20-dev.el ends here
