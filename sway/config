@@ -55,7 +55,8 @@ focus output $out_ext
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
 set $laptop_kb 1:1:AT_Translated_Set_2_keyboard
-set $keychron_kb 1452:591:Keychron_K4_Keychron_K4
+set $keychron_kb_k4 1452:591:Keychron_K4_Keychron_K4
+set $keychron_kb_k2 1452:591:Keytron_Keychron_K2
 
 input * {
     xkb_layout fr,us
@@ -66,10 +67,14 @@ input * {
 input type:touchpad {
     dwt enabled
 }
-input $keychron_kb {
+input $keychron_kb_k4 {
     xkb_layout us
     xkb_variant qwerty-fr
     xkb_numlock enabled
+}
+input $keychron_kb_k2 {
+    xkb_layout us
+    xkb_variant qwerty-fr
 }
 
 
