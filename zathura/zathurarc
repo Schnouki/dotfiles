@@ -1,0 +1,17 @@
+# Enable copy to clipboard
+set selection-clipboard clipboard
+
+# Side-by-side mode
+map D set "first-page-column 1:1"
+map <C-d> set "first-page-column 1:2"
+
+# Status
+set statusbar-home-tilde true
+set statusbar-page-percent true
+set window-title-basename true
+
+# Scrolling and zooming
+set scroll-page-aware true
+set adjust-open best-fit
+set vertical-center true
+set zoom-step 5
