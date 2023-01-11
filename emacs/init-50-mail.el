@@ -297,7 +297,7 @@
   '(add-to-list 'mm-inline-media-tests '("text/pdf" ignore ignore)))
 
 ;; Viewers
-(mailcap-add "image/.*" "geeqie %s" '(eq window-system 'x))
+(mailcap-add "image/.*" "viewnior %s" '(member window-system '(x pgtk)))
 
 
 ;; Write HTML emails with org-mode

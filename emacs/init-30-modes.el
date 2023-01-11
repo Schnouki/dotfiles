@@ -197,6 +197,10 @@
   :config
   (load (expand-file-name "~/.roswell/helper.el"))
   (sly-setup))
+(use-package sly-asdf
+  :ensure t)
+(use-package sly-named-readtables
+  :ensure t)
 (use-package sly-quicklisp
   :ensure t)
 
@@ -251,11 +255,6 @@ _p_rev       _u_pper (mine)       _=_: upper/lower       _r_esolve
       ("r" smerge-resolve)
       ("k" smerge-kill-current)
       ("q" nil "cancel" :color blue)))
-
-
-;; eldoc-mode
-(dolist (hook '(emacs-lisp-mode-hook lisp-mode-hook python-mode-hook))
-  (add-hook hook 'eldoc-mode))
 
 ;; Format JSON / JSONlines with JQ
 (use-package jq-format

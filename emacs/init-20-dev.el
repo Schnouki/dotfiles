@@ -136,6 +136,7 @@
   (lsp-clients-emmy-lua-jar-path "/usr/lib/lua-emmy-language-server/EmmyLua-LS-all.jar")
   (lsp-enable-file-watchers nil)
   (lsp-prefer-flymake nil)
+  (lsp-warn-no-matched-clients nil)
   :config
   (defun schnouki/lsp--disable-y-or-n-p (orig-fun &rest args)
     (if schnouki/desktop-was-read
@@ -168,6 +169,32 @@
   (let ((client (gethash 'nimls lsp-clients)))
     (setf (lsp--client-new-connection client)
 	  (lsp-stdio-connection "~/.nimble/bin/nimlsp"))))
+
+;; https://github.com/abo-abo/hydra/wiki/lsp-mode
+(defhydra hydra-lsp (:exit t :hint nil)
+  "
+ Buffer^^               Server^^                   Symbol
+^^-------------------- ^^------------------------ --------------------------------------------------------
+ [_f_] format           [_M-r_] restart            [_d_] declaration  [_i_] implementation  [_o_] documentation
+ [_m_] imenu            [_S_]   shutdown           [_D_] definition   [_t_] type            [_r_] rename
+ [_x_] execute action   [_M-s_] describe session   [_R_] references   [_s_] signature"
+  ("d" lsp-find-declaration)
+  ("D" lsp-ui-peek-find-definitions)
+  ("R" lsp-ui-peek-find-references)
+  ("i" lsp-ui-peek-find-implementation)
+  ("t" lsp-find-type-definition)
+  ("s" lsp-signature-help)
+  ("o" lsp-describe-thing-at-point)
+  ("r" lsp-rename)
+
+  ("f" lsp-format-buffer)
+  ("m" lsp-ui-imenu)
+  ("x" lsp-execute-code-action)
+
+  ("M-s" lsp-describe-session)
+  ("M-r" lsp-restart-workspace)
+  ("S" lsp-shutdown-workspace))
+(bind-key "l" 'hydra-lsp/body schnouki-prefix-map)
 
 
 ;; DAP - Debug Adapter Protocol
@@ -255,6 +282,28 @@
 (use-package move-text
   :ensure t
   :commands (move-text-up move-text-down))
+
+;; ElDoc
+(use-package eldoc
+  :hook (emacs-lisp-mode ielm-mode lisp-interaction-mode lisp-mode python-mode))
+
+;; Paredit
+(use-package paredit
+  :ensure t
+  :hook ((emacs-lisp-mode eval-expression-minibuffer-setup ielm-mode
+			  lisp-interaction-mode lisp-mode scheme-mode) . enable-paredit-mode)
+  :config
+  ;; Don't touch my C-<left> and C-<right>!
+  (dolist (key '("C-<right>" "C-<left>" "ESC C-<right>" "ESC C-<left>"))
+    (unbind-key key paredit-mode-map))
+  (bind-keys :map paredit-mode-map
+	     ("C-M-<right>" . paredit-forward-slurp-sexp)
+	     ("C-M-<left>" . paredit-forward-barf-sexp)
+	     ("C-S-<left>" . paredit-backward-slurp-sexp)
+	     ("C-S-<right>" . paredit-backward-barf-sexp))
+  (eval-after-load 'eldoc
+    (eldoc-add-command 'paredit-backward-delete
+		       'paredit-close-round)))
 
 ;; REST client!
 (use-package restclient

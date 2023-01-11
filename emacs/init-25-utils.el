@@ -425,13 +425,34 @@ Prioritize directories, but make sure .dotfiles are last."
 ;; avy (reminder: C-x C-SPC to pop-global-mark)
 (use-package avy
   :ensure t
-  :bind (("C-;" . avy-goto-word-or-subword-1)
-	 ("C-M-;" . avy-goto-char-timer)
+  :bind (("C-;" . avy-goto-char-timer)
+	 ("C-M-;" . avy-goto-word-or-subword-1)
 	 ("C-x C-;" . avy-pop-mark))
+  :custom
+  (avy-background t)
   :config
   (avy-setup-default)
-  (setq ;;avy-keys '(?q ?s ?d ?f ?j ?k ?l ?m) ;; AZERTY :)
-   avy-background t))
+  :init
+  (defhydra hydra-avy (:exit t :hint nil)
+    "
+ Line^^       Region^^        Goto
+^^---------- ^^------------- ^^^^---------------------------------
+ [_y_] yank   [_Y_] yank      [_c_] timed char  [_C_] char
+ [_m_] move   [_M_] move      [_w_] word        [_W_] any word
+ [_k_] kill   [_K_] kill      [_l_] line        [_L_] end of line"
+    ("c" avy-goto-char-timer)
+    ("C" avy-goto-char)
+    ("w" avy-goto-word-1)
+    ("W" avy-goto-word-0)
+    ("l" avy-goto-line)
+    ("L" avy-goto-end-of-line)
+    ("m" avy-move-line)
+    ("M" avy-move-region)
+    ("k" avy-kill-whole-line)
+    ("K" avy-kill-region)
+    ("y" avy-copy-line)
+    ("Y" avy-copy-region))
+  (bind-key ";" 'hydra-avy/body schnouki-prefix-map))
 
 
 ;; Visual feedback on some operations
@@ -648,5 +669,17 @@ If third argument START is non-nil, convert words after that index in STRING."
 ;; GUI for pueue
 (use-package pueue
   :ensure t)
+
+;; Actionable URLs in buffers
+;; https://xenodium.com/actionable-urls-in-emacs-buffers/
+(use-package goto-addr
+  :hook ((prog-mode . goto-address-prog-mode)
+	 (compilation-mode . goto-address-mode)
+	 (eshell-mode . goto-address-mode)
+	 (shell-mode . goto-address-mode)
+	 (magit-process-mode . goto-address-mode))
+  :bind (:map goto-address-highlight-keymap
+	      ("RET" . goto-address-at-point)
+	      ("M-RET" . newline)))
 
 ;;; init-25-utils.el ends here
