@@ -12,13 +12,8 @@ if test "$TERM" = foot -o "$TERM" = foot-extra
         end
     end
 
-    # https://codeberg.org/dnkl/foot/wiki#user-content-how-to-configure-my-shell-to-emit-the-osc-7-escape-sequence
-    function update_cwd_osc --on-variable PWD --description 'Notify terminals when $PWD changes'
-        if status --is-command-substitution || set -q INSIDE_EMACS
-            return
-        end
-        printf \e\]7\;file://%s%s\e\\ $hostname (string escape --style=url $PWD)
+    # https://codeberg.org/dnkl/foot/wiki#jumping-between-prompts
+    function mark_prompt_start --on-event fish_prompt
+        echo -en "\e]133;A\e\\"
     end
-
-    update_cwd_osc # Run once since we might have inherited PWD from a parent shell
 end
