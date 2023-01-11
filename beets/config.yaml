@@ -5,6 +5,7 @@ plugins:
   - bpd
   - edit
   - fetchart
+  - fish
   - fromfilename
   - info
   - mbsync
