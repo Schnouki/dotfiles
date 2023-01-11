@@ -31,6 +31,7 @@ FILES = {
 }
 
 TARBALLS = {
+    "Age": ("age.tar.gpg", ".config/age/*"),
     "Calibre": ("calibre.tar.gpg", ".config/calibre/*"),
     "Pgweb": ("pgweb.tar.gpg", ".pgweb/**/**"),
     "Tmuxp": ("tmuxp.tar.gpg", ".tmuxp/*"),

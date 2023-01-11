@@ -682,4 +682,18 @@ If third argument START is non-nil, convert words after that index in STRING."
 	      ("RET" . goto-address-at-point)
 	      ("M-RET" . newline)))
 
+;; Transparent age encryption support
+(use-package age
+  :ensure t
+  :defer t
+  :custom
+  (age-program "rage")
+  (age-default-identity '("~/.config/age/age-yubikey-identity-fd6d28aa.txt"
+			  "~/.config/age/age-yubikey-identity-ff36b8b1.txt"))
+  (age-default-recipient '("~/.config/age/age-yubikey-fd6d28aa.pub"
+			   "~/.config/age/age-yubikey-ff36b8b1.pub"
+			   "~/.config/age/age-7qlgd5cs.pub"))
+  :config
+  (age-file-enable))
+
 ;;; init-25-utils.el ends here
