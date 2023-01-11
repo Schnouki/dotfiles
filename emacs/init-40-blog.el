@@ -19,12 +19,6 @@
 
 (add-hook 'markdown-mode-hook #'schnouki/markdown-maybe-add-shortcode-keyword)
 
-;; Grammarly integration
-(use-package flycheck-grammarly
-  :ensure t
-  :custom
-  (flycheck-grammarly-check-time  3))
-
 ;; Useless :)
 ;; (use-package company-emoji
 ;;   :ensure t

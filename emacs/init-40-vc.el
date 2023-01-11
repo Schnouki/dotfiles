@@ -50,8 +50,8 @@
   :custom
   (git-link-use-commit t))
 
-;; gitignore
-(use-package gitignore-mode
+;; git modes
+(use-package git-modes
   :ensure t)
 
 ;; Use SSH agent

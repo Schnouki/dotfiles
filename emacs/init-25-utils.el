@@ -433,19 +433,6 @@ Prioritize directories, but make sure .dotfiles are last."
   (setq ;;avy-keys '(?q ?s ?d ?f ?j ?k ?l ?m) ;; AZERTY :)
    avy-background t))
 
-;; ace-window
-(use-package ace-window
-  :ensure t
-  :bind (("M-o" . ace-window))
-  :custom
-  (aw-scope 'frame)
-  (aw-minibuffer-flag t)
-  )
-
-(use-package avy-zap
-  :ensure t
-  :bind (("M-z" . avy-zap-to-char-dwim)
-	 ("M-Z" . avy-zap-up-to-char-dwim)))
 
 ;; Visual feedback on some operations
 (use-package volatile-highlights
@@ -642,10 +629,6 @@ If third argument START is non-nil, convert words after that index in STRING."
 ;; (schnouki/update-selected-packages)
 ;; (package-autoremove)
 ;; (package-install-selected-packages)
-
-;; Open file in Docker containers
-(use-package docker-tramp
-  :ensure t)
 
 ;; Refresh environment variables, e.g. when sway is reloaded
 (defun schnouki/refresh-env ()

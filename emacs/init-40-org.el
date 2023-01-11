@@ -40,7 +40,6 @@
      (dot . t)
      (emacs-lisp . t)
      (gnuplot . t)
-     (ledger . t)
      (python . t)))
   ;;(sh . t)))
 
