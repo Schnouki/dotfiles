@@ -6,6 +6,9 @@
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 	upp = !git fetch --prune && git checkout main && git pull
 	wdiff = diff --color-words
+[branch]
+        autoSetupMerge = true
+        autoSetupRebase = remote
 [color]
 	ui = true
 [commit]
@@ -51,6 +54,7 @@
 [pull]
 	ff = only
 [push]
+        autoSetupRemote = true
 	default = simple
 [rebase]
 	autosquash = true
