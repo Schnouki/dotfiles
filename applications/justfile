@@ -1,17 +1,26 @@
-default: knossos obsidian steam steam-native vivaldi-stable steam-games
+default: knossos obsidian steam steam-native vivaldi-stable vivaldi-stable-alt steam-games
 
-prepare FILE:
-    cp "/usr/share/applications/{{FILE}}.desktop" "{{FILE}}.desktop"
+[private]
+prepare FILE TARGET="":
+    cp "/usr/share/applications/{{FILE}}.desktop" "{{ if TARGET == '' { FILE } else { TARGET } }}.desktop"
 
+[private]
 add_args FILE +ARGS:
     sed -i 's/^\(Exec=.*\)/\1 {{ARGS}}/g' "{{FILE}}.desktop"
 
+[private]
 add_runner FILE +RUNNER:
     sed -i '/{{RUNNER}}/!s/^Exec=\(.*\)/Exec={{RUNNER}} \1/g' "{{FILE}}.desktop"
 
+[private]
+add_name FILE +ARGS:
+    sed -i 's/^\(Name=.*\)/\1 {{ARGS}}/g' "{{FILE}}.desktop"
+
+[private]
 electron_wayland FILE:
     just add_args "{{FILE}}" --enable-features=UseOzonePlatform --ozone-platform=wayland
 
+[private]
 electron_scaling FILE:
     just add_args "{{FILE}}" --force-device-scale-factor=1.25
 
@@ -31,9 +40,15 @@ vivaldi-stable: (prepare "vivaldi-stable")
     sed -i "s!/usr/bin/vivaldi-stable!${HOME}/bin/vivaldi-stable!g" vivaldi-stable.desktop
     just electron_wayland vivaldi-stable
 
+vivaldi-stable-alt: (prepare "vivaldi-stable" "vivaldi-stable-alt")
+    sed -i "s!/usr/bin/vivaldi-stable!${HOME}/bin/vivaldi-stable!g" vivaldi-stable-alt.desktop
+    just electron_wayland vivaldi-stable
+    just add_args vivaldi-stable-alt '"--profile-directory=Profile 1"'
+    just add_name  vivaldi-stable-alt "(test profile)"
+
 steam-games:
     ./make_steam_desktop_files.py
 
 clean:
-    rm -rf obsidisan.desktop steam.desktop steam-native.desktop vivaldi-stable.desktop \
+    rm -rf obsidisan.desktop steam.desktop steam-native.desktop vivaldi-stable.desktop vivaldi-stable-alt.desktop \
         steamgame_*.desktop steam_icons/
