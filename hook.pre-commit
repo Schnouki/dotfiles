@@ -2,8 +2,8 @@
 
 import argparse
 import hashlib
-import subprocess as subp
 import os
+import subprocess as subp
 import tempfile
 from pathlib import Path
 
@@ -125,7 +125,15 @@ def update_encrypted_files(force: bool):
 
             dst_p.unlink(missing_ok=True)
             subp.run(
-                ["gpg2", "--quiet", "--batch", "--output", dst_p, "--encrypt", Path(src_p)],
+                [
+                    "gpg2",
+                    "--quiet",
+                    "--batch",
+                    "--output",
+                    dst_p,
+                    "--encrypt",
+                    Path(src_p),
+                ],
                 check=True,
             )
             uf_p.touch()
@@ -138,10 +146,14 @@ def update_encrypted_tarballs(force: bool):
         uf_p = CONFIG / get_last_update_filename(dst)
 
         # Inspired by https://github.com/maxmcd/reptar
-        tar_cmd = ["tar",
-                   "--sort=name",
-                   "--mtime='1970-01-01 00:00:00Z'",
-                   "-c", "-C", HOME]
+        tar_cmd = [
+            "tar",
+            "--sort=name",
+            "--mtime='1970-01-01 00:00:00Z'",
+            "-c",
+            "-C",
+            HOME,
+        ]
         tar_cmd += [p.relative_to(HOME) for p in src_ps]
         tar_data = subp.run(tar_cmd, check=True, capture_output=True).stdout
         tar_hh = md5(tar_data)
