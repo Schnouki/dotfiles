@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import os
 import subprocess as subp
+import sys
 import tempfile
 from pathlib import Path
 
@@ -170,7 +171,27 @@ def update_encrypted_tarballs(force: bool):
             uf_p.write_text(tar_hh)
 
 
-def list_update_files():
+def cmd_install(force: bool):
+    hook_path = Path(".git/hooks/pre-commit")
+    if hook_path.exists() and not force:
+        print("A pre-commit hook is already installed!")
+        sys.exit(1)
+
+    script_path = Path(__file__)
+
+    script_content = f"""#!/usr/bin/bash
+
+exec "{script_path}" encrypt "$@"
+"""
+    hook_path.write_text(script_content)
+
+
+def cmd_encrypt(force: bool):
+    update_encrypted_files(force)
+    update_encrypted_tarballs(force)
+
+
+def cmd_list(force: bool):
     dir_names = {p.name for p in CONFIG.glob(".last_update_*")}
     known_names = {get_last_update_filename(dst): src for src, dst in FILES.items()}
     known_names.update(
@@ -204,11 +225,18 @@ def list_update_files():
 if __name__ == "__main__":
     parser = argparse.ArgumentParser("Dotfiles pre-commit hook")
     parser.add_argument("-f", "--force", action="store_true", help="Force update")
-    parser.add_argument("-l", "--list", action="store_true", help="List update files")
+    parser.set_defaults(func=cmd_encrypt)
+    sp = parser.add_subparsers()
+
+    parser_install = sp.add_parser("install", help="install pre-commit hook")
+    parser_install.set_defaults(func=cmd_install)
+
+    parser_list = sp.add_parser("list", help="list update files")
+    parser_list.set_defaults(func=cmd_list)
+
+    parser_encrypt = sp.add_parser("encrypt", help="update encrypted files")
+    parser_encrypt.set_defaults(func=cmd_encrypt)
+
     args = parser.parse_args()
 
-    if args.list:
-        list_update_files()
-    else:
-        update_encrypted_files(args.force)
-        update_encrypted_tarballs(args.force)
+    args.func(args.force)
