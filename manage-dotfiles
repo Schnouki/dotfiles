@@ -3,13 +3,14 @@
 import argparse
 import hashlib
 import os
+import stat
 import subprocess as subp
 import sys
 import tempfile
 from pathlib import Path
 
 
-FILES = {
+ENCRYPTED_FILES = {
     ".atlas/auth": "atlas-auth.gpg",
     ".gitspindle": "gitspindle.gpg",
     ".gnupg/gpg.conf": "gpg.conf.gpg",
@@ -31,12 +32,45 @@ FILES = {
     ".config/zsh/private": "zsh/private.gpg",
 }
 
-TARBALLS = {
+ENCRYPTED_TARBALLS = {
     "Age": ("age.tar.gpg", ".config/age/*"),
     "Calibre": ("calibre.tar.gpg", ".config/calibre/*"),
     "Pgweb": ("pgweb.tar.gpg", ".pgweb/**/**"),
     "Tmuxp": ("tmuxp.tar.gpg", ".tmuxp/*"),
     "Weechat": ("weechat.tar.gpg", ".config/weechat/*.conf"),
+}
+
+FILE_SYMLINKS = {
+    "emacs/init.el": ".emacs",
+    "guile": ".guile",
+    "inputrc": ".inputrc",
+    "psqlrc": ".psqlrc",
+    "tmux.conf": ".tmux.conf",
+    "Xresources": ".Xresources",
+    "xinitrc": ".xinitrc",
+    "xsession": ".xsession",
+    # ZSH startup/shutdown files
+    # Order:
+    # - ~/.zshenv
+    # - login shell: /etc/zprofile, ~/.zprofile
+    # - interactive shell: /etc/zshrc, ~/.zshrc
+    # - login shell: /etc/zlogin, ~/.zlogin
+    # On exit via exit, logout, or end-of-file: ~/.zlogout, /etc/zlogout
+    "zsh/profile": ".zshenv",
+    "zsh/zshrc": ".zshrc",
+    "zsh/login": ".zlogin",
+    "zsh/logout": ".zlogout",
+}
+
+DIR_SYMLINKS = {
+    "applications": ".local/share/applications",
+    "emacs": ".emacs.d",
+    "git/config": ".gitconfig",
+    "imapfilter": ".imapfilter",
+}
+
+EXECUTABLE_FILES = {
+    ".config/notmuch/autotag.py",
 }
 
 HOME = Path.home()
@@ -103,7 +137,7 @@ def get_last_update_filename(name: str) -> str:
 
 
 def update_encrypted_files(force: bool):
-    for src, dst in FILES.items():
+    for src, dst in ENCRYPTED_FILES.items():
         src_p = HOME / src
         dst_p = CONFIG / dst
         uf_p = CONFIG / get_last_update_filename(dst)
@@ -141,7 +175,7 @@ def update_encrypted_files(force: bool):
 
 
 def update_encrypted_tarballs(force: bool):
-    for name, (dst, pattern) in TARBALLS.items():
+    for name, (dst, pattern) in ENCRYPTED_TARBALLS.items():
         src_ps = sorted(list(HOME.glob(pattern)))
         dst_p = CONFIG / dst
         uf_p = CONFIG / get_last_update_filename(dst)
@@ -171,9 +205,124 @@ def update_encrypted_tarballs(force: bool):
             uf_p.write_text(tar_hh)
 
 
-def cmd_install(force: bool):
+def create_dir_symlinks():
+    success = True
+
+    for src, dst in DIR_SYMLINKS.items():
+        src_p = CONFIG / src
+        dst_p = HOME / dst
+
+        if not dst_p.exists():
+            print(f"Creating symlink: ~/{dst}")
+            dst_p.symlink_to(src_p, target_is_directory=True)
+        elif dst_p.is_symlink():
+            actual_target = dst_p.readlink()
+            if actual_target != src_p:
+                print(
+                    f"~/{dst} points to a wrong target :( ({actual_target}; should be {src})"
+                )
+                success = False
+        elif dst_p.is_dir():
+            if len(list(dst_p.iterdir())) == 0:
+                print(f"Replace empty dir with symlink: ~/{dst}")
+                dst_p.rmdir()
+                dst_p.symlink_to(src_p, target_is_directory=True)
+            else:
+                print(f"~/{dst} exists and is not empty :(")
+                success = False
+        else:
+            print(f"There is something wrong with ~/{dst} :/")
+            success = False
+
+    return success
+
+
+def create_file_symlinks():
+    success = True
+
+    for src, dst in FILE_SYMLINKS.items():
+        src_p = CONFIG / src
+        dst_p = HOME / dst
+
+        if not dst_p.exists():
+            print(f"Creating symlink: ~/{dst}")
+            dst_p.symlink_to(src_p)
+        elif dst_p.is_symlink():
+            actual_target = dst_p.readlink()
+            if actual_target != src_p:
+                print(
+                    f"~/{dst} points to a wrong target :( ({actual_target}; should be {src})"
+                )
+                success = False
+        else:
+            print(f"There is something wrong with ~/{dst} :/")
+            success = False
+
+    return success
+
+
+def decrypt_files():
+    for dst, src in ENCRYPTED_FILES.items():
+        src_p = CONFIG / src
+        dst_p = HOME / dst
+        uf_p = CONFIG / get_last_update_filename(src)
+
+        if (
+            not dst_p.exists()
+            or not uf_p.exists()
+            or src_p.stat().st_mtime > uf_p.stat().st_mtime
+        ):
+            print(f"Decrypting ~/{dst}")
+            dst_p.unlink(missing_ok=True)
+            subp.run(
+                ["gpg2", "--quiet", "--batch", "--output", dst_p, "--decrypt", src_p],
+                check=True,
+            )
+            uf_p.touch()
+
+    return True
+
+
+def decrypt_tarballs():
+    for name, (src, _) in ENCRYPTED_TARBALLS.items():
+        src_p = CONFIG / src
+        uf_p = CONFIG / get_last_update_filename(src)
+
+        if not uf_p.exists() or src_p.stat().st_mtime > uf_p.stat().st_mtime:
+            print(f"Decrypting {name} tarball")
+            tar_data = subp.run(
+                ["gpg2", "--quiet", "--batch", "--decrypt", src_p],
+                check=True,
+                capture_output=True,
+            ).stdout
+            tar_hh = md5(tar_data)
+
+            subp.run(["tar", "x", "-m", "-C", HOME], check=True, input=tar_data)
+            uf_p.write_text(tar_hh)
+
+    return True
+
+
+def update_executable_files():
+    perm = stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH
+    for src in EXECUTABLE_FILES:
+        src_p = HOME / src
+        if not src_p.exists():
+            continue
+        mode = src_p.stat().st_mode
+        wanted_mode = mode | stat.S_IXUSR
+        if mode & stat.S_IRGRP:
+            wanted_mode |= stat.S_IXGRP
+        if mode & stat.S_IROTH:
+            wanted_mode |= stat.S_IXOTH
+        if mode != wanted_mode:
+            src_p.chmod(wanted_mode)
+    return True
+
+
+def cmd_install(args):
     hook_path = Path(".git/hooks/pre-commit")
-    if hook_path.exists() and not force:
+    if hook_path.exists() and not args.force:
         print("A pre-commit hook is already installed!")
         sys.exit(1)
 
@@ -186,18 +335,20 @@ exec "{script_path}" encrypt "$@"
     hook_path.write_text(script_content)
 
 
-def cmd_encrypt(force: bool):
-    update_encrypted_files(force)
-    update_encrypted_tarballs(force)
+def cmd_encrypt(args):
+    update_encrypted_files(args.force)
+    update_encrypted_tarballs(args.force)
 
 
-def cmd_list(force: bool):
+def cmd_list(args):
     dir_names = {p.name for p in CONFIG.glob(".last_update_*")}
-    known_names = {get_last_update_filename(dst): src for src, dst in FILES.items()}
+    known_names = {
+        get_last_update_filename(dst): src for src, dst in ENCRYPTED_FILES.items()
+    }
     known_names.update(
         {
             get_last_update_filename(data[0]): f"{name} tarball"
-            for name, data in TARBALLS.items()
+            for name, data in ENCRYPTED_TARBALLS.items()
         }
     )
     known_names_set = set(known_names.keys())
@@ -222,21 +373,45 @@ def cmd_list(force: bool):
             print(name)
 
 
+def cmd_setup(args):
+    r1 = create_dir_symlinks()
+    r2 = create_file_symlinks()
+    r3 = decrypt_files()
+    r4 = decrypt_tarballs()
+    r5 = update_executable_files()
+
+    success = r1 and r2 and r3 and r4 and r5
+    sys.exit(0 if success else 1)
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser("Dotfiles pre-commit hook")
-    parser.add_argument("-f", "--force", action="store_true", help="Force update")
-    parser.set_defaults(func=cmd_encrypt)
     sp = parser.add_subparsers()
 
     parser_install = sp.add_parser("install", help="install pre-commit hook")
+    parser_install.add_argument(
+        "-f", "--force", action="store_true", help="Allow overwriting existing files"
+    )
     parser_install.set_defaults(func=cmd_install)
 
     parser_list = sp.add_parser("list", help="list update files")
     parser_list.set_defaults(func=cmd_list)
 
     parser_encrypt = sp.add_parser("encrypt", help="update encrypted files")
+    parser_encrypt.add_argument(
+        "-f", "--force", action="store_true", help="Force update"
+    )
     parser_encrypt.set_defaults(func=cmd_encrypt)
+
+    parser_setup = sp.add_parser(
+        "setup", help="setup symlinks and decrypt encrypted files"
+    )
+    parser_setup.set_defaults(func=cmd_setup)
 
     args = parser.parse_args()
 
-    args.func(args.force)
+    if "func" in args:
+        args.func(args)
+    else:
+        parser.print_help()
+        sys.exit(1)

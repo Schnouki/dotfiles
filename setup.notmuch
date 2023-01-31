@@ -1,7 +1,0 @@
-#!/bin/zsh
-
-# Decrypt the notmuch config file
-setup_decrypt "notmuch/config.gpg" ".notmuch-config"
-
-# Decrypt the autotag script and make it executable
-setup_decrypt "notmuch/autotag.py.gpg" ".config/notmuch/autotag.py" 1
