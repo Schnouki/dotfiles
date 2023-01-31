@@ -4,10 +4,11 @@ BindsTo=sway-session.target
 After=sway-session.target
 
 [Service]
-Type=simple
-ExecStart=/usr/bin/swww init --no-daemon
+Type=forking
+ExecStart=/usr/bin/swww init
 ExecStartPost=%h/.config/swww/random-swww
 ExecReload=%h/.config/swww/random-swww
+ExecStop=/usr/bin/swww kill
 Restart=on-failure
 
 [Install]
