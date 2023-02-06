@@ -1,2 +1,4 @@
+*.age diff=age
 *.gpg diff=gpg
+*.tar.age -text
 *.tar.gpg -text

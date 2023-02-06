@@ -1,3 +1,3 @@
-#!/bin/zsh
+#!/usr/bin/env bash
 
-gpg -q -d "$1"
+exec gpg2 --batch --quiet --decrypt "$1"

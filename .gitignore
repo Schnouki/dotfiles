@@ -6,7 +6,12 @@ __pycache__/
 !setup*
 !hook*
 
+# Encrypted files
+!*.age
+!*.gpg
+
 # Dotfiles
+!agecat
 !applications/justfile
 !applications/make_steam_desktop_files.py
 !beets/config.yaml
@@ -15,7 +20,7 @@ __pycache__/
 !electron-flags.conf
 !fonts.conf
 !gitconfig
-!gpgdiff
+!gpgcat
 !gtkrc-2.0
 !gtkrc-2.0-numix-dark
 !gtkrc-baldr
@@ -32,7 +37,6 @@ __pycache__/
 !tmux.conf
 !xinitrc
 !xsession
-!*.gpg
 
 # Folders
 !awesome
