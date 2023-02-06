@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 
+from __future__ import annotations
+
 import argparse
 import hashlib
 import os
@@ -136,6 +138,52 @@ def get_last_update_filename(name: str) -> str:
     return f".last_update_{dst_hash}"
 
 
+def _age_recipients():
+    age_dir = CONFIG / "age"
+    rcpts = []
+    for pub_file in age_dir.glob("*.pub"):
+        rcpts += ["-R", pub_file]
+    return rcpts
+
+
+def _age_identities():
+    age_dir = CONFIG / "age"
+    ids = []
+    for id_file in age_dir.glob("*identity*.txt"):
+        ids += ["-i", id_file]
+    return ids
+
+
+def encrypt_data(src: Path | bytes, dst_p: Path):
+    if dst_p.suffix == ".gpg":
+        cmd = ["gpg2", "--quiet", "--batch", "--output", dst_p, "--encrypt"]
+    elif dst_p.suffix == ".age":
+        cmd = ["age", "--encrypt"] + _age_recipients() + ["-o", dst_p]
+    else:
+        raise ValueError("Unknown suffix for encrypted file: " + dst_p.suffix)
+    input_ = src
+    if isinstance(src, Path):
+        cmd.append(src)
+        input_ = None
+    return subp.run(cmd, check=True, input=input_)
+
+
+def decrypt_data(src_p: Path, dst: Path | None = None):
+    if src_p.suffix == ".gpg":
+        cmd = ["gpg2", "--quiet", "--batch", "--decrypt", src_p]
+    elif src_p.suffix == ".age":
+        cmd = ["age", "--decrypt"] + _age_identities() + [src_p]
+    else:
+        raise ValueError("Unknown suffix for encrypted file: " + src_p.suffix)
+    capture_output = True
+    if dst is not None:
+        cmd = cmd[:-1] + ["--output", dst, src_p]
+        capture_output = False
+    res = subp.run(cmd, check=True, capture_output=capture_output)
+    if capture_output:
+        return res.stdout
+
+
 def update_encrypted_files(force: bool):
     for src, dst in ENCRYPTED_FILES.items():
         src_p = HOME / src
@@ -159,18 +207,7 @@ def update_encrypted_files(force: bool):
                 src_p = filter_func(src_p)
 
             dst_p.unlink(missing_ok=True)
-            subp.run(
-                [
-                    "gpg2",
-                    "--quiet",
-                    "--batch",
-                    "--output",
-                    dst_p,
-                    "--encrypt",
-                    Path(src_p),
-                ],
-                check=True,
-            )
+            encrypt_data(Path(src_p), dst_p)
             uf_p.touch()
 
 
@@ -197,11 +234,7 @@ def update_encrypted_tarballs(force: bool):
         if force or not dst_p.exists() or not uf_p.exists() or tar_hh != uf_hh:
             print(f"New version of {name} found, encrypting it...")
             dst_p.unlink(missing_ok=True)
-            subp.run(
-                ["gpg2", "--quiet", "--batch", "--output", dst_p, "--encrypt"],
-                check=True,
-                input=tar_data,
-            )
+            encrypt_data(tar_data, dst_p)
             uf_p.write_text(tar_hh)
 
 
@@ -274,10 +307,7 @@ def decrypt_files():
         ):
             print(f"Decrypting ~/{dst}")
             dst_p.unlink(missing_ok=True)
-            subp.run(
-                ["gpg2", "--quiet", "--batch", "--output", dst_p, "--decrypt", src_p],
-                check=True,
-            )
+            decrypt_data(src_p, dst_p)
             uf_p.touch()
 
     return True
@@ -290,11 +320,7 @@ def decrypt_tarballs():
 
         if not uf_p.exists() or src_p.stat().st_mtime > uf_p.stat().st_mtime:
             print(f"Decrypting {name} tarball")
-            tar_data = subp.run(
-                ["gpg2", "--quiet", "--batch", "--decrypt", src_p],
-                check=True,
-                capture_output=True,
-            ).stdout
+            tar_data = decrypt_data(src_p)
             tar_hh = md5(tar_data)
 
             subp.run(["tar", "x", "-m", "-C", HOME], check=True, input=tar_data)
