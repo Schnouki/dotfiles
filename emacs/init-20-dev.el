@@ -39,6 +39,13 @@
   (setq indent-tabs-mode t))
 (add-hook 'emacs-lisp-mode-hook 'schnouki/emacs-lisp-default-indent)
 
+;; Markdown
+(use-package markdown-mode
+  :ensure t
+  :mode (("\\.md\\'" . markdown-mode)
+  	 ("\\.mdwn\\'" . markdown-mode)
+  	 ("\\.markdown\\'" . markdown-mode)))
+
 ;; Flycheck
 (use-package flycheck
   :ensure t
@@ -72,6 +79,7 @@
   :ensure t
   :bind (:map flycheck-command-map
               ("g" . avy-flycheck-goto-error)))
+
 
 ;; Jump to definition
 (use-package xref
@@ -223,13 +231,15 @@
   (company-show-quick-access t))
 
 
-;; tree-sitter -- faster, fine-grained code highlighting, and much more
-(use-package tree-sitter
-  :ensure t)
-(use-package tree-sitter-langs
-  :ensure t)
-(global-tree-sitter-mode 1)
-(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+;; treesit-auto -- automatically use tree-sitter whenever possible
+;; https://github.com/renzmann/treesit-auto
+(use-package treesit-auto
+  :ensure t
+  :demand t
+  :custom
+  (treesit-auto-install t)
+  :config
+  (global-treesit-auto-mode 1))
 
 ;; Display the current function name in the mode line
 (which-function-mode 1)

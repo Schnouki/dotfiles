@@ -2,6 +2,7 @@
 *.el[cdn]
 .#*
 *.cache
+flycheck_*.el
 
 .cask/
 .python-environments/
@@ -15,6 +16,7 @@ persist/
 request/
 url/
 transient/
+tree-sitter/
 var/
 
 .dap-breakpoints
