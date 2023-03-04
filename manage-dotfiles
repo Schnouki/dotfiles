@@ -280,6 +280,7 @@ def create_file_symlinks():
         if not dst_p.exists():
             print(f"Creating symlink: ~/{dst}")
             dst_p.symlink_to(src_p)
+            dst_p.lchmod(0o600)
         elif dst_p.is_symlink():
             actual_target = dst_p.readlink()
             if actual_target != src_p:
@@ -308,6 +309,7 @@ def decrypt_files():
             print(f"Decrypting ~/{dst}")
             dst_p.unlink(missing_ok=True)
             decrypt_data(src_p, dst_p)
+            dst_p.lchmod(0o600)
             uf_p.touch()
 
     return True
