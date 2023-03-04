@@ -1,5 +1,4 @@
 [alias]
-	ag = grep --break --heading --line-number
 	dft = difftool --tool difftastic
 	dftu = difftool --tool difftastic-inline
 	fp = fetch --prune
