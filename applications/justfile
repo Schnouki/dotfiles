@@ -18,7 +18,7 @@ add_name FILE +ARGS:
 
 [private]
 electron_wayland FILE:
-    just add_args "{{FILE}}" --enable-features=UseOzonePlatform --ozone-platform=wayland
+    just add_args "{{FILE}}" --enable-features=WaylandWindowDecorations --ozone-platform-hint=auto
 
 [private]
 electron_scaling FILE:
@@ -28,7 +28,7 @@ knossos: (prepare "knossos")
     just add_runner knossos prime-run
 
 obsidian: (prepare "obsidian")
-    just electron_wayland obsidian
+    #just electron_wayland obsidian
 
 steam: (prepare "steam")
     just add_runner steam prime-run
