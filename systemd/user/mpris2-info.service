@@ -6,6 +6,7 @@ Requires=graphical-session.target
 Type=dbus
 BusName=net.schnouki.Mpris2Info
 ExecStart=/home/schnouki/bin/mpris2-info --journal
+Restart=on-failure
 
 [Install]
 WantedBy=applications.target
