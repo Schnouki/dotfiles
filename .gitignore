@@ -3,8 +3,6 @@ __pycache__/
 !.gitattributes
 !.gitignore
 !.gitmodules
-!setup*
-!hook*
 
 # Encrypted files
 !*.age
@@ -15,9 +13,7 @@ __pycache__/
 !applications/justfile
 !applications/make_steam_desktop_files.py
 !beets/config.yaml
-!Xresources
 !chromium-flags.conf
-!electron-flags.conf
 !fonts.conf
 !gitconfig
 !gpgcat
@@ -30,19 +26,13 @@ __pycache__/
 !lftp/rc
 !mimeo.conf
 !mpd.conf
-!picom.conf
 !psqlrc
 !python_startup.py
 !ripgreprc
 !tmux.conf
-!xinitrc
-!xsession
 
 # Folders
-!awesome
 !composer
-!ddns
-ddns/key
 !emacs
 !fennel
 !fish
@@ -61,10 +51,7 @@ gtk-3.0/bookmarks
 !swayidle
 !swww
 !systemd
-!terminator
 !timewarrior
-!urxvt
 !waybar
 !youtube-dl
 !zathura
-!zsh

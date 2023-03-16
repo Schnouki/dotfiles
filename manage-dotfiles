@@ -31,7 +31,6 @@ ENCRYPTED_FILES = {
     ".config/mpdasrc": "mpdasrc.gpg",
     ".config/notmuch/autotag.py": "notmuch/autotag.py.gpg",
     ".config/swww/choose-folder": "swww/choose-folder.gpg",
-    ".config/zsh/private": "zsh/private.gpg",
 }
 
 ENCRYPTED_TARBALLS = {
@@ -48,20 +47,6 @@ FILE_SYMLINKS = {
     "inputrc": ".inputrc",
     "psqlrc": ".psqlrc",
     "tmux.conf": ".tmux.conf",
-    "Xresources": ".Xresources",
-    "xinitrc": ".xinitrc",
-    "xsession": ".xsession",
-    # ZSH startup/shutdown files
-    # Order:
-    # - ~/.zshenv
-    # - login shell: /etc/zprofile, ~/.zprofile
-    # - interactive shell: /etc/zshrc, ~/.zshrc
-    # - login shell: /etc/zlogin, ~/.zlogin
-    # On exit via exit, logout, or end-of-file: ~/.zlogout, /etc/zlogout
-    "zsh/profile": ".zshenv",
-    "zsh/zshrc": ".zshrc",
-    "zsh/login": ".zlogin",
-    "zsh/logout": ".zlogout",
 }
 
 DIR_SYMLINKS = {
