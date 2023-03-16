@@ -8,6 +8,7 @@ ConditionEnvironment=WAYLAND_DISPLAY
 [Service]
 StandardInput=socket
 ExecStart=/usr/bin/wob
+Restart=on-failure
 
 [Install]
 WantedBy=graphical-session.target
