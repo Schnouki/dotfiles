@@ -235,6 +235,9 @@ workspace_auto_back_and_forth yes
 
     # Move focus to the parent container
     bindsym $mod+a focus parent
+
+    # Move focus to the child last-focused child of the focused container
+    bindsym $mod+Shift+a focus child
 #
 # Scratchpad:
 #
@@ -281,6 +284,8 @@ bindsym $mod+r mode "resize"
 
     bindsym $mod+Shift+i exec /home/schnouki/bin/mpris2-control info
     bindsym $mod+Shift+o exec /home/schnouki/bin/mpris2-control nextplayer
+    bindsym $mod+Shift+F12 exec /home/schnouki/bin/mpris2-control volume_plus > $wobsock
+    bindsym $mod+Shift+F11 exec /home/schnouki/bin/mpris2-control volume_minus > $wobsock
 
 #
 # Brightness control:
