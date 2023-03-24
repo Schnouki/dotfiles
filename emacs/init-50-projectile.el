@@ -33,6 +33,8 @@
 
   (add-to-list 'schnouki/projectile-project-root-regexps
                "~/\.virtualenvs/[^/]+/\\(local/\\)?lib/python[^/]*/site-packages/[^/]+/?$")
+  (add-to-list 'schnouki/projectile-project-root-regexps
+               "~/\.local/share/virtualenvs/[^/]+/\\(local/\\)?lib/python[^/]*/site-packages/[^/]+/?$")
 
   (defun schnouki/projectile-root-regexp (dir &optional list)
     (projectile-locate-dominating-file

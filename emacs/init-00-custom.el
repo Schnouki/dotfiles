@@ -26,10 +26,8 @@
  '(safe-local-variable-values
    '((lsp-pyright-extra-paths .
 			      ["/home/schnouki/doist/ist_libs/python"])
-     (lsp-pyright-venv-path . "/home/schnouki/.virtualenvs/todoist/")
      (python-fill-docstring-style . python-257-nn)
      (blacken-mode . t)
-     (lsp-pyls-server-command . "/home/schnouki/doist/twist/env/bin/pyls")
      (python-fill-docstring-style . django)
      (eval blacken-mode t)
      (company-tabnine-always-trigger)
@@ -47,7 +45,6 @@
 	   (require 'rainbow-mode nil t)
 	   (schnouki/rainbow-mode-zenburn))
      (js2-basic-offset . 4)
-     (python-venv . "findspire")
      (nxml-child-indent . 2)
      (nxml-attribute-indent . 4)
      (lua-indent-level . 4)
@@ -65,8 +62,7 @@
      (pkgbuild-update-sums-on-save)
      (py-indent-offset . 4)
      (ispell-dictionary . "francais")
-     (ispell-dictionary . "american")
-     (lsp-pyls-server-command . "/home/schnouki/.virtualenvs/todoist/bin/pyls")))
+     (ispell-dictionary . "american")))
  '(sudoku-download t nil nil "Customized with use-package sudoku")
  '(sudoku-level 'medium nil nil "Customized with use-package sudoku")
  '(sudoku-style 'unicode nil nil "Customized with use-package sudoku")

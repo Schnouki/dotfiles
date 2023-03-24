@@ -47,6 +47,9 @@ set -gx SQLITE_HISTORY "$XDG_DATA_HOME"/sqlite_history
 # Units
 alias units="units --history $XDG_DATA_HOME/units_history"
 
+# Virtualenv
+set -gx WORKON_HOME "$XDG_DATA_HOME"/virtualenvs
+
 # Wget
 alias wget="wget --hsts-file=$XDG_DATA_HOME/wget-hsts"
 
