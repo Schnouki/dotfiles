@@ -10,11 +10,7 @@
   :ensure t)
 
 (use-package python
-  :mode ("\\.py'" . python-mode)
-  :init
-  (progn
-    (defalias 'python2-mode 'python-mode)
-    (defalias 'python3-mode 'python-mode)))
+  :mode ("\\.py'" . python-ts-mode))
 
 (use-package hy-mode
   :ensure t
