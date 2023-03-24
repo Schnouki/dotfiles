@@ -16,20 +16,19 @@ ENCRYPTED_FILES = {
     ".atlas/auth": "atlas-auth.gpg",
     ".gitspindle": "gitspindle.gpg",
     ".gnupg/gpg.conf": "gpg.conf.gpg",
-    ".msmtprc": "msmtprc.gpg",
     ".netrc": "netrc.gpg",
     ".npmrc": "npmrc.gpg",
     ".mbsyncrc": "mbsyncrc.gpg",
-    ".notmuch-config": "notmuch/config.gpg",
     ".ssh/config": "ssh.gpg",
     ".transifexrc": "transifexrc.gpg",
     ".config/pws.yaml": "pws.yaml.gpg",
     ".config/emacs/init-99-private.el": "emacs/init-99-private.el.gpg",
     ".config/fish/conf.d/doist.fish": "fish/conf.d/doist.fish.gpg",
     ".config/fish/conf.d/private.fish": "fish/conf.d/private.fish.gpg",
-    ".config/imapfilter/config.lua": "imapfilter/config.lua.gpg",
     ".config/mpdasrc": "mpdasrc.gpg",
+    ".config/msmtp/config": "msmtp/config.gpg",
     ".config/notmuch/autotag.py": "notmuch/autotag.py.gpg",
+    ".config/notmuch/default/config": "notmuch/default/config.gpg",
     ".config/swww/choose-folder": "swww/choose-folder.gpg",
 }
 
@@ -44,16 +43,12 @@ ENCRYPTED_TARBALLS = {
 FILE_SYMLINKS = {
     "emacs/init.el": ".emacs",
     "guile": ".guile",
-    "inputrc": ".inputrc",
-    "psqlrc": ".psqlrc",
-    "tmux.conf": ".tmux.conf",
 }
 
 DIR_SYMLINKS = {
     "applications": ".local/share/applications",
     "emacs": ".emacs.d",
     "git/config": ".gitconfig",
-    "imapfilter": ".imapfilter",
 }
 
 EXECUTABLE_FILES = {

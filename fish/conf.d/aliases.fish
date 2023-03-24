@@ -35,6 +35,6 @@ alias zbarscreen="zbarimg (maim -s | psub)"
 alias ytmusicdl="youtube-dl --config-location ~/.config/youtube-dl/music"
 
 # Wine 32-bit
-alias wine32="WINEPREFIX=$HOME/.wine32 WINEARCH=win32 wine"
-alias wineconsole32="WINEPREFIX=$HOME/.wine32 WINEARCH=win32 wineconsole"
-alias winetricks32="WINEPREFIX=$HOME/.wine32 WINEARCH=win32 winetricks"
+alias wine32="WINEPREFIX=$XDG_DATA_HOME/wine32 WINEARCH=win32 wine"
+alias wineconsole32="WINEPREFIX=$XDG_DATA_HOME/wine32 WINEARCH=win32 wineconsole"
+alias winetricks32="WINEPREFIX=$XDG_DATA_HOME/wine32 WINEARCH=win32 winetricks"
