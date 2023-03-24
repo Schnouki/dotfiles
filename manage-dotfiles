@@ -41,13 +41,11 @@ ENCRYPTED_TARBALLS = {
 }
 
 FILE_SYMLINKS = {
-    "emacs/init.el": ".emacs",
     "guile": ".guile",
 }
 
 DIR_SYMLINKS = {
     "applications": ".local/share/applications",
-    "emacs": ".emacs.d",
     "git/config": ".gitconfig",
 }
 

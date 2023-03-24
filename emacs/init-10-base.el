@@ -21,13 +21,13 @@
 (setq gc-cons-threshold most-positive-fixnum)
 
 ;; Paths
-(add-to-list 'load-path "~/.config/emacs")
+(add-to-list 'load-path "~/.config/emacs/lisp")
 
 ;; Custom file
 (setq custom-file "~/.config/emacs/init-00-custom.el")
 
 ;; Keep all backup files in a single directory
-(setq backup-directory-alist '(("." . "~/.emacs-backup-files/")))
+(setq backup-directory-alist '(("." . "~/.local/share/emacs/backup-files/")))
 
 ;; Web browser
 (setq browse-url-browser-function 'browse-url-firefox  ;chromium
