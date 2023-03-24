@@ -24,10 +24,10 @@
       'fail)))
 
 (defun with-eval-after-load-feature-preload (feature-list)
-  (loop for f in feature-list
-        for fail = (with-eval-after-load-feature-preload-1 f)
-        when fail
-        collect fail))
+  (cl-loop for f in feature-list
+	   for fail = (with-eval-after-load-feature-preload-1 f)
+	   when fail
+	   collect fail))
 
 (defun with-eval-after-load-feature-transform (feature-list body)
   (if (null feature-list)

@@ -23,11 +23,6 @@
 ;; Paths
 (add-to-list 'load-path "~/.config/emacs")
 
-;; Fix for tramp "recursive load"
-;; (http://lists.gnu.org/archive/html/help-gnu-emacs/2011-05/msg00064.html)
-(when (< emacs-major-version 24)
-  (load "/usr/share/emacs/23.3/lisp/net/tramp.el.gz"))
-
 ;; Custom file
 (setq custom-file "~/.config/emacs/init-00-custom.el")
 
@@ -38,11 +33,6 @@
 (setq browse-url-browser-function 'browse-url-firefox  ;chromium
       browse-url-firefox-program "firefox"
       browse-url-firefox-new-window-is-tab t)
-
-;; Display date and time
-(require 'time)
-(display-time)
-(setq display-time-24hr-format t)
 
 ;; Display line and colon number
 (column-number-mode t)
@@ -95,7 +85,7 @@
 (setq sentence-end-double-space nil)
 
 ;; Avoid breaking lines at '(' or ':' characters
-(add-hook 'fill-no-break-predicate 'fill-french-nobreak-p)
+(add-hook 'fill-nobreak-predicate 'fill-french-nobreak-p)
 
 ;; Justify at 80 columns
 (setq-default fill-column 80)
