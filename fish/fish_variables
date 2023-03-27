@@ -1,6 +1,28 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
+SETUVAR --export AWS_CONFIG_FILE:/home/schnouki/\x2econfig/aws/config
+SETUVAR --export AWS_SHARED_CREDENTIALS_FILE:/home/schnouki/\x2econfig/aws/credentials
+SETUVAR --export CARGO_HOME:/home/schnouki/\x2elocal/share/cargo
+SETUVAR --export --path CUDA_CACHE_PATH:/home/schnouki/\x2ecache/nv
+SETUVAR --export DOCKER_CONFIG:/home/schnouki/\x2econfig/docker
+SETUVAR --export INPUTRC:/home/schnouki/\x2econfig/inputrc
+SETUVAR --export LESSHISTFILE:/home/schnouki/\x2elocal/share/less_history
+SETUVAR --export MYPY_CACHE_DIR:/home/schnouki/\x2ecache/mypy
+SETUVAR --export MYSQL_HISTFILE:/home/schnouki/\x2elocal/share/mysql_history
+SETUVAR --export NIMBLE_DIR:/home/schnouki/\x2elocal/share/nimble
+SETUVAR --export NODE_REPL_HISTORY:/home/schnouki/\x2elocal/share/node_repl_history
+SETUVAR --export PSQLRC:/home/schnouki/\x2econfig/pg/psqlrc
 SETUVAR --export PYENV_ROOT:/home/schnouki/\x2elocal/share/pyenv
+SETUVAR --export PYLINTHOME:/home/schnouki/\x2ecache/pylint
+SETUVAR --export SQLITE_HISTORY:/home/schnouki/\x2elocal/share/sqlite_history
+SETUVAR --export VIRTUALFISH_HOME:/home/schnouki/\x2elocal/share/virtualenvs
+SETUVAR --export WINEPREFIX:/home/schnouki/\x2elocal/share/wine
+SETUVAR --export WORKON_HOME:/home/schnouki/\x2elocal/share/virtualenvs
+SETUVAR --export XAUTHORITY:/run/user/1000/Xauthority
+SETUVAR --export XDG_CACHE_HOME:/home/schnouki/\x2ecache
+SETUVAR --export XDG_CONFIG_HOME:/home/schnouki/\x2econfig
+SETUVAR --export XDG_DATA_HOME:/home/schnouki/\x2elocal/share
+SETUVAR --export XDG_STATE_HOME:/home/schnouki/\x2elocal/state
 SETUVAR ZO_CMD:zo
 SETUVAR Z_CMD:z
 SETUVAR Z_DATA:/home/schnouki/\x2elocal/share/z/data

@@ -11,10 +11,10 @@ set PATH \
     $HOME/.roswell/bin \
     $PATH
 
-set -gx XDG_DATA_HOME $HOME/.local/share
-set -gx XDG_STATE_HOME $HOME/.local/state
-set -gx XDG_CONFIG_HOME $HOME/.config
-set -gx XDG_CACHE_HOME $HOME/.cache
+set -Ux XDG_DATA_HOME $HOME/.local/share
+set -Ux XDG_STATE_HOME $HOME/.local/state
+set -Ux XDG_CONFIG_HOME $HOME/.config
+set -Ux XDG_CACHE_HOME $HOME/.cache
 
 # Programs
 set -gx EDITOR "emacsclient -c -a \"\""
