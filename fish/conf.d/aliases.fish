@@ -1,15 +1,13 @@
-alias ls='ls -FNh --color=auto'
-alias l='ls -FNh --color=auto'
-alias lk='ls -FNh --color=auto'
-alias la='ls -FNha --color=auto'
-alias ll='ls -FNhl --color=auto'
-alias lla='ls -FNhla --color=auto'
+alias lx="l --sort time"
+alias lxr="lx --reverse"
+alias llx="ll --sort time"
+alias llxr="llx --reverse"
 
 alias df='df -h'
 alias free='free -m'
 
 alias grep='grep --color=auto'
-alias egrep='egrep --color=auto'
+alias egrep='grep -E --color=auto'
 
 alias ssu="sudo -i"
 
@@ -21,13 +19,6 @@ alias jctlu="journalctl --user"
 alias ec="eclient -n -c"
 alias ecn="eclient -n"
 alias ecnw="eclient -nw"
-
-alias ea="exa -F --group-directories-first"
-alias el="ea -l --git --time-style long-iso"
-alias eaa="ea -a"
-alias ela="el -a"
-alias elt="el -s modified"
-alias elta="elt -a"
 
 alias zbarscreen="zbarimg (maim -s | psub)"
 
