@@ -205,19 +205,6 @@
 (bind-key "l" 'hydra-lsp/body schnouki-prefix-map)
 
 
-;; DAP - Debug Adapter Protocol
-(use-package dap-mode
-  :ensure t
-  :custom
-  (dap-python-debugger 'debugpy)
-  :config
-  (dap-auto-configure-mode t)
-  (dap-register-debug-template "Python :: Attach to running process"
-			       (list :type "python"
-				     :request "attach"
-				     :connect (list :host "localhost"
-						    :port 5679))))
-
 ;; Company -- complete anything
 (use-package company
   :ensure t
