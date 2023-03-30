@@ -175,7 +175,10 @@
                               (add-hook 'before-save-hook 'fish_indent-before-save))))
 
 (use-package nim-mode
-  :ensure t)
+  :ensure t
+  :hook (nim-mode . nimsuggest-mode)
+  :custom
+  (nimsuggest-path "~/.local/share/nimble/bin/nimsuggest"))
 (use-package flycheck-nim
   :ensure t)
 
