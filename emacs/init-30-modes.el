@@ -255,8 +255,16 @@ _p_rev       _u_pper (mine)       _=_: upper/lower       _r_esolve
       ("k" smerge-kill-current)
       ("q" nil "cancel" :color blue)))
 
-;; Format JSON / JSONlines with JQ
-(use-package jq-format
-  :ensure t)
+;; Code formatting in many languages
+(use-package apheleia
+  :ensure t
+  :diminish apheleia-mode
+  :init
+  (apheleia-global-mode +1)
+  :config
+  ;; Nimpretty
+  (setf (alist-get 'nimpretty apheleia-formatters)
+	'("~/.local/share/nimble/bin/nimpretty" inplace))
+  (setf (alist-get 'nim-mode apheleia-mode-alist) '(nimpretty)))
 
 ;;; init-30-modes.el ends here

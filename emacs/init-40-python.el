@@ -12,9 +12,6 @@
   :custom
   (auto-virtualenvwrapper-verbose nil))
 
-(use-package blacken
-  :ensure t)
-
 ;; Django helper
 (defun schnouki/use-django-interactive-shell ()
   "Auto-detect Django projects and change the interactive shell to `manage.py shell'."
