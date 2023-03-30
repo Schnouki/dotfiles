@@ -21,6 +21,7 @@ ENCRYPTED_FILES = {
     ".mbsyncrc": "mbsyncrc.gpg",
     ".ssh/config": "ssh.gpg",
     ".transifexrc": "transifexrc.gpg",
+    ".config/exist-git-hook.conf": "exist-git-hook.conf.gpg",
     ".config/pws.yaml": "pws.yaml.gpg",
     ".config/emacs/init-99-private.el": "emacs/init-99-private.el.gpg",
     ".config/fish/conf.d/doist.fish": "fish/conf.d/doist.fish.gpg",
