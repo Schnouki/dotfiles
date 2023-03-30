@@ -176,7 +176,7 @@
 (with-eval-after-load-feature (lsp lsp-nim)
   (let ((client (gethash 'nimls lsp-clients)))
     (setf (lsp--client-new-connection client)
-	  (lsp-stdio-connection "~/.nimble/bin/nimlsp"))))
+	  (lsp-stdio-connection "~/.local/share/nimble/bin/nimlsp"))))
 
 ;; https://github.com/abo-abo/hydra/wiki/lsp-mode
 (defhydra hydra-lsp (:exit t :hint nil)
