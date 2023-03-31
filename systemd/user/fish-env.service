@@ -1,0 +1,11 @@
+[Unit]
+Description=Fish environment variables
+Before=environment.target
+IgnoreOnIsolate=true
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/fish --login --private --command _sctlu_env
+
+[Install]
+WantedBy=default.target environment.target
