@@ -1,3 +1,0 @@
-[Unit]
-Description=The Xorg server
-Requires=window-manager.service environment.target

@@ -1,9 +1,0 @@
-[Unit]
-Description=Mullvad VPN
-Requires=graphical-session.target
-
-[Service]
-ExecStart=/usr/bin/mullvad-vpn
-
-[Install]
-WantedBy=applications.target
