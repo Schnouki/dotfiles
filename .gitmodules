@@ -1,3 +1,9 @@
 [submodule "emacs/ligature.el"]
 	path = emacs/ligature.el
 	url = https://github.com/mickeynp/ligature.el
+[submodule "emacs/tree-sitter-module"]
+	path = emacs/tree-sitter-module
+	url = https://github.com/casouri/tree-sitter-module
+[submodule "emacs/janet-ts-mode"]
+	path = emacs/janet-ts-mode
+	url = https://github.com/sogaiu/janet-ts-mode

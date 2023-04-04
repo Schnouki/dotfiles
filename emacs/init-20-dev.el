@@ -288,6 +288,7 @@
 (use-package paredit
   :ensure t
   :hook ((emacs-lisp-mode eval-expression-minibuffer-setup ielm-mode
+			  janet-ts-mode
 			  lisp-interaction-mode lisp-mode scheme-mode) . enable-paredit-mode)
   :config
   ;; Don't touch my C-<left> and C-<right>!

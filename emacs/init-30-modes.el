@@ -206,6 +206,8 @@
 (use-package just-mode
   :ensure t)
 
+(use-package janet-ts-mode
+  :load-path "~/.config/emacs/janet-ts-mode")
 
 ;; -----------------------------------------------------------------------------
 ;; Minor modes
