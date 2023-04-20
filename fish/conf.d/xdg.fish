@@ -13,6 +13,10 @@ set -Ux CUDA_CACHE_PATH "$XDG_CACHE_HOME"/nv
 # Docker
 set -Ux DOCKER_CONFIG "$XDG_CONFIG_HOME"/docker
 
+# Janet
+set -Ux JANET_TREE "$XDG_DATA_HOME"/jpm_tree
+#set -Ux JANET_PATH "$XDG_DATA_HOME"/jpm_tree/lib
+
 # Less
 set -Ux LESSHISTFILE "$XDG_DATA_HOME"/less_history
 

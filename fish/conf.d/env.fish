@@ -6,6 +6,7 @@ set PATH \
     $HOME/.composer/vendor/bin \
     $HOME/.gem/ruby/2.5.0/bin \
     $HOME/.go/bin \
+    $HOME/.local/share/jpm_tree/bin \
     $HOME/.local/share/nimble/bin \
     $HOME/.luarocks/bin \
     $HOME/.roswell/bin \

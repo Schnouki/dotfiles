@@ -25,6 +25,7 @@ SETUVAR --export EXA_LT_OPTIONS:\x2d\x2dtree\x1e\x2d\x2dlevel
 SETUVAR --export EXA_L_OPTIONS:\x2d\x2dclassify
 SETUVAR --export EXA_STANDARD_OPTIONS:\x2d\x2dgroup\x1e\x2d\x2dheader\x1e\x2d\x2dgroup\x2ddirectories\x2dfirst\x1e\x2d\x2dclassify
 SETUVAR --export INPUTRC:/home/schnouki/\x2econfig/inputrc
+SETUVAR --export JANET_TREE:/home/schnouki/\x2elocal/share/jpm_tree
 SETUVAR --export LESSHISTFILE:/home/schnouki/\x2elocal/share/less_history
 SETUVAR --export MYPY_CACHE_DIR:/home/schnouki/\x2ecache/mypy
 SETUVAR --export MYSQL_HISTFILE:/home/schnouki/\x2elocal/share/mysql_history
