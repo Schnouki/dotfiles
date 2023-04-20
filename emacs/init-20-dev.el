@@ -298,7 +298,10 @@
 	     ("C-M-<right>" . paredit-forward-slurp-sexp)
 	     ("C-M-<left>" . paredit-forward-barf-sexp)
 	     ("C-S-<left>" . paredit-backward-slurp-sexp)
-	     ("C-S-<right>" . paredit-backward-barf-sexp))
+	     ("C-S-<right>" . paredit-backward-barf-sexp)
+	     ("{" . paredit-open-curly)
+	     ("}" . paredit-close-curly)
+	     ("M-}" . paredit-close-curly-and-newline))
   (eval-after-load 'eldoc
     (eldoc-add-command 'paredit-backward-delete
 		       'paredit-close-round)))
