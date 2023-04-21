@@ -30,7 +30,7 @@ end
 
 # From https://github.com/akermu/emacs-libvterm#directory-tracking-and-prompt-tracking
 # function vterm_prompt_end;
-#     vterm_printf '51;A'(whoami)'@'(hostname)':'(pwd)
+#     vterm_printf '51;A'(whoami)'@'(hostnamectl hostname)':'(pwd)
 # end
 # functions --copy fish_prompt vterm_old_fish_prompt
 # function fish_prompt --description 'Write out the prompt; do not replace this. Instead, put this at end of your file.'

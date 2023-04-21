@@ -3,7 +3,7 @@ export XDG_CURRENT_DESKTOP=sway
 
 # GTK
 # export GDK_BACKEND=wayland
-export GTK2_RC_FILES="$HOME/.config/gtkrc-2.0:$HOME/.config/gtkrc-$(hostname):/etc/gtk-2.0/gtkrc"
+export GTK2_RC_FILES="$HOME/.config/gtkrc-2.0:$HOME/.config/gtkrc-$(hostnamectl hostname):/etc/gtk-2.0/gtkrc"
 
 # Qt
 export QT_QPA_PLATFORM=wayland

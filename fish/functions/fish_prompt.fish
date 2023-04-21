@@ -52,7 +52,7 @@ function fish_prompt --description 'Write out the prompt'
         if test -n $id_part
             set id_part "$id_part$hostname_separator"
         end
-        set id_part "$id_part$hostname_color"(hostname)
+        set id_part "$id_part$hostname_color"(hostnamectl hostname)
     end
     if test -n $id_part
         set id_part $id_part" "
