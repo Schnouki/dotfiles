@@ -6,13 +6,9 @@
   :ensure t
   :defer 15
   :diminish yas-minor-mode
+  :custom
+  (yas-snippet-dirs '("~/.config/emacs/snippets"))
   :config
-  ;; Snippets dir:
-  ;; - make sure the local one (~/.emacs.d/snippets) comes first
-  (setq yas-snippet-dirs
-	(cons "~/.emacs.d/snippets"
-	      (cl-remove-if (lambda (item) (string-equal "~/.emacs.d/snippets" item))
-			    yas-snippet-dirs)))
   (yas-global-mode 1))
 
 ;; Modes that bind something to "<tab>" instead of "TAB"

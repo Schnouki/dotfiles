@@ -1,7 +1,0 @@
-# -*- mode: snippet; require-final-newline: nil -*-
-# name: test
-# key: test
-# --
-@test "${1:test something}" {
-    $0
-}
