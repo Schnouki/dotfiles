@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import os
+import socket
 import stat
 import subprocess as subp
 import sys
@@ -42,7 +43,7 @@ ENCRYPTED_TARBALLS = {
 }
 
 FILE_SYMLINKS = {
-    "guile": ".guile",
+    "sway/config.outputs-@@HOSTNAME@@": ".config/sway/config.outputs",
 }
 
 DIR_SYMLINKS = {
@@ -252,14 +253,15 @@ def create_dir_symlinks():
 def create_file_symlinks():
     success = True
 
+    hostname = socket.gethostname()
     for src, dst in FILE_SYMLINKS.items():
+        src = src.replace("@@HOSTNAME@@", hostname)
         src_p = CONFIG / src
         dst_p = HOME / dst
 
         if not dst_p.exists():
             print(f"Creating symlink: ~/{dst}")
             dst_p.symlink_to(src_p)
-            dst_p.lchmod(0o600)
         elif dst_p.is_symlink():
             actual_target = dst_p.readlink()
             if actual_target != src_p:
