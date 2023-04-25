@@ -535,6 +535,7 @@ If third argument START is non-nil, convert words after that index in STRING."
   :defer t
   :hook (after-init . global-emojify-mode)
   :custom
+  (emojify-emoji-styles '(unicode))
   (emojify-point-entered-behaviour 'uncover))
 
 ;; Colorize strings that represent colors
