@@ -1,2 +1,2 @@
 [general]
-hist_file = $XDG_DATA_HOME/bpythonhistory
+hist_file = ~/.local/share/bpythonhistory
