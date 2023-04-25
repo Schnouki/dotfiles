@@ -18,7 +18,15 @@ add_name FILE +ARGS:
 
 [private]
 electron_wayland FILE:
-    just add_args "{{FILE}}" --enable-features=WaylandWindowDecorations --ozone-platform-hint=auto
+    just add_args "{{FILE}}" --ozone-platform-hint=auto --enable-webrtc-pipewire-capturer #--gtk-version=4
+
+[private]
+electron_wayland_old FILE:
+    just add_args "{{FILE}}" --enable-features=UseOzonePlatform --ozone-platform=wayland
+
+[private]
+electron_wayland_nogpu FILE:
+    just add_args "{{FILE}}" --ozone-platform-hint=auto --enable-webrtc-pipewire-capturer --disable-gpu #--gtk-version=4
 
 [private]
 electron_scaling FILE:
@@ -28,7 +36,7 @@ knossos: (prepare "knossos")
     just add_runner knossos prime-run
 
 obsidian: (prepare "obsidian")
-    #just electron_wayland obsidian
+    just electron_wayland_nogpu obsidian
 
 steam: (prepare "steam")
     just add_runner steam prime-run
@@ -38,11 +46,11 @@ steam-native: (prepare "steam-native")
 
 vivaldi-stable: (prepare "vivaldi-stable")
     sed -i "s!/usr/bin/vivaldi-stable!${HOME}/bin/vivaldi-stable!g" vivaldi-stable.desktop
-    just electron_wayland vivaldi-stable
+    #just electron_wayland vivaldi-stable
 
 vivaldi-stable-alt: (prepare "vivaldi-stable" "vivaldi-stable-alt")
     sed -i "s!/usr/bin/vivaldi-stable!${HOME}/bin/vivaldi-stable!g" vivaldi-stable-alt.desktop
-    just electron_wayland vivaldi-stable
+    #just electron_wayland vivaldi-stable-alt
     just add_args vivaldi-stable-alt '"--profile-directory=Profile 1"'
     just add_name  vivaldi-stable-alt "(test profile)"
 
