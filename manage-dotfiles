@@ -164,6 +164,14 @@ def decrypt_data(src_p: Path, dst: Path | None = None):
         return res.stdout
 
 
+def get_wanted_permissions(src: Path) -> int:
+    with src.open("rb") as fd:
+        data = fd.read(64)
+    if data.startswith(b"#!"):
+        return 0o700
+    return 0o600
+
+
 def update_encrypted_files(force: bool):
     for src, dst in ENCRYPTED_FILES.items():
         src_p = HOME / src
@@ -290,7 +298,8 @@ def decrypt_files():
             print(f"Decrypting ~/{dst}")
             dst_p.unlink(missing_ok=True)
             decrypt_data(src_p, dst_p)
-            dst_p.lchmod(0o600)
+            perms = get_wanted_permissions(dst_p)
+            dst_p.lchmod(perms)
             uf_p.touch()
 
     return True
