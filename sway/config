@@ -111,6 +111,7 @@ workspace_auto_back_and_forth yes
 
     # Start your launcher
     bindsym $mod+d exec $menu
+    bindsym $mod+space exec ulauncher-toggle
 
     # Wallpaper config
     bindsym $mod+Shift+d exec $wallpaper_config
@@ -227,7 +228,7 @@ workspace_auto_back_and_forth yes
     bindsym $mod+Shift+space floating toggle
 
     # Swap focus between the tiling area and the floating area
-    bindsym $mod+space focus mode_toggle
+    bindsym $mod+Ctrl+space focus mode_toggle
 
     # Move focus to the parent container
     bindsym $mod+a focus parent
@@ -358,6 +359,11 @@ for_window [app_id="firefox" title="Incrustation vidéo"] {
     floating enable
     border normal
     inhibit_idle visible
+}
+
+for_window [app_id="ulauncher"] {
+    floating enable
+    border none
 }
 
 # Run basic stuff

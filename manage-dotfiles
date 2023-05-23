@@ -41,6 +41,11 @@ ENCRYPTED_TARBALLS = {
     "Calibre": ("calibre.tar.gpg", ".config/calibre/*"),
     "Pgweb": ("pgweb.tar.gpg", ".pgweb/**/**"),
     "Tmuxp": ("tmuxp.tar.gpg", ".tmuxp/*"),
+    "Ulauncher": (
+        "ulauncher.tar.gpg",
+        ".config/ulauncher/*",
+        ".config/ulauncher/*/*",
+    ),
     "Weechat": ("weechat.tar.gpg", ".config/weechat/*.conf"),
 }
 
@@ -174,11 +179,14 @@ def get_wanted_permissions(src: Path) -> int:
     return 0o600
 
 
-def update_encrypted_files(force: bool):
+def update_encrypted_files(force: bool, verbose: bool):
     for src, dst in ENCRYPTED_FILES.items():
         src_p = HOME / src
         dst_p = CONFIG / dst
         uf_p = CONFIG / get_last_update_filename(dst)
+
+        if verbose:
+            print(f"Checking {dst_p} using {src_p}")
 
         if not src_p.exists():
             print(f"Missing source file: {src}")
@@ -201,11 +209,19 @@ def update_encrypted_files(force: bool):
             uf_p.touch()
 
 
-def update_encrypted_tarballs(force: bool):
-    for name, (dst, pattern) in ENCRYPTED_TARBALLS.items():
-        src_ps = sorted(list(HOME.glob(pattern)))
+def update_encrypted_tarballs(force: bool, verbose: bool):
+    for name, (dst, *patterns) in ENCRYPTED_TARBALLS.items():
+        src_ps = []
+        for pattern in patterns:
+            src_ps += list(HOME.glob(pattern))
+        src_ps = sorted(src_ps)
         dst_p = CONFIG / dst
         uf_p = CONFIG / get_last_update_filename(dst)
+
+        if verbose:
+            print(f"Checking {name} tarball ({dst_p}) using:")
+            for p in src_ps:
+                print(f"  {p.relative_to(HOME)}")
 
         # Inspired by https://github.com/maxmcd/reptar
         tar_cmd = [
@@ -356,8 +372,8 @@ exec "{script_path}" encrypt "$@"
 
 
 def cmd_encrypt(args):
-    update_encrypted_files(args.force)
-    update_encrypted_tarballs(args.force)
+    update_encrypted_files(args.force, args.verbose)
+    update_encrypted_tarballs(args.force, args.verbose)
 
 
 def cmd_list(args):
@@ -420,6 +436,9 @@ if __name__ == "__main__":
     parser_encrypt = sp.add_parser("encrypt", help="update encrypted files")
     parser_encrypt.add_argument(
         "-f", "--force", action="store_true", help="Force update"
+    )
+    parser_encrypt.add_argument(
+        "-v", "--verbose", action="store_true", help="Verbose mode"
     )
     parser_encrypt.set_defaults(func=cmd_encrypt)
 
