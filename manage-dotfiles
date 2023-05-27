@@ -323,7 +323,7 @@ def decrypt_files():
 
 
 def decrypt_tarballs():
-    for name, (src, _) in ENCRYPTED_TARBALLS.items():
+    for name, (src, *_) in ENCRYPTED_TARBALLS.items():
         src_p = CONFIG / src
         uf_p = CONFIG / get_last_update_filename(src)
 
