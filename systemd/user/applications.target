@@ -1,4 +1,5 @@
 [Unit]
 Description=Start user applications
 IgnoreOnIsolate=true
-Requires=dbus.socket environment.target graphical-session.target 
+Requires=dbus.socket environment.target graphical-session.target
+Wants=xdg-desktop-autostart.target
