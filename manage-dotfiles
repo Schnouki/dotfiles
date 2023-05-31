@@ -17,6 +17,7 @@ ENCRYPTED_FILES = {
     ".atlas/auth": "atlas-auth.gpg",
     ".gitspindle": "gitspindle.gpg",
     ".gnupg/gpg.conf": "gpg.conf.gpg",
+    ".gnupg/gpg-agent.conf": "gpg-agent.conf.gpg",
     ".netrc": "netrc.gpg",
     ".npmrc": "npmrc.gpg",
     ".mbsyncrc": "mbsyncrc.gpg",
