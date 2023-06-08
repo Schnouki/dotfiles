@@ -1,0 +1,9 @@
+{
+	"auths": {
+		"docker.pkg.github.com": {},
+		"ghcr.io": {},
+		"https://index.docker.io/v1/": {},
+		"registry.digitalocean.com": {}
+	},
+	"credsStore": "netrc"
+}
