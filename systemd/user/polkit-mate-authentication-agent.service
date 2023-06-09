@@ -1,0 +1,10 @@
+[Unit]
+Description=PolicyKit Authentication Agent for the MATE Desktop
+Requires=dbus.socket
+
+[Service]
+ExecStart=/usr/lib/mate-polkit/polkit-mate-authentication-agent-1
+Restart=on-failure
+
+[Install]
+WantedBy=applications.target
