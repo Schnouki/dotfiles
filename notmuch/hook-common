@@ -1,0 +1,5 @@
+# Exit if any command fails
+set -e
+
+CONFIGDIR=$HOME/.config/notmuch
+MAILDIR=$HOME/mail

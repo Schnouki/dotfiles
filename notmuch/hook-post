@@ -1,6 +1,6 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
-. ~/.config/notmuch/hook-common.zsh
+. ~/.config/notmuch/hook-common
 
 notmuch new
 new=$(notmuch count tag:new)
@@ -8,7 +8,7 @@ LD_PRELOAD=/usr/lib/nosync/nosync.so $CONFIGDIR/autotag.py || echo "Autotag fail
 
 #awesome_end_update
 dbus-send --session --dest="org.gnu.Emacs" "/org/gnu/Emacs" "org.gnu.Emacs.NotmuchNotify"
-[[ $new > 0 ]] && $CONFIGDIR/notify.py
+[[ $new -gt 0 ]] && $CONFIGDIR/notify.py
 
 # Once in a while, sync CardDAV contacts
 if [[ $(( $RANDOM % 20 )) == 0 ]]; then
