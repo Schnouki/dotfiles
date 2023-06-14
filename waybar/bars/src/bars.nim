@@ -51,7 +51,7 @@ proc updateBar(b: seq[string], t: ColorType, v: float): seq[string] =
 
 
 proc asBar(d: seq[string]): string =
-  return "⎹<span font_desc=\"Bars\">" & d.join() & "</span>⎸"
+  return "▕<span font_desc=\"Bars\">" & d.join() & "</span>▏"
 
 
 proc runGraphMode(delay, size: int) =
