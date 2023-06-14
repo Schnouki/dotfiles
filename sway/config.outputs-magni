@@ -1,5 +1,5 @@
 set $out_int eDP-1
-set $out_ext DP-1
-output $out_int position 0,0 scale 1.5
-output $out_ext position 1920,0
+set $out_ext DP-4
+output $out_int position 528,1440 scale 1.5
+output $out_ext position 0,0 scale 1.5
 focus output $out_ext
