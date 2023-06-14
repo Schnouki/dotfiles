@@ -3,6 +3,7 @@
 SETUVAR --export AWS_CONFIG_FILE:/home/schnouki/\x2econfig/aws/config
 SETUVAR --export AWS_SHARED_CREDENTIALS_FILE:/home/schnouki/\x2econfig/aws/credentials
 SETUVAR --export CARGO_HOME:/home/schnouki/\x2elocal/share/cargo
+SETUVAR --export CLUTTER_BACKEND:wayland
 SETUVAR --export --path CUDA_CACHE_PATH:/home/schnouki/\x2ecache/nv
 SETUVAR --export DOCKER_CONFIG:/home/schnouki/\x2econfig/docker
 SETUVAR --export EXA_LAAD_OPTIONS:\x2d\x2dall\x1e\x2d\x2dall\x1e\x2d\x2dbinary\x1e\x2d\x2donly\x2ddirs
@@ -24,9 +25,11 @@ SETUVAR --export EXA_LO_OPTIONS:\x2d\x2doneline
 SETUVAR --export EXA_LT_OPTIONS:\x2d\x2dtree\x1e\x2d\x2dlevel
 SETUVAR --export EXA_L_OPTIONS:\x2d\x2dclassify
 SETUVAR --export EXA_STANDARD_OPTIONS:\x2d\x2dgroup\x1e\x2d\x2dheader\x1e\x2d\x2dgroup\x2ddirectories\x2dfirst\x1e\x2d\x2dclassify
+SETUVAR --export GTK2_RC_FILES:/home/schnouki/\x2econfig/gtkrc\x2d2\x2e0\x3a/home/schnouki/\x2econfig/gtkrc\x2d\x28hostnamectl\x20hostname\x29\x3a/etc/gtk\x2d2\x2e0/gtkrc
 SETUVAR --export INPUTRC:/home/schnouki/\x2econfig/inputrc
 SETUVAR --export JANET_TREE:/home/schnouki/\x2elocal/share/jpm_tree
 SETUVAR --export LESSHISTFILE:/home/schnouki/\x2elocal/share/less_history
+SETUVAR --export MOZ_ENABLE_WAYLAND:1
 SETUVAR --export MYPY_CACHE_DIR:/home/schnouki/\x2ecache/mypy
 SETUVAR --export MYSQL_HISTFILE:/home/schnouki/\x2elocal/share/mysql_history
 SETUVAR --export NIMBLE_DIR:/home/schnouki/\x2elocal/share/nimble
@@ -34,6 +37,8 @@ SETUVAR --export NODE_REPL_HISTORY:/home/schnouki/\x2elocal/share/node_repl_hist
 SETUVAR --export PSQLRC:/home/schnouki/\x2econfig/pg/psqlrc
 SETUVAR --export PYENV_ROOT:/home/schnouki/\x2elocal/share/pyenv
 SETUVAR --export PYLINTHOME:/home/schnouki/\x2ecache/pylint
+SETUVAR --export QT_QPA_PLATFORM:wayland
+SETUVAR --export QT_STYLE_OVERRIDE:gtk
 SETUVAR --export SQLITE_HISTORY:/home/schnouki/\x2elocal/share/sqlite_history
 SETUVAR --export VIRTUALFISH_HOME:/home/schnouki/\x2elocal/share/virtualenvs
 SETUVAR --export WINEPREFIX:/home/schnouki/\x2elocal/share/wine
@@ -41,6 +46,7 @@ SETUVAR --export WORKON_HOME:/home/schnouki/\x2elocal/share/virtualenvs
 SETUVAR --export XAUTHORITY:/run/user/1000/Xauthority
 SETUVAR --export XDG_CACHE_HOME:/home/schnouki/\x2ecache
 SETUVAR --export XDG_CONFIG_HOME:/home/schnouki/\x2econfig
+SETUVAR --export XDG_CURRENT_DESKTOP:sway
 SETUVAR --export XDG_DATA_HOME:/home/schnouki/\x2elocal/share
 SETUVAR --export XDG_STATE_HOME:/home/schnouki/\x2elocal/state
 SETUVAR ZO_CMD:zo
