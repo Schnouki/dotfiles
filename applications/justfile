@@ -2,19 +2,19 @@ default: knossos obsidian steam steam-native vivaldi-stable vivaldi-stable-alt s
 
 [private]
 prepare FILE TARGET="":
-    cp "/usr/share/applications/{{FILE}}.desktop" "{{ if TARGET == '' { FILE } else { TARGET } }}.desktop"
+    -cp "/usr/share/applications/{{FILE}}.desktop" "{{ if TARGET == '' { FILE } else { TARGET } }}.desktop"
 
 [private]
 add_args FILE +ARGS:
-    sed -i 's/^\(Exec=.*\)/\1 {{ARGS}}/g' "{{FILE}}.desktop"
+    -sed -i 's/^\(Exec=.*\)/\1 {{ARGS}}/g' "{{FILE}}.desktop"
 
 [private]
 add_runner FILE +RUNNER:
-    sed -i '/{{RUNNER}}/!s/^Exec=\(.*\)/Exec={{RUNNER}} \1/g' "{{FILE}}.desktop"
+    -sed -i '/{{RUNNER}}/!s/^Exec=\(.*\)/Exec={{RUNNER}} \1/g' "{{FILE}}.desktop"
 
 [private]
 add_name FILE +ARGS:
-    sed -i 's/^\(Name=.*\)/\1 {{ARGS}}/g' "{{FILE}}.desktop"
+    -sed -i 's/^\(Name=.*\)/\1 {{ARGS}}/g' "{{FILE}}.desktop"
 
 [private]
 electron_wayland FILE:
@@ -36,7 +36,7 @@ knossos: (prepare "knossos")
     just add_runner knossos prime-run
 
 obsidian: (prepare "obsidian")
-    just electron_wayland_nogpu obsidian
+    just electron_wayland obsidian
 
 steam: (prepare "steam")
     just add_runner steam prime-run
@@ -46,11 +46,11 @@ steam-native: (prepare "steam-native")
 
 vivaldi-stable: (prepare "vivaldi-stable")
     sed -i "s!/usr/bin/vivaldi-stable!${HOME}/bin/vivaldi-stable!g" vivaldi-stable.desktop
-    #just electron_wayland vivaldi-stable
+    just electron_wayland vivaldi-stable
 
 vivaldi-stable-alt: (prepare "vivaldi-stable" "vivaldi-stable-alt")
     sed -i "s!/usr/bin/vivaldi-stable!${HOME}/bin/vivaldi-stable!g" vivaldi-stable-alt.desktop
-    #just electron_wayland vivaldi-stable-alt
+    just electron_wayland vivaldi-stable-alt
     just add_args vivaldi-stable-alt '"--profile-directory=Profile 1"'
     just add_name  vivaldi-stable-alt "(test profile)"
 
