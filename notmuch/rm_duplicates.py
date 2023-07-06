@@ -1,10 +1,10 @@
-#!/usr/bin/env python2
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python
 
 import os
 import os.path
 
 import notmuch
+
 
 def run(db):
     query = notmuch.Query(db, "")
@@ -14,21 +14,19 @@ def run(db):
         if len(fns) < 2:
             continue
 
-        dirnames = [os.path.dirname(os.path.dirname(fn)) for fn in fns]
-        same_dir = True
-        for dirname in dirnames:
-            if dirname != dirnames[0]:
-                same_dir = False
-                break
-        if not same_dir:
+        dirnames = {os.path.dirname(os.path.dirname(fn)) for fn in fns}
+        if len(dirnames) != 1:
+            # print("Duplicates in different dirs: " + ", ".join(fns))
             continue
 
         fns.sort(key=os.path.getmtime)
         for fn in fns[1:]:
             cnt += 1
+            # print(f"{fn} (dupe of {fns[0]}")
             os.unlink(fn)
 
-    print cnt
+    print(f"Deleted {cnt} duplicates.")
+
 
 if __name__ == "__main__":
     db = notmuch.Database(mode=notmuch.Database.MODE.READ_ONLY)

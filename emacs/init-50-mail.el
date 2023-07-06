@@ -47,7 +47,7 @@
 			       (:name "ldn"                  :query "(tag:ldn and tag:unread)")
 			       (:name "notmuch"              :query "(tag:notmuch and tag:unread)")
 			       (:name "spop"                 :query "(tag:spop and tag:unread"))
-      notmuch-show-all-tags-list t
+      notmuch-show-all-tags-list nil
       notmuch-archive-tags '("-inbox" "-unread" "+archive")
       notmuch-address-command "~/.config/notmuch/addrbook.py"
       notmuch-crypto-process-mime t
@@ -297,7 +297,7 @@
   '(add-to-list 'mm-inline-media-tests '("text/pdf" ignore ignore)))
 
 ;; Viewers
-(mailcap-add "image/.*" "viewnior %s" '(member window-system '(x pgtk)))
+(mailcap-add "image/.*" "ristretto %s" '(member window-system '(x pgtk)))
 
 
 ;; Write HTML emails with org-mode
