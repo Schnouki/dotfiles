@@ -408,13 +408,15 @@ Prioritize directories, but make sure .dotfiles are last."
 
 ;; undo-tree
 (use-package undo-tree
-  :load-path "~/dev/undo-tree"
+  :load-path "~/.config/emacs/undo-tree"
   :demand t
+  :diminish undo-tree-mode
   :bind* (("C-'"  . undo-tree-undo)
 	  ("C-\"" . undo-tree-redo))
+  :custom
+  (undo-tree-allow-overridden-bindings t)
+  (undo-tree-visualizer-diff t)
   :config
-  (setq undo-tree-mode-lighter nil
-	undo-tree-allow-overridden-bindings t)
   (global-undo-tree-mode))
 
 ;; goto-last-change

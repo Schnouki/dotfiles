@@ -7,3 +7,7 @@
 [submodule "emacs/janet-ts-mode"]
 	path = emacs/janet-ts-mode
 	url = https://github.com/sogaiu/janet-ts-mode
+[submodule "emacs/undo-tree"]
+	path = emacs/undo-tree
+	url = https://git.sr.ht/~schnouki/undo-tree
+	branch = allow-overridden-bindings
