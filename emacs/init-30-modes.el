@@ -194,6 +194,7 @@
 (use-package sly
   :ensure t
   :config
+  ;; install it with "ros install sly"
   (load (expand-file-name "~/.roswell/helper.el"))
   (sly-setup))
 (use-package sly-asdf
