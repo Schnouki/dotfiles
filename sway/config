@@ -72,6 +72,10 @@ input $keychron_kb_k2 {
     xkb_layout us
     xkb_variant qwerty-fr
 }
+input $laptop_kb {
+    xkb_layout fr
+    xkb_variant oss
+}
 
 
 ### Workspaces
@@ -370,7 +374,7 @@ for_window [app_id="ulauncher"] {
 include /etc/sway/config.d/*
 
 # Systemd integration -- https://github.com/swaywm/sway/wiki/Systemd-integration
-exec "systemctl --user import-environment; systemctl --user start sway-session.target"
+exec "systemctl --user import-environment {,WAYLAND_}DISPLAY SWAYSOCK; systemctl --user start sway-session.target"
 
 # Emacs: refresh environment after each reload
 exec_always "emacsclient -ue '(schnouki/refresh-env)'"
