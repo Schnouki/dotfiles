@@ -13,19 +13,19 @@
   (unless schnouki/sd-notify--client
     (let ((addr (getenv "NOTIFY_SOCKET")))
       (cond (addr
-	     (setq schnouki/sd-notify--client
-		   (make-network-process :name "sd-notify"
-					 :type 'datagram
-					 :family 'local
-					 :service addr
-					 :sentinel 'schnouki/sd-notify--sentinel
-					 :coding 'utf-8
-					 :noquery t)))
-	    (t (message "Can't notify systemd: NOTIFY_SOCKET is not set"))))))
+             (setq schnouki/sd-notify--client
+                   (make-network-process :name "sd-notify"
+                                         :type 'datagram
+                                         :family 'local
+                                         :service addr
+                                         :sentinel 'schnouki/sd-notify--sentinel
+                                         :coding 'utf-8
+                                         :noquery t)))
+            (t (message "Can't notify systemd: NOTIFY_SOCKET is not set"))))))
 
 (defun schnouki/sd-notify--maybe-dump-queue ()
   (when (and schnouki/sd-notify--client
-	     (eq (process-status schnouki/sd-notify--client) 'open))
+             (eq (process-status schnouki/sd-notify--client) 'open))
     (dolist (item schnouki/sd-notify--queue)
       (process-send-string schnouki/sd-notify--client item))
     (setq schnouki/sd-notify--queue '())))

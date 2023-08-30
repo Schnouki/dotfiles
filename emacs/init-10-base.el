@@ -66,7 +66,7 @@
   ;; Based on https://www.emacswiki.org/emacs/YesOrNoP#toc2
   (declare (indent defun) (debug (body)))
   `(cl-letf (((symbol-function 'y-or-n-p) (lambda (&rest args) ,answer))
-	     ((symbol-function 'yes-or-no-p) (lambda (&rest args) ,answer)))
+             ((symbol-function 'yes-or-no-p) (lambda (&rest args) ,answer)))
      ,@body))
 
 ;; Helper to add things in "default" lists (for buffer-local variables)
@@ -74,7 +74,7 @@
   "Add ELEMENT to the default value of LIST-VAR if it isn't there yet."
   (let ((current-list (default-value list-var)))
     (if (memq element current-list)
-	current-list
+        current-list
       (setq-default list-var (cons element current-list)))))
 
 ;; Use "initials" completion style
@@ -102,9 +102,9 @@
   "If the matching paren is offscreen, show the matching line in the echo area.
 Has no effect if the character before point is not of the syntax class ')'."
   (let* ((cb (char-before (point)))
-	 (matching-text (and cb
-			     (char-equal (char-syntax cb) ?\) )
-			     (blink-matching-open))))
+         (matching-text (and cb
+                             (char-equal (char-syntax cb) ?\) )
+                             (blink-matching-open))))
     (when matching-text (message matching-text))))
 (advice-add 'show-paren-function :after #'schnouki/show-matching-paren-offscreen)
 
@@ -125,7 +125,7 @@ Has no effect if the character before point is not of the syntax class ')'."
   (progn
     (delete-selection-mode 1)
     (setq x-select-enable-clipboard t
-	  x-select-enable-primary   t)))
+          x-select-enable-primary   t)))
 
 ;; Highlight current region
 (transient-mark-mode t)
@@ -145,21 +145,21 @@ Has no effect if the character before point is not of the syntax class ')'."
 (require 'ediff)
 (setq ediff-window-setup-function 'ediff-setup-windows-plain
       ediff-split-window-function (lambda (&optional arg)
-				    (if (> (frame-width) 150)
-					(split-window-horizontally arg)
-				      (split-window-vertically arg))))
+                                    (if (> (frame-width) 150)
+                                        (split-window-horizontally arg)
+                                      (split-window-vertically arg))))
 ;; - restore window configuration when quitting ediff
 (defvar ediff-saved-window-configuration nil)
 (add-hook 'ediff-load-hook
-	  (lambda ()
-	    (add-hook 'ediff-before-setup-hook
-		      (lambda ()
-			(setq ediff-saved-window-configuration (current-window-configuration))))
-	    (let ((restore-window-configuration
-		   (lambda ()
-		     (set-window-configuration ediff-saved-window-configuration))))
-	      (add-hook 'ediff-quit-hook restore-window-configuration 'append)
-	      (add-hook 'ediff-suspend-hook restore-window-configuration 'append))))
+          (lambda ()
+            (add-hook 'ediff-before-setup-hook
+                      (lambda ()
+                        (setq ediff-saved-window-configuration (current-window-configuration))))
+            (let ((restore-window-configuration
+                   (lambda ()
+                     (set-window-configuration ediff-saved-window-configuration))))
+              (add-hook 'ediff-quit-hook restore-window-configuration 'append)
+              (add-hook 'ediff-suspend-hook restore-window-configuration 'append))))
 
 ;; Remember the last visited line in a file
 (require 'saveplace)
@@ -177,7 +177,7 @@ Has no effect if the character before point is not of the syntax class ')'."
 
 (with-eval-after-load 'dash
   (setq desktop-modes-not-to-save (-union desktop-modes-not-to-save
-					  '(prog-mode))))
+                                          '(prog-mode))))
 
 (defvar schnouki/desktop-was-read nil)
 (defun schnouki/desktop-after-read-hook ()
@@ -214,7 +214,7 @@ Has no effect if the character before point is not of the syntax class ')'."
 ;; http://www.masteringemacs.org/articles/2010/11/14/disabling-prompts-emacs/
 (setq kill-buffer-query-functions
       (remq 'process-kill-buffer-query-function
-	    kill-buffer-query-functions))
+            kill-buffer-query-functions))
 
 ;; Automagically make scripts executable
 ;; http://www.masteringemacs.org/articles/2011/01/19/script-files-executable-automatically/
@@ -223,7 +223,7 @@ Has no effect if the character before point is not of the syntax class ')'."
   "Automagically make scripts executable."
   (let ((name (buffer-file-name)))
     (unless (cl-some #'(lambda (dir) (string-prefix-p (expand-file-name dir) name))
-		     schnouki/no-script)
+                     schnouki/no-script)
       (executable-make-buffer-file-executable-if-script-p))))
 (add-hook 'after-save-hook 'schnouki/maybe-make-executable-if-script-p)
 
@@ -246,14 +246,14 @@ Has no effect if the character before point is not of the syntax class ')'."
 (defun schnouki/split-window-more-sensibly (&optional window)
   (let ((window (or window (selected-window))))
     (or (and (window-splittable-p window t)
-	     ;; Split window horizontally.
-	     (with-selected-window window
-	       (split-window-right)))
-	(and (window-splittable-p window)
-	     ;; Split window vertically.
-	     (with-selected-window window
-	       (split-window-below)))
-	(split-window-sensibly window))))
+             ;; Split window horizontally.
+             (with-selected-window window
+               (split-window-right)))
+        (and (window-splittable-p window)
+             ;; Split window vertically.
+             (with-selected-window window
+               (split-window-below)))
+        (split-window-sensibly window))))
 
 (setq split-window-preferred-function 'schnouki/split-window-more-sensibly
       split-width-threshold 120

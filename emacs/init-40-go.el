@@ -13,16 +13,16 @@
               ("C-c C-t" . go-add-tags)
               )
   :hook ((before-save . gofmt-before-save)
-	 (go-mode . go-set-project))
+         (go-mode . go-set-project))
 
   :config
   (add-to-list 'go-guess-gopath-functions #'schnouki/go-hellogopher-gopath)
 
   (defun schnouki/go--better-guess-gopath (orig-fun &rest args)
     (let* ((root-and-paths (apply orig-fun args))
-	   (root (car root-and-paths))
-	   (env-paths (cdr root-and-paths))
-	   (guessed-paths (split-string (go-guess-gopath) path-separator)))
+           (root (car root-and-paths))
+           (env-paths (cdr root-and-paths))
+           (guessed-paths (split-string (go-guess-gopath) path-separator)))
       (cons root (append guessed-paths env-paths))))
   (advice-add 'go-root-and-paths :around #'schnouki/go--better-guess-gopath))
 
@@ -67,10 +67,10 @@
 ;; "vendor" dirs (https://github.com/dominikh/go-mode.el/issues/135)
 (defun schnouki/go-packages-strip-vendor (packages)
   (mapcar (lambda (pkg)
-	    (if (string-match "/vendor/\\(.*\\)" pkg)
-		(match-string 1 pkg)
-	      pkg))
-	  packages))
+            (if (string-match "/vendor/\\(.*\\)" pkg)
+                (match-string 1 pkg)
+              pkg))
+          packages))
 (defun schnouki/go-packages-native-without-vendor ()
   "Return a list of all installed Go packages, stripping vendor directories."
   (schnouki/go-packages-strip-vendor (go-packages-native)))

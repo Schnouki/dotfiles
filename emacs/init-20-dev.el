@@ -11,8 +11,8 @@
 
 ;; Tabs and indentation
 (setq-default c-basic-offset 4
-	      c-indent-level 4
-	      indent-tabs-mode nil) ;; No tabs at all!
+              c-indent-level 4
+              indent-tabs-mode nil) ;; No tabs at all!
 
 (use-package dtrt-indent
   :ensure t
@@ -33,18 +33,12 @@
     (delete-trailing-whitespace)))
 (add-hook 'before-save-hook 'schnouki/maybe-delete-trailing-whitespace)
 
-;; Default parameters for emacs-lisp
-(defun schnouki/emacs-lisp-default-indent ()
-  "Fix default indent for emacs-lisp."
-  (setq indent-tabs-mode t))
-(add-hook 'emacs-lisp-mode-hook 'schnouki/emacs-lisp-default-indent)
-
 ;; Markdown
 (use-package markdown-mode
   :ensure t
   :mode (("\\.md\\'" . markdown-mode)
-  	 ("\\.mdwn\\'" . markdown-mode)
-  	 ("\\.markdown\\'" . markdown-mode)))
+         ("\\.mdwn\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode)))
 
 ;; Flycheck
 (use-package flycheck
@@ -89,11 +83,11 @@
 (use-package dumb-jump
   :ensure t
   :bind (:map schnouki-prefix-map
-	 ("j j" . dumb-jump-go)
-	 ("j o" . dumb-jump-go-other-window)
-	 ("j p" . dumb-jump-back)
-	 ("j i" . dumb-jump-go-prompt)
-	 ("j l" . dumb-jump-quick-look)
+         ("j j" . dumb-jump-go)
+         ("j o" . dumb-jump-go-other-window)
+         ("j p" . dumb-jump-back)
+         ("j i" . dumb-jump-go-prompt)
+         ("j l" . dumb-jump-quick-look)
          ("j J" . dumb-jump-go-prefer-external)
          ("j O" . dumb-jump-go-prefer-external-other-window))
   :commands (dumb-jump-xref-activate)
@@ -116,9 +110,9 @@
   "Auto-close the compilation window when successful."
   ;; If M-x compile exists with a 0
   (when (and
-	 (eq status 'exit)
-	 (zerop code)
-	 (not (-contains? '("Ag" "Ripgrep") mode-name)))
+         (eq status 'exit)
+         (zerop code)
+         (not (-contains? '("Ag" "Ripgrep") mode-name)))
     ;; then bury the *compilation* buffer, so that C-x b doesn't go there
     (bury-buffer)
     ;; and delete the *compilation* window
@@ -130,7 +124,7 @@
 ;; Make ediff fr_FR-locale-friendly
 ;(eval-after-load 'ediff-diff
 ;  '(setq ediff-diff-ok-lines-regexp
-;	(concat (substring ediff-diff-ok-lines-regexp 0 -2) "\\|.*Pas de fin de ligne\\)")))
+;        (concat (substring ediff-diff-ok-lines-regexp 0 -2) "\\|.*Pas de fin de ligne\\)")))
 
 ;; Completion with LSP
 (use-package lsp-mode
@@ -148,11 +142,11 @@
   :config
   (defun schnouki/lsp--disable-y-or-n-p (orig-fun &rest args)
     (if schnouki/desktop-was-read
-	;; OK, proceed!
-	(apply orig-fun args)
+        ;; OK, proceed!
+        (apply orig-fun args)
       ;; Still reading desktop time: turn y-or-no-p into a no-op
       (with-yes-or-no nil
-	(apply orig-fun args))))
+        (apply orig-fun args))))
   (advice-add 'lsp :around #'schnouki/lsp--disable-y-or-n-p)
   (advice-add 'lsp--ask-about-watching-big-repo :around #'schnouki/lsp--disable-y-or-n-p))
 
@@ -162,8 +156,8 @@
   :ensure t
   :hook (lsp-mode . lsp-ui-mode)
   :bind (:map lsp-ui-mode-map
-	      ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
-	      ([remap xref-find-references] . lsp-ui-peek-find-references))
+              ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
+              ([remap xref-find-references] . lsp-ui-peek-find-references))
   :limit-process t
   :custom
   (lsp-ui-flycheck t)
@@ -176,7 +170,7 @@
 (with-eval-after-load-feature (lsp lsp-nim)
   (let ((client (gethash 'nimls lsp-clients)))
     (setf (lsp--client-new-connection client)
-	  (lsp-stdio-connection "~/.local/share/nimble/bin/nimlsp"))))
+          (lsp-stdio-connection "~/.local/share/nimble/bin/nimlsp"))))
 
 ;; https://github.com/abo-abo/hydra/wiki/lsp-mode
 (defhydra hydra-lsp (:exit t :hint nil)
@@ -234,19 +228,19 @@
 ;; Pretty symbols
 ;; http://emacsredux.com/blog/2014/08/25/a-peek-at-emacs-24-dot-4-prettify-symbols-mode/
 (setq schnouki/prettify-symbols-common '(("lambda" . ?λ)
-					 ("<=" . ?≤)
-					 (">=" . ?≥)
-					 ("!=" . ?≠)
-					 ("-->" . ?→)
-					 ("<--" . ?←))
+                                         ("<=" . ?≤)
+                                         (">=" . ?≥)
+                                         ("!=" . ?≠)
+                                         ("-->" . ?→)
+                                         ("<--" . ?←))
       schnouki/prettify-symbols-modes '((emacs-lisp-mode . nil)
-					(lisp-mode . nil)
-					(python-base-mode . (("is not" . ?≢)
-							     ("is" . ?≡)
-							     ("in" . ?∈)
-							     ("not in" . ?∉)))
-					(Javascript-mode . (("===" . ?≡)
-							    ("!==" . ?≢)))))
+                                        (lisp-mode . nil)
+                                        (python-base-mode . (("is not" . ?≢)
+                                                             ("is" . ?≡)
+                                                             ("in" . ?∈)
+                                                             ("not in" . ?∉)))
+                                        (Javascript-mode . (("===" . ?≡)
+                                                            ("!==" . ?≢)))))
 
 (defun schnouki/maybe-enable-prettify-symbols-mode ()
   "Maybe enable prettify-symbol-mode for the current major mode."
@@ -254,10 +248,10 @@
     (when config
       ;; Add common symbols to the alist
       (dolist (entry schnouki/prettify-symbols-common)
-	(push entry prettify-symbols-alist))
+        (push entry prettify-symbols-alist))
       ;; Add mode-specific symbols to the alist
       (dolist (entry (cdr config))
-	(push entry prettify-symbols-alist))
+        (push entry prettify-symbols-alist))
       ;; Enable prettify-symbols-mode
       (prettify-symbols-mode 1))))
 ;(add-hook 'prog-mode-hook 'schnouki/maybe-enable-prettify-symbols-mode)
@@ -267,14 +261,14 @@
   :ensure t
   :demand t
   :bind (("C-:" . er/expand-region)
-	 ("C-," . er/contract-region)))
+         ("C-," . er/contract-region)))
 
 (use-package smart-forward
   :ensure t
   :bind (("M-<up>" . smart-up)
-	 ("M-<down>" . smart-down)
-	 ("M-<left>" . smart-backward)
-	 ("M-<right>" . smart-forward)))
+         ("M-<down>" . smart-down)
+         ("M-<left>" . smart-backward)
+         ("M-<right>" . smart-forward)))
 
 (use-package move-text
   :ensure t
@@ -343,9 +337,9 @@
   :defer t
   :commands global-hl-todo-mode
   :bind (:map hl-todo-mode-map
-	      ("C-! h p" . hl-todo-previous)
-	      ("C-! h n" . hl-todo-next)
-	      ("C-! h o" . hl-todo-occur))
+              ("C-! h p" . hl-todo-previous)
+              ("C-! h n" . hl-todo-next)
+              ("C-! h o" . hl-todo-occur))
   :config
   (global-hl-todo-mode))
 
@@ -357,11 +351,11 @@
 (use-package vterm
   :ensure t
   :bind (:map vterm-mode-map
-	      ("C-q" . vterm-send-next-key)
-	 :map schnouki-prefix-map
-	      ("v v" . vterm)
-	      ("v o" . vterm-other-window))
+              ("C-q" . vterm-send-next-key)
+         :map schnouki-prefix-map
+              ("v v" . vterm)
+              ("v o" . vterm-other-window))
   :hook ((vterm-mode . #'schnouki/disable-hl-line-mode-locally)
-	 (vterm-copy-mode . #'schnouki/enable-hl-line-mode)))
+         (vterm-copy-mode . #'schnouki/enable-hl-line-mode)))
 
 ;;; init-20-dev.el ends here

@@ -412,7 +412,7 @@ Prioritize directories, but make sure .dotfiles are last."
   :demand t
   :diminish undo-tree-mode
   :bind* (("C-'"  . undo-tree-undo)
-	  ("C-\"" . undo-tree-redo))
+          ("C-\"" . undo-tree-redo))
   :custom
   (undo-tree-allow-overridden-bindings t)
   (undo-tree-visualizer-diff t)
@@ -428,8 +428,8 @@ Prioritize directories, but make sure .dotfiles are last."
 (use-package avy
   :ensure t
   :bind (("C-;" . avy-goto-char-timer)
-	 ("C-M-;" . avy-goto-word-or-subword-1)
-	 ("C-x C-;" . avy-pop-mark))
+         ("C-M-;" . avy-goto-word-or-subword-1)
+         ("C-x C-;" . avy-pop-mark))
   :custom
   (avy-background t)
   :config
@@ -468,11 +468,11 @@ Prioritize directories, but make sure .dotfiles are last."
 (use-package google-translate
   :ensure t
   :bind (:map schnouki-prefix-map
-	 ("W" . google-translate-query-translate))
+         ("W" . google-translate-query-translate))
   :init
   (setq google-translate-default-source-language "en"
-	google-translate-default-target-language "fr"
-	google-translate-enable-ido-completion t))
+        google-translate-default-target-language "fr"
+        google-translate-enable-ido-completion t))
 
 ;; NSFW
 (use-package sudoku
@@ -503,15 +503,15 @@ If third argument START is non-nil, convert words after that index in STRING."
   (let ((case-fold-search nil))
     (while (string-match "[A-Z]" s (or start 1))
       (setq s (replace-match (concat (or sep "-")
-				     (downcase (match-string 0 s)))
-			     t nil s)))
+                                     (downcase (match-string 0 s)))
+                             t nil s)))
     (downcase s)))
 
 ;; Increment number at point
 (use-package evil-numbers
   :ensure t
   :commands (evil-numbers/inc-at-pt
-	     evil-numbers/dec-at-pt)
+             evil-numbers/dec-at-pt)
   :init
   (defhydra hydra-evil-numbers ()
     "evil numbers:"
@@ -520,10 +520,10 @@ If third argument START is non-nil, convert words after that index in STRING."
     ("-"             evil-numbers/dec-at-pt "decrease")
     ("<kp-subtract>" evil-numbers/dec-at-pt "decrease"))
   (bind-keys :map schnouki-prefix-map
-	     ("="             . hydra-evil-numbers/evil-numbers/inc-at-pt)
-	     ("<kp-add>"      . hydra-evil-numbers/evil-numbers/inc-at-pt)
-	     ("-"             . hydra-evil/numbers/evil-numbers/dec-at-pt)
-	     ("<kp-subtract>" . hydra-evil/numbers/evil-numbers/dec-at-pt)))
+             ("="             . hydra-evil-numbers/evil-numbers/inc-at-pt)
+             ("<kp-add>"      . hydra-evil-numbers/evil-numbers/inc-at-pt)
+             ("-"             . hydra-evil/numbers/evil-numbers/dec-at-pt)
+             ("<kp-subtract>" . hydra-evil/numbers/evil-numbers/dec-at-pt)))
 
 ;; Shrink whitespaces
 ;; http://pragmaticemacs.com/emacs/delete-blank-lines-and-shrink-whitespace/
@@ -549,11 +549,11 @@ If third argument START is non-nil, convert words after that index in STRING."
 ;; Use ImageMagick as much as possible
 ;; (let* ((types '(bmp jpeg png svg))
 ;;        (fix-alist (lambda (alist)
-;; 		    (--map-when (-contains? types (cdr it))
-;; 				(cons (car it) 'imagemagick)
-;; 				alist))))
+;;                     (--map-when (-contains? types (cdr it))
+;;                                 (cons (car it) 'imagemagick)
+;;                                 alist))))
 ;;   (setq image-type-header-regexps (funcall fix-alist image-type-header-regexps)
-;; 	image-type-file-name-regexps (funcall fix-alist image-type-file-name-regexps)))
+;;         image-type-file-name-regexps (funcall fix-alist image-type-file-name-regexps)))
 ;; (fboundp 'imagemagick-types)
 ;; (imagemagick-types)
 
@@ -562,12 +562,12 @@ If third argument START is non-nil, convert words after that index in STRING."
   ;; From http://emacs.stackexchange.com/a/2458/2006
   (interactive)
   (let* ((img-size (image-display-size (image-get-display-property) t))
-	 (img-width (car img-size))
-	 (img-height (cdr img-size))
-	 (img-h/w-ratio (/ (float img-height) (float img-width)))
-	 (win-width (window-pixel-width))
-	 (win-height (window-pixel-height))
-	 (win-h/w-ratio (/ (float win-height) (float win-width))))
+         (img-width (car img-size))
+         (img-height (cdr img-size))
+         (img-h/w-ratio (/ (float img-height) (float img-width)))
+         (win-width (window-pixel-width))
+         (win-height (window-pixel-height))
+         (win-h/w-ratio (/ (float win-height) (float win-width))))
     ;; Fit image by width if the h/w ratio of window is > h/w ratio of the image
     (if (> win-h/w-ratio img-h/w-ratio)
         (image-transform-fit-to-width)
@@ -577,17 +577,17 @@ If third argument START is non-nil, convert words after that index in STRING."
 ;; Add useful image-mode key bindings
 (with-eval-after-load 'image-mode
   (bind-keys :map image-mode-map
-	     ("r" . image-transform-set-rotation)
-	     ("zh" . image-transform-fit-to-height)
-	     ("zs" . image-transform-set-scale)
-	     ("zw" . image-transform-fit-to-width)
-	     ("zz" . schnouki/image-transform-fit-to-window)))
+             ("r" . image-transform-set-rotation)
+             ("zh" . image-transform-fit-to-height)
+             ("zs" . image-transform-set-scale)
+             ("zw" . image-transform-fit-to-width)
+             ("zz" . schnouki/image-transform-fit-to-window)))
 
 ;; Weather
 (use-package wttrin
   :ensure t
   :bind (:map schnouki-prefix-map
-	 ("W" . wttrin))
+         ("W" . wttrin))
   :init
   (setq wttrin-default-cities '("Nancy" "Forbach" "Paris")))
 
@@ -618,11 +618,11 @@ If third argument START is non-nil, convert words after that index in STRING."
 (use-package writeroom-mode
   :ensure t
   :bind (:map schnouki-prefix-map
-	 ("w" . writeroom-mode)
-	 :map writeroom-mode-map
-	 ("C-<kp-add>" . writeroom-increase-width)
-	 ("C-<kp-subtract>" . writeroom-decrease-width)
-	 ("C-=" . writeroom-adjust-width)))
+         ("w" . writeroom-mode)
+         :map writeroom-mode-map
+         ("C-<kp-add>" . writeroom-increase-width)
+         ("C-<kp-subtract>" . writeroom-decrease-width)
+         ("C-=" . writeroom-adjust-width)))
 
 ;; Memory usage
 (use-package memory-usage
@@ -637,18 +637,18 @@ If third argument START is non-nil, convert words after that index in STRING."
 (use-package transpose-frame
   :ensure t
   :bind (:map schnouki-prefix-map
-	 ("p t" . transpose-frame)
-	 ("p f" . flip-frame)
-	 ("p F" . flop-frame)
-	 ("p r" . rotate-frame-clockwise)
-	 ("p R" . rotate-frame-anticlockwise)))
+         ("p t" . transpose-frame)
+         ("p f" . flip-frame)
+         ("p F" . flop-frame)
+         ("p r" . rotate-frame-clockwise)
+         ("p R" . rotate-frame-anticlockwise)))
 
 ;; Keep init-00-custom up-to-date! :)
 (defun schnouki/update-selected-packages ()
   (interactive)
   (let* ((output (shell-command-to-string "rg --no-filename --no-line-number --no-heading '^\\(use-package' ~/.config/emacs | awk '{print $2}' | sort -u"))
-	 (lines (s-lines (s-trim output)))
-	 (packages (-map 'intern lines)))
+         (lines (s-lines (s-trim output)))
+         (packages (-map 'intern lines)))
     (customize-save-variable 'package-selected-packages packages)))
 ;; (schnouki/update-selected-packages)
 ;; (package-autoremove)
@@ -660,9 +660,9 @@ If third argument START is non-nil, convert words after that index in STRING."
   (require 's)
   (let ((env-vars '("SWAYSOCK" "I3SOCK")))
     (-as-> (with-output-to-string
-	      (with-current-buffer standard-output
-		(call-process "systemctl" nil t nil "--user" "show-environment")))
-	   env
+              (with-current-buffer standard-output
+                (call-process "systemctl" nil t nil "--user" "show-environment")))
+           env
      (s-lines env)
      (-remove #'s-blank-str? env)
      (--map (s-split-up-to "=" it 1) env)
@@ -677,13 +677,13 @@ If third argument START is non-nil, convert words after that index in STRING."
 ;; https://xenodium.com/actionable-urls-in-emacs-buffers/
 (use-package goto-addr
   :hook ((prog-mode . goto-address-prog-mode)
-	 (compilation-mode . goto-address-mode)
-	 (eshell-mode . goto-address-mode)
-	 (shell-mode . goto-address-mode)
-	 (magit-process-mode . goto-address-mode))
+         (compilation-mode . goto-address-mode)
+         (eshell-mode . goto-address-mode)
+         (shell-mode . goto-address-mode)
+         (magit-process-mode . goto-address-mode))
   :bind (:map goto-address-highlight-keymap
-	      ("RET" . goto-address-at-point)
-	      ("M-RET" . newline)))
+              ("RET" . goto-address-at-point)
+              ("M-RET" . newline)))
 
 ;; Transparent age encryption support
 (use-package age
@@ -692,10 +692,10 @@ If third argument START is non-nil, convert words after that index in STRING."
   :custom
   (age-program "rage")
   (age-default-identity '("~/.config/age/age-yubikey-identity-fd6d28aa.txt"
-			  "~/.config/age/age-yubikey-identity-ff36b8b1.txt"))
+                          "~/.config/age/age-yubikey-identity-ff36b8b1.txt"))
   (age-default-recipient '("~/.config/age/age-yubikey-fd6d28aa.pub"
-			   "~/.config/age/age-yubikey-ff36b8b1.pub"
-			   "~/.config/age/age-7qlgd5cs.pub"))
+                           "~/.config/age/age-yubikey-ff36b8b1.pub"
+                           "~/.config/age/age-7qlgd5cs.pub"))
   :config
   (age-file-enable))
 

@@ -35,10 +35,10 @@
   :mode "\\.coffee\'"
   :init
   (add-hook 'coffee-mode-hook
-	    '(lambda ()
-	       (setq tab-width 4
-		     coffee-tab-width 4)
-	       (local-set-key (kbd "C-c C-c") 'coffee-compile-buffer))))
+            '(lambda ()
+               (setq tab-width 4
+                     coffee-tab-width 4)
+               (local-set-key (kbd "C-c C-c") 'coffee-compile-buffer))))
 
 (use-package tide
   :ensure t
@@ -61,8 +61,8 @@
 (use-package markdown-mode
   :ensure t
   :mode (("\\.md\\'" . markdown-mode)
-  	 ("\\.mdwn\\'" . markdown-mode)
-  	 ("\\.markdown\\'" . markdown-mode))
+           ("\\.mdwn\\'" . markdown-mode)
+           ("\\.markdown\\'" . markdown-mode))
   :init
   (setq markdown-command "~/.config/emacs/markdown"))
 
@@ -96,12 +96,12 @@
   :mode "\\.\\(?:\\(?:h\\(?:bs\\|tml\\)\\|liquid\\|mako\\|tmpl\\)\\)\\'"
   :init
   (setq web-mode-engines-alist '(("django" . "\\.html\\'")
-				 ("go" . "\\.tmpl\\'")
-				 ("mako" . "\\.mako\\'"))))
+                                 ("go" . "\\.tmpl\\'")
+                                 ("mako" . "\\.mako\\'"))))
 
 (use-package cmake-mode
   :mode (("/CMakeLists\\.txt\\'" . cmake-mode)
-	 ("\\.cmake\\'" . cmake-mode)))
+         ("\\.cmake\\'" . cmake-mode)))
 
 (use-package pkgbuild-mode
   :ensure t
@@ -151,7 +151,7 @@
 (use-package caddyfile-mode
   :load-path "~/dev/caddyfile-mode"
   :mode (("Caddyfile\\'" . caddyfile-mode)
-	 ("caddy\\.conf\\'" . caddyfile-mode)))
+         ("caddy\\.conf\\'" . caddyfile-mode)))
 (use-package loop :ensure t)
 
 (use-package d-mode
@@ -222,14 +222,14 @@
     (save-excursion
       (goto-char (point-min))
       (when (re-search-forward "^<<<<<<< " nil t)
-	(smerge-mode 1))))
+        (smerge-mode 1))))
   (add-hook 'find-file-hook 'schnouki/maybe-enable-smerge)
   (add-hook 'after-revert-hook 'schnouki/maybe-enable-smerge)
 
   :config
   (defhydra hydra-smerge (:hint nil
-				:pre (smerge-mode 1)
-				:post (smerge-auto-leave))
+                                :pre (smerge-mode 1)
+                                :post (smerge-auto-leave))
     "
 ^Move^       ^Keep^               ^Diff^                 ^Other^
 ^^-----------^^-------------------^^---------------------^^-------
@@ -266,7 +266,7 @@ _p_rev       _u_pper (mine)       _=_: upper/lower       _r_esolve
   :config
   ;; Nimpretty
   (setf (alist-get 'nimpretty apheleia-formatters)
-	'("~/.local/share/nimble/bin/nimpretty" inplace))
+        '("~/.local/share/nimble/bin/nimpretty" inplace))
   (setf (alist-get 'nim-mode apheleia-mode-alist) '(nimpretty)))
 
 ;;; init-30-modes.el ends here

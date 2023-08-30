@@ -8,19 +8,19 @@
 
 (defun schnouki/org-gh-parse-url (path)
   (let* ((m (s-match (rx bos
-			 (or
-			  (opt
-			   (opt (group (1+ graph))
-				"/")
-			   (group (1+ graph))
-			   "#")
-			  "#")
-			 (group (1+ num))
-			 eos)
-		     path))
-	 (user (or (nth 1 m) schnouki/org-gh-default-user))
-	 (repo (or (nth 2 m) schnouki/org-gh-default-repo))
-	 (obj (nth 3 m)))
+                         (or
+                          (opt
+                           (opt (group (1+ graph))
+                                "/")
+                           (group (1+ graph))
+                           "#")
+                          "#")
+                         (group (1+ num))
+                         eos)
+                     path))
+         (user (or (nth 1 m) schnouki/org-gh-default-user))
+         (repo (or (nth 2 m) schnouki/org-gh-default-repo))
+         (obj (nth 3 m)))
     (list user repo obj)))
 (defun schnouki/org-gh-build-url (type path)
   (seq-let (user repo obj) (schnouki/org-gh-parse-url path)
@@ -37,8 +37,8 @@
   (browse-url (schnouki/org-gh-build-url type path)))
 (defun schnouki/org-gh-export (type path description format)
   (let ((url (schnouki/org-gh-build-url type path))
-	(desc (or description
-		  (schnouki/org-gh-format-url path))))
+        (desc (or description
+                  (schnouki/org-gh-format-url path))))
     (pcase format
       (`html (format "<a target=\"_blank\" href=\"%s\">%s</a>" url desc))
       (`latex (format "\\href{%s}{%s}" url desc))
@@ -59,10 +59,10 @@
 
 (with-eval-after-load 'org
   (org-link-set-parameters "ghi"
-			   :follow #'schnouki/org-ghi-follow
-			   :export #'schnouki/org-ghi-export)
+                           :follow #'schnouki/org-ghi-follow
+                           :export #'schnouki/org-ghi-export)
   (org-link-set-parameters "ghpr"
-			   :follow #'schnouki/org-ghpr-follow
-			   :export #'schnouki/org-ghpr-export))
+                           :follow #'schnouki/org-ghpr-follow
+                           :export #'schnouki/org-ghpr-export))
 
 ;;; init-41-org-github.el ends here

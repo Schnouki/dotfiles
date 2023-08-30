@@ -19,16 +19,16 @@ adjusts its OOM score."
     (mapbacktrace
      (lambda (&rest frame)
        (let ((file (symbol-file (cadr frame))))
-	 (when (and file
-		    (memq (intern (file-name-base file))
-			  schnouki/limited-processes-files))
-	   (let ((command (map-elt args :command)))
-	     (throw 'limited
-		    (map-insert args :command
-				(append (list
-					 (expand-file-name "~/.config/emacs/limited-process-wrapper.sh")
-					 (file-name-base file))
-					command))))))))
+         (when (and file
+                    (memq (intern (file-name-base file))
+                          schnouki/limited-processes-files))
+           (let ((command (map-elt args :command)))
+             (throw 'limited
+                    (map-insert args :command
+                                (append (list
+                                         (expand-file-name "~/.config/emacs/limited-process-wrapper.sh")
+                                         (file-name-base file))
+                                        command))))))))
     args))
 
 (advice-add 'make-process :filter-args #'schnouki/filter-make-process-args)
@@ -44,21 +44,21 @@ adjusts its OOM score."
       (cond
        ((listp arg) arg)
        ((and (booleanp arg)
-	     arg)
-	(list name-symbol))
+             arg)
+        (list name-symbol))
        ((stringp arg) (list (intern arg)))
        ((symbolp arg)  arg)
        (t
-	(use-package-error "Bad argument for :limit-process"))))))
+        (use-package-error "Bad argument for :limit-process"))))))
 
 (defun use-package-handler/:limit-process (name-symbol keyword file-names rest state)
   (let ((body (use-package-process-keywords name-symbol rest state)))
     (if (null file-names)
-	body
+        body
       (use-package-concat
        body
        (mapcar (lambda (file-name)
-		 `(add-to-list 'schnouki/limited-processes-files ',file-name))
-	       file-names)))))
+                 `(add-to-list 'schnouki/limited-processes-files ',file-name))
+               file-names)))))
 
 ;;; init-16-process.el ends here

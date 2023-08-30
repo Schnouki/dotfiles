@@ -108,8 +108,8 @@ as the new width."
 (add-hook 'org-mode-hook #'schnouki/set-wider-fill-column)
 
 (bind-keys :map schnouki-prefix-map
-	   ("v t" . schnouki/toggle-visual-text-mode)
-	   ("v c" . schnouki/toggle-visual-fill-column-center-text)
-	   ("v w" . schnouki/set-visual-fill-column-width))
+           ("v t" . schnouki/toggle-visual-text-mode)
+           ("v c" . schnouki/toggle-visual-fill-column-center-text)
+           ("v w" . schnouki/set-visual-fill-column-width))
 
 ;;; init-20-text.el ends here

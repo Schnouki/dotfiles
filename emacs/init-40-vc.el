@@ -15,10 +15,10 @@
 	 :map schnouki-magit-prefix-map
 	 ("<" . magit-dispatch)
 	 ("\\" . magit-dispatch)
-	 ("f" . magit-file-dispatch)
-	 ("l" . magit-log-buffer-file)
-	 ("b" . magit-blame)
-	 )
+         ("f" . magit-file-dispatch)
+         ("l" . magit-log-buffer-file)
+         ("b" . magit-blame)
+         )
   :demand t
   :custom
   (magit-process-popup-time 2)
@@ -34,9 +34,9 @@
   (defun schnouki/magit-process--maybe-tail-buffer (proc string)
     (let ((window (get-buffer-window (process-buffer proc))))
       (when window
-	(with-selected-window window
-	  (end-of-buffer)
-	  (recenter -1 t)))))
+        (with-selected-window window
+          (end-of-buffer)
+          (recenter -1 t)))))
 
   (advice-add #'magit-process-filter :after #'schnouki/magit-process--maybe-tail-buffer)
   )
@@ -44,9 +44,9 @@
 (use-package git-link
   :ensure t
   :bind (:map schnouki-magit-prefix-map
-	 ("g g" . git-link)
-	 ("g c" . git-link-commit)
-	 ("g h" . git-link-homepage))
+         ("g g" . git-link)
+         ("g c" . git-link-commit)
+         ("g h" . git-link-homepage))
   :custom
   (git-link-use-commit t))
 
@@ -56,6 +56,6 @@
 
 ;; Use SSH agent
 (setenv "SSH_AUTH_SOCK"
-	(format "/run/user/%d/gnupg/S.gpg-agent.ssh" (user-uid)))
+        (format "/run/user/%d/gnupg/S.gpg-agent.ssh" (user-uid)))
 
 ;;; init-40-vc.el ends here

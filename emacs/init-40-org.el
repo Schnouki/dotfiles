@@ -7,11 +7,11 @@
   :pin gnu
   :mode ("\\.org\\'" . org-mode)
   :bind (:map schnouki-prefix-map
-	 ("o l" . org-store-link)
-	 ("o a" . org-agenda)
-	 :map org-mode-map
-	 ("C-c C-x i" . org-id-get-create)
-	 ("C-c y" . schnouki/org-yank-link))
+         ("o l" . org-store-link)
+         ("o a" . org-agenda)
+         :map org-mode-map
+         ("C-c C-x i" . org-id-get-create)
+         ("C-c y" . schnouki/org-yank-link))
   :custom
   (org-adapt-indentation nil)
   (org-checkbox-hierarchical-statistics nil)
@@ -47,10 +47,10 @@
     "Yank a link."
     (interactive "P")
     (let* ((location (current-kill 0))
-	   (desc (cond
-		  (current-prefix-arg (completing-read (format "Description for %s: " location) nil))
-		  (description description)
-		  (t "ref"))))
+           (desc (cond
+                  (current-prefix-arg (completing-read (format "Description for %s: " location) nil))
+                  (description description)
+                  (t "ref"))))
       (org-insert-link nil location desc)))
   )
 
@@ -70,7 +70,7 @@
   :custom
   (company-org-block-edit-style 'auto)
   :hook (org-mode . (lambda ()
-		       (add-to-list (make-local-variable 'company-backends)
-				    'company-org-block))))
+                       (add-to-list (make-local-variable 'company-backends)
+                                    'company-org-block))))
 
 ;;; init-40-org.el ends here

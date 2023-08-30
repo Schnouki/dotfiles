@@ -6,12 +6,12 @@
   :ensure t
   :config
   (setq projectile-enable-caching nil
-	projectile-sort-order 'recently-active)
+        projectile-sort-order 'recently-active)
 
   ;; Mode line
   (defun schnouki/projectile-mode-line ()
     (if (file-remote-p default-directory)
-	" Pj"
+        " Pj"
       (format " Pj[%s]" (projectile-project-name))))
   (setq projectile-mode-line-function 'schnouki/projectile-mode-line)
 
@@ -54,11 +54,11 @@
     (interactive)
     (let ((projects (projectile-relevant-known-projects)))
       (if projects
-	  (projectile-completing-read
-	   "Open magit in project: " projects
-	   :action (lambda (project)
-		     (magit-status project)))
-	(user-error "There are no known projects"))))
+          (projectile-completing-read
+           "Open magit in project: " projects
+           :action (lambda (project)
+                     (magit-status project)))
+        (user-error "There are no known projects"))))
   (bind-key "\\" 'schnouki/projectile-magit projectile-command-map)
   (bind-key "<" 'schnouki/projectile-magit projectile-command-map)
 
@@ -82,28 +82,28 @@
   ;;:load-path "~/dev/deadgrep"
   :commands deadgrep
   :bind (:map deadgrep-mode-map
-	 ("C-x C-q" . deadgrep-edit-mode)
-	 :map deadgrep-edit-mode-map
-	 ("C-c C-c" . deadgrep-mode))
+         ("C-x C-q" . deadgrep-edit-mode)
+         :map deadgrep-edit-mode-map
+         ("C-c C-c" . deadgrep-mode))
   :config
   (defun schnouki/deadgrep--guess-type ()
     (let* ((deadgrep-types (deadgrep--type-list))
        (ext-to-type (--mapcat (let ((type-name (car it))
-				    (exts (cadr it)))
-				(--map (cons
-					(s-chop-prefix "*." it)
-					type-name)
-				       exts))
-			      deadgrep-types))
+                                    (exts (cadr it)))
+                                (--map (cons
+                                        (s-chop-prefix "*." it)
+                                        type-name)
+                                       exts))
+                              deadgrep-types))
        (file-ext (s-chop-prefix "." (url-file-extension (buffer-name)))))
       (cdr (assoc file-ext ext-to-type))))
   (defun schnouki/deadgrep--auto-guess-type (orig-fun &rest args)
     (let* ((guessed-type (schnouki/deadgrep--guess-type))
-	   (new-type (if guessed-type
-			 (cons 'type guessed-type)
-		       deadgrep--file-type)))
+           (new-type (if guessed-type
+                         (cons 'type guessed-type)
+                       deadgrep--file-type)))
       (let ((deadgrep--file-type new-type))
-	(apply orig-fun args))))
+        (apply orig-fun args))))
   (advice-add 'deadgrep :around #'schnouki/deadgrep--auto-guess-type))
 
 (use-package defproject
