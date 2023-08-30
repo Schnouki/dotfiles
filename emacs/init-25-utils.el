@@ -415,6 +415,7 @@ Prioritize directories, but make sure .dotfiles are last."
           ("C-\"" . undo-tree-redo))
   :custom
   (undo-tree-allow-overridden-bindings t)
+  (undo-tree-history-directory-alist '(("." . "~/.cache/emacs/undo-tree-history/")))
   (undo-tree-visualizer-diff t)
   :config
   (global-undo-tree-mode))

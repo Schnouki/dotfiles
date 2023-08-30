@@ -27,7 +27,7 @@
 (setq custom-file "~/.config/emacs/init-00-custom.el")
 
 ;; Keep all backup files in a single directory
-(setq backup-directory-alist '(("." . "~/.local/share/emacs/backup-files/")))
+(setq backup-directory-alist '(("." . "~/.cache/emacs/backup-files/")))
 
 ;; Web browser
 (setq browse-url-browser-function 'browse-url-firefox  ;chromium
