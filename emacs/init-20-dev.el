@@ -278,27 +278,12 @@
 (use-package eldoc
   :hook (emacs-lisp-mode ielm-mode lisp-interaction-mode lisp-mode python-mode))
 
-;; Paredit
-(use-package paredit
+;; Parinfer
+(use-package parinfer-rust-mode
   :ensure t
-  :hook ((emacs-lisp-mode eval-expression-minibuffer-setup ielm-mode
-			  janet-ts-mode
-			  lisp-interaction-mode lisp-mode scheme-mode) . enable-paredit-mode)
-  :config
-  ;; Don't touch my C-<left> and C-<right>!
-  (dolist (key '("C-<right>" "C-<left>" "ESC C-<right>" "ESC C-<left>"))
-    (unbind-key key paredit-mode-map))
-  (bind-keys :map paredit-mode-map
-	     ("C-M-<right>" . paredit-forward-slurp-sexp)
-	     ("C-M-<left>" . paredit-forward-barf-sexp)
-	     ("C-S-<left>" . paredit-backward-slurp-sexp)
-	     ("C-S-<right>" . paredit-backward-barf-sexp)
-	     ("{" . paredit-open-curly)
-	     ("}" . paredit-close-curly)
-	     ("M-}" . paredit-close-curly-and-newline))
-  (eval-after-load 'eldoc
-    (eldoc-add-command 'paredit-backward-delete
-		       'paredit-close-round)))
+  :hook (emacs-lisp-mode janet-ts-mode)
+  :custom
+  (parinfer-rust-auto-download t))
 
 ;; REST client!
 (use-package restclient

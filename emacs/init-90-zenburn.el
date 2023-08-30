@@ -172,6 +172,9 @@
          ;(set-face-attribute 'markup-value-face nil )
          (set-face-attribute 'markup-verbatim-face nil :inherit font-lock-constant-face :background 'unspecified)))
 
+    (eval-after-load 'parinfer-rust-mode
+      `(progn
+         (set-face-foreground 'parinfer-rust-dim-parens ,zenburn-fg-05)))
 
     (eval-after-load 'go-guru
      `(progn

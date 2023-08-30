@@ -12,6 +12,7 @@ elpa/
 eln-cache/
 emojis/
 eshell/
+parinfer-rust/
 persist/
 request/
 url/
