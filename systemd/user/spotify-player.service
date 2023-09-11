@@ -1,0 +1,16 @@
+[Unit]
+Description=Spotify player - daemon part
+Documentation=https://github.com/aome510/spotify-player
+Wants=sound.target
+After=sound.target
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/spotify_player --daemon
+Restart=always
+RestartSec=12
+
+[Install]
+WantedBy=default.target
