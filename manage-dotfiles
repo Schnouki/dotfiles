@@ -34,7 +34,6 @@ ENCRYPTED_FILES = {
     ".config/notmuch/autotag.py": "notmuch/autotag.py.gpg",
     ".config/notmuch/default/config": "notmuch/default/config.gpg",
     ".config/spotify-player/app.toml": "spotify-player/app.toml.gpg",
-    ".config/spotifyd/spotifyd.conf": "spotifyd/spotifyd.conf.gpg",
     ".config/swww/choose-folder": "swww/choose-folder.gpg",
 }
 
