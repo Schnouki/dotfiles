@@ -1,4 +1,17 @@
 function __fish_exa_install --on-event fish-exa_install
+    function _set
+        if not set --query --universal --export $argv[1]
+            set --universal --export $argv[1] $argv[2..-1]
+          end
+    end
+
+    # Prefer eza as exa is unmaintained
+    if type -q eza
+        set -Ux __FISH_EXA_BINARY eza
+    else
+        set -Ux __FISH_EXA_BINARY exa
+    end
+
     set -Ux __FISH_EXA_BASE_ALIASES l ll lg le lt lc lo
     set -Ux __FISH_EXA_EXPANDED a d i id aa ad ai aid aad aai aaid
     set -Ux __FISH_EXA_EXPANDED_OPT_NAME LA LD LI LID LAA LAD LAI LAID LAAD LAAI LAAID
@@ -6,36 +19,36 @@ function __fish_exa_install --on-event fish-exa_install
     set -Ux __FISH_EXA_ALIASES
     set -Ux __FISH_EXA_SORT_OPTIONS name .name size ext mod old acc cr inode
 
-    set -Ux EXA_STANDARD_OPTIONS "--group" "--header" "--group-directories-first"
+    _set EXA_STANDARD_OPTIONS "--group" "--header" "--group-directories-first"
 
     # Base aliases
-    set -Ux EXA_L_OPTIONS
-    set -Ux EXA_LL_OPTIONS "--long"
-    set -Ux EXA_LG_OPTIONS "--git" "--git-ignore" "--long"
-    set -Ux EXA_LE_OPTIONS "--extended" "--long"
-    set -Ux EXA_LT_OPTIONS "--tree" "--level"
-    set -Ux EXA_LC_OPTIONS "--across"
-    set -Ux EXA_LO_OPTIONS "--oneline"
+    _set EXA_L_OPTIONS
+    _set EXA_LL_OPTIONS "--long"
+    _set EXA_LG_OPTIONS "--git" "--git-ignore" "--long"
+    _set EXA_LE_OPTIONS "--extended" "--long"
+    _set EXA_LT_OPTIONS "--tree" "--level"
+    _set EXA_LC_OPTIONS "--across"
+    _set EXA_LO_OPTIONS "--oneline"
 
     # Extended aliases
-    set -Ux EXA_LI_OPTIONS "--icons"
-    set -Ux EXA_LD_OPTIONS "--only-dirs"
-    set -Ux EXA_LID_OPTIONS "--icons" "--only-dirs"
-    set -Ux EXA_LA_OPTIONS "--all" "--binary"
-    set -Ux EXA_LAD_OPTIONS "--all" "--binary" "--only-dirs"
-    set -Ux EXA_LAI_OPTIONS  "--all" "--binary" "--icons"
-    set -Ux EXA_LAID_OPTIONS  "--all" "--binary" "--icons" "--only-dirs"
-    set -Ux EXA_LAA_OPTIONS "--all" "--all" "--binary"
-    set -Ux EXA_LAAD_OPTIONS "--all" "--all" "--binary" "--only-dirs"
-    set -Ux EXA_LAAI_OPTIONS  "--all" "--all" "--binary" "--icons"
-    set -Ux EXA_LAAID_OPTIONS  "--all" "--all" "--binary" "--icons" "--only-dirs"
+    _set EXA_LI_OPTIONS "--icons"
+    _set EXA_LD_OPTIONS "--only-dirs"
+    _set EXA_LID_OPTIONS "--icons" "--only-dirs"
+    _set EXA_LA_OPTIONS "--all" "--binary"
+    _set EXA_LAD_OPTIONS "--all" "--binary" "--only-dirs"
+    _set EXA_LAI_OPTIONS  "--all" "--binary" "--icons"
+    _set EXA_LAID_OPTIONS  "--all" "--binary" "--icons" "--only-dirs"
+    _set EXA_LAA_OPTIONS "--all" "--all" "--binary"
+    _set EXA_LAAD_OPTIONS "--all" "--all" "--binary" "--only-dirs"
+    _set EXA_LAAI_OPTIONS  "--all" "--all" "--binary" "--icons"
+    _set EXA_LAAID_OPTIONS  "--all" "--all" "--binary" "--icons" "--only-dirs"
 
     for a in $__FISH_EXA_BASE_ALIASES
         set -l opt_name (string join '_' "EXA" (string upper $a) "OPTIONS")
         if test $a = "ll"
             alias --save "$a" "exa_git"
         else
-            alias --save "$a" "exa \$EXA_STANDARD_OPTIONS \$$opt_name"
+            alias --save "$a" "$__FISH_EXA_BINARY \$EXA_STANDARD_OPTIONS \$$opt_name"
         end
         set -a __FISH_EXA_OPT_NAMES "$opt_name"
         set -a __FISH_EXA_ALIASES "$a"
@@ -50,7 +63,7 @@ function __fish_exa_install --on-event fish-exa_install
             if string match --quiet 'll*' "$name"
                 alias --save "$name" "exa_git \$$exp_opt_name"
             else
-                alias --save "$name" "exa \$EXA_STANDARD_OPTIONS \$$exp_opt_name \$$opt_name"
+                alias --save "$name" "$__FISH_EXA_BINARY \$EXA_STANDARD_OPTIONS \$$exp_opt_name \$$opt_name"
             end
             set -a __FISH_EXA_ALIASES "$name"
 
@@ -67,15 +80,9 @@ function __fish_exa_update --on-event fish-exa_update
 end
 
 function __fish_exa_uninstall --on-event fish-exa_uninstall
-    set --erase EXA_STANDARD_OPTIONS
-
     for a in $__FISH_EXA_ALIASES
         functions --erase $a
         funcsave $a
-    end
-
-    for opt in $__FISH_EXA_OPT_NAMES
-        set --erase $opt
     end
 
     set --erase __FISH_EXA_BASE_ALIASES
@@ -84,4 +91,5 @@ function __fish_exa_uninstall --on-event fish-exa_uninstall
     set --erase __FISH_EXA_EXPANDED_OPT_NAME
     set --erase __FISH_EXA_OPT_NAMES
     set --erase __FISH_EXA_SORT_OPTIONS
+    set --erase __FISH_EXA_BINARY
 end

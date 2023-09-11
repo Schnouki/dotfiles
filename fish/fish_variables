@@ -57,6 +57,7 @@ SETUVAR Z_EXCLUDE:\x5e/home/schnouki\x24
 SETUVAR Z_OWNER:schnouki
 SETUVAR --export __FISH_EXA_ALIASES:l\x1ela\x1eld\x1eli\x1elid\x1elaa\x1elad\x1elai\x1elaid\x1elaad\x1elaai\x1elaaid\x1ell\x1ella\x1elld\x1elli\x1ellid\x1ellaa\x1ellad\x1ellai\x1ellaid\x1ellaad\x1ellaai\x1ellaaid\x1elg\x1elga\x1elgd\x1elgi\x1elgid\x1elgaa\x1elgad\x1elgai\x1elgaid\x1elgaad\x1elgaai\x1elgaaid\x1ele\x1elea\x1eled\x1elei\x1eleid\x1eleaa\x1elead\x1eleai\x1eleaid\x1eleaad\x1eleaai\x1eleaaid\x1elt\x1elta\x1eltd\x1elti\x1eltid\x1eltad\x1eltai\x1eltaid\x1eltaad\x1eltaai\x1eltaaid\x1elc\x1elca\x1elcd\x1elci\x1elcid\x1elcaa\x1elcad\x1elcai\x1elcaid\x1elcaad\x1elcaai\x1elcaaid\x1elo\x1eloa\x1elod\x1eloi\x1eloid\x1eloaa\x1eload\x1eloai\x1eloaid\x1eloaad\x1eloaai\x1eloaaid
 SETUVAR --export __FISH_EXA_BASE_ALIASES:l\x1ell\x1elg\x1ele\x1elt\x1elc\x1elo
+SETUVAR --export __FISH_EXA_BINARY:eza
 SETUVAR --export __FISH_EXA_EXPANDED:a\x1ed\x1ei\x1eid\x1eaa\x1ead\x1eai\x1eaid\x1eaad\x1eaai\x1eaaid
 SETUVAR --export __FISH_EXA_EXPANDED_OPT_NAME:LA\x1eLD\x1eLI\x1eLID\x1eLAA\x1eLAD\x1eLAI\x1eLAID\x1eLAAD\x1eLAAI\x1eLAAID
 SETUVAR --export __FISH_EXA_OPT_NAMES:EXA_L_OPTIONS\x1eEXA_LA_OPTIONS\x1eEXA_LD_OPTIONS\x1eEXA_LI_OPTIONS\x1eEXA_LID_OPTIONS\x1eEXA_LAA_OPTIONS\x1eEXA_LAD_OPTIONS\x1eEXA_LAI_OPTIONS\x1eEXA_LAID_OPTIONS\x1eEXA_LAAD_OPTIONS\x1eEXA_LAAI_OPTIONS\x1eEXA_LAAID_OPTIONS\x1eEXA_LL_OPTIONS\x1eEXA_LG_OPTIONS\x1eEXA_LE_OPTIONS\x1eEXA_LT_OPTIONS\x1eEXA_LC_OPTIONS\x1eEXA_LO_OPTIONS
