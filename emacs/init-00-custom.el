@@ -21,47 +21,53 @@
  '(lsp-ui-flycheck t t nil "Customized with use-package lsp-ui")
  '(magit-fetch-arguments '("--prune"))
  '(magit-log-section-arguments '("--decorate" "-n256"))
+ '(magit-todos-insert-after '(bottom) nil nil "Changed by setter of obsolete option `magit-todos-insert-at'")
  '(package-selected-packages
-   '(apheleia treesit-auto age git-modes paredit sly-named-readtables sly-asdf vterm mastodon pueue adoc-mode alert auto-read-only auto-virtualenvwrapper avy avy-flycheck bind-key browse-kill-ring caddyfile-mode cargo cmake-mode coffee-mode company company-org-block company-tabnine counsel crossword cython-mode dash deadgrep defproject dfmt diminish dired-collapse dired-subtree d-mode dockerfile-mode dtrt-indent dumb-jump editorconfig elixir-mode emojify evil-numbers expand-region faceup fennel-mode fish-mode flycheck flycheck-mypy flycheck-nim flycheck-package flycheck-plantuml flycheck-pos-tip flyspell gitignore-mode git-link go-add-tags godoctor go-eldoc go-guru go-mode google-translate go-rename goto-last-change graphviz-dot-mode guess-language helpful hl-todo hydra hy-mode ibuffer-projectile ivy ix jinja2-mode jq-mode js2-mode js-doc just-mode less-css-mode ligature list-utils loop lsp-mode lsp-pyright lsp-ui lua-mode magit memory-usage move-text multiple-cursors nim-mode notmuch org org-contrib org-mime ox-gfm ox-md package-lint php-mode pkgbuild-mode plantuml-mode po-compat po-mode projectile python rainbow-mode restclient restclient-jq ripgrep rust-mode s sass-mode scad-mode scss-mode shrink-whitespace sly-quicklisp smart-comment smart-forward smart-mode-line smerge-mode sudoku swiper systemd tide toml-mode transpose-frame undo-tree unicode-troll-stopper use-package uuidgen viking-mode visual-fill-column volatile-highlights wgrep writeroom-mode wttrin xref yasnippet zenburn-theme) nil nil "COUCOU!")
+   '(magit-todos apheleia treesit-auto age git-modes paredit sly-named-readtables
+		 sly-asdf vterm mastodon pueue adoc-mode alert auto-read-only
+		 auto-virtualenvwrapper avy avy-flycheck bind-key
+		 browse-kill-ring caddyfile-mode cargo cmake-mode coffee-mode
+		 company company-org-block company-tabnine counsel crossword
+		 cython-mode dash deadgrep defproject dfmt diminish
+		 dired-collapse dired-subtree d-mode dockerfile-mode dtrt-indent
+		 dumb-jump editorconfig elixir-mode emojify evil-numbers
+		 expand-region faceup fennel-mode fish-mode flycheck
+		 flycheck-mypy flycheck-nim flycheck-package flycheck-plantuml
+		 flycheck-pos-tip flyspell gitignore-mode git-link go-add-tags
+		 godoctor go-eldoc go-guru go-mode google-translate go-rename
+		 goto-last-change graphviz-dot-mode guess-language helpful
+		 hl-todo hydra hy-mode ibuffer-projectile ivy ix jinja2-mode
+		 jq-mode js2-mode js-doc just-mode less-css-mode ligature
+		 list-utils loop lsp-mode lsp-pyright lsp-ui lua-mode magit
+		 memory-usage move-text multiple-cursors nim-mode notmuch org
+		 org-contrib org-mime ox-gfm ox-md package-lint php-mode
+		 pkgbuild-mode plantuml-mode po-compat po-mode projectile python
+		 rainbow-mode restclient restclient-jq ripgrep rust-mode s
+		 sass-mode scad-mode scss-mode shrink-whitespace sly-quicklisp
+		 smart-comment smart-forward smart-mode-line smerge-mode sudoku
+		 swiper systemd tide toml-mode transpose-frame undo-tree
+		 unicode-troll-stopper use-package uuidgen viking-mode
+		 visual-fill-column volatile-highlights wgrep writeroom-mode
+		 wttrin xref yasnippet zenburn-theme) nil nil "COUCOU!")
  '(safe-local-variable-values
-   '((lsp-pyright-extra-paths .
-			      ["/home/schnouki/doist/ist_libs/python"])
-     (python-fill-docstring-style . python-257-nn)
-     (blacken-mode . t)
-     (python-fill-docstring-style . django)
-     (eval blacken-mode t)
-     (company-tabnine-always-trigger)
-     (schnouki/disable-autopep8 . t)
-     (py-autopep8-options quote
-			  ("--max-line-length=100"))
+   '((lsp-pyright-extra-paths . ["/home/schnouki/doist/ist_libs/python"])
+     (python-fill-docstring-style . python-257-nn) (blacken-mode . t)
+     (python-fill-docstring-style . django) (eval blacken-mode t)
+     (company-tabnine-always-trigger) (schnouki/disable-autopep8 . t)
+     (py-autopep8-options quote ("--max-line-length=100"))
      (py-autopep8-options "--max-line-length=100")
-     (plantuml-output-type . "svg")
-     (org-image-actual-width . 120)
+     (plantuml-output-type . "svg") (org-image-actual-width . 120)
      (origami-fold-style . triple-braces)
-     (eval when
-	   (require 'rainbow-mode nil t)
-	   (rainbow-mode 1))
-     (eval when
-	   (require 'rainbow-mode nil t)
-	   (schnouki/rainbow-mode-zenburn))
-     (js2-basic-offset . 4)
-     (nxml-child-indent . 2)
-     (nxml-attribute-indent . 4)
-     (lua-indent-level . 4)
-     (org-enable-table-editor)
-     (nxml-child-indent . 8)
-     (nxml-attribute-indent . 8)
-     (require-final-newline)
+     (eval when (require 'rainbow-mode nil t) (rainbow-mode 1))
+     (eval when (require 'rainbow-mode nil t) (schnouki/rainbow-mode-zenburn))
+     (js2-basic-offset . 4) (nxml-child-indent . 2) (nxml-attribute-indent . 4)
+     (lua-indent-level . 4) (org-enable-table-editor) (nxml-child-indent . 8)
+     (nxml-attribute-indent . 8) (require-final-newline)
      (ack-and-a-half-prompt-for-directory . t)
-     (flycheck-checker . python2-pylint)
-     (delete-trailing-lines)
-     (js3-strict-trailing-comma-warning)
-     (js2-strict-trailing-comma-warning)
-     (haml-indent-offset . 4)
-     (encoding . utf-8)
-     (pkgbuild-update-sums-on-save)
-     (py-indent-offset . 4)
-     (ispell-dictionary . "francais")
+     (flycheck-checker . python2-pylint) (delete-trailing-lines)
+     (js3-strict-trailing-comma-warning) (js2-strict-trailing-comma-warning)
+     (haml-indent-offset . 4) (encoding . utf-8) (pkgbuild-update-sums-on-save)
+     (py-indent-offset . 4) (ispell-dictionary . "francais")
      (ispell-dictionary . "american")))
  '(sudoku-download t nil nil "Customized with use-package sudoku")
  '(sudoku-level 'medium nil nil "Customized with use-package sudoku")
