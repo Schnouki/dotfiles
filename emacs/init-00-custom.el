@@ -102,6 +102,7 @@
  '(lsp-ui-flycheck t t nil "Customized with use-package lsp-ui")
  '(magit-fetch-arguments '("--prune"))
  '(magit-log-section-arguments '("--decorate" "-n256"))
+ '(magit-todos-insert-after '(bottom) nil nil "Changed by setter of obsolete option `magit-todos-insert-at'")
  '(package-selected-packages
    '(parinfer-rust-mode lsp-docker lsp-treemacs treemacs apheleia treesit-auto age
 			git-modes sly-named-readtables sly-asdf vterm mastodon

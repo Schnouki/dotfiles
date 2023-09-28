@@ -41,12 +41,18 @@
   (advice-add #'magit-process-filter :after #'schnouki/magit-process--maybe-tail-buffer)
   )
 
+(use-package magit-todos
+  :ensure t
+  :after magit
+  :config
+  (magit-todos-mode 1))
+
 (use-package git-link
   :ensure t
   :bind (:map schnouki-magit-prefix-map
-         ("g g" . git-link)
-         ("g c" . git-link-commit)
-         ("g h" . git-link-homepage))
+              ("g g" . git-link)
+              ("g c" . git-link-commit)
+              ("g h" . git-link-homepage))
   :custom
   (git-link-use-commit t))
 
