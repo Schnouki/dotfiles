@@ -23,7 +23,7 @@
   :custom
   (magit-process-popup-time 2)
   (vc-follow-symlinks t)
-  (epg-pinentry-mode 'loopback)
+  (epg-pinentry-mode nil)
   :config
 
   (setq schnouki/magit-process-buffer-tail t)
