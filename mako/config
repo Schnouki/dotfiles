@@ -1,7 +1,7 @@
 font=Iosevka Aile 12
 padding=12
 default-timeout=5000
-layer=overlay
+layer=top
 
 icons=1
 icon-path=/usr/share/icons/Numix-Circle:/usr/share/icons/Numix
@@ -17,3 +17,12 @@ background-color=#6c3333
 text-color=#ecb3b3
 border-color=#8c5353
 progress-color=over #8c5353
+
+[app-name="spotify_player"]
+invisible=1
+
+[app-name="mpris2"]
+background-color=#151505
+text-color=#dcdccc
+border-size=0
+border-radius=10
