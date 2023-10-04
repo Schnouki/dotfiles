@@ -3,7 +3,7 @@
 	dftu = difftool --tool difftastic-inline
 	fp = fetch --prune
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-	upp = !git fetch --prune && git checkout main && git pull
+	upp = !git fetch --prune && git checkout $(git symbolic-ref --short HEAD) && git pull
 	wdiff = diff --color-words
 [branch]
         autoSetupMerge = true
@@ -57,6 +57,10 @@
 	default = simple
 [rebase]
 	autosquash = true
+[sendemail]
+	annotate = true
+	envelopeSender = auto
+	sendmailCmd = msmtpq -a schnouki.net
 [user]
 	name = Thomas Jost
 	email = schnouki@schnouki.net
