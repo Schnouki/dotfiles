@@ -33,7 +33,7 @@ ENCRYPTED_FILES = {
     ".config/msmtp/config": "msmtp/config.gpg",
     ".config/notmuch/autotag.py": "notmuch/autotag.py.gpg",
     ".config/notmuch/default/config": "notmuch/default/config.gpg",
-    ".config/spotify-player/app.toml": "spotify-player/app.toml.gpg",
+    ".config/spotify-player/app.toml.in": "spotify-player/app.toml.in.gpg",
     ".config/swww/choose-folder": "swww/choose-folder.gpg",
 }
 
@@ -60,6 +60,10 @@ DIR_SYMLINKS = {
 
 EXECUTABLE_FILES = {
     ".config/notmuch/autotag.py",
+}
+
+TEMPLATED_FILES = {
+    ".config/spotify-player/app.toml",
 }
 
 HOME = Path.home()
@@ -111,6 +115,19 @@ def filter_netrc(fp: Path) -> os.PathLike:
     outp = TempPath()
     outp.path.write_text("\n".join(new_data))
     return outp
+
+
+def render_template(src_fp: Path, dst_fp: Path) -> None:
+    hostname = socket.gethostname()
+    replacements = {
+        "@@HOSTNAME@@": hostname,
+        "@@HOSTNAME_TITLE@@": hostname.title(),
+    }
+
+    text = src_fp.read_text()
+    for needle, value in replacements.items():
+        text = text.replace(needle, value)
+    dst_fp.write_text(text)
 
 
 def md5(buf: bytes) -> str:
@@ -339,6 +356,23 @@ def decrypt_tarballs():
     return True
 
 
+def render_templates():
+    success = True
+
+    for path in TEMPLATED_FILES:
+        dst_p = HOME / path
+        src_p = dst_p.with_suffix(dst_p.suffix + ".in")
+        if not src_p.exists():
+            print(f"Template missing: {src_p}")
+            success = False
+            continue
+        if not dst_p.exists() or src_p.stat().st_mtime > dst_p.stat().st_mtime:
+            print(f"Rendering {dst_p}")
+            render_template(src_p, dst_p)
+
+    return success
+
+
 def update_executable_files():
     perm = stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH
     for src in EXECUTABLE_FILES:
@@ -414,9 +448,10 @@ def cmd_setup(args):
     r2 = create_file_symlinks()
     r3 = decrypt_files()
     r4 = decrypt_tarballs()
-    r5 = update_executable_files()
+    r5 = render_templates()
+    r6 = update_executable_files()
 
-    success = r1 and r2 and r3 and r4 and r5
+    success = r1 and r2 and r3 and r4 and r5 and r6
     sys.exit(0 if success else 1)
 
 
