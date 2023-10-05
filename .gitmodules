@@ -11,3 +11,6 @@
 	path = emacs/undo-tree
 	url = https://git.sr.ht/~schnouki/undo-tree
 	branch = allow-overridden-bindings
+[submodule "emacs/ajrepl"]
+	path = emacs/ajrepl
+	url = https://github.com/sogaiu/ajrepl
