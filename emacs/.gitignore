@@ -45,4 +45,5 @@ tramp
 golbarg.el
 
 # Private
+init-00-custom.el
 init-99-private.el
