@@ -2,8 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-(use-package flycheck-mypy
-  :ensure t)
 
 (use-package auto-virtualenvwrapper
   :ensure t
@@ -12,22 +10,6 @@
   :custom
   (auto-virtualenvwrapper-verbose nil))
 
-;; Django helper
-(defun schnouki/use-django-interactive-shell ()
-  "Auto-detect Django projects and change the interactive shell to `manage.py shell'."
-  (interactive)
-  (let ((file (buffer-file-name))
-	(found nil))
-    (while (not (or (null file)
-		    (string= file "/")
-		    found))
-      (let* ((parent-dir (file-name-directory file))
-	     (manage-py (concat parent-dir "manage.py")))
-	(setq file (directory-file-name parent-dir))
-	(when (file-exists-p manage-py)
-	  (setq-local python-shell-interpreter-args (concat manage-py " shell"))
-	  (setq found t))))))
-(add-hook 'python-mode-hook 'schnouki/use-django-interactive-shell)
 
 (use-package cython-mode
   :ensure t

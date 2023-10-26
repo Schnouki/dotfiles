@@ -179,8 +179,6 @@
   :hook (nim-mode . nimsuggest-mode)
   :custom
   (nimsuggest-path "~/.local/share/nimble/bin/nimsuggest"))
-(use-package flycheck-nim
-  :ensure t)
 
 (use-package scad-mode
   :ensure t)
