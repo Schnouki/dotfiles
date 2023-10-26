@@ -45,6 +45,7 @@ vivaldi-stable-alt: (prepare "vivaldi-stable" "vivaldi-stable-alt")
     just electron_wayland vivaldi-stable-alt
     just add_args vivaldi-stable-alt '"--profile-directory=Profile 1"'
     just add_name vivaldi-stable-alt "(test profile)"
+    [[ ! -d "${HOME}/.config/vivaldi/Profile 1" ]] && rm vivaldi-stable-alt.desktop
 
 steam-games:
     ./make_steam_desktop_files.py
