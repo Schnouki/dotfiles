@@ -20,7 +20,7 @@
   :diminish dtrt-indent-mode
   :defer 3
   :config
-  (dtrt-indent-mode 1))
+  (dtrt-indent-global-mode 1))
 
 ;; No trailing whitespaces
 (defvar-local enable-delete-trailing-whitespace t
@@ -32,6 +32,8 @@
   (when enable-delete-trailing-whitespace
     (delete-trailing-whitespace)))
 (add-hook 'before-save-hook 'schnouki/maybe-delete-trailing-whitespace)
+
+(setq show-trailing-whitespace t)
 
 ;; Markdown
 (use-package markdown-mode

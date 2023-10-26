@@ -29,8 +29,11 @@
 ;; Keep all backup files in a single directory
 (setq backup-directory-alist '(("." . "~/.cache/emacs/backup-files/")))
 
+;; Don't move to backup, copy!
+(setq backup-by-copying t)
+
 ;; Web browser
-(setq browse-url-browser-function 'browse-url-firefox  ;chromium
+(setq browse-url-browser-function 'browse-url-firefox
       browse-url-firefox-program "firefox"
       browse-url-firefox-new-window-is-tab t)
 
@@ -103,7 +106,7 @@
 Has no effect if the character before point is not of the syntax class ')'."
   (let* ((cb (char-before (point)))
          (matching-text (and cb
-                             (char-equal (char-syntax cb) ?\) )
+                             (char-equal (char-syntax cb) ?\))
                              (blink-matching-open))))
     (when matching-text (message matching-text))))
 (advice-add 'show-paren-function :after #'schnouki/show-matching-paren-offscreen)

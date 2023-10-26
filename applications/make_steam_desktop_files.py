@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 
 from pathlib import Path
+import functools
 import re
 import shlex
+import shutil
 
 from PIL import Image
 import slugify
@@ -12,7 +14,7 @@ STEAM_BASE_DIR = "~/.local/share/Steam"
 DESKTOP_TEMPLATE = """[Desktop Entry]
 Name={name}
 Comment=Play {name} on Steam
-Exec=prime-run steam steam://rungameid/{appid}
+Exec={wrapper}steam steam://rungameid/{appid}
 Icon={icon_path}
 Terminal=false
 Type=Application
@@ -39,6 +41,13 @@ def main():
     cleanup_steam_desktop_files(app_dir)
 
 
+@functools.cache
+def get_wrapper() -> str:
+    if w := shutil.which("prime-run"):
+        return "prime-run "
+    return ""
+
+
 def process_acf(app_dir: Path, steam_dir: Path, acf_file: Path):
     acf_data = parse_acf(acf_file)
     appid = acf_data["appid"]
@@ -58,6 +67,7 @@ def process_acf(app_dir: Path, steam_dir: Path, acf_file: Path):
         appid=appid,
         name=name,
         icon_path=png_icon_path,
+        wrapper=get_wrapper(),
     )
 
     file_path = app_dir / file_name
