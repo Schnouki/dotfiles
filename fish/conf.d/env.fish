@@ -10,6 +10,7 @@ set PATH \
     $HOME/.local/share/nimble/bin \
     $HOME/.luarocks/bin \
     $HOME/.roswell/bin \
+    $HOME/.config/guix/current/bin \
     $PATH
 
 set -Ux XDG_DATA_HOME $HOME/.local/share
