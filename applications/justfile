@@ -25,16 +25,16 @@ electron_scaling FILE:
     just add_args "{{FILE}}" --force-device-scale-factor=1.25
 
 knossos: (prepare "knossos")
-    just add_runner knossos prime-run
+    -which prime-run &>/dev/null && just add_runner knossos prime-run || rm knossos.desktop
 
 obsidian: (prepare "obsidian")
     just electron_wayland obsidian
 
 steam: (prepare "steam")
-    just add_runner steam prime-run
+    -which prime-run &>/dev/null && just add_runner steam prime-run || rm steam.desktop
 
 steam-native: (prepare "steam-native")
-    just add_runner steam-native prime-run
+    -which prime-run &>/dev/null && just add_runner steam-native prime-run || rm steam-native.desktop
 
 vivaldi-stable: (prepare "vivaldi-stable")
     sed -i "s!/usr/bin/vivaldi-stable!${HOME}/bin/vivaldi-stable!g" vivaldi-stable.desktop
@@ -50,5 +50,5 @@ steam-games:
     ./make_steam_desktop_files.py
 
 clean:
-    rm -rf obsidisan.desktop steam.desktop steam-native.desktop vivaldi-stable.desktop vivaldi-stable-alt.desktop \
+    rm -rf obsidian.desktop steam.desktop steam-native.desktop vivaldi-stable.desktop vivaldi-stable-alt.desktop \
         steamgame_*.desktop steam_icons/
