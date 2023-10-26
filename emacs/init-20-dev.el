@@ -127,76 +127,17 @@
 ;;        (concat (substring ediff-diff-ok-lines-regexp 0 -2) "\\|.*Pas de fin de ligne\\)")))
 
 ;; Completion with LSP
-(use-package lsp-mode
+(use-package eglot
   :ensure t
-  :commands (lsp lsp-deferred)
-  :hook (prog-mode . lsp-deferred)
-  :limit-process t
   :custom
-  (lsp-auto-guess-root nil)
-  (lsp-auto-select-workspace nil)
-  (lsp-clients-emmy-lua-jar-path "/usr/lib/lua-emmy-language-server/EmmyLua-LS-all.jar")
-  (lsp-enable-file-watchers nil)
-  (lsp-prefer-flymake nil)
-  (lsp-warn-no-matched-clients nil)
-  :config
-  (defun schnouki/lsp--disable-y-or-n-p (orig-fun &rest args)
-    (if schnouki/desktop-was-read
-        ;; OK, proceed!
-        (apply orig-fun args)
-      ;; Still reading desktop time: turn y-or-no-p into a no-op
-      (with-yes-or-no nil
-        (apply orig-fun args))))
-  (advice-add 'lsp :around #'schnouki/lsp--disable-y-or-n-p)
-  (advice-add 'lsp--ask-about-watching-big-repo :around #'schnouki/lsp--disable-y-or-n-p))
+  (eglot-autoshutdown t)
+  (eglot-stay-out-of '(flymake)))
 
-(setq schnouki/desktop-was-read nil)
-
-(use-package lsp-ui
+(use-package flycheck-eglot
+  :after (eglot flycheck)
   :ensure t
-  :hook (lsp-mode . lsp-ui-mode)
-  :bind (:map lsp-ui-mode-map
-              ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
-              ([remap xref-find-references] . lsp-ui-peek-find-references))
-  :limit-process t
-  :custom
-  (lsp-ui-flycheck t)
-  (lsp-ui-doc-delay 0.2)
-  (lsp-ui-doc-include-signature t)
-  (lsp-ui-doc-position 'top)
-  (lsp-ui-doc-alignment 'window))
-
-;; Use nimlsp from nimble
-(with-eval-after-load-feature (lsp lsp-nim)
-  (let ((client (gethash 'nimls lsp-clients)))
-    (setf (lsp--client-new-connection client)
-          (lsp-stdio-connection "~/.local/share/nimble/bin/nimlsp"))))
-
-;; https://github.com/abo-abo/hydra/wiki/lsp-mode
-(defhydra hydra-lsp (:exit t :hint nil)
-  "
- Buffer^^               Server^^                   Symbol
-^^-------------------- ^^------------------------ --------------------------------------------------------
- [_f_] format           [_M-r_] restart            [_d_] declaration  [_i_] implementation  [_o_] documentation
- [_m_] imenu            [_S_]   shutdown           [_D_] definition   [_t_] type            [_r_] rename
- [_x_] execute action   [_M-s_] describe session   [_R_] references   [_s_] signature"
-  ("d" lsp-find-declaration)
-  ("D" lsp-ui-peek-find-definitions)
-  ("R" lsp-ui-peek-find-references)
-  ("i" lsp-ui-peek-find-implementation)
-  ("t" lsp-find-type-definition)
-  ("s" lsp-signature-help)
-  ("o" lsp-describe-thing-at-point)
-  ("r" lsp-rename)
-
-  ("f" lsp-format-buffer)
-  ("m" lsp-ui-imenu)
-  ("x" lsp-execute-code-action)
-
-  ("M-s" lsp-describe-session)
-  ("M-r" lsp-restart-workspace)
-  ("S" lsp-shutdown-workspace))
-(bind-key "l" 'hydra-lsp/body schnouki-prefix-map)
+  :init
+  (global-flycheck-eglot-mode 1))
 
 
 ;; Company -- complete anything
