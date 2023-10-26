@@ -24,7 +24,7 @@
 (use-package js-doc
   :ensure t
   :bind (:map js2-mode-map
-              ;("C-c C-@" . js-doc-describe-tag)
+              ;;("C-c C-@" . js-doc-describe-tag)
               ("C-c i"   . js-doc-insert-function-doc)
               ("@"       . js-doc-insert-tag))
   :custom
@@ -47,8 +47,8 @@
   (add-hook 'typescript-mode-hook
             (lambda ()
               (tide-setup)
-              (add-hook 'before-save-hook 'tide-format-before-save nil t))
-            ))
+              (add-hook 'before-save-hook 'tide-format-before-save nil t))))
+
 
 (use-package php-mode
   :ensure t
@@ -61,8 +61,8 @@
 (use-package markdown-mode
   :ensure t
   :mode (("\\.md\\'" . markdown-mode)
-           ("\\.mdwn\\'" . markdown-mode)
-           ("\\.markdown\\'" . markdown-mode))
+         ("\\.mdwn\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
   :init
   (setq markdown-command "~/.config/emacs/markdown"))
 

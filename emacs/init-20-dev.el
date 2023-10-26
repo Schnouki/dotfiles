@@ -50,8 +50,8 @@
                                                       flycheck-check-syntax-automatically))
   (defhydra hydra-flycheck
     (:pre (progn (setq hydra-lv t) (flycheck-list-errors))
-     :post (progn (setq hydra-lv nil) (quit-windows-on "*Flycheck errors*"))
-     :hint nil)
+          :post (progn (setq hydra-lv nil) (quit-windows-on "*Flycheck errors*"))
+          :hint nil)
     "Flycheck errors"
     ("p" flycheck-previous-error "previous")
     ("n" flycheck-next-error "next")
@@ -83,13 +83,13 @@
 (use-package dumb-jump
   :ensure t
   :bind (:map schnouki-prefix-map
-         ("j j" . dumb-jump-go)
-         ("j o" . dumb-jump-go-other-window)
-         ("j p" . dumb-jump-back)
-         ("j i" . dumb-jump-go-prompt)
-         ("j l" . dumb-jump-quick-look)
-         ("j J" . dumb-jump-go-prefer-external)
-         ("j O" . dumb-jump-go-prefer-external-other-window))
+              ("j j" . dumb-jump-go)
+              ("j o" . dumb-jump-go-other-window)
+              ("j p" . dumb-jump-back)
+              ("j i" . dumb-jump-go-prompt)
+              ("j l" . dumb-jump-quick-look)
+              ("j J" . dumb-jump-go-prefer-external)
+              ("j O" . dumb-jump-go-prefer-external-other-window))
   :commands (dumb-jump-xref-activate)
   :init
   (setq dumb-jump-selector 'ivy)
@@ -122,9 +122,9 @@
 (setq compilation-exit-message-function 'compilation-exit-autoclose)
 
 ;; Make ediff fr_FR-locale-friendly
-;(eval-after-load 'ediff-diff
-;  '(setq ediff-diff-ok-lines-regexp
-;        (concat (substring ediff-diff-ok-lines-regexp 0 -2) "\\|.*Pas de fin de ligne\\)")))
+;;(eval-after-load 'ediff-diff
+;;  '(setq ediff-diff-ok-lines-regexp
+;;        (concat (substring ediff-diff-ok-lines-regexp 0 -2) "\\|.*Pas de fin de ligne\\)")))
 
 ;; Completion with LSP
 (use-package lsp-mode
@@ -254,7 +254,7 @@
         (push entry prettify-symbols-alist))
       ;; Enable prettify-symbols-mode
       (prettify-symbols-mode 1))))
-;(add-hook 'prog-mode-hook 'schnouki/maybe-enable-prettify-symbols-mode)
+;;(add-hook 'prog-mode-hook 'schnouki/maybe-enable-prettify-symbols-mode)
 
 ;; Increase selected region by semantic units
 (use-package expand-region
@@ -337,7 +337,7 @@
   :ensure t
   :bind (:map vterm-mode-map
               ("C-q" . vterm-send-next-key)
-         :map schnouki-prefix-map
+              :map schnouki-prefix-map
               ("v v" . vterm)
               ("v o" . vterm-other-window))
   :hook ((vterm-mode . #'schnouki/disable-hl-line-mode-locally)
