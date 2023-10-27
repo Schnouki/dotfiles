@@ -6,6 +6,7 @@
 (use-package smart-mode-line
   :ensure t
   :custom
+  (mode-line-compact 'long)
   (sml/theme 'respectful)
   (sml/show-client t)
   (rm-blacklist '(" ,"           ; subword
@@ -19,8 +20,9 @@
      ("^~/doist/"    ":D:")
      ("^:D:Todoist/" ":TD:")
      ("^:D:twist/"   ":TW:")))
-  (sml/name-width '(0 . 44))
+  (sml/name-width '(0 . 30))
   (sml/mode-width 'full)
+  (sml/extra-filler -1)
 
   :config
   ;; Move which-func indicator to just after the file name
