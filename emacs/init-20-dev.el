@@ -226,7 +226,8 @@
   :ensure t
   :hook (emacs-lisp-mode janet-ts-mode)
   :custom
-  (parinfer-rust-auto-download t))
+  (parinfer-rust-auto-download t)
+  (parinfer-rust-check-before-enable nil))
 
 ;; REST client!
 (use-package restclient
