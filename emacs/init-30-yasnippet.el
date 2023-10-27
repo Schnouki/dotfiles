@@ -8,6 +8,8 @@
   :diminish yas-minor-mode
   :config
   (yas-global-mode 1))
+(use-package yasnippet-snippets
+  :ensure t)
 
 ;; Modes that bind something to "<tab>" instead of "TAB"
 ;; -- http://blog.iany.me/2012/03/fix-tab-binding-for-yasnippet-and-auto-complete/
