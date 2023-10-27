@@ -25,13 +25,15 @@
   :config
   ;; Move which-func indicator to just after the file name
   ;; https://github.com/Bruce-Connor/smart-mode-line/issues/77#issuecomment-39708760
-  (let ((which-func '(which-func-mode ("" which-func-format " ")))
+  (let ((which-func-entry '(which-function-mode
+                            (which-func-mode
+                             ("" which-func-format " "))))
         cell)
-    (setq-default mode-line-format (remove which-func mode-line-format))
-    (setq-default mode-line-misc-info (remove which-func mode-line-misc-info))
+    (setq mode-line-format (remove which-func-entry mode-line-format))
+    (setq mode-line-misc-info (remove which-func-entry mode-line-misc-info))
     (setq cell (last mode-line-format 8))
     (setcdr cell
-            (cons which-func
+            (cons which-func-entry
                   (cdr cell))))
 
   (sml/setup))
