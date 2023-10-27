@@ -6,8 +6,6 @@
   :ensure t
   :defer 15
   :diminish yas-minor-mode
-  :custom
-  (yas-snippet-dirs '("~/.config/emacs/snippets"))
   :config
   (yas-global-mode 1))
 
