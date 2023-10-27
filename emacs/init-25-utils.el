@@ -195,8 +195,8 @@ If PREFIX is not nil, force creating a new scratch buffer."
   "Convert seconds to a readable duration."
   (interactive)
   (let* ((secs (if (numberp seconds) seconds
-		(if (stringp seconds) (string-to-number seconds)
-		  (error "Argument must be a number or a string"))))
+                 (if (stringp seconds) (string-to-number seconds)
+                   (error "Argument must be a number or a string"))))
 	 (h (floor secs 3600))
 	 (m (floor (mod secs 3600) 60))
 	 (s (floor (mod secs 60))))
@@ -227,7 +227,7 @@ Return the index of the matching item, or nil if not found."
       schnouki/immortal-silent-buffers `(,(rx string-start "*magit:")
 					 "*Messages*")
       schnouki/immortal-modes        '(message-mode notmuch-hello-mode notmuch-search-mode
-				       notmuch-show-mode inferior-python-mode))
+                                                    notmuch-show-mode inferior-python-mode))
 
 (defun schnouki/buffer-immortal-p (buffer)
   "Check if BUFFER is immortal."
@@ -300,13 +300,13 @@ of buffers that *would* be killed."
 (bind-key "K" 'schnouki/kill-mode-buffers schnouki-prefix-map)
 
 (defun schnouki/killable-buffer-list (buffers)
-    "Filter and return killable buffers from BUFFERS.
+  "Filter and return killable buffers from BUFFERS.
 A buffer is considered killable if it is not modified and either visits a file, or is not immortal."
-    (--filter (and (buffer-live-p it)
-		   (not (buffer-modified-p it))
-		   (or (buffer-file-name it)
-		       (not (schnouki/buffer-immortal-p it))))
-	      buffers))
+  (--filter (and (buffer-live-p it)
+                 (not (buffer-modified-p it))
+                 (or (buffer-file-name it)
+                     (not (schnouki/buffer-immortal-p it))))
+            buffers))
 
 (defun schnouki/sort-buffers-by-display-time (buffers)
   "Sort BUFFERS by display time."
@@ -360,7 +360,7 @@ Prioritize directories, but make sure .dotfiles are last."
   :commands (ivy-mode)
   :diminish ivy-mode
   :bind (:map schnouki-prefix-map
-	 ("r " . ivy-resume))
+              ("r " . ivy-resume))
   :custom
   (ivy-magic-tilde nil)
   (ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
@@ -383,11 +383,11 @@ Prioritize directories, but make sure .dotfiles are last."
   :commands (counsel-mode)
   :diminish counsel-mode
   :bind (:map counsel-mode-map
-	 ([remap insert-char] . counsel-unicode-char)
-	 ([remap switch-to-buffer] . counsel-switch-buffer)
-	 ([remap switch-to-buffer-other-window] . counsel-switch-buffer-other-window)
-	 :map schnouki-prefix-map
-	 ("s" . counsel-rg))
+              ([remap insert-char] . counsel-unicode-char)
+              ([remap switch-to-buffer] . counsel-switch-buffer)
+              ([remap switch-to-buffer-other-window] . counsel-switch-buffer-other-window)
+              :map schnouki-prefix-map
+              ("s" . counsel-rg))
   :custom
   (counsel-find-file-ignore-regexp
    (rx (or (: bos (or "." "#"))
@@ -469,7 +469,7 @@ Prioritize directories, but make sure .dotfiles are last."
 (use-package google-translate
   :ensure t
   :bind (:map schnouki-prefix-map
-         ("W" . google-translate-query-translate))
+              ("W" . google-translate-query-translate))
   :init
   (setq google-translate-default-source-language "en"
         google-translate-default-target-language "fr"
@@ -588,7 +588,7 @@ If third argument START is non-nil, convert words after that index in STRING."
 (use-package wttrin
   :ensure t
   :bind (:map schnouki-prefix-map
-         ("W" . wttrin))
+              ("W" . wttrin))
   :init
   (setq wttrin-default-cities '("Nancy" "Forbach" "Paris")))
 
@@ -619,11 +619,11 @@ If third argument START is non-nil, convert words after that index in STRING."
 (use-package writeroom-mode
   :ensure t
   :bind (:map schnouki-prefix-map
-         ("w" . writeroom-mode)
-         :map writeroom-mode-map
-         ("C-<kp-add>" . writeroom-increase-width)
-         ("C-<kp-subtract>" . writeroom-decrease-width)
-         ("C-=" . writeroom-adjust-width)))
+              ("w" . writeroom-mode)
+              :map writeroom-mode-map
+              ("C-<kp-add>" . writeroom-increase-width)
+              ("C-<kp-subtract>" . writeroom-decrease-width)
+              ("C-=" . writeroom-adjust-width)))
 
 ;; Memory usage
 (use-package memory-usage
@@ -638,11 +638,11 @@ If third argument START is non-nil, convert words after that index in STRING."
 (use-package transpose-frame
   :ensure t
   :bind (:map schnouki-prefix-map
-         ("p t" . transpose-frame)
-         ("p f" . flip-frame)
-         ("p F" . flop-frame)
-         ("p r" . rotate-frame-clockwise)
-         ("p R" . rotate-frame-anticlockwise)))
+              ("p t" . transpose-frame)
+              ("p f" . flip-frame)
+              ("p F" . flop-frame)
+              ("p r" . rotate-frame-clockwise)
+              ("p R" . rotate-frame-anticlockwise)))
 
 ;; Keep init-00-custom up-to-date! :)
 (defun schnouki/update-selected-packages ()
@@ -661,14 +661,14 @@ If third argument START is non-nil, convert words after that index in STRING."
   (require 's)
   (let ((env-vars '("SWAYSOCK" "I3SOCK")))
     (-as-> (with-output-to-string
-              (with-current-buffer standard-output
-                (call-process "systemctl" nil t nil "--user" "show-environment")))
+             (with-current-buffer standard-output
+               (call-process "systemctl" nil t nil "--user" "show-environment")))
            env
-     (s-lines env)
-     (-remove #'s-blank-str? env)
-     (--map (s-split-up-to "=" it 1) env)
-     (--filter (-contains? env-vars (car it)) env)
-     (--each env (apply #'setenv it)))))
+           (s-lines env)
+           (-remove #'s-blank-str? env)
+           (--map (s-split-up-to "=" it 1) env)
+           (--filter (-contains? env-vars (car it)) env)
+           (--each env (apply #'setenv it)))))
 
 ;; GUI for pueue
 (use-package pueue
