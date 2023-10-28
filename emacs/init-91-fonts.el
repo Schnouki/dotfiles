@@ -28,8 +28,13 @@
     (--each '(mode-line mode-line-active mode-line-inactive)
       (set-face-attribute it nil :font mono-font))))
 
-(eval-after-load 'faces
-  (schnouki/setup-fonts))
+(with-eval-after-load 'faces
+  (schnouki/setup-fonts)
 
+  (defface strictly-fixed-pitch
+    '((t :inherit fixed-pitch
+         :font "Iosevka Fixed"))
+    "A strictly fixed-pitch face, even for graphical Unicode characters"
+    :group 'basic-faces))
 
 ;;; init-91-fonts.el ends here

@@ -406,21 +406,17 @@ Prioritize directories, but make sure .dotfiles are last."
   :custom
   (wgrep-auto-save-buffer t))
 
-;; undo-tree
-(use-package queue
-  :ensure t)
-(use-package undo-tree
-  :load-path "~/.config/emacs/undo-tree"
-  :demand t
-  :diminish undo-tree-mode
-  :bind* (("C-'"  . undo-tree-undo)
-          ("C-\"" . undo-tree-redo))
+;; vundo
+(use-package vundo
+  :ensure t
+  :bind* (("C-'" . undo)
+          ("C-\"" . undo-redo))
+  :bind (:map ctl-x-map
+              ("u" . vundo))
   :custom
-  (undo-tree-allow-overridden-bindings t)
-  (undo-tree-history-directory-alist '(("." . "~/.cache/emacs/undo-tree-history/")))
-  (undo-tree-visualizer-diff t)
-  :config
-  (global-undo-tree-mode))
+  (vundo-glyph-alist vundo-unicode-symbols)
+  :custom-face
+  (vundo-default ((t (:inherit strictly-fixed-pitch)))))
 
 ;; goto-last-change
 (use-package goto-last-change
