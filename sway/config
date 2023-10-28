@@ -358,7 +358,6 @@ for_window [shell="xwayland"] title_format "%title <small>[XWayland]</small>"
 for_window [app_id="galculator"] floating enable
 for_window [app_id="pavucontrol"] floating enable
 
-for_window [app_id="firefox" title="Firefox - Indicateur de partage"] kill
 for_window [app_id="firefox" title="Incrustation vidéo"] {
     floating enable
     border normal
