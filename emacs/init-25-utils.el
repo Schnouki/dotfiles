@@ -407,6 +407,8 @@ Prioritize directories, but make sure .dotfiles are last."
   (wgrep-auto-save-buffer t))
 
 ;; undo-tree
+(use-package queue
+  :ensure t)
 (use-package undo-tree
   :load-path "~/.config/emacs/undo-tree"
   :demand t
