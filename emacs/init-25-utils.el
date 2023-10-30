@@ -17,13 +17,13 @@
 (use-package helpful
   :ensure t
   :bind (("C-h f" . helpful-callable)
-	 ("C-h v" . helpful-variable)
-	 ("C-h k" . helpful-key)
-	 :map schnouki-prefix-map
-	 ("." . helpful-at-point))
+         ("C-h v" . helpful-variable)
+         ("C-h k" . helpful-key)
+         :map schnouki-prefix-map
+         ("." . helpful-at-point))
   :init
   (setq counsel-describe-function-function 'helpful-callable
-	counsel-describe-variable-function 'helpful-variable))
+     	counsel-describe-variable-function 'helpful-variable))
 
 ;; Set justification with C-x M-f
 (bind-key "C-x M-f" 'set-justification)
@@ -48,8 +48,8 @@
 (use-package dired-subtree
   :ensure t
   :bind (:map dired-mode-map
-	      ("i" . dired-subtree-insert)
-	      ("I" . dired-subtree-remove)))
+              ("i" . dired-subtree-insert)
+              ("I" . dired-subtree-remove)))
 
 (use-package dired-collapse
   :ensure t
@@ -115,16 +115,16 @@ of a new buffer.  If MODE is nil, create a buffer in
 symbol, use that mode instead."
   (interactive "P")
   (let* ((buffer-mode (if (booleanp mode)
-			  (if mode major-mode
-			    initial-major-mode)
-			mode))
-	 (buffer-name (concat "*scratch"
-			      (when (not (eq buffer-mode initial-major-mode))
-				(concat ":" (symbol-name buffer-mode)))
-			      "*"))
-	 (buffer (if force-new
-		     (generate-new-buffer buffer-name)
-		   (get-buffer-create buffer-name))))
+                          (if mode major-mode
+                            initial-major-mode)
+                        mode))
+         (buffer-name (concat "*scratch"
+                              (when (not (eq buffer-mode initial-major-mode))
+                                (concat ":" (symbol-name buffer-mode)))
+                              "*"))
+         (buffer (if force-new
+                     (generate-new-buffer buffer-name)
+                   (get-buffer-create buffer-name))))
     (switch-to-buffer buffer)
     (when (not (eq major-mode buffer-mode))
       (funcall buffer-mode))))
@@ -134,11 +134,11 @@ symbol, use that mode instead."
 If PREFIX is not nil, force creating a new scratch buffer."
   (interactive "P")
   (let* ((modes (->> auto-mode-alist
-		     (-map 'cdr)
-		     -distinct))
-	 (default-mode (symbol-name major-mode))
-	 (prompt (concat "Major mode (" default-mode "): "))
-	 (chosen-mode (completing-read prompt modes nil nil nil nil default-mode)))
+                     (-map 'cdr)
+                     -distinct))
+         (default-mode (symbol-name major-mode))
+         (prompt (concat "Major mode (" default-mode "): "))
+         (chosen-mode (completing-read prompt modes nil nil nil nil default-mode)))
     (schnouki/goto-scratch prefix (intern chosen-mode))))
 
 (bind-key "C-x M-s" 'schnouki/goto-scratch)
@@ -160,11 +160,11 @@ If PREFIX is not nil, force creating a new scratch buffer."
     ;; If at beginning of the indented text and if it's not the same as real
     ;; text, go to real text
     (if (and (= pos-current pos-indent) (not (= pos-indent pos-real)))
-	(move-to-column pos-real)
+       	(move-to-column pos-real)
       ;; Else, if at beginning of real text, go to beginning of line
       (if (= pos-current pos-real) (move-to-column 0)
-	;; Else, go to beginning of indented text
-	(move-to-column pos-indent)))))
+    	;; Else, go to beginning of indented text
+        (move-to-column pos-indent)))))
 (global-set-key [home] 'schnouki/home-key)
 
 ;; Insert newline and return to point
@@ -186,9 +186,9 @@ If PREFIX is not nil, force creating a new scratch buffer."
 
 ;; Enlarge/shrink window horozontally/vertically
 (bind-keys ("C-M-j" . shrink-window)
-	   ("C-M-k" . enlarge-window)
-	   ("C-M-h" . shrink-window-horizontally)
-	   ("C-M-l" . enlarge-window-horizontally))
+    	   ("C-M-k" . enlarge-window)
+    	   ("C-M-h" . shrink-window-horizontally)
+    	   ("C-M-l" . enlarge-window-horizontally))
 
 ;; Convert seconds to a duration
 (defun schnouki/seconds-to-duration (seconds)
@@ -197,9 +197,9 @@ If PREFIX is not nil, force creating a new scratch buffer."
   (let* ((secs (if (numberp seconds) seconds
                  (if (stringp seconds) (string-to-number seconds)
                    (error "Argument must be a number or a string"))))
-	 (h (floor secs 3600))
-	 (m (floor (mod secs 3600) 60))
-	 (s (floor (mod secs 60))))
+         (h (floor secs 3600))
+         (m (floor (mod secs 3600) 60))
+         (s (floor (mod secs 60))))
     (concat
      (if (> h 0) (concat (number-to-string h) "h" (if (or (> m 0) (> s 0)) " ")))
      (if (> m 0) (concat (number-to-string m) "m" (if (> s 0) " ")))
@@ -210,7 +210,7 @@ If PREFIX is not nil, force creating a new scratch buffer."
   "Find the first occurence of ITEM in SEQ.
 Return the index of the matching item, or nil if not found."
   (let ((len (length seq))
-	(count 0))
+        (count 0))
     (while (and (< count len) (not (string= item (nth count seq))))
       (setq count (1+ count)))
     (if (= count len) nil count)))
@@ -221,18 +221,18 @@ Return the index of the matching item, or nil if not found."
 (defvar schnouki/immortal-silent-buffers nil)
 (defvar schnouki/immortal-modes nil)
 (setq schnouki/immortal-star-buffers `(,(rx string-start "*scratch"
-					    (optional ":" (1+ print))
-					    "*" string-end)
-				       "*pomidor*")
+                                            (optional ":" (1+ print))
+                                            "*" string-end)
+                                       "*pomidor*")
       schnouki/immortal-silent-buffers `(,(rx string-start "*magit:")
-					 "*Messages*")
+                                         "*Messages*")
       schnouki/immortal-modes        '(message-mode notmuch-hello-mode notmuch-search-mode
                                                     notmuch-show-mode inferior-python-mode))
 
 (defun schnouki/buffer-immortal-p (buffer)
   "Check if BUFFER is immortal."
   (let ((buf-name (buffer-name buffer))
-	(buf-mode (buffer-local-value 'major-mode buffer)))
+        (buf-mode (buffer-local-value 'major-mode buffer)))
     (or
      (--any? (string-match-p it buf-name) schnouki/immortal-star-buffers)
      (-contains? schnouki/immortal-modes buf-mode)
@@ -249,21 +249,21 @@ of buffers that *would* be killed."
   (let ((killed nil))
     (-each (buffer-list)
       (lambda (buf)
-	(let ((buf-name (buffer-name buf)))
-	  (when (and
-		 (s-starts-with? "*" buf-name)
-		 (or kill-all
-		     (not (schnouki/buffer-immortal-p buf))))
-	    (unless dry-run
-	      (kill-buffer buf))
-	    (when (--none? (string-match-p it buf-name) schnouki/immortal-silent-buffers)
-	      (add-to-list 'killed (cons buf-name buf)))))))
+        (let ((buf-name (buffer-name buf)))
+          (when (and
+                 (s-starts-with? "*" buf-name)
+                 (or kill-all
+                     (not (schnouki/buffer-immortal-p buf))))
+            (unless dry-run
+              (kill-buffer buf))
+            (when (--none? (string-match-p it buf-name) schnouki/immortal-silent-buffers)
+              (add-to-list 'killed (cons buf-name buf)))))))
     (cond
      (dry-run killed)
      (killed
       (message "%d buffers killed: %s"
-	       (length killed)
-	       (string-join (-map 'car killed)  ", "))))))
+    	       (length killed)
+    	       (string-join (-map 'car killed)  ", "))))))
 (bind-key "C-x M-k" 'schnouki/kill-star-buffers)
 
 ;; Kill all buffers visiting files in a directory or its subdirectories.
@@ -271,13 +271,13 @@ of buffers that *would* be killed."
   "Remove all buffers visiting DIRECTORY or its subdirectories."
   (interactive "DKill buffers visiting: ")
   (let ((buffers (->> (buffer-list)
-		      (--map (cons it (if (eq (buffer-local-value 'major-mode it) 'dired-mode)
-					  (buffer-local-value 'dired-directory it)
-					(buffer-file-name it))))
-		      (--filter (cdr it))
-		      (--map (cons (car it) (expand-file-name (cdr it))))
-		      (--filter (s-starts-with? directory (cdr it)))
-		      (-map 'car))))
+                      (--map (cons it (if (eq (buffer-local-value 'major-mode it) 'dired-mode)
+                                          (buffer-local-value 'dired-directory it)
+                                        (buffer-file-name it))))
+                      (--filter (cdr it))
+                      (--map (cons (car it) (expand-file-name (cdr it))))
+                      (--filter (s-starts-with? directory (cdr it)))
+                      (-map 'car))))
     (-each buffers 'kill-buffer)
     (message (format "Killed %d buffers visiting %s" (length buffers) directory))))
 (bind-key "k" 'schnouki/kill-dir-buffers schnouki-prefix-map)
@@ -287,14 +287,14 @@ of buffers that *would* be killed."
   "Remove all buffers using MODE."
   (interactive
    (let ((all-modes (->> (buffer-list)
-			 (--map (buffer-local-value 'major-mode it))
-			 (-group-by 'identity))))
+                         (--map (buffer-local-value 'major-mode it))
+                         (-group-by 'identity))))
      (list
       (completing-read "Kill buffers in major mode: "
-		       all-modes nil t nil nil (symbol-name major-mode)))))
+                       all-modes nil t nil nil (symbol-name major-mode)))))
   (let ((buffers (->> (buffer-list)
-		      (--filter (string= mode
-					 (buffer-local-value 'major-mode it))))))
+                      (--filter (string= mode
+                                         (buffer-local-value 'major-mode it))))))
     (-each buffers 'kill-buffer)
     (message (format "Killed %d buffers using %s" (length buffers) mode))))
 (bind-key "K" 'schnouki/kill-mode-buffers schnouki-prefix-map)
@@ -311,34 +311,34 @@ A buffer is considered killable if it is not modified and either visits a file, 
 (defun schnouki/sort-buffers-by-display-time (buffers)
   "Sort BUFFERS by display time."
   (--sort (time-less-p (buffer-local-value 'buffer-display-time it)
-		       (buffer-local-value 'buffer-display-time other))
-	  buffers))
+                       (buffer-local-value 'buffer-display-time other))
+    	  buffers))
 
 (defun schnouki/clean-buffer-list (keep-buffers-nb)
   "Clean buffer list until there are only KEEP-BUFFERS-NB buffers remaining."
   (interactive
    (list
     (or current-prefix-arg
-	(let* ((nb-buffers (length (buffer-list)))
-	       (default-nb (min 100 (/ nb-buffers 2))))
-	  (read-number (format "Number of buffers (out of %d) to keep: " nb-buffers)
-		       default-nb)))))
+       	(let* ((nb-buffers (length (buffer-list)))
+               (default-nb (min 100 (/ nb-buffers 2))))
+          (read-number (format "Number of buffers (out of %d) to keep: " nb-buffers)
+                       default-nb)))))
   (let* ((nb-buffers (length (buffer-list)))
-	 (nb-buffers-to-kill (- nb-buffers keep-buffers-nb))
-	 (all-killable-buffers (->> (buffer-list)
-				    (schnouki/killable-buffer-list)
-				    (schnouki/sort-buffers-by-display-time)))
-	 (star-killed (schnouki/kill-star-buffers nil t))
-	 (killed-buffers (-map 'cdr star-killed))
-	 (killable-buffers (-difference all-killable-buffers killed-buffers)))
+         (nb-buffers-to-kill (- nb-buffers keep-buffers-nb))
+         (all-killable-buffers (->> (buffer-list)
+                                    (schnouki/killable-buffer-list)
+                                    (schnouki/sort-buffers-by-display-time)))
+         (star-killed (schnouki/kill-star-buffers nil t))
+         (killed-buffers (-map 'cdr star-killed))
+         (killable-buffers (-difference all-killable-buffers killed-buffers)))
     (when (< (length killed-buffers) nb-buffers-to-kill)
       (setq killed-buffers (-concat killed-buffers
-				    (-take (- nb-buffers-to-kill (length killed-buffers))
-					   killable-buffers))))
+                                    (-take (- nb-buffers-to-kill (length killed-buffers))
+                                           killable-buffers))))
     (when (yes-or-no-p
-	   (format "About to kill %d buffers: %s. Continue? "
-		   (length killed-buffers)
-		   (string-join (--map (buffer-name it) killed-buffers) ", ")))
+           (format "About to kill %d buffers: %s. Continue? "
+                   (length killed-buffers)
+                   (string-join (--map (buffer-name it) killed-buffers) ", ")))
       (--each killed-buffers (kill-buffer it))
       (message "Killed %d buffers (out of %d)." (length killed-buffers) nb-buffers))))
 (bind-key "C-x K" 'schnouki/clean-buffer-list)
@@ -350,9 +350,9 @@ A buffer is considered killable if it is not modified and either visits a file, 
   "Compare two files X and Y.
 Prioritize directories, but make sure .dotfiles are last."
   (let ((is-x-dot? (s-starts-with? "." x))
-	(is-y-dot? (s-starts-with? "." y)))
+        (is-y-dot? (s-starts-with? "." y)))
     (if (xor is-x-dot? is-y-dot?)
-	is-y-dot?
+       	is-y-dot?
       (ivy-sort-file-function-default x y))))
 
 (use-package ivy
@@ -391,8 +391,8 @@ Prioritize directories, but make sure .dotfiles are last."
   :custom
   (counsel-find-file-ignore-regexp
    (rx (or (: bos (or "." "#"))
-	   (: (or "#" "~") eos)
-	   (: ".pyc" eos))))
+           (: (or "#" "~") eos)
+           (: ".pyc" eos))))
   :init
   (defun schnouki/enable-counsel ()
     (counsel-mode 1))
