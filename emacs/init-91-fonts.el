@@ -33,7 +33,7 @@
 
   (defface strictly-fixed-pitch
     '((t :inherit fixed-pitch
-         :font "Iosevka Fixed"))
+         :font "Iosevka Term"))
     "A strictly fixed-pitch face, even for graphical Unicode characters"
     :group 'basic-faces))
 
