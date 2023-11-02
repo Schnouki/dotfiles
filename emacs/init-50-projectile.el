@@ -82,20 +82,20 @@
   ;;:load-path "~/dev/deadgrep"
   :commands deadgrep
   :bind (:map deadgrep-mode-map
-         ("C-x C-q" . deadgrep-edit-mode)
-         :map deadgrep-edit-mode-map
-         ("C-c C-c" . deadgrep-mode))
+              ("C-x C-q" . deadgrep-edit-mode)
+              :map deadgrep-edit-mode-map
+              ("C-c C-c" . deadgrep-mode))
   :config
   (defun schnouki/deadgrep--guess-type ()
     (let* ((deadgrep-types (deadgrep--type-list))
-       (ext-to-type (--mapcat (let ((type-name (car it))
-                                    (exts (cadr it)))
-                                (--map (cons
-                                        (s-chop-prefix "*." it)
-                                        type-name)
-                                       exts))
-                              deadgrep-types))
-       (file-ext (s-chop-prefix "." (url-file-extension (buffer-name)))))
+           (ext-to-type (--mapcat (let ((type-name (car it))
+                                        (exts (cadr it)))
+                                    (--map (cons
+                                            (s-chop-prefix "*." it)
+                                            type-name)
+                                           exts))
+                                  deadgrep-types))
+           (file-ext (s-chop-prefix "." (url-file-extension (buffer-name)))))
       (cdr (assoc file-ext ext-to-type))))
   (defun schnouki/deadgrep--auto-guess-type (orig-fun &rest args)
     (let* ((guessed-type (schnouki/deadgrep--guess-type))

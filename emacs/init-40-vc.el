@@ -11,14 +11,13 @@
 (use-package magit
   :ensure t
   :bind (("C-<"      . magit-status)
-	 ("C-\\"     . magit-status)
-	 :map schnouki-magit-prefix-map
-	 ("<" . magit-dispatch)
-	 ("\\" . magit-dispatch)
+         ("C-\\"     . magit-status)
+         :map schnouki-magit-prefix-map
+         ("<" . magit-dispatch)
+         ("\\" . magit-dispatch)
          ("f" . magit-file-dispatch)
          ("l" . magit-log-buffer-file)
-         ("b" . magit-blame)
-         )
+         ("b" . magit-blame))
   :demand t
   :custom
   (magit-process-popup-time 2)
@@ -38,8 +37,7 @@
           (end-of-buffer)
           (recenter -1 t)))))
 
-  (advice-add #'magit-process-filter :after #'schnouki/magit-process--maybe-tail-buffer)
-  )
+  (advice-add #'magit-process-filter :after #'schnouki/magit-process--maybe-tail-buffer))
 
 (use-package magit-todos
   :ensure t

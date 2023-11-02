@@ -23,7 +23,7 @@
          ("." . helpful-at-point))
   :init
   (setq counsel-describe-function-function 'helpful-callable
-     	counsel-describe-variable-function 'helpful-variable))
+        counsel-describe-variable-function 'helpful-variable))
 
 ;; Set justification with C-x M-f
 (bind-key "C-x M-f" 'set-justification)
@@ -160,10 +160,10 @@ If PREFIX is not nil, force creating a new scratch buffer."
     ;; If at beginning of the indented text and if it's not the same as real
     ;; text, go to real text
     (if (and (= pos-current pos-indent) (not (= pos-indent pos-real)))
-       	(move-to-column pos-real)
+        (move-to-column pos-real)
       ;; Else, if at beginning of real text, go to beginning of line
       (if (= pos-current pos-real) (move-to-column 0)
-    	;; Else, go to beginning of indented text
+        ;; Else, go to beginning of indented text
         (move-to-column pos-indent)))))
 (global-set-key [home] 'schnouki/home-key)
 
@@ -186,9 +186,9 @@ If PREFIX is not nil, force creating a new scratch buffer."
 
 ;; Enlarge/shrink window horozontally/vertically
 (bind-keys ("C-M-j" . shrink-window)
-    	   ("C-M-k" . enlarge-window)
-    	   ("C-M-h" . shrink-window-horizontally)
-    	   ("C-M-l" . enlarge-window-horizontally))
+           ("C-M-k" . enlarge-window)
+           ("C-M-h" . shrink-window-horizontally)
+           ("C-M-l" . enlarge-window-horizontally))
 
 ;; Convert seconds to a duration
 (defun schnouki/seconds-to-duration (seconds)
@@ -262,8 +262,8 @@ of buffers that *would* be killed."
      (dry-run killed)
      (killed
       (message "%d buffers killed: %s"
-    	       (length killed)
-    	       (string-join (-map 'car killed)  ", "))))))
+               (length killed)
+               (string-join (-map 'car killed)  ", "))))))
 (bind-key "C-x M-k" 'schnouki/kill-star-buffers)
 
 ;; Kill all buffers visiting files in a directory or its subdirectories.
@@ -312,14 +312,14 @@ A buffer is considered killable if it is not modified and either visits a file, 
   "Sort BUFFERS by display time."
   (--sort (time-less-p (buffer-local-value 'buffer-display-time it)
                        (buffer-local-value 'buffer-display-time other))
-    	  buffers))
+          buffers))
 
 (defun schnouki/clean-buffer-list (keep-buffers-nb)
   "Clean buffer list until there are only KEEP-BUFFERS-NB buffers remaining."
   (interactive
    (list
     (or current-prefix-arg
-       	(let* ((nb-buffers (length (buffer-list)))
+        (let* ((nb-buffers (length (buffer-list)))
                (default-nb (min 100 (/ nb-buffers 2))))
           (read-number (format "Number of buffers (out of %d) to keep: " nb-buffers)
                        default-nb)))))
@@ -352,7 +352,7 @@ Prioritize directories, but make sure .dotfiles are last."
   (let ((is-x-dot? (s-starts-with? "." x))
         (is-y-dot? (s-starts-with? "." y)))
     (if (xor is-x-dot? is-y-dot?)
-       	is-y-dot?
+        is-y-dot?
       (ivy-sort-file-function-default x y))))
 
 (use-package ivy

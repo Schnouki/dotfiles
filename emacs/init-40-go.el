@@ -10,11 +10,9 @@
               ("C-c C-k" . godoc)
               ("C-c C-r" . go-remove-unused-imports)
               ("C-c C-n" . go-rename)
-              ("C-c C-t" . go-add-tags)
-              )
+              ("C-c C-t" . go-add-tags))
   :hook ((before-save . gofmt-before-save)
          (go-mode . go-set-project))
-
   :config
   (add-to-list 'go-guess-gopath-functions #'schnouki/go-hellogopher-gopath)
 

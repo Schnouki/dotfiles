@@ -25,11 +25,11 @@
                                (:name "unread"      :key "u" :query "tag:unread")
                                (:name "inbox"       :key "i" :query "tag:inbox")
                                (:name "archive"     :key "a"
-                                :query ,(concat "tag:inbox and ("
-                                                (string-join (--map (format "folder:schnouki.net/Archives.%d" it)
-                                                                   (number-sequence 2009 (nth 5 (decode-time))))
-                                                             " or ")
-                                                ")"))
+                                      :query ,(concat "tag:inbox and ("
+                                                      (string-join (--map (format "folder:schnouki.net/Archives.%d" it)
+                                                                          (number-sequence 2009 (nth 5 (decode-time))))
+                                                                   " or ")
+                                                      ")"))
                                (:name "blabla"      :key "b" :query "tag:blabla")
                                (:name "drafts"      :key "d" :query "tag:draft")
                                (:name "sent"        :key "s" :query "tag:sent")
@@ -149,8 +149,8 @@
     (message-replace-header "Date" (message-make-date))
     (when notmuch-mua-user-agent-function
       (let ((user-agent (funcall notmuch-mua-user-agent-function)))
-            (when (not (string= "" user-agent))
-              (message-replace-header "User-Agent" user-agent))))
+        (when (not (string= "" user-agent))
+          (message-replace-header "User-Agent" user-agent))))
 
     ;; Associate buffer with file name
     (setq buffer-file-name filename)
@@ -268,21 +268,21 @@
 ;; Load notmuch!
 (use-package notmuch
   :bind (:map schnouki-prefix-map
-         ("n" . notmuch)
-         ("m" . notmuch-mua-new-mail)
-         ;; Show-mode keybindings
-         :map notmuch-show-mode-map
-         ("b" . schnouki/notmuch-show-bounce)
-         ("e" . schnouki/notmuch-show-edit-draft)
-         ("H" . schnouki/notmuch-view-html)
-         ("r" . nil)
-         ("R" . nil)
-         ("ra" . notmuch-show-reply)
-         ("rs" . notmuch-show-reply-sender)
-         ;; Search-mode keybindings
-         :map notmuch-search-mode-map
-         ("d" . notmuch-search-filter-by-date)
-         ("C-<return>" . schnouki/notmuch-search-show-thread-inhibit-images))
+              ("n" . notmuch)
+              ("m" . notmuch-mua-new-mail)
+              ;; Show-mode keybindings
+              :map notmuch-show-mode-map
+              ("b" . schnouki/notmuch-show-bounce)
+              ("e" . schnouki/notmuch-show-edit-draft)
+              ("H" . schnouki/notmuch-view-html)
+              ("r" . nil)
+              ("R" . nil)
+              ("ra" . notmuch-show-reply)
+              ("rs" . notmuch-show-reply-sender)
+              ;; Search-mode keybindings
+              :map notmuch-search-mode-map
+              ("d" . notmuch-search-filter-by-date)
+              ("C-<return>" . schnouki/notmuch-search-show-thread-inhibit-images))
 
   :config
   ;; Autorefresh notmuch-hello using D-Bus
@@ -304,9 +304,9 @@
 (use-package org-mime
   :ensure t
   :bind (:map message-mode-map
-         ("C-c M-o" . org-mime-htmlize)
-         :map org-mode-map
-         ("C-c M-o" . org-mime-org-buffer-htmlize))
+              ("C-c M-o" . org-mime-htmlize)
+              :map org-mode-map
+              ("C-c M-o" . org-mime-org-buffer-htmlize))
   :custom
   (org-mime-export-options (list :section-numbers nil
                                  :with-author nil

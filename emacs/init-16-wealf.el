@@ -33,8 +33,8 @@
   (if (null feature-list)
       body
     (let ((feature (car feature-list)) (rest (cdr feature-list)))
-    `((with-eval-after-load ',feature
-       ,@(with-eval-after-load-feature-transform rest body))))))
+      `((with-eval-after-load ',feature
+          ,@(with-eval-after-load-feature-transform rest body))))))
 
 (defmacro with-eval-after-load-feature (feature &rest body)
   (declare (indent 1) (debug t))

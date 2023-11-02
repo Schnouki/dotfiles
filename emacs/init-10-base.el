@@ -50,7 +50,7 @@
 (add-to-list 'default-frame-alist '(internal-border . 0))
 
 ;; Focus follows mouse
-;(setq mouse-autoselect-window t)
+;;(setq mouse-autoselect-window t)
 
 ;; No beep, but flash screen
 (setq visible-bell t)
@@ -232,7 +232,7 @@ Has no effect if the character before point is not of the syntax class ')'."
 
 ;; Wait a very little bit before fontifying buffers
 ;; http://tsengf.blogspot.fr/2012/11/slow-scrolling-speed-in-emacs.html
-;(setq jit-lock-defer-time 0.05)
+;;(setq jit-lock-defer-time 0.05)
 
 ;; Better naming than main.yml<2>, main.yml<3>, main.yml<4>
 (require 'uniquify)
