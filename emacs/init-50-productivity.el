@@ -8,7 +8,7 @@
               ("t" . pomm-third-time))
   :custom
   (pomm-third-time-fraction "1/4")
-  :init
+  :config
   (pomm-mode-line-mode 1))
 
 ;;; init-50-productivity.el ends here
