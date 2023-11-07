@@ -225,6 +225,7 @@
 (use-package parinfer-rust-mode
   :ensure t
   :hook (emacs-lisp-mode janet-ts-mode)
+  :delight '(:eval (concat " ():" (substring parinfer-rust--mode 0 1)))
   :custom
   (parinfer-rust-auto-download t)
   (parinfer-rust-check-before-enable nil))
