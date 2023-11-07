@@ -268,7 +268,7 @@ _p_rev       _u_pper (mine)       _=_: upper/lower       _r_esolve
 ;; Code formatting in many languages
 (use-package apheleia
   :ensure t
-  :diminish apheleia-mode
+  :delight
   :init
   (apheleia-global-mode +1)
   :config

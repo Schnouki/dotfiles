@@ -10,7 +10,7 @@
   :ensure t
   :defer t
   :commands (guess-language guess-language-buffer)
-  ;;:diminish guess-language-mode
+  ;;:delight
   :hook text-mode
   :custom
   (guess-language-languages '(en fr))

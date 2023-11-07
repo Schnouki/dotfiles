@@ -21,7 +21,7 @@
 (require 'use-package)
 (use-package use-package
   :ensure t)
-(use-package diminish
+(use-package delight
   :ensure t)
 
 ;; Notify that Emacs is loading…

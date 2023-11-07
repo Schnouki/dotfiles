@@ -17,7 +17,7 @@
 (use-package dtrt-indent
   :ensure t
   :commands dtrt-indent-mode
-  :diminish dtrt-indent-mode
+  :delight
   :defer 3
   :config
   (dtrt-indent-global-mode 1))
@@ -145,7 +145,7 @@
 ;; Company -- complete anything
 (use-package company
   :ensure t
-  :diminish company-mode
+  :delight
   :hook (prog-mode . company-mode-on)
   :custom
   (company-tooltip-limit 30)
@@ -241,7 +241,7 @@
   :disabled t
   :ensure t
   :commands unicode-troll-stopper-mode
-  :diminish unicode-troll-stopper-mode
+  :delight
   :hook prog-mode)
 
 ;; Smart Comments
@@ -252,7 +252,7 @@
 ;; Automatically make some buffers read-only
 (use-package auto-read-only
   :ensure t
-  :diminish auto-read-only-mode
+  :delight
   :config
   (--each (list (rx "/.config/emacs/elpa/")
                 (rx "/vendor/")

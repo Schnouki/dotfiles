@@ -5,7 +5,7 @@
 ;; which-key helps a lot
 (use-package which-key
   :ensure t
-  :diminish which-key-mode
+  :delight
   :custom
   (which-key-show-docstrings t)
   (which-key-max-description-length nil)
@@ -34,7 +34,7 @@
 
 ;; Auto-update buffers when the file changes on-disk
 (global-auto-revert-mode 1)
-(diminish 'auto-revert-mode)
+(delight 'auto-revert-mode)
 (bind-key "C-x r RET" 'revert-buffer)
 
 ;; And also auto-revert dired buffers (needed since global-auto-revert-mode only
@@ -101,7 +101,7 @@
 ;; Viking-mode
 (use-package viking-mode
   :ensure t
-  :diminish viking-mode
+  :delight
   :config
   (viking-global-mode t))
 
@@ -358,7 +358,7 @@ Prioritize directories, but make sure .dotfiles are last."
 (use-package ivy
   :ensure t
   :commands (ivy-mode)
-  :diminish ivy-mode
+  :delight
   :bind (:map schnouki-prefix-map
               ("r " . ivy-resume))
   :custom
@@ -381,7 +381,7 @@ Prioritize directories, but make sure .dotfiles are last."
 (use-package counsel
   :ensure t
   :commands (counsel-mode)
-  :diminish counsel-mode
+  :delight
   :bind (:map counsel-mode-map
               ([remap insert-char] . counsel-unicode-char)
               ([remap switch-to-buffer] . counsel-switch-buffer)
@@ -459,7 +459,7 @@ Prioritize directories, but make sure .dotfiles are last."
 ;; Visual feedback on some operations
 (use-package volatile-highlights
   :ensure t
-  :diminish volatile-highlights-mode
+  :delight
   :config
   (volatile-highlights-mode t))
 
@@ -543,7 +543,7 @@ If third argument START is non-nil, convert words after that index in STRING."
 (use-package rainbow-mode
   :ensure t
   :commands rainbow-mode
-  :diminish rainbow-mode)
+  :delight)
 
 ;; Use ImageMagick as much as possible
 ;; (let* ((types '(bmp jpeg png svg))
@@ -600,7 +600,7 @@ If third argument START is non-nil, convert words after that index in STRING."
 ;; EditorConfig
 (use-package editorconfig
   :ensure t
-  :diminish editorconfig-mode
+  :delight
   :config
   (editorconfig-mode 1))
 
