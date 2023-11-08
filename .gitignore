@@ -36,6 +36,7 @@ __pycache__/
 !bpython
 !composer
 !docker
+!easyeffects
 !emacs
 !fennel
 !fish

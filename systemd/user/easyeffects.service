@@ -1,0 +1,14 @@
+[Unit]
+Description=EasyEffects daemon
+Requires=dbus.service pipewire.service
+
+[Service]
+Type=dbus
+BusName=com.github.wwmm.easyeffects
+ExecStart=/usr/bin/easyeffects --gapplication-service
+ExecStop=/usr/bin/easyeffects --quit
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target
