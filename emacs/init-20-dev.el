@@ -223,6 +223,7 @@
 
 ;; ElDoc
 (use-package eldoc
+  :delight
   :hook (emacs-lisp-mode ielm-mode lisp-interaction-mode lisp-mode python-mode))
 
 ;; Parinfer

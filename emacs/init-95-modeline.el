@@ -10,8 +10,7 @@
   (sml/theme 'respectful)
   (sml/show-client t)
   (rm-blacklist '(" ,"           ; subword
-                  " Abbrev"      ; abbrev
-                  " ElDoc"))      ; eldoc
+                  " Abbrev"))
   (sml/replacer-regexp-list
    '(("^/ssh:.*:"    ":SSH:")
      ("^/sudo:.*:"   ":SU:")
