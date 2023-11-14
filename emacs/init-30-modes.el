@@ -35,19 +35,19 @@
   :mode "\\.coffee\'"
   :init
   (add-hook 'coffee-mode-hook
-            '(lambda ()
-               (setq tab-width 4
-                     coffee-tab-width 4)
-               (local-set-key (kbd "C-c C-c") 'coffee-compile-buffer))))
+            #'(lambda ()
+                (setq tab-width 4
+                      coffee-tab-width 4)
+                (local-set-key (kbd "C-c C-c") 'coffee-compile-buffer))))
 
 (use-package tide
   :ensure t
   :mode ("\\.ts\\'" . typescript-mode)
   :config
   (add-hook 'typescript-mode-hook
-            (lambda ()
-              (tide-setup)
-              (add-hook 'before-save-hook 'tide-format-before-save nil t))))
+            #'(lambda ()
+                (tide-setup)
+                (add-hook 'before-save-hook 'tide-format-before-save nil t))))
 
 
 (use-package php-mode

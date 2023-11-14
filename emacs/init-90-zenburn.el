@@ -114,7 +114,7 @@
     ;; show-paren-mode
     (eval-after-load 'paren
       `(progn
-         (set-face-attribute 'show-paren-match    nil :weight 'bold :foreground nil :background ,zenburn-bg-1)
+         (set-face-attribute 'show-paren-match    nil :weight 'bold :foreground ,zenburn-fg  :background ,zenburn-bg-1)
          (set-face-attribute 'show-paren-mismatch nil :weight 'bold :foreground ,zenburn-red :background "#3c1313")))
 
     ;; auto-dim-other-bufers
