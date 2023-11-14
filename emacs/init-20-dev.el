@@ -137,7 +137,31 @@
   :ensure t
   :custom
   (eglot-autoshutdown t)
-  (eglot-stay-out-of '(flymake)))
+  (eglot-stay-out-of '(flymake))
+  :config
+
+  (defhydra hydra-eglot (:hint nil)
+    "
+^^Find              ^^Modify       ^^Actions
+^^----------------- ^^------------ ^^------------
+_r_eferences        _f_ormat       _R_ename var
+de_c_laration       format _b_uf   _a_ctions
+_d_efinition
+_i_mplementation
+_t_ype definition"
+    ("r" xref-find-references)
+    ("c" eglot-find-declaration)
+    ("d" xref-find-definitions)
+    ("i" eglot-find-implementation)
+    ("t" eglot-find-typeDefinition)
+
+    ("f" eglot-format)
+    ("b" eglot-format-buffer)
+
+    ("R" eglot-rename)
+    ("a" eglot-code-actions))
+  (bind-key "e" 'hydra-eglot/body schnouki-prefix-map))
+
 
 (use-package flycheck-eglot
   :after (eglot flycheck)
