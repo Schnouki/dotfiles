@@ -65,11 +65,15 @@
     ("q" nil))
   (bind-key "!" 'hydra-flycheck/body flycheck-command-map))
 
-(use-package flycheck-pos-tip
+(use-package flycheck-inline
   :ensure t
-  :after flycheck
+  :hook (flycheck-mode . flycheck-inline-mode)
   :config
-  (flycheck-pos-tip-mode t))
+  (let ((scale 0.8))
+    (set-face-attribute 'flycheck-inline-info nil :height scale)
+    (set-face-attribute 'flycheck-inline-warning nil :height scale)
+    (set-face-attribute 'flycheck-inline-error nil :height scale)))
+
 
 (use-package avy-flycheck
   :ensure t
