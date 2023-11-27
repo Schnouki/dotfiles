@@ -30,7 +30,7 @@ abbrev_defs
 amx-items
 bookmarks
 ede-projects.el
-forge-database.sqlite
+forge-database*.sqlite
 image-dired
 mastodon.plstore
 network-security.data
