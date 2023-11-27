@@ -1,17 +1,10 @@
-# Spotify URLs
-/usr/bin/spotify %U
-  ^http://open.spotify.com/
-  ^spotify:
-
-# Regular URLs
-/usr/bin/firefox-developer-edition
-  ^http://
-  ^https://
-  ^ftp://
-
-/home/schnouki/.config/notmuch/nm-mailto
+/home/schnouki/.config/notmuch/nm-mailto %U
   ^mailto:
 
-# Weird file formats
-/usr/bin/vlc --one-instance --playlist-enqueue %F
-  \.[Mm][Tt][Ss]$
+# rg --hyperlink-format=grep+
+/home/schnouki/.config/emacs/handle-grep+.py %u
+  ^grep\+://
+
+# Local Variables:
+# mode: conf-space
+# End:
