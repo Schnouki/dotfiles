@@ -11,6 +11,7 @@ set PATH \
     $HOME/.luarocks/bin \
     $HOME/.roswell/bin \
     $HOME/.config/guix/current/bin \
+    /opt/gerbil/bin \
     $PATH
 
 set -Ux XDG_DATA_HOME $HOME/.local/share
