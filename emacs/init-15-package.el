@@ -48,4 +48,15 @@
     (setq schnouki/init-emacs--ready-alerted t)))
 (advice-add 'server-start :after #'schnouki/init-emacs--alert-ready)
 
+(defun schnouki/custom-reset-variable (variable)
+  "Reset VARIABLE to its standard value."
+  (set variable (custom--standard-value variable)))
+
+(defun schnouki/custom-reset-group (group)
+  "Reset all custom variables in GROUP to their standard value."
+  (dolist (member (get 'apheleia 'custom-group))
+    (let ((var (car member)))
+      (when (custom-variable-p var)
+        (set var (custom--standard-value var))))))
+
 ;;; init-15-package.el ends here
