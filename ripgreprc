@@ -4,3 +4,6 @@ liquid:*.liquid
 
 # Ignore some files
 --glob=!*.{map,min.js}
+
+# Hyperlinks
+--hyperlink-format=grep+

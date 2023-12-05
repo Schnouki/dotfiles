@@ -92,8 +92,7 @@ as the new width."
       (schnouki/visual-text-mode -1)
     (schnouki/visual-text-mode 1)))
 
-(setq schnouki/no-visual-text-modes
-      '(yaml-mode))
+(setq schnouki/no-visual-text-modes'(yaml-mode yaml-ts-mode))
 
 (defun schnouki/maybe-turn-on-visual-text-mode ()
   (unless (apply #'derived-mode-p schnouki/no-visual-text-modes)

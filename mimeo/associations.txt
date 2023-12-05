@@ -1,0 +1,10 @@
+/home/schnouki/.config/notmuch/nm-mailto %U
+  ^mailto:
+
+# rg --hyperlink-format=grep+
+/home/schnouki/.config/emacs/handle-grep+.py %u
+  ^grep\+://
+
+# Local Variables:
+# mode: conf-space
+# End:
