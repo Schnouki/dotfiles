@@ -73,7 +73,7 @@ CONFIG = HOME / ".config"
 _filters = {}
 
 
-def filter(filename):
+def filter(filename: str):
     def wrapper(func):
         _filters[filename] = func
         return func
@@ -221,6 +221,12 @@ def update_encrypted_files(force: bool, verbose: bool):
             if filter_func := _filters.get(src):
                 print(f"  applying {filter_func.__name__}...")
                 src_p = filter_func(src_p)
+
+            # Check if content has changed
+            if dst_p.exists() and decrypt_data(dst_p) == Path(src_p).read_bytes():
+                print(f"  content is identical, skipping it...")
+                uf_p.touch()
+                continue
 
             dst_p.unlink(missing_ok=True)
             encrypt_data(Path(src_p), dst_p)
