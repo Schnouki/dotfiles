@@ -1,18 +1,7 @@
 # Paths
-set PATH \
-    $HOME/bin \
-    $HOME/.local/bin \
-    $HOME/.cabal/bin \
-    $HOME/.composer/vendor/bin \
-    $HOME/.gem/ruby/2.5.0/bin \
-    $HOME/.go/bin \
-    $HOME/.local/share/jpm_tree/bin \
-    $HOME/.local/share/nimble/bin \
-    $HOME/.luarocks/bin \
-    $HOME/.roswell/bin \
-    $HOME/.config/guix/current/bin \
-    /opt/gerbil/bin \
-    $PATH
+set -x fish_user_paths
+fish_add_path ~/bin
+fish_add_path ~/.local/bin
 
 set -Ux XDG_DATA_HOME $HOME/.local/share
 set -Ux XDG_STATE_HOME $HOME/.local/state
@@ -25,11 +14,19 @@ set -gx BROWSER firefox
 
 # Program-specifig options
 
+# Gerbil
+fish_add_path /opt/gerbil/bin
+
 # Go
 set -gx GOPATH $HOME/.go
+fish_add_path $GOPATH/bin
+
+# Guix
+fish_add_path ~/.config/guix/current/bin
 
 # Lua & Luarocks
 set -l _lua 5.4
+fish_add_path ~/.luarocks/bin
 set -gx LUA_PATH (string join ";" \
     /usr/share/lua/$_lua/\?.lua \
     /usr/share/lua/$_lua/\?/init.lua \
@@ -52,3 +49,6 @@ set -gx PYTHONSTARTUP $HOME/.config/python_startup.py
 
 # Ripgrep
 set -gx RIPGREP_CONFIG_PATH $HOME/.config/ripgreprc
+
+# Roswell
+fish_add_path ~/.roswell/bin
