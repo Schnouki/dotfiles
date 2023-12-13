@@ -13,6 +13,9 @@ set -Ux CUDA_CACHE_PATH "$XDG_CACHE_HOME"/nv
 # Docker
 set -Ux DOCKER_CONFIG "$XDG_CONFIG_HOME"/docker
 
+# Guile
+set -Ux GUILE_HISTORY "$XDG_STATE_HOME"/guile_history
+
 # Janet
 set -Ux JANET_TREE "$XDG_DATA_HOME"/jpm_tree
 #set -Ux JANET_PATH "$XDG_DATA_HOME"/jpm_tree/lib

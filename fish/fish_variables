@@ -26,6 +26,7 @@ SETUVAR --export EXA_LT_OPTIONS:\x2d\x2dtree\x1e\x2d\x2dlevel
 SETUVAR --export EXA_L_OPTIONS:\x2d\x2dclassify
 SETUVAR --export EXA_STANDARD_OPTIONS:\x2d\x2dgroup\x1e\x2d\x2dheader\x1e\x2d\x2dgroup\x2ddirectories\x2dfirst\x1e\x2d\x2dclassify
 SETUVAR --export GTK2_RC_FILES:/home/schnouki/\x2econfig/gtkrc\x2d2\x2e0\x3a/home/schnouki/\x2econfig/gtkrc\x2d\x28hostnamectl\x20hostname\x29\x3a/etc/gtk\x2d2\x2e0/gtkrc
+SETUVAR --export GUILE_HISTORY:/home/schnouki/\x2elocal/state/guile_history
 SETUVAR --export INPUTRC:/home/schnouki/\x2econfig/inputrc
 SETUVAR --export JANET_TREE:/home/schnouki/\x2elocal/share/jpm_tree
 SETUVAR --export LESSHISTFILE:/home/schnouki/\x2elocal/share/less_history
