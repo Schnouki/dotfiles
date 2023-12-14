@@ -10,7 +10,7 @@ set $term foot
 set $editor /home/schnouki/bin/eclient -n -c
 set $menu fuzzel
 set $fman thunar
-set $emoji rofimoji --selector="wofi"
+set $emoji rofimoji --selector="wofi" --action type copy
 set $lock /home/schnouki/.config/swayidle/lock.sh
 set $wallpaper_config /home/schnouki/.config/swww/choose-folder
 
