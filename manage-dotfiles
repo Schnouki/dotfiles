@@ -24,6 +24,7 @@ ENCRYPTED_FILES = {
     ".ssh/authorized_keys": "ssh-authorized-keys.gpg",
     ".ssh/config": "ssh-config.gpg",
     ".transifexrc": "transifexrc.gpg",
+    ".config/git/doist.inc": "git/doist.inc.gpg",
     ".config/exist-git-hook.conf": "exist-git-hook.conf.gpg",
     ".config/pws.yaml": "pws.yaml.gpg",
     ".config/emacs/init-99-private.el": "emacs/init-99-private.el.gpg",
