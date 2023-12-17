@@ -272,6 +272,11 @@ _p_rev       _u_pper (mine)       _=_: upper/lower       _r_esolve
   :init
   (apheleia-global-mode +1)
   :config
+  (schnouki/custom-reset-variable 'apheleia-formatters)
+  (schnouki/custom-reset-variable 'apheleia-mode-alist)
+  ;; Python: use "ruff format" instead of black
+  (setf (alist-get 'python-mode apheleia-mode-alist) '(ruff))
+  (setf (alist-get 'python-ts-mode apheleia-mode-alist) '(ruff))
   ;; Nimpretty
   (setf (alist-get 'nimpretty apheleia-formatters)
         '("~/.local/share/nimble/bin/nimpretty" inplace))

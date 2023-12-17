@@ -36,7 +36,7 @@
   (add-to-list 'schnouki/projectile-project-root-regexps
                "~/\.local/share/virtualenvs/[^/]+/\\(local/\\)?lib/python[^/]*/site-packages/[^/]+/?$")
 
-  (defun schnouki/projectile-root-regexp (dir &optional list)
+  (defun schnouki/projectile-root-regexp (dir)
     (projectile-locate-dominating-file
      dir
      (lambda (dir)
@@ -45,9 +45,9 @@
              (s-equals? (file-remote-p it) (file-remote-p dir))
              (string-match-p (expand-file-name it) (expand-file-name dir)))
             dir)
-        (or list schnouki/projectile-project-root-regexps (list))))))
+        schnouki/projectile-project-root-regexps))))
 
-  (add-to-list 'projectile-project-root-files-functions #'schnouki/projectile-root-regexp t)
+  (add-to-list 'projectile-project-root-functions #'schnouki/projectile-root-regexp t)
 
   (defun schnouki/projectile-magit ()
     "Open a magit-status buffer in a known project."
