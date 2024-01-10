@@ -282,4 +282,15 @@ _p_rev       _u_pper (mine)       _=_: upper/lower       _r_esolve
         '("~/.local/share/nimble/bin/nimpretty" inplace))
   (setf (alist-get 'nim-mode apheleia-mode-alist) '(nimpretty)))
 
+;; Show info about the block at its end
+(use-package scopeline
+  :ensure t
+  :delight
+  :hook prog-mode
+  :custom
+  (scopeline-min-lines 10)
+  (scopeline-overlay-prefix "   # ")
+  :custom-face
+  (scopeline-face ((t (:height 0.8 :inherit shadow)))))
+
 ;;; init-30-modes.el ends here

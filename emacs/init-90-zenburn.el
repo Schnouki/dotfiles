@@ -5,6 +5,9 @@
 
 (use-package zenburn-theme
   :ensure t
+  :custom
+  (zenburn-override-colors-alist '(("zenburn-bg+4" . "#7F7F7F")
+                                   ("zenburn-bg+5" . "#8F8F8F")))
   :config
   (load-theme 'zenburn)
 
@@ -172,20 +175,28 @@
          ;;(set-face-attribute 'markup-value-face nil)
          (set-face-attribute 'markup-verbatim-face nil :inherit font-lock-constant-face :background 'unspecified)))
 
+    ;; Parinfer
     (eval-after-load 'parinfer-rust-mode
       `(progn
          (set-face-foreground 'parinfer-rust-dim-parens ,zenburn-fg-05)))
 
+    ;; Go-Guru
     (eval-after-load 'go-guru
       `(progn
          (set-face-attribute 'go-guru-hl-identifier-face nil :background ,zenburn-bg-1)))
 
+    ;; Sudoku :)
     (eval-after-load 'sudoku
       `(progn
          (set-face-foreground 'sudoku-value-face ,zenburn-blue)
          (set-face-foreground 'sudoku-value-pencil-1-face ,zenburn-fg-1
                               (set-face-foreground 'sudoku-value-pencil-2-face ,zenburn-fg+1)
-                              (set-face-foreground 'sudoku-autovalue-face ,zenburn-magenta))))))
+                              (set-face-foreground 'sudoku-autovalue-face ,zenburn-magenta))))
+
+    ;; Scopeline
+    (eval-after-load 'scopeline
+      `(progn
+         (set-face-foreground 'scopeline-face ,zenburn-bg+5)))))
 
 
 ;; rainbow-mode with zenburn colors!
