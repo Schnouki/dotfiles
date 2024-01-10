@@ -19,7 +19,7 @@ from uuid import uuid4
 # Add venv name to prompt
 if env := os.environ.get("VIRTUAL_ENV"):
     env_name = os.path.basename(env)
-    sys.ps1 = f"({env_name}) {sys.ps1}"
+    sys.ps1 = f"({env_name}) {getattr(sys, 'ps1', '>>> ')}"
 
 # Quick aliases
 p = print
