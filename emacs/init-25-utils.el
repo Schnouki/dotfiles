@@ -20,7 +20,7 @@
          ("C-h v" . helpful-variable)
          ("C-h k" . helpful-key)
          :map schnouki-prefix-map
-         ("." . helpful-at-point))
+         ("h" . helpful-at-point))
   :init
   (setq counsel-describe-function-function 'helpful-callable
         counsel-describe-variable-function 'helpful-variable))
