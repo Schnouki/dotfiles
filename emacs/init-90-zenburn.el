@@ -189,9 +189,9 @@
     (eval-after-load 'sudoku
       `(progn
          (set-face-foreground 'sudoku-value-face ,zenburn-blue)
-         (set-face-foreground 'sudoku-value-pencil-1-face ,zenburn-fg-1
-                              (set-face-foreground 'sudoku-value-pencil-2-face ,zenburn-fg+1)
-                              (set-face-foreground 'sudoku-autovalue-face ,zenburn-magenta))))
+         (set-face-foreground 'sudoku-value-pencil-1-face ,zenburn-fg-1)
+         (set-face-foreground 'sudoku-value-pencil-2-face ,zenburn-fg+1)
+         (set-face-foreground 'sudoku-autovalue-face ,zenburn-magenta)))
 
     ;; Scopeline
     (eval-after-load 'scopeline
