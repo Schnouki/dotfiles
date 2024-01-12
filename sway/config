@@ -11,7 +11,6 @@ set $editor /home/schnouki/bin/eclient -n -c
 set $menu fuzzel
 set $fman thunar
 set $emoji rofimoji --selector="wofi" --action type copy
-set $lock /home/schnouki/.config/swayidle/lock.sh
 set $wallpaper_config /home/schnouki/.config/swww/choose-folder
 
 set $wobsock $XDG_RUNTIME_DIR/wob.sock
@@ -124,7 +123,7 @@ workspace_auto_back_and_forth yes
     bindsym $mod+period exec $emoji
 
     # Lock screen
-    bindsym $mod+Ctrl+Escape exec $lock
+    bindsym $mod+Ctrl+Escape exec waylogout
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
