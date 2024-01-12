@@ -4,21 +4,19 @@
 
 (require 'dash)
 
-(defun schnouki/setup-fonts ()
+(defun schnouki/setup-fonts (&rest args)
   "Setup fonts."
   (interactive)
   (let* ((mono-family "Iosevka")
          (mono-serif-family "Iosevka Slab")
          (var-family "Iosevka Aile")
          (font-size 12)
-         (mono-font (format "%s-%d" mono-family font-size))
-         (mono-serif-font (format "%s-%d" mono-serif-family font-size))
-         (var-font (format "%s-%d" var-family font-size)))
+         (mono-font (format "%s-%d" mono-family font-size)))
 
-    (set-face-attribute 'default nil :font mono-font)
-    (set-face-attribute 'fixed-pitch nil :font mono-font)
-    (set-face-attribute 'fixed-pitch-serif nil :font mono-serif-font)
-    (set-face-attribute 'variable-pitch nil :font var-font)
+    (custom-set-faces `(default ((t (:family ,mono-family))))
+                      `(fixed-pitch ((t (:family ,mono-family))))
+                      `(fixed-pitch-serif ((t (:family ,mono-serif-family))))
+                      `(variable-pitch ((t (:family ,var-family)))))
 
     (assq-delete-all 'font default-frame-alist)
     (add-to-list 'default-frame-alist
@@ -36,5 +34,9 @@
          :font "Iosevka Term"))
     "A strictly fixed-pitch face, even for graphical Unicode characters"
     :group 'basic-faces))
+
+(add-hook 'after-init-hook #'schnouki/setup-fonts)
+(add-hook 'enable-theme-functions #'schnouki/setup-fonts)
+
 
 ;;; init-91-fonts.el ends here
