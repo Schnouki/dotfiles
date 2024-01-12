@@ -54,11 +54,13 @@ gtk-3.0/bookmarks
 !spotifyd
 !sway
 !swayidle
+!swaylock
 !swww
 !systemd
 !timewarrior
 !tmux
 !waybar
+!waylogout
 !wireplumber
 !youtube-dl
 !zathura

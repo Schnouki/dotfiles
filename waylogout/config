@@ -1,0 +1,21 @@
+hide-cancel
+#selection-label
+screenshots
+effect-blur=5x3
+effect-greyscale
+
+lock-command="~/.config/swayidle/lock.sh"
+suspend-command="systemctl suspend"
+hibernate-command="systemctl hibernate"
+reboot-command="systemctl reboot"
+poweroff-command="systemctl poweroff"
+default-action=lock
+
+line-uses-ring
+inside-color=2b2b2b
+ring-color=4f4f4f
+text-color=dcdccc
+
+inside-selection-color=366060
+ring-selection-color=6ca0a3
+text-selection-color=ace0e3
