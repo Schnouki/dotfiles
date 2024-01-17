@@ -1,4 +1,4 @@
 timeout 270 'notify-call -R swayidle -u critical -t 30000 -i lock -- "LOCKING in 30s"' resume 'notify-call -R swayidle -t 1 -i lock -- "Resuming."'
-timeout 300 '~/.config/swayidle/lock.sh'
+timeout 300 '~/.config/swayidle/lock.sh idle'
 timeout 360 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'
-before-sleep '~/.config/swayidle/lock.sh'
+before-sleep '~/.config/swayidle/lock.sh sleep'
