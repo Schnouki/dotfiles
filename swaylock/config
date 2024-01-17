@@ -3,7 +3,6 @@ effect-blur=20x5
 effect-greyscale
 
 show-failed-attempts
-grace=5
 
 indicator
 clock
