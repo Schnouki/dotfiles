@@ -291,6 +291,19 @@ _p_rev       _u_pper (mine)       _=_: upper/lower       _r_esolve
   (scopeline-min-lines 10)
   (scopeline-overlay-prefix "   # ")
   :custom-face
-  (scopeline-face ((t (:height 0.8 :inherit shadow)))))
+  (scopeline-face ((t (:height 0.8 :inherit shadow))))
+  :config
+  (defun schnouki/hide-scopeline-on-active-line ()
+    (when scopeline-mode
+      (dolist (ov scopeline--overlays)
+        (overlay-put ov 'after-string
+                     (propertize (overlay-get ov 'after-string)
+                                 'invisible (and (>= (overlay-start ov) (pos-bol))
+                                                 (<= (overlay-end ov) (pos-eol))))))))
+  (defun schnouki/enable-hide-scopeline-on-active-line ()
+    (add-hook 'post-command-hook #'schnouki/hide-scopeline-on-active-line nil t))
+  (add-hook 'scopeline-mode-hook #'schnouki/enable-hide-scopeline-on-active-line))
+
+
 
 ;;; init-30-modes.el ends here
