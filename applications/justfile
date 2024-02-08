@@ -1,4 +1,4 @@
-default: bitwarden knossos obsidian steam steam-native vivaldi-stable vivaldi-stable-alt steam-games
+default: bitwarden insomnia knossos obsidian steam steam-native vivaldi-stable vivaldi-stable-alt steam-games
 
 [private]
 prepare FILE TARGET="":
@@ -26,6 +26,9 @@ electron_scaling FILE:
 
 bitwarden: (prepare "bitwarden")
     just electron_wayland bitwarden
+
+insomnia: (prepare "insomnia")
+    just electron_wayland insomnia
 
 knossos: (prepare "knossos")
     -which prime-run &>/dev/null && just add_runner knossos prime-run || rm knossos.desktop
