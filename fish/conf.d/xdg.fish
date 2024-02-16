@@ -65,5 +65,5 @@ alias wget="wget --hsts-file=$XDG_DATA_HOME/wget-hsts"
 # Wine
 set -Ux WINEPREFIX "$XDG_DATA_HOME"/wine
 
-# Xorg-xauth
-set -Ux XAUTHORITY "$XDG_RUNTIME_DIR"/Xauthority
+# Xorg-xauth: disabled because it breaks ssh X11 forwarding
+#set -Ux XAUTHORITY "$XDG_RUNTIME_DIR"/Xauthority

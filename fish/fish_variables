@@ -44,7 +44,6 @@ SETUVAR --export SQLITE_HISTORY:/home/schnouki/\x2elocal/share/sqlite_history
 SETUVAR --export VIRTUALFISH_HOME:/home/schnouki/\x2elocal/share/virtualenvs
 SETUVAR --export WINEPREFIX:/home/schnouki/\x2elocal/share/wine
 SETUVAR --export WORKON_HOME:/home/schnouki/\x2elocal/share/virtualenvs
-SETUVAR --export XAUTHORITY:/run/user/1000/Xauthority
 SETUVAR --export XDG_CACHE_HOME:/home/schnouki/\x2ecache
 SETUVAR --export XDG_CONFIG_HOME:/home/schnouki/\x2econfig
 SETUVAR --export XDG_CURRENT_DESKTOP:sway
