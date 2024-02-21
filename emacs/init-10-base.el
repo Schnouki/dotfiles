@@ -172,15 +172,14 @@ Has no effect if the character before point is not of the syntax class ')'."
 ;; Save opened files and other stuff
 ;; http://www.xsteve.at/prg/emacs/power-user-tips.html
 (require 'desktop)
+(require 'cl-seq)
 (setq desktop-save t
       desktop-load-locked-desktop t
       desktop-restore-frames nil
       desktop-restore-eager nil
-      desktop-path '("~/.config/emacs"))
-
-(with-eval-after-load 'dash
-  (setq desktop-modes-not-to-save (-union desktop-modes-not-to-save
-                                          '(prog-mode))))
+      desktop-path '("~/.config/emacs")
+      desktop-modes-not-to-save (cl-union desktop-modes-not-to-save
+                                          '(prog-mode)))
 
 (defvar schnouki/desktop-was-read nil)
 (defun schnouki/desktop-after-read-hook ()

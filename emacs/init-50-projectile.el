@@ -16,8 +16,8 @@
   (setq projectile-mode-line-function 'schnouki/projectile-mode-line)
 
   ;; Ignore suffixes
-  (--each '(".pyc" ".o" ".so" "~" "#" ".min.js")
-    (add-to-list 'projectile-globally-ignored-file-suffixes it))
+  (seq-each (lambda (suf) (add-to-list 'projectile-globally-ignored-file-suffixes suf))
+            '(".pyc" ".o" ".so" "~" "#" ".min.js"))
 
   ;; Keybindings
   (bind-key "s-!" 'projectile-command-map projectile-mode-map)
@@ -40,12 +40,12 @@
     (projectile-locate-dominating-file
      dir
      (lambda (dir)
-       (--first
-        (if (and
-             (s-equals? (file-remote-p it) (file-remote-p dir))
-             (string-match-p (expand-file-name it) (expand-file-name dir)))
-            dir)
-        schnouki/projectile-project-root-regexps))))
+       (seq-find (lambda (it)
+                   (if (and
+                        (s-equals? (file-remote-p it) (file-remote-p dir))
+                        (string-match-p (expand-file-name it) (expand-file-name dir)))
+                       dir))
+                 schnouki/projectile-project-root-regexps))))
 
   (add-to-list 'projectile-project-root-functions #'schnouki/projectile-root-regexp t)
 
@@ -88,13 +88,14 @@
   :config
   (defun schnouki/deadgrep--guess-type ()
     (let* ((deadgrep-types (deadgrep--type-list))
-           (ext-to-type (--mapcat (let ((type-name (car it))
-                                        (exts (cadr it)))
-                                    (--map (cons
-                                            (s-chop-prefix "*." it)
-                                            type-name)
-                                           exts))
-                                  deadgrep-types))
+           (ext-to-type (seq-mapcat (lambda (it)
+                                      (let ((type-name (car it))
+                                            (exts (cadr it)))
+                                        (mapcar (lambda (typ) (cons
+                                                               (s-chop-prefix "*." typ)
+                                                               type-name))
+                                                exts)))
+                                    deadgrep-types))
            (file-ext (s-chop-prefix "." (url-file-extension (buffer-name)))))
       (cdr (assoc file-ext ext-to-type))))
   (defun schnouki/deadgrep--auto-guess-type (orig-fun &rest args)

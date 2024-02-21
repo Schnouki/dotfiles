@@ -26,9 +26,10 @@
                                (:name "inbox"       :key "i" :query "tag:inbox")
                                (:name "archive"     :key "a"
                                       :query ,(concat "tag:inbox and ("
-                                                      (string-join (--map (format "folder:schnouki.net/Archives.%d" it)
-                                                                          (number-sequence 2009 (nth 5 (decode-time))))
-                                                                   " or ")
+                                                      (string-join
+                                                       (mapcar (lambda (n) (format "folder:schnouki.net/Archives.%d" n))
+                                                               (number-sequence 2009 (nth 5 (decode-time))))
+                                                       " or ")
                                                       ")"))
                                (:name "blabla"      :key "b" :query "tag:blabla")
                                (:name "drafts"      :key "d" :query "tag:draft")
@@ -260,10 +261,9 @@
   (let* ((headers (plist-get msg :headers))
          (from (or (plist-get headers :From) "")))
     (cond
-     ((--any? (string-match it from) schnouki/notmuch-html-senders)
+     ((seq-some (lambda (it) (string-match it from)) schnouki/notmuch-html-senders)
       '("text/plain"))
-     (t
-      '("text/html" "multipart/related")))))
+     (t '("text/html" "multipart/related")))))
 
 ;; Load notmuch!
 (use-package notmuch

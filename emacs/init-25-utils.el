@@ -133,9 +133,7 @@ symbol, use that mode instead."
   "Switch to a scratch buffer, letting the user decide its major mode.
 If PREFIX is not nil, force creating a new scratch buffer."
   (interactive "P")
-  (let* ((modes (->> auto-mode-alist
-                     (-map 'cdr)
-                     -distinct))
+  (let* ((modes (seq-uniq (mapcar #'cdr auto-mode-alist)))
          (default-mode (symbol-name major-mode))
          (prompt (concat "Major mode (" default-mode "): "))
          (chosen-mode (completing-read prompt modes nil nil nil nil default-mode)))
@@ -234,8 +232,9 @@ Return the index of the matching item, or nil if not found."
   (let ((buf-name (buffer-name buffer))
         (buf-mode (buffer-local-value 'major-mode buffer)))
     (or
-     (--any? (string-match-p it buf-name) schnouki/immortal-star-buffers)
-     (-contains? schnouki/immortal-modes buf-mode)
+     (seq-some (lambda (it) (string-match-p it buf-name))
+               schnouki/immortal-star-buffers)
+     (seq-contains-p schnouki/immortal-modes buf-mode)
      (and (get-buffer-process buffer) t))))
 
 (defun schnouki/kill-star-buffers (&optional kill-all dry-run)
@@ -247,38 +246,37 @@ is non-nil, don't actually kill the buffers, but return the list
 of buffers that *would* be killed."
   (interactive "P")
   (let ((killed nil))
-    (-each (buffer-list)
-      (lambda (buf)
-        (let ((buf-name (buffer-name buf)))
-          (when (and
-                 (s-starts-with? "*" buf-name)
-                 (or kill-all
-                     (not (schnouki/buffer-immortal-p buf))))
-            (unless dry-run
-              (kill-buffer buf))
-            (when (--none? (string-match-p it buf-name) schnouki/immortal-silent-buffers)
-              (add-to-list 'killed (cons buf-name buf)))))))
+    (seq-each (lambda (buf)
+                (let ((buf-name (buffer-name buf)))
+                  (when (and
+                         (s-starts-with? "*" buf-name)
+                         (or kill-all
+                             (not (schnouki/buffer-immortal-p buf))))
+                    (unless dry-run
+                      (kill-buffer buf))
+                    (unless (seq-some (lambda (it) (string-match-p it buf-name)) schnouki/immortal-silent-buffers)
+                      (add-to-list 'killed (cons buf-name buf))))))
+              (buffer-list))
     (cond
      (dry-run killed)
      (killed
       (message "%d buffers killed: %s"
                (length killed)
-               (string-join (-map 'car killed)  ", "))))))
+               (string-join (mapcar #'car killed)  ", "))))))
 (bind-key "C-x M-k" 'schnouki/kill-star-buffers)
 
 ;; Kill all buffers visiting files in a directory or its subdirectories.
 (defun schnouki/kill-dir-buffers (&optional directory)
   "Remove all buffers visiting DIRECTORY or its subdirectories."
   (interactive "DKill buffers visiting: ")
-  (let ((buffers (->> (buffer-list)
-                      (--map (cons it (if (eq (buffer-local-value 'major-mode it) 'dired-mode)
-                                          (buffer-local-value 'dired-directory it)
-                                        (buffer-file-name it))))
-                      (--filter (cdr it))
-                      (--map (cons (car it) (expand-file-name (cdr it))))
-                      (--filter (s-starts-with? directory (cdr it)))
-                      (-map 'car))))
-    (-each buffers 'kill-buffer)
+  (let ((buffers (seq-filter (lambda (buf)
+                               (when-let ((fn (if (eq (buffer-local-value 'major-mode buf) 'dired-mode)
+                                                  (buffer-local-value 'dired-directory buf)
+                                                (buffer-file-name buf))))
+                                 (when (string-prefix-p directory (expand-file-name fn))
+                                   buf)))
+                             (buffer-list))))
+    (seq-each #'kill-buffer buffers)
     (message (format "Killed %d buffers visiting %s" (length buffers) directory))))
 (bind-key "k" 'schnouki/kill-dir-buffers schnouki-prefix-map)
 
@@ -286,33 +284,33 @@ of buffers that *would* be killed."
 (defun schnouki/kill-mode-buffers (&optional mode)
   "Remove all buffers using MODE."
   (interactive
-   (let ((all-modes (->> (buffer-list)
-                         (--map (buffer-local-value 'major-mode it))
-                         (-group-by 'identity))))
+   (let ((all-modes (seq-uniq (mapcar (lambda (buf) (buffer-local-value 'major-mode buf))
+                                      (buffer-list)))))
      (list
       (completing-read "Kill buffers in major mode: "
                        all-modes nil t nil nil (symbol-name major-mode)))))
-  (let ((buffers (->> (buffer-list)
-                      (--filter (string= mode
-                                         (buffer-local-value 'major-mode it))))))
-    (-each buffers 'kill-buffer)
+  (let ((buffers (seq-filter (lambda (buf) (string= mode (buffer-local-value 'major-mode buf)))
+                             (buffer-list))))
+    (seq-each #'kill-buffer buffers)
     (message (format "Killed %d buffers using %s" (length buffers) mode))))
 (bind-key "K" 'schnouki/kill-mode-buffers schnouki-prefix-map)
 
 (defun schnouki/killable-buffer-list (buffers)
   "Filter and return killable buffers from BUFFERS.
 A buffer is considered killable if it is not modified and either visits a file, or is not immortal."
-  (--filter (and (buffer-live-p it)
-                 (not (buffer-modified-p it))
-                 (or (buffer-file-name it)
-                     (not (schnouki/buffer-immortal-p it))))
-            buffers))
+  (seq-filter (lambda (buf)
+                (and (buffer-live-p buf))
+                (not (buffer-modified-p buf))
+                (or (buffer-file-name buf)
+                    (not (schnouki/buffer-immortal-p buf))))
+              buffers))
 
 (defun schnouki/sort-buffers-by-display-time (buffers)
   "Sort BUFFERS by display time."
-  (--sort (time-less-p (buffer-local-value 'buffer-display-time it)
-                       (buffer-local-value 'buffer-display-time other))
-          buffers))
+  (sort (copy-sequence buffers)
+        (lambda (a b)
+          (time-less-p (buffer-local-value 'buffer-display-time a)
+                       (buffer-local-value 'buffer-display-time b)))))
 
 (defun schnouki/clean-buffer-list (keep-buffers-nb)
   "Clean buffer list until there are only KEEP-BUFFERS-NB buffers remaining."
@@ -325,21 +323,21 @@ A buffer is considered killable if it is not modified and either visits a file, 
                        default-nb)))))
   (let* ((nb-buffers (length (buffer-list)))
          (nb-buffers-to-kill (- nb-buffers keep-buffers-nb))
-         (all-killable-buffers (->> (buffer-list)
-                                    (schnouki/killable-buffer-list)
-                                    (schnouki/sort-buffers-by-display-time)))
+         (all-killable-buffers (schnouki/sort-buffers-by-display-time
+                                (schnouki/killable-bufer-list (buffer-list))))
          (star-killed (schnouki/kill-star-buffers nil t))
-         (killed-buffers (-map 'cdr star-killed))
-         (killable-buffers (-difference all-killable-buffers killed-buffers)))
+         (killed-buffers (mapcar #'cdr star-killed))
+         (killable-buffers (seq-difference all-killable-buffers killed-buffers)))
     (when (< (length killed-buffers) nb-buffers-to-kill)
-      (setq killed-buffers (-concat killed-buffers
-                                    (-take (- nb-buffers-to-kill (length killed-buffers))
-                                           killable-buffers))))
+      (setq killed-buffers (append killed-buffers
+                                   (seq-take killable-buffers
+                                             (- nb-buffers-to-kill (length killed-buffers))))))
+
     (when (yes-or-no-p
            (format "About to kill %d buffers: %s. Continue? "
                    (length killed-buffers)
-                   (string-join (--map (buffer-name it) killed-buffers) ", ")))
-      (--each killed-buffers (kill-buffer it))
+                   (string-join (mapcar #'buffer-name killed-buffers) ", ")))
+      (seq-each #'kill-buffer killed-buffers)
       (message "Killed %d buffers (out of %d)." (length killed-buffers) nb-buffers))))
 (bind-key "C-x K" 'schnouki/clean-buffer-list)
 
@@ -647,7 +645,7 @@ If third argument START is non-nil, convert words after that index in STRING."
   (interactive)
   (let* ((output (shell-command-to-string "rg --no-filename --no-line-number --no-heading '^\\(use-package' ~/.config/emacs | awk '{print $2}' | sort -u"))
          (lines (s-lines (s-trim output)))
-         (packages (-map 'intern lines)))
+         (packages (mapcar #'intern lines)))
     (customize-save-variable 'package-selected-packages packages)))
 ;; (schnouki/update-selected-packages)
 ;; (package-autoremove)
@@ -655,24 +653,25 @@ If third argument START is non-nil, convert words after that index in STRING."
 
 ;; Refresh environment variables, e.g. when sway is reloaded
 (defun schnouki/refresh-env ()
-  (require 'dash)
   (require 's)
-  (let ((env-vars '("SWAYSOCK" "I3SOCK")))
-    (-as-> (with-output-to-string
-             (with-current-buffer standard-output
-               (call-process "systemctl" nil t nil "--user" "show-environment")))
-           env
-           (s-lines env)
-           (-remove #'s-blank-str? env)
-           (--map (s-split-up-to "=" it 1) env)
-           (--filter (-contains? env-vars (car it)) env)
-           (--each env (apply #'setenv it)))))
+  (let* ((update-vars '("SWAYSOCK" "I3SOCK"))
+         (raw-env (with-output-to-string
+                    (with-current-buffer standard-output
+                      (call-process "systemctl" nil t nil "--user" "show-environment"))))
+         (env-lines (seq-remove #'s-blank-str? (s-lines raw-env)))
+         (current-env (mapcar (lambda (line) (s-split-up-to "=" line 1)) env-lines)))
+    (seq-each (lambda (var)
+                (when-let ((value (cadr (assoc-string var current-env))))
+                  (setenv var value)))
+              update-vars)))
+(schnouki/refresh-env)
+
 
 ;; GUI for pueue
 (use-package pueue
   :ensure t)
 
-;; Actionable URLs in buffers
+;; Actionable URLs in buffersq
 ;; https://xenodium.com/actionable-urls-in-emacs-buffers/
 (use-package goto-addr
   :hook ((prog-mode . goto-address-prog-mode)

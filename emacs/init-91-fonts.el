@@ -2,8 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-(require 'dash)
-
 (defun schnouki/setup-fonts (&rest args)
   "Setup fonts."
   (interactive)
@@ -23,8 +21,8 @@
                  `(font . ,mono-font))
     (set-frame-font mono-font)
 
-    (--each '(mode-line mode-line-active mode-line-inactive)
-      (set-face-attribute it nil :font mono-font))))
+    (seq-each (lambda (face) (set-face-attribute face nil :font mono-font))
+              '(mode-line mode-line-active mode-line-inactive))))
 
 (with-eval-after-load 'faces
   (schnouki/setup-fonts)

@@ -2,8 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(use-package dash
-  :ensure t)
+
 (use-package list-utils
   :ensure t)
 (use-package s
@@ -47,9 +46,9 @@
   :ensure t
   :hook (after-init . global-flycheck-mode)
   :config
-  (setq flycheck-check-syntax-automatically (--remove (or (eq it 'mode-enabled)
-                                                          (eq it 'new-line))
-                                                      flycheck-check-syntax-automatically))
+  (setq flycheck-check-syntax-automatically (seq-remove (lambda (it) (or (eq it 'mode-enabled)
+                                                                         (eq it 'new-line)))
+                                                        flycheck-check-syntax-automatically))
   (defhydra hydra-flycheck
     (:pre (progn (setq hydra-lv t) (flycheck-list-errors))
           :post (progn (setq hydra-lv nil) (quit-windows-on "*Flycheck errors*"))
@@ -118,7 +117,7 @@
   (when (and
          (eq status 'exit)
          (zerop code)
-         (not (-contains? '("Ag" "Ripgrep") mode-name)))
+         (not (seq-contains-p '("Ag" "Ripgrep") mode-name)))
     ;; then bury the *compilation* buffer, so that C-x b doesn't go there
     (bury-buffer)
     ;; and delete the *compilation* window
@@ -284,10 +283,10 @@ _t_ype definition"
   :ensure t
   :delight
   :config
-  (--each (list (rx "/.config/emacs/elpa/")
-                (rx "/vendor/")
-                (rx "/" (or ".virtualenvs" "venv" ".venv") "/"))
-    (add-to-list 'auto-read-only-file-regexps it))
+  (seq-each (list (rx "/.config/emacs/elpa/")
+                  (rx "/vendor/")
+                  (rx "/" (or ".virtualenvs" "venv" ".venv") "/"))
+            (lambda (it) (add-to-list 'auto-read-only-file-regexps it)))
   (auto-read-only-mode 1))
 
 ;; Highlight TODO and similar keywords
