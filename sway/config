@@ -52,7 +52,7 @@ include ~/.config/sway/config.outputs
 set $laptop_kb 1:1:AT_Translated_Set_2_keyboard
 set $keychron_kb_k4 1452:591:Keychron_K4_Keychron_K4
 set $keychron_kb_k2 1452:591:Keytron_Keychron_K2
-set $keychron_kb_k10 13364:673:Keychron_Keychron_K10_Pro_Keyboqrd
+set $keychron_kb_k10 13364:673:Keychron_Keychron_K10_Pro
 
 input * {
     xkb_layout fr,us
@@ -171,6 +171,7 @@ workspace_auto_back_and_forth yes
     bindsym $mod+8 workspace number 8
     bindsym $mod+9 workspace number 9
     bindsym $mod+0 workspace number 10
+
     # Move focused container to workspace
     bindsym $mod+Shift+1 move container to workspace number 1
     bindsym $mod+Shift+2 move container to workspace number 2
@@ -185,7 +186,7 @@ workspace_auto_back_and_forth yes
     # Note: workspaces can have any name you want, not just numbers.
     # We just use 1-10 as the default.
 
-    # Same bindings for the laptop keyboard (with fr-oss layout)
+    # Same bindings for the fr-oss keyboards
     bindsym --input-device=$laptop_kb $mod+ampersand  workspace number 1
     bindsym --input-device=$laptop_kb $mod+eacute     workspace number 2
     bindsym --input-device=$laptop_kb $mod+quotedbl   workspace number 3
@@ -207,6 +208,28 @@ workspace_auto_back_and_forth yes
     bindsym --input-device=$laptop_kb $mod+Shift+underscore move container to workspace number 8
     bindsym --input-device=$laptop_kb $mod+Shift+ccedilla   move container to workspace number 9
     bindsym --input-device=$laptop_kb $mod+Shift+agrave     move container to workspace number 10
+
+    bindsym --input-device=$keychron_kb_k10 $mod+ampersand  workspace number 1
+    bindsym --input-device=$keychron_kb_k10 $mod+eacute     workspace number 2
+    bindsym --input-device=$keychron_kb_k10 $mod+quotedbl   workspace number 3
+    bindsym --input-device=$keychron_kb_k10 $mod+apostrophe workspace number 4
+    bindsym --input-device=$keychron_kb_k10 $mod+parenleft  workspace number 5
+    bindsym --input-device=$keychron_kb_k10 $mod+minus      workspace number 6
+    bindsym --input-device=$keychron_kb_k10 $mod+egrave     workspace number 7
+    bindsym --input-device=$keychron_kb_k10 $mod+underscore workspace number 8
+    bindsym --input-device=$keychron_kb_k10 $mod+ccedilla   workspace number 9
+    bindsym --input-device=$keychron_kb_k10 $mod+agrave     workspace number 10
+
+    bindsym --input-device=$keychron_kb_k10 $mod+Shift+ampersand  move container to workspace number 1
+    bindsym --input-device=$keychron_kb_k10 $mod+Shift+eacute     move container to workspace number 2
+    bindsym --input-device=$keychron_kb_k10 $mod+Shift+quotedbl   move container to workspace number 3
+    bindsym --input-device=$keychron_kb_k10 $mod+Shift+apostrophe move container to workspace number 4
+    bindsym --input-device=$keychron_kb_k10 $mod+Shift+parenleft  move container to workspace number 5
+    bindsym --input-device=$keychron_kb_k10 $mod+Shift+minus      move container to workspace number 6
+    bindsym --input-device=$keychron_kb_k10 $mod+Shift+egrave     move container to workspace number 7
+    bindsym --input-device=$keychron_kb_k10 $mod+Shift+underscore move container to workspace number 8
+    bindsym --input-device=$keychron_kb_k10 $mod+Shift+ccedilla   move container to workspace number 9
+    bindsym --input-device=$keychron_kb_k10 $mod+Shift+agrave     move container to workspace number 10
 
     # Workaround for https://github.com/swaywm/sway/issues/6961 (from https://github.com/swaywm/sway/issues/4955)
     seat * keyboard_grouping none
