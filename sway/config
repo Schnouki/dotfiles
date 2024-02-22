@@ -52,6 +52,7 @@ include ~/.config/sway/config.outputs
 set $laptop_kb 1:1:AT_Translated_Set_2_keyboard
 set $keychron_kb_k4 1452:591:Keychron_K4_Keychron_K4
 set $keychron_kb_k2 1452:591:Keytron_Keychron_K2
+set $keychron_kb_k10 13364:673:Keychron_Keychron_K10_Pro_Keyboqrd
 
 input * {
     xkb_layout fr,us
@@ -70,6 +71,11 @@ input $keychron_kb_k4 {
 input $keychron_kb_k2 {
     xkb_layout us
     xkb_variant qwerty-fr
+}
+input $keychron_kb_k10 {
+    xkb_layout fr
+    xkb_variant oss
+    xkb_numlock enabled
 }
 input $laptop_kb {
     xkb_layout fr
