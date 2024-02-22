@@ -5,6 +5,10 @@
 /home/schnouki/.config/emacs/handle-grep+.py %u
   ^grep\+://
 
+# Default browser, because Obsidian keeps messing with it
+/usr/lib/firefox/firefox %u
+  ^https?://
+
 # Local Variables:
 # mode: conf-space
 # End:
