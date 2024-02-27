@@ -12,7 +12,6 @@
         ],
         // "modules-center": ["wlr/taskbar"],
         "modules-right": [
-            "custom/timewarrior",
             "custom/bars",
             "temperature",
             "pulseaudio",
@@ -42,13 +41,6 @@
         },
 
         // Right modules
-        "custom/timewarrior": {
-            "exec": "$HOME/.config/timewarrior/tww.py",
-            "return-type": "json",
-            "restart-interval": 1,
-            "format": " {}",
-            "on-click": "$HOME/.config/timewarrior/timew-ui.py",
-        },
         "custom/bars": {
             "exec": "$HOME/.config/waybar/bars/bars",
             "return-type": "json",
