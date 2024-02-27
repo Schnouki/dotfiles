@@ -68,6 +68,7 @@
                 "car": "",
                 "default": ["", ""]
             },
+            "ignored-sinks": ["Easy Effects Sink"],
             "scroll-step": 5,
             "on-click": "pavucontrol"
         },
@@ -165,4 +166,5 @@
 
 // Local Variables:
 // mode: js
+// apheleia-mode: nil
 // End:
