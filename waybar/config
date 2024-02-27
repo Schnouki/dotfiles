@@ -13,6 +13,7 @@
         // "modules-center": ["wlr/taskbar"],
         "modules-right": [
             "custom/bars",
+            "custom/mullvad",
             "temperature",
             "pulseaudio",
             "battery",
@@ -46,6 +47,19 @@
             "return-type": "json",
             "restart-interval": 1,
             "format": "{}",
+        },
+        "custom/mullvad": {
+            "exec": "$HOME/.config/waybar/mullvad-status.py",
+            "return-type": "json",
+            "restart-interval": 1,
+            "format": "{icon}",
+            "format-icons": {
+                "connected": "",
+                "connecting": "",
+                "disconnected": "",
+                "disconnecting": "",
+            },
+            "on-click": "$HOME/.config/waybar/mullvad-status.py toggle",
         },
         "pulseaudio": {
             "format": "{icon} {volume}%",
