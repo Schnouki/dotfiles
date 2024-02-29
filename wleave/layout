@@ -1,0 +1,30 @@
+{
+    "label" : "lock",
+    "action" : "~/.config/swayidle/lock.sh",
+    "text" : "Verrouillage",
+    "keybind" : "v"
+}
+{
+    "label" : "suspend",
+    "action" : "systemctl suspend",
+    "text" : "Mise en veille",
+    "keybind" : "v"
+}
+{
+    "label" : "hibernate",
+    "action" : "systemctl hibernate",
+    "text" : "Hibernation",
+    "keybind" : "h"
+}
+{
+    "label" : "reboot",
+    "action" : "systemctl reboot",
+    "text" : "Redémarrage",
+    "keybind" : "r"
+}
+{
+    "label" : "shutdown",
+    "action" : "systemctl poweroff",
+    "text" : "Extinction",
+    "keybind" : "e"
+}

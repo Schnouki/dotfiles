@@ -1,0 +1,67 @@
+* {
+    background-image: none;
+}
+
+window {
+    background-color: #3f3f3f;
+}
+
+button {
+    color: #dcdccc;
+    background-color: #2b2b2b;
+    border: 0;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+button:focus,
+button:active {
+    background-color: #366060;
+    outline-style: none;
+}
+button:hover {
+    background-color: #4c7073;
+    outline-style: none;
+}
+
+#lock {
+    background-image: image(
+        url("/usr/share/wleave/icons/lock.svg"),
+        url("/usr/local/share/wleave/icons/lock.svg")
+    );
+}
+
+#logout {
+    background-image: image(
+        url("/usr/share/wleave/icons/logout.svg"),
+        url("/usr/local/share/wleave/icons/logout.svg")
+    );
+}
+
+#suspend {
+    background-image: image(
+        url("/usr/share/wleave/icons/suspend.svg"),
+        url("/usr/local/share/wleave/icons/suspend.svg")
+    );
+}
+
+#hibernate {
+    background-image: image(
+        url("/usr/share/wleave/icons/hibernate.svg"),
+        url("/usr/local/share/wleave/icons/hibernate.svg")
+    );
+}
+
+#shutdown {
+    background-image: image(
+        url("/usr/share/wleave/icons/shutdown.svg"),
+        url("/usr/local/share/wleave/icons/shutdown.svg")
+    );
+}
+
+#reboot {
+    background-image: image(
+        url("/usr/share/wleave/icons/reboot.svg"),
+        url("/usr/local/share/wleave/icons/reboot.svg")
+    );
+}
