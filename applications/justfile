@@ -1,4 +1,4 @@
-default: knossos obsidian steam steam-native vivaldi-stable vivaldi-stable-alt steam-games update-cache
+default: bruno knossos obsidian steam steam-native vivaldi-stable vivaldi-stable-alt steam-games update-cache
 
 [private]
 prepare FILE TARGET="":
@@ -23,6 +23,9 @@ electron_wayland FILE:
 [private]
 electron_scaling FILE:
     just add_args "{{FILE}}" --force-device-scale-factor=1.25
+
+bruno: (prepare "bruno")
+    just electron_wayland bruno
 
 knossos: (prepare "knossos")
     -which prime-run &>/dev/null && just add_runner knossos prime-run || rm knossos.desktop
