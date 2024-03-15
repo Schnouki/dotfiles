@@ -85,9 +85,6 @@
             "format": "{icon} {temperatureC}°C",
             "format-icons": ["", "", "", "", ""],
         },
-        "keyboard-state": {
-            "device-path": "/dev/input/by-id/usb-Keychron_K4_Keychron_K4-event-kbd",
-        },
         "battery": {
             "design-capacity": false,
             "states": {
