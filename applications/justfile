@@ -1,4 +1,4 @@
-default: bitwarden insomnia knossos obsidian steam steam-native vivaldi-stable vivaldi-stable-alt steam-games update-cache
+default: knossos obsidian steam steam-native vivaldi-stable vivaldi-stable-alt steam-games update-cache
 
 [private]
 prepare FILE TARGET="":
@@ -23,12 +23,6 @@ electron_wayland FILE:
 [private]
 electron_scaling FILE:
     just add_args "{{FILE}}" --force-device-scale-factor=1.25
-
-bitwarden: (prepare "bitwarden")
-    just electron_wayland bitwarden
-
-insomnia: (prepare "insomnia")
-    just electron_wayland insomnia
 
 knossos: (prepare "knossos")
     -which prime-run &>/dev/null && just add_runner knossos prime-run || rm knossos.desktop
