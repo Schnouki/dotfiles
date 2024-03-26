@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-/usr/share/sway-contrib/grimshot --notify save "$@" - \
+/usr/bin/grimshot --notify save "$@" - \
     | exec swappy -f - -o ~/Dropbox/Public/Screenshots/$(date +"%F-%H_%M_%S").png
