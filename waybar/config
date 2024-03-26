@@ -92,7 +92,9 @@
                 "critical": 15,
             },
             "format": "{icon} {capacity}%",
-            "format-icons": ["", "", "", "", ""]
+            "format-icons": ["", "", "", "", ""],
+            "format-time": "{H}h{m}",
+            "tooltip-format": " {time} — {power:.1f} W",
         },
         "clock": {
             "interval": 10,
@@ -105,7 +107,7 @@
         },
         "tray": {
             "icon-size": 24,
-            "spacing": 2,
+            "spacing": 0,
         },
     },
 

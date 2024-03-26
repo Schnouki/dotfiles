@@ -34,7 +34,7 @@ window#waybar {
     background: @zb_bg_m1;
     color: @zb_fg;
     transition-property: background-color;
-    transition-duration: .5s;
+    transition-duration: 0.5s;
 }
 
 tooltip {
@@ -54,7 +54,6 @@ widget > * {
 }
 */
 
-
 button {
     border: none;
     border-radius: 0;
@@ -69,7 +68,7 @@ button:hover {
 }
 
 #workspaces {
-    padding: 0
+    padding: 0;
 }
 #workspaces button {
     padding: 0 4pt;
@@ -90,7 +89,7 @@ button:hover {
 #workspaces button.visible:not(.focused) {
     background: @zb_bg;
     color: @zb_fg;
-    border-color: @zb_fg_m05
+    border-color: @zb_fg_m05;
 }
 #workspaces button.urgent {
     background: @zb_red_m6;
@@ -112,5 +111,15 @@ button:hover {
     color: @zb_bg_m1;
 }
 #battery.critical:not(.charging) {
+    background: @zb_red_m4;
+}
+
+#tray {
+    padding-right: 0;
+}
+#tray widget > * {
+    padding: 0 2pt;
+}
+#tray > .needs-attention {
     background: @zb_red_m4;
 }
