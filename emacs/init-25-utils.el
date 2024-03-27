@@ -37,12 +37,17 @@
 (delight 'auto-revert-mode)
 (bind-key "C-x r RET" 'revert-buffer)
 
-;; And also auto-revert dired buffers (needed since global-auto-revert-mode only
-;; works for buffers associated with files on the disk)
-(add-hook 'dired-mode-hook 'auto-revert-mode)
+;; Dired
+(use-package dired
+  :demand t
+  :config
+  (require 'dired-x)
 
-;; http://emacsrocks.com/e16.html
-(setq dired-dwim-target t)
+  ;; Auto-revert dired buffers (needed since global-auto-revert-mode only
+  ;; works for buffers associated with files on the disk)
+  (add-hook 'dired-mode-hook 'auto-revert-mode)
+  :custom
+  (dired-dwim-target t)) ;; http://emacsrocks.com/e16.html
 
 ;; http://pragmaticemacs.com/emacs/tree-style-directory-views-in-dired-with-dired-subtree/
 (use-package dired-subtree
