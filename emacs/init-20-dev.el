@@ -283,10 +283,10 @@ _t_ype definition"
   :ensure t
   :delight
   :config
-  (seq-each (list (rx "/.config/emacs/elpa/")
+  (seq-each (lambda (it) (add-to-list 'auto-read-only-file-regexps it))
+            (list (rx "/.config/emacs/elpa/")
                   (rx "/vendor/")
-                  (rx "/" (or ".virtualenvs" "venv" ".venv") "/"))
-            (lambda (it) (add-to-list 'auto-read-only-file-regexps it)))
+                  (rx "/" (or ".virtualenvs" "venv" ".venv") "/")))
   (auto-read-only-mode 1))
 
 ;; Highlight TODO and similar keywords
