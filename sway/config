@@ -62,6 +62,8 @@ input * {
 }
 input type:touchpad {
     dwt enabled
+    click_method clickfinger
+    middle_emulation disabled
 }
 input $keychron_kb_k4 {
     xkb_layout us
