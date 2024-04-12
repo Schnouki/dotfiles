@@ -169,6 +169,14 @@ _t_ype definition"
   (global-flycheck-eglot-mode 1))
 
 
+;; eglot-booster -- https://github.com/jdtsmith/eglot-booster
+(use-package eglot-booster
+  :load-path "~/.config/emacs/eglot-booster"
+  :after eglot
+  :config
+  (eglot-booster-mode))
+
+
 ;; Company -- complete anything
 (use-package company
   :ensure t

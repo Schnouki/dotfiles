@@ -10,3 +10,6 @@
 [submodule "emacs/ajrepl"]
 	path = emacs/ajrepl
 	url = https://github.com/sogaiu/ajrepl
+[submodule "emacs/eglot-booster"]
+	path = emacs/eglot-booster
+	url = https://github.com/jdtsmith/eglot-booster.git
