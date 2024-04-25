@@ -264,7 +264,7 @@ _t_ype definition"
   :delight '(:eval (concat " ():" (substring parinfer-rust--mode 0 1)))
   :custom
   (parinfer-rust-auto-download t)
-  (parinfer-rust-check-before-enable nil))
+  (parinfer-rust-check-before-enable 'defer))
 
 ;; REST client!
 (use-package restclient
