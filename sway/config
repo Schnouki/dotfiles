@@ -6,10 +6,10 @@ set $mod Mod4
 # Preferred apps
 # (pass to "swaymsg exec -- " to open it on the original workspace that the
 # command was run on)
-set $term foot
+set $term /home/schnouki/.config/sway/run.sh foot
 set $editor /home/schnouki/bin/eclient -n -c
 set $menu fuzzel
-set $fman thunar
+set $fman /home/schnouki/.config/sway/run.sh thunar
 set $emoji rofimoji --selector="wofi" --action type copy
 set $wallpaper_config /home/schnouki/.config/swww/choose-folder
 
@@ -62,6 +62,8 @@ input * {
 }
 input type:touchpad {
     dwt enabled
+    click_method clickfinger
+    middle_emulation disabled
 }
 input $keychron_kb_k4 {
     xkb_layout us

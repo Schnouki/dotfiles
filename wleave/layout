@@ -2,7 +2,7 @@
     "label" : "lock",
     "action" : "~/.config/swayidle/lock.sh",
     "text" : "Verrouillage",
-    "keybind" : "v"
+    "keybind" : "l"
 }
 {
     "label" : "suspend",
