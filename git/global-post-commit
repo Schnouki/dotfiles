@@ -1,5 +1,3 @@
 #!/bin/sh
 
-# Log commit to Exist.io
-DATE_TODAY=$(date +"%Y-%m-%d")
-pueue add --group git --label exist.io "~/.local/share/nimble/bin/exist_git_hook --date:$DATE_TODAY commit"
+# Nothing to do :)
