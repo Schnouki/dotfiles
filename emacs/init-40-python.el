@@ -20,4 +20,11 @@
   :mode "\\.p\\(?:yx\\|x[di]\\)\\'")
 
 
+;; Configure basedpyright in eglot, based on pyright
+(with-eval-after-load-feature 'eglot
+  (when (executable-find "basedpyright-langserver")
+    (add-to-list 'eglot-server-programs
+                 '((python-mode python-ts-mode)
+                   "basedpyright-langserver" "--stdio"))))
+
 ;;; init-40-python.el ends here
