@@ -325,6 +325,14 @@ bindsym $mod+r mode "resize"
     bindsym XF86MonBrightnessDown exec light -U 5 && light -G | cut -d'.' -f1 > $wobsock
 
 #
+# Quick shortcuts:
+#
+    bindsym XF86Tools    workspace back_and_forth
+    # bindsym XF86Launch5
+    # bindsym XF86Launch6
+    # bindsym XF86Launch7
+
+#
 # Screenshot:
 #
 mode "screenshot" {
