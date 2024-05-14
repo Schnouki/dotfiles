@@ -141,11 +141,11 @@
 
   (defhydra hydra-eglot (:hint nil)
     "
-^^Find              ^^Modify       ^^Actions
-^^----------------- ^^------------ ^^------------
-_r_eferences        _f_ormat       _R_ename var
-de_c_laration       format _b_uf   _a_ctions
-_d_efinition
+^^Find              ^^Modify       ^^Actions      ^^Manage eglot
+^^----------------- ^^------------ ^^------------ ^^--------------------
+_r_eferences        _f_ormat       _R_ename var   start s_e_rver
+de_c_laration       format _b_uf   _a_ctions      [_C-r_] reconnect
+_d_efinition        ^^             ^^             [_C-s_] shutdown
 _i_mplementation
 _t_ype definition"
     ("r" xref-find-references)
@@ -158,7 +158,11 @@ _t_ype definition"
     ("b" eglot-format-buffer)
 
     ("R" eglot-rename)
-    ("a" eglot-code-actions))
+    ("a" eglot-code-actions)
+
+    ("e" eglot)
+    ("C-r" eglot-reconnect)
+    ("C-s" eglot-shutdown))
   (bind-key "e" 'hydra-eglot/body schnouki-prefix-map))
 
 
