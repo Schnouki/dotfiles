@@ -52,6 +52,7 @@ gtk-3.0/bookmarks
 !notmuch
 !spotify-player
 !spotifyd
+!sqlite3
 !sway
 !swayidle
 !swaylock
