@@ -1,3 +1,4 @@
 #!/bin/sh
 
-# Nothing to do :)
+# Log commit in sqlite
+GITLOG_COMMIT_TIME=$(date -Iseconds) pueue add --group git "~/bin/log-git-commit.ros"
