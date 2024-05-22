@@ -1,5 +1,22 @@
 [
   {
+    "group": "root",
+    "stations": [
+      {
+        "name": "Nectarine",
+        "url": "https://scenestream.io/necta128.ogg"
+      },
+      {
+        "name": "SLAY Radio",
+        "url": "https://www.slayradio.org/tune_in.php/128kbps/slayradio.128.m3u"
+      },
+      {
+        "name": "Fréquence 3",
+        "url": "https://frequence3.net-radio.fr/frequence3-128.mp3"
+      }
+    ]
+  },
+  {
     "group": "SomaFM",
     "stations": [
       {

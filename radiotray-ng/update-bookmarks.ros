@@ -25,6 +25,17 @@ exec ros -Q -- $0 "$@"
   group
   stations)
 
+(defun list-root-stations ()
+  (list (make-station :name "Nectarine"
+                      :url "https://scenestream.io/necta128.ogg"
+                      :order 0)
+        (make-station :name "SLAY Radio"
+                      :url "https://www.slayradio.org/tune_in.php/128kbps/slayradio.128.m3u"
+                      :order 0)
+        (make-station :name "Fréquence 3"
+                      :url "https://frequence3.net-radio.fr/frequence3-128.mp3"
+                      :order 0)))
+
 (defun list-somafm-stations ()
   (let ((channels (xmls:parse (dex:get "https://somafm.com/channels.xml"))))
     (sort
@@ -46,9 +57,9 @@ exec ros -Q -- $0 "$@"
 (defun list-nightridefm-stations ()
   (let* ((dom (lquery:$ (initialize (dex:get "https://nightride.fm/stations"))))
          (stations (lquery:$ dom
-                     "a[data-type=stream]"
-                     (combine (attr :data-station)
-                              ($1 "h3" (text))))))
+                             "a[data-type=stream]"
+                             (combine (attr :data-station)
+                                      ($1 "h3" (text))))))
     (loop for (id name) across stations
           for order from 1
           collect
@@ -60,13 +71,12 @@ exec ros -Q -- $0 "$@"
 
 (defun main (&rest argv)
   (declare (ignorable argv))
-  (let ((bookmarks (list
-                    (make-group
-                     :group "SomaFM"
-                     :stations (list-somafm-stations))
-                    (make-group
-                     :group "Nightride FM"
-                     :stations (list-nightridefm-stations)))))
+  (let ((bookmarks (list (make-group :group "root"
+                                     :stations (list-root-stations))
+                         (make-group :group "SomaFM"
+                                     :stations (list-somafm-stations))
+                         (make-group :group "Nightride FM"
+                                     :stations (list-nightridefm-stations)))))
     (with-open-file (stream (uiop:merge-pathnames* "radiotray-ng/bookmarks.json"
                                                    (uiop:xdg-config-home))
                             :direction :output
