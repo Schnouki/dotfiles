@@ -1,0 +1,79 @@
+#!/bin/sh
+#|-*- mode:lisp -*-|#
+#|
+exec ros -Q -- $0 "$@"
+|#
+(progn ;;init forms
+  (ros:ensure-asdf)
+  #+quicklisp(ql:quickload '(com.inuoe.jzon dexador lquery uiop xmls) :silent t))
+
+(defpackage :ros.script.update-bookmarks.3925291010
+  (:use :cl)
+  (:local-nicknames (#:jzon #:com.inuoe.jzon)))
+(in-package :ros.script.update-bookmarks.3925291010)
+
+(defstruct (station (:constructor make-station))
+  name
+  url
+  order)
+
+(defmethod jzon:coerced-fields ((station station))
+  (list (list "name" (station-name station))
+        (list "url" (station-url station))))
+
+(defstruct (group (:constructor make-group))
+  group
+  stations)
+
+(defun list-somafm-stations ()
+  (let ((channels (xmls:parse (dex:get "https://somafm.com/channels.xml"))))
+    (sort
+     (mapcar
+      (lambda (channel)
+        (make-station
+         :name (xmls:xmlrep-string-child (xmls:xmlrep-find-child-tag "title" channel))
+         :url (xmls:xmlrep-string-child
+               (find-if (lambda (fastpls)
+                          (string= (xmls:xmlrep-attrib-value "format" fastpls)
+                                   "mp3"))
+                        (xmls:xmlrep-find-child-tags "fastpls" channel)))
+         :order (xmls:xmlrep-integer-child (xmls:xmlrep-find-child-tag "listeners" channel))))
+
+      (xmls:xmlrep-find-child-tags "channel" channels))
+     (lambda (s1 s2)
+       (> (station-order s1) (station-order s2))))))
+
+(defun list-nightridefm-stations ()
+  (let* ((dom (lquery:$ (initialize (dex:get "https://nightride.fm/stations"))))
+         (stations (lquery:$ dom
+                     "a[data-type=stream]"
+                     (combine (attr :data-station)
+                              ($1 "h3" (text))))))
+    (loop for (id name) across stations
+          for order from 1
+          collect
+          (make-station
+           :name name
+           :url (format nil "https://stream.nightride.fm:8443/~a/~a.m3u8" id id)
+           :order order))))
+
+
+(defun main (&rest argv)
+  (declare (ignorable argv))
+  (let ((bookmarks (list
+                    (make-group
+                     :group "SomaFM"
+                     :stations (list-somafm-stations))
+                    (make-group
+                     :group "Nightride FM"
+                     :stations (list-nightridefm-stations)))))
+    (with-open-file (stream (uiop:merge-pathnames* "radiotray-ng/bookmarks.json"
+                                                   (uiop:xdg-config-home))
+                            :direction :output
+                            :if-exists :supersede
+                            :if-does-not-exist :create)
+      (jzon:stringify bookmarks
+                      :stream stream
+                      :pretty t))))
+
+;;; vim: set ft=lisp lisp:

@@ -1,0 +1,216 @@
+[
+  {
+    "group": "SomaFM",
+    "stations": [
+      {
+        "name": "Groove Salad",
+        "url": "https://somafm.com/groovesalad256.pls"
+      },
+      {
+        "name": "Drone Zone",
+        "url": "https://somafm.com/dronezone256.pls"
+      },
+      {
+        "name": "Indie Pop Rocks!",
+        "url": "https://somafm.com/indiepop.pls"
+      },
+      {
+        "name": "Groove Salad Classic",
+        "url": "https://somafm.com/gsclassic.pls"
+      },
+      {
+        "name": "Space Station Soma",
+        "url": "https://somafm.com/spacestation.pls"
+      },
+      {
+        "name": "Deep Space One",
+        "url": "https://somafm.com/deepspaceone.pls"
+      },
+      {
+        "name": "Secret Agent",
+        "url": "https://somafm.com/secretagent.pls"
+      },
+      {
+        "name": "Underground 80s",
+        "url": "https://somafm.com/u80s256.pls"
+      },
+      {
+        "name": "Lush",
+        "url": "https://somafm.com/lush.pls"
+      },
+      {
+        "name": "Left Coast 70s",
+        "url": "https://somafm.com/seventies320.pls"
+      },
+      {
+        "name": "DEF CON Radio",
+        "url": "https://somafm.com/defcon256.pls"
+      },
+      {
+        "name": "Synphaera Radio",
+        "url": "https://somafm.com/synphaera256.pls"
+      },
+      {
+        "name": "Folk Forward",
+        "url": "https://somafm.com/folkfwd.pls"
+      },
+      {
+        "name": "Beat Blender",
+        "url": "https://somafm.com/beatblender.pls"
+      },
+      {
+        "name": "Boot Liquor",
+        "url": "https://somafm.com/bootliquor320.pls"
+      },
+      {
+        "name": "Suburbs of Goa",
+        "url": "https://somafm.com/suburbsofgoa.pls"
+      },
+      {
+        "name": "Sonic Universe",
+        "url": "https://somafm.com/sonicuniverse256.pls"
+      },
+      {
+        "name": "The Trip",
+        "url": "https://somafm.com/thetrip.pls"
+      },
+      {
+        "name": "PopTron",
+        "url": "https://somafm.com/poptron.pls"
+      },
+      {
+        "name": "ThistleRadio",
+        "url": "https://somafm.com/thistle.pls"
+      },
+      {
+        "name": "Illinois Street Lounge",
+        "url": "https://somafm.com/illstreet.pls"
+      },
+      {
+        "name": "Seven Inch Soul",
+        "url": "https://somafm.com/7soul.pls"
+      },
+      {
+        "name": "Bossa Beyond",
+        "url": "https://somafm.com/bossa256.pls"
+      },
+      {
+        "name": "Fluid",
+        "url": "https://somafm.com/fluid.pls"
+      },
+      {
+        "name": "Heavyweight Reggae",
+        "url": "https://somafm.com/reggae256.pls"
+      },
+      {
+        "name": "cliqhop idm",
+        "url": "https://somafm.com/cliqhop256.pls"
+      },
+      {
+        "name": "Vaporwaves",
+        "url": "https://somafm.com/vaporwaves.pls"
+      },
+      {
+        "name": "The Dark Zone",
+        "url": "https://somafm.com/darkzone256.pls"
+      },
+      {
+        "name": "Mission Control",
+        "url": "https://somafm.com/missioncontrol.pls"
+      },
+      {
+        "name": "Dub Step Beyond",
+        "url": "https://somafm.com/dubstep256.pls"
+      },
+      {
+        "name": "Black Rock FM",
+        "url": "https://somafm.com/brfm.pls"
+      },
+      {
+        "name": "Digitalis",
+        "url": "https://somafm.com/digitalis256.pls"
+      },
+      {
+        "name": "Metal Detector",
+        "url": "https://somafm.com/metal.pls"
+      },
+      {
+        "name": "The In-Sound",
+        "url": "https://somafm.com/insound256.pls"
+      },
+      {
+        "name": "Covers",
+        "url": "https://somafm.com/covers.pls"
+      },
+      {
+        "name": "SF 10-33",
+        "url": "https://somafm.com/sf1033.pls"
+      },
+      {
+        "name": "n5MD Radio",
+        "url": "https://somafm.com/n5md.pls"
+      },
+      {
+        "name": "SomaFM Live",
+        "url": "https://somafm.com/live.pls"
+      },
+      {
+        "name": "Tiki Time",
+        "url": "https://somafm.com/tikitime256.pls"
+      },
+      {
+        "name": "SomaFM Specials",
+        "url": "https://somafm.com/specials.pls"
+      },
+      {
+        "name": "Doomed",
+        "url": "https://somafm.com/doomed256.pls"
+      },
+      {
+        "name": "Chillits Radio",
+        "url": "https://somafm.com/chillits.pls"
+      },
+      {
+        "name": "SF Police Scanner",
+        "url": "https://somafm.com/scanner.pls"
+      },
+      {
+        "name": "SF in SF",
+        "url": "https://somafm.com/sfinsf.pls"
+      }
+    ]
+  },
+  {
+    "group": "Nightride FM",
+    "stations": [
+      {
+        "name": "NIGHTRIDE FM",
+        "url": "https://stream.nightride.fm:8443/nightride/nightride.m3u8"
+      },
+      {
+        "name": "CHILLSYNTH FM",
+        "url": "https://stream.nightride.fm:8443/chillsynth/chillsynth.m3u8"
+      },
+      {
+        "name": "DATAWAVE FM",
+        "url": "https://stream.nightride.fm:8443/datawave/datawave.m3u8"
+      },
+      {
+        "name": "SPACESYNTH FM",
+        "url": "https://stream.nightride.fm:8443/spacesynth/spacesynth.m3u8"
+      },
+      {
+        "name": "DARKSYNTH",
+        "url": "https://stream.nightride.fm:8443/darksynth/darksynth.m3u8"
+      },
+      {
+        "name": "HORRORSYNTH",
+        "url": "https://stream.nightride.fm:8443/horrorsynth/horrorsynth.m3u8"
+      },
+      {
+        "name": "EBSM",
+        "url": "https://stream.nightride.fm:8443/ebsm/ebsm.m3u8"
+      }
+    ]
+  }
+]
