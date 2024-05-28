@@ -305,7 +305,7 @@ _p_rev       _u_pper (mine)       _=_: upper/lower       _r_esolve
                                                  (<= (overlay-end ov) (pos-eol))))))))
   (defun schnouki/enable-hide-scopeline-on-active-line ()
     (add-hook 'post-command-hook #'schnouki/hide-scopeline-on-active-line nil t))
-  (add-hook 'scopeline-mode-hook #'schnouki/enable-hide-scopeline-on-active-line))
+  :hook (scopeline-mode . schnouki/enable-hide-scopeline-on-active-line))
 
 
 
