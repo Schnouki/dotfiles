@@ -163,7 +163,38 @@ _t_ype definition"
     ("e" eglot)
     ("C-r" eglot-reconnect)
     ("C-s" eglot-shutdown))
-  (bind-key "e" 'hydra-eglot/body schnouki-prefix-map))
+  (bind-key "e" 'hydra-eglot/body schnouki-prefix-map)
+
+  (defvar-local schnouki/eglot-invisible-overlays nil
+    "List of eglot inlay hints overlays that are currently invisible.")
+
+  (defun schnouki/hide-eglot-inlay-hints-on-active-line ()
+    "Hide eglot inlay hints on the active line."
+    (when eglot-inlay-hints-mode
+      ;; Define a helper function, to quickly toggle the `invisible' property of
+      ;; the `before-string' and `after-string' properties of an overlay.
+      (cl-flet ((ov-set-invisible (ov inv)
+                  (dolist (prop '(before-string after-string))
+                    (when-let ((s (overlay-get ov prop)))
+                      (overlay-put ov prop
+                                   (propertize s 'invisible inv))))))
+        ;; Turn all overlays visible again
+        (dolist (ov schnouki/eglot-invisible-overlays)
+          (ov-set-invisible ov nil))
+        ;; Update the list of overlays that should be invisible
+        (setq schnouki/eglot-invisible-overlays
+              (cl-remove-if-not (lambda (ov)
+                                  (overlay-get ov 'eglot--inlay-hint))
+                                (overlays-in (pos-bol) (pos-eol))))
+        ;; ...and make them invisible.
+        (dolist (ov schnouki/eglot-invisible-overlays)
+          (ov-set-invisible ov t)))))
+
+  (defun schnouki/enable-hide-eglot-inlay-hints-on-active-line ()
+    (setq schnouki/eglot-invisible-overlays nil)
+    (add-hook 'post-command-hook #'schnouki/hide-eglot-inlay-hints-on-active-line nil t))
+
+  :hook (eglot-inlay-hints-mode . schnouki/enable-hide-eglot-inlay-hints-on-active-line))
 
 
 (use-package flycheck-eglot
