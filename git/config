@@ -4,6 +4,7 @@
 	fp = fetch --prune
 	fpa = fetch --prune --all
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	show-commit-message = show -s --format=%B
 	upp = !git fetch --prune && git checkout $(git symbolic-ref --short HEAD) && git pull
 	wdiff = diff --color-words
 [branch]
