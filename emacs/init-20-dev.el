@@ -354,9 +354,24 @@ _t_ype definition"
   :bind (:map vterm-mode-map
               ("C-q" . vterm-send-next-key)
               :map schnouki-prefix-map
-              ("v v" . vterm)
+              ("v RET" . vterm)
               ("v o" . vterm-other-window))
   :hook ((vterm-mode . #'schnouki/disable-hl-line-mode-locally)
          (vterm-copy-mode . #'schnouki/enable-hl-line-mode)))
+
+(use-package vterm-toggle
+  :after vterm
+  :ensure t
+  :bind (:map schnouki-prefix-map
+              ("v v" . vterm-toggle))
+  :custom
+  (vterm-toggle-fullscreen-p nil)
+  (vterm-toggle-scope 'project)
+  :config
+  (add-to-list 'display-buffer-alist
+               '((derived-mode . vterm-mode)
+                 (display-buffer-reuse-window display-buffer-at-bottom)
+                 (reusable-frames . visible)
+                 (window-height . 0.3))))
 
 ;;; init-20-dev.el ends here
