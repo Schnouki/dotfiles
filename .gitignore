@@ -45,11 +45,13 @@ __pycache__/
 !git
 !gtk-3.0
 gtk-3.0/bookmarks
+!gtk-4.0
 !mako
 !mimeo
 !mozilla
 !mpDris2
 !notmuch
+!presets
 !radiotray-ng
 !spotify-player
 !spotifyd
