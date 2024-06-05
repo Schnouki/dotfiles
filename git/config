@@ -1,6 +1,8 @@
 [alias]
+	dlog = -c diff.external=difft log -p --ext-diff
 	dft = difftool --tool difftastic
-	dftu = difftool --tool difftastic-inline
+	dfti = difftool --tool difftastic-inline
+	dshow = -c diff.external=difft show --ext-diff
 	fp = fetch --prune
 	fpa = fetch --prune --all
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
