@@ -51,6 +51,7 @@ ENCRYPTED_TARBALLS = {
 }
 
 FILE_SYMLINKS = {
+    "notmuch/default/config": ".notmuch-config",
     "sway/config.outputs-@@HOSTNAME@@": ".config/sway/config.outputs",
 }
 
