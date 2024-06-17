@@ -12,6 +12,7 @@ __pycache__/
 !agecat
 !applications/justfile
 !applications/make_steam_desktop_files.py
+!bat
 !beets/config.yaml
 !chromium-flags.conf
 !docker/config.json
