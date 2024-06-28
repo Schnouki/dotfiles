@@ -1,4 +1,5 @@
 [alias]
+	can-merge = "!f() { git merge-tree --write-tree --name-only $(git rev-parse --abbrev-ref HEAD) \"$1\" | sed '1,/^$/d'; }; f"
 	dlog = -c diff.external=difft log -p --ext-diff
 	dft = difftool --tool difftastic
 	dfti = difftool --tool difftastic-inline
