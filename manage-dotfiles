@@ -51,8 +51,8 @@ ENCRYPTED_TARBALLS = {
 }
 
 FILE_SYMLINKS = {
+    "kanshi/config.@@HOSTNAME@@": ".config/kanshi/config",
     "notmuch/default/config": ".notmuch-config",
-    "sway/config.outputs-@@HOSTNAME@@": ".config/sway/config.outputs",
 }
 
 DIR_SYMLINKS = {

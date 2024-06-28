@@ -1,9 +1,0 @@
-set $out_int eDP-1
-set $out_ext DP-1
-
-# Laptop: 2256x1504 / 1.5 = 1504x1002
-# External: 3840x2160 / 1.5 = 2560x1440
-# Laptop centered on the left: Y_offset = (1440 - 1002) / 2 = 219
-output $out_int position 0,219 scale 1.5
-output $out_ext position 1504,0 scale 1.5
-focus output $out_ext

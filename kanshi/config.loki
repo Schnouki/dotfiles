@@ -1,0 +1,10 @@
+output eDP-1 scale 2
+
+profile nomad {
+    output eDP-1 enable position 0,0
+}
+
+profile home {
+    output eDP-1 enable position 0,0
+    output "AOC Q2577W AHLK39A000129" enable position 1920,0
+}

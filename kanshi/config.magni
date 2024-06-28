@@ -1,0 +1,21 @@
+output eDP-1 scale 1.5
+
+profile nomad {
+    output eDP-1 enable position 0,0
+}
+
+profile home {
+    # Laptop: 2256x1504 / 1.5 = 1504x1002
+    # External: 2564x1440
+    # Laptop at bottom left: Y_offset = (1440 - 1002) = 438
+    output eDP-1 enable position 0,438
+    output "AOC Q2577W AHLK39A000129" enable position 1504,0 scale 1
+}
+
+profile coworking {
+    # Laptop: 2256x1504 / 1.5 = 1504x1002
+    # External: 3840x2160 / 1.5 = 2560x1440
+    # Laptop centered on the left: Y_offset = (1440 - 1002) / 2 = 219
+    output eDP-1 enable position 0,219
+    output "LG Electronics LG HDR 4K 0x0000FF33" enable position 1504,0 scale 1.5
+}

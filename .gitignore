@@ -47,6 +47,7 @@ __pycache__/
 !gtk-3.0
 gtk-3.0/bookmarks
 !gtk-4.0
+!kanshi
 !mako
 !mimeo
 !mozilla
