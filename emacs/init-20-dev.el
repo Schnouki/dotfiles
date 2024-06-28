@@ -356,11 +356,10 @@ _t_ype definition"
               :map schnouki-prefix-map
               ("v RET" . vterm)
               ("v o" . vterm-other-window))
-  :hook ((vterm-mode . #'schnouki/disable-hl-line-mode-locally)
-         (vterm-copy-mode . #'schnouki/enable-hl-line-mode)))
+  :hook ((vterm-mode . schnouki/disable-hl-line-mode-locally)
+         (vterm-copy-mode . schnouki/enable-hl-line-mode)))
 
 (use-package vterm-toggle
-  :after vterm
   :ensure t
   :bind (:map schnouki-prefix-map
               ("v v" . vterm-toggle))
