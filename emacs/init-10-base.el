@@ -115,9 +115,10 @@ Has no effect if the character before point is not of the syntax class ')'."
 ;; http://www.emacsblog.org/2007/04/09/highlight-the-current-line/
 (global-hl-line-mode 1)
 (defun schnouki/disable-hl-line-mode-locally ()
-  (setq-local global-hl-line-mode nil))
+  (setq-local global-hl-line-mode nil)
+  (hl-line-mode 0))
 (defun schnouki/enable-hl-line-mode ()
-  (call-interactively 'hl-line-mode))
+  (hl-line-mode 1))
 
 ;; Case-insensitive search
 (setq case-fold-search t)
