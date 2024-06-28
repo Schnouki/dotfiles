@@ -9,7 +9,7 @@
   (zenburn-override-colors-alist '(("zenburn-bg+4" . "#7F7F7F")
                                    ("zenburn-bg+5" . "#8F8F8F")))
   :config
-  (load-theme 'zenburn)
+  (load-theme 'zenburn t)
 
   (zenburn-with-color-variables
 
