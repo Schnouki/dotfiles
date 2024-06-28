@@ -29,3 +29,6 @@ alias ytmusicdl="youtube-dl --config-location ~/.config/youtube-dl/music"
 alias wine32="WINEPREFIX=$XDG_DATA_HOME/wine32 WINEARCH=win32 wine"
 alias wineconsole32="WINEPREFIX=$XDG_DATA_HOME/wine32 WINEARCH=win32 wineconsole"
 alias winetricks32="WINEPREFIX=$XDG_DATA_HOME/wine32 WINEARCH=win32 winetricks"
+
+# use --bhelp to colorize --help with bat
+abbr --add --position anywhere --set-cursor -- --bhelp "--help % | bat -plhelp"
