@@ -125,6 +125,16 @@
       `(progn
          (set-face-background 'auto-dim-other-buffers-face ,zenburn-bg-05)))
 
+    ;; forge
+    (eval-after-load 'forge
+      `(progn
+         (set-face-foreground 'forge-dimmed           ,zenburn-fg-1)
+         (set-face-foreground 'forge-topic-slug-saved ,zenburn-orange)
+         (set-face-foreground 'forge-pullreq-open     ,zenburn-green)
+         (set-face-foreground 'forge-pullreq-merged   "#c8abdd")
+         (set-face-foreground 'forge-pullreq-rejected "#c8abdd")))
+
+
     ;; git-annex
     (eval-after-load 'git-annex
       `(progn
