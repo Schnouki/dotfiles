@@ -5,17 +5,17 @@ profile nomad {
 }
 
 profile home {
-    # Laptop: 2256x1504 / 1.5 = 1504x1002
-    # External: 2564x1440
-    # Laptop at bottom left: Y_offset = (1440 - 1002) = 438
-    output eDP-1 enable position 0,438
+    # Laptop: 2256x1504, scale 1.5 -> (calc-eval "(2256i + 1504) / 1.5") = 1504x1003
+    # External: 2564x1440, scale 1
+    # Laptop at bottom left: Y_offset = (- 1440 1003)
+    output eDP-1 enable position 0,437
     output "AOC Q2577W AHLK39A000129" enable position 1504,0 scale 1
 }
 
 profile coworking {
-    # Laptop: 2256x1504 / 1.5 = 1504x1002
-    # External: 3840x2160 / 1.5 = 2560x1440
-    # Laptop centered on the left: Y_offset = (1440 - 1002) / 2 = 219
+    # Laptop: 2256x1504, scale 1.5 -> (calc-eval "(2256i + 1504) / 1.5") = 1504x1003
+    # External: 3840x2160, scale 1.5 -> (calc-eval "(3840i + 2160) / 1.5") = 2560x1440
+    # Laptop centered on the left: Y_offset = (/ (float (- 1440 1003)) 2)  = 218.5
     output eDP-1 enable position 0,219
     output "LG Electronics LG HDR 4K 0x0000FF33" enable position 1504,0 scale 1.5
 }
