@@ -21,9 +21,14 @@
       message-sendmail-envelope-from 'header
       message-default-headers "X-Clacks-Overhead: GNU Terry Pratchett\n"
       gnus-inhibit-images nil
+      mml-attach-file-at-the-end t
       notmuch-saved-searches `((:name "home"        :key "h" :query "(tag:inbox or tag:todo or tag:unread)")
                                (:name "unread"      :key "u" :query "tag:unread")
                                (:name "inbox"       :key "i" :query "tag:inbox")
+                               ,@(mapcar (lambda (acc) `(:name ,(concat "home::" acc)
+                                                               :query ,(concat "path:" acc "/** and (tag:inbox or tag:todo or tag:unread)")))
+                                         '("schnouki.net" "doist"))
+
                                (:name "archive"     :key "a"
                                       :query ,(concat "tag:inbox and ("
                                                       (string-join
