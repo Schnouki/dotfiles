@@ -13,3 +13,6 @@
 [submodule "emacs/eglot-booster"]
 	path = emacs/eglot-booster
 	url = https://github.com/jdtsmith/eglot-booster.git
+[submodule "emacs/eglot-ltex"]
+	path = emacs/eglot-ltex
+	url = https://github.com/emacs-languagetool/eglot-ltex

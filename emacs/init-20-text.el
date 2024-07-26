@@ -2,10 +2,10 @@
 ;;; Commentary:
 ;;; Code:
 
-;; https://manuel-uberti.github.io/emacs/2017/02/04/guess-language/
 (use-package flyspell
   :commands (flyspell-mode flyspell-mode-on flyspell-mode-off))
 
+;; https://manuel-uberti.github.io/emacs/2017/02/04/guess-language/
 (use-package guess-language
   :ensure t
   :defer t

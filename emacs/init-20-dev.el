@@ -212,6 +212,25 @@ _t_ype definition"
   (eglot-booster-mode))
 
 
+;; eglot-ltex -- language server for text using LanguageTool
+(use-package eglot-ltex
+  :load-path "~/.config/emacs/eglot-ltex"
+  :after eglot
+  :custom
+  (eglot-ltex-server-path "/usr/share/ltex-ls")
+  :config
+  (let ((auth-info (car (auth-source-search :host "api.languagetoolplus.com"))))
+    (setq eglot-workspace-configuration
+          (plist-put eglot-workspace-configuration
+                     :ltex-ls `(:language "auto"
+                                          :disabledRules ["ELLIPSIS" "EN_QUOTES"]
+                                          :additionalRules (:enablePickyRules t
+                                                                              :motherTongue "fr-FR")
+                                          :languageToolHttpServerUri "https://api.languagetoolplus.com/"
+                                          :languageToolOrg (:username ,(plist-get auth-info :user)
+                                                                      :apiKey ,(auth-info-password auth-info)))))))
+
+
 ;; Company -- complete anything
 (use-package company
   :ensure t
