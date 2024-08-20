@@ -4,12 +4,6 @@
 [submodule "emacs/tree-sitter-module"]
 	path = emacs/tree-sitter-module
 	url = https://github.com/casouri/tree-sitter-module
-[submodule "emacs/janet-ts-mode"]
-	path = emacs/janet-ts-mode
-	url = https://github.com/sogaiu/janet-ts-mode
-[submodule "emacs/ajrepl"]
-	path = emacs/ajrepl
-	url = https://github.com/sogaiu/ajrepl
 [submodule "emacs/eglot-booster"]
 	path = emacs/eglot-booster
 	url = https://github.com/jdtsmith/eglot-booster.git
