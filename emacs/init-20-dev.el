@@ -137,7 +137,7 @@
   :custom
   (eglot-autoshutdown t)
   (eglot-stay-out-of '(flymake))
-  :config
+  :init
 
   (defhydra hydra-eglot (:hint nil)
     "
@@ -165,6 +165,7 @@ _t_ype definition"
     ("C-s" eglot-shutdown))
   (bind-key "e" 'hydra-eglot/body schnouki-prefix-map)
 
+  :config
   (defvar-local schnouki/eglot-invisible-overlays nil
     "List of eglot inlay hints overlays that are currently invisible.")
 
