@@ -79,7 +79,6 @@
 
 (use-package deadgrep
   :ensure t
-  ;;:load-path "~/dev/deadgrep"
   :commands deadgrep
   :bind (:map deadgrep-mode-map
               ("C-x C-q" . deadgrep-edit-mode)
@@ -105,7 +104,13 @@
                        deadgrep--file-type)))
       (let ((deadgrep--file-type new-type))
         (apply orig-fun args))))
-  (advice-add 'deadgrep :around #'schnouki/deadgrep--auto-guess-type))
+  (advice-add 'deadgrep :around #'schnouki/deadgrep--auto-guess-type)
+
+  (defun schnouki/deadgrep--avoid-small-searches (args)
+    (when (< (length (car args)) 2)
+      (error "Search term too short: %s" (car args)))
+    args)
+  (advice-add 'deadgrep--start :filter-args #'schnouki/deadgrep--avoid-small-searches))
 
 (use-package defproject
   :ensure t
