@@ -11,8 +11,16 @@
               ("l s" . gptel-send))
   :config
   (require 'gptel-curl)
-  (setq gptel-backend (gptel-make-kagi "Kagi" :key #'gptel-api-key)
-        gptel-model "fastgpt")
+  (gptel-make-kagi "Kagi" :key #'gptel-api-key)
+  (setq gptel-backend (gptel-make-openai "OpenRouter"
+                        :host "openrouter.ai"
+                        :endpoint "/api/v1/chat/completions"
+                        :stream t
+                        :key #'gptel-api-key
+                        :models '("anthropic/claude-3.5-sonnet"
+                                  "openai/chatgpt-4o-latest"
+                                  "meta-llama/llama-3.1-70b-instruct"))
+        gptel-model "anthropic/claude-3.5-sonnet")
   :custom
   (gptel-default-mode 'org-mode)
   (gptel-log-level 'nil))
@@ -30,7 +38,10 @@
                      (string-remove-suffix "-ts"))
       (read-string "Programming language: "))))
   (gptel-request prompt
-    :system (format "You are large language model and a careful %s programmer. Provide code and only code as an output, without any additional text, prompt or note, but with relevant comments or docstrings. Do not wrap output in a markdown code block." lang)))
+    :system (format "You are large language model and a careful %s programmer. \
+Provide code and only code as an output, without any additional text, prompt \
+or note. Use docstrings, but keep them short. Use comment for non-obvious \
+parts of the code. Do not wrap output in a markdown code block." lang)))
 
 (bind-key "l c" #'schnouki/gptel-write-code schnouki-prefix-map)
 
