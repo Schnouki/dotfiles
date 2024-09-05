@@ -1,5 +1,6 @@
 .#*
 *.swp
+.aider*
 .dir-locals.el
 .dir-locals-2.el
 .mypy_cache

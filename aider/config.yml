@@ -1,0 +1,5 @@
+env-file: /home/schnouki/.config/aider/env
+
+dark-mode: true
+gitignore: false
+auto-commits: false

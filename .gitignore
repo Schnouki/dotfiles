@@ -33,6 +33,7 @@ __pycache__/
 !ripgreprc
 
 # Folders
+!aider
 !bpython
 !composer
 !docker
