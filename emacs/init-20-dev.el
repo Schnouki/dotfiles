@@ -97,7 +97,6 @@
               ("j O" . dumb-jump-go-prefer-external-other-window))
   :commands (dumb-jump-xref-activate)
   :init
-  (setq dumb-jump-selector 'ivy)
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
 
 ;; Default compilation commands

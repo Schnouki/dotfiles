@@ -31,6 +31,7 @@ amx-items
 bookmarks
 ede-projects.el
 forge-database*.sqlite
+history
 image-dired
 mastodon.plstore
 network-security.data

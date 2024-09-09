@@ -41,8 +41,12 @@
      'user
 
 ;;;; Global faces
+     `(completions-annotations ((t :foreground ,zenburn-fg-05)))
      `(hl-line ((t :background ,zenburn-bg-05)))
      `(schnouki/notmuch-hl-line ((t :background ,zenburn-bg-05)))
+
+;;;; Vertico
+     `(vertico-current ((t :underline nil)))
      )
 
     (eval-after-load 'notmuch
