@@ -13,10 +13,6 @@
 
   (zenburn-with-color-variables
 
-    ;; Changes to "global" faces
-    (set-face-background 'hl-line zenburn-bg-05)
-    (set-face-background 'schnouki/notmuch-hl-line zenburn-bg-05)
-
     ;; notmuch
     (defun schnouki/get-icon (name)
       (with-temp-buffer
@@ -40,6 +36,14 @@
                                  (propertize tag 'face '(:weight bold :foreground ,zenburn-blue-5))
                                  (notmuch-tag-format-image-data tag (schnouki/get-icon "actions/edit-delete")))
                                 ("unread"     (propertize tag 'face '(:foreground ,zenburn-red)))))
+
+    (custom-theme-set-faces
+     'user
+
+;;;; Global faces
+     `(hl-line ((t :background ,zenburn-bg-05)))
+     `(schnouki/notmuch-hl-line ((t :background ,zenburn-bg-05)))
+     )
 
     (eval-after-load 'notmuch
       `(progn
@@ -206,7 +210,8 @@
     ;; Scopeline
     (eval-after-load 'scopeline
       `(progn
-         (set-face-foreground 'scopeline-face ,zenburn-bg+5)))))
+         (set-face-foreground 'scopeline-face ,zenburn-bg+5))))
+  )
 
 
 ;; rainbow-mode with zenburn colors!
