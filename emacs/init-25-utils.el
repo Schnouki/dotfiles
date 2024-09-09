@@ -19,6 +19,7 @@
   :bind (("C-h f" . helpful-callable)
          ("C-h v" . helpful-variable)
          ("C-h k" . helpful-key)
+         ("C-h x" . helpful-command)
          :map schnouki-prefix-map
          ("h" . helpful-at-point)))
 
