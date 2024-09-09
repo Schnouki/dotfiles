@@ -39,6 +39,9 @@ steam: (prepare "steam")
 steam-native: (prepare "steam-native")
     -which prime-run &>/dev/null && just add_runner steam-native prime-run || rm steam-native.desktop
 
+todoist:
+    sed -i 's!\(Exec=.*\.AppImage\) \(--no-sandbox.*\)!\1 --ozone-platform-hint=auto \2!g' appimagekit_*-Todoist.desktop
+
 vivaldi-stable: (prepare "vivaldi-stable")
     sed -i "s!/usr/bin/vivaldi-stable!${HOME}/bin/vivaldi-stable!g" vivaldi-stable.desktop
     just electron_wayland vivaldi-stable
