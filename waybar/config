@@ -18,6 +18,7 @@
             "pulseaudio",
             "battery",
             "clock",
+            "custom/weather",
             "tray",
         ],
 
@@ -118,6 +119,13 @@
                 "on-scroll-up": "shift_down",
                 "on-scroll-down": "shift_up",
             },
+        },
+        "custom/weather": {
+            "format": "{}°",
+            "tooltip": true,
+            "interval": 3600,
+            "exec": "wttrbar --lang fr --location Vandoeuvre-lès-Nancy --hide-conditions",
+            "return-type": "json",
         },
         "tray": {
             "icon-size": 24,
