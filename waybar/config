@@ -98,12 +98,26 @@
         },
         "clock": {
             "interval": 10,
-            "format": "{:%Y-%m-%d %H:%M}",
-            "tooltip-format": "<big>{:%A %e %B %Y}</big>\n\n<tt>{calendar}</tt>",
-            "today-format": "<span color='#cc9393'><b>{}</b></span>",
-            "calendar-weeks-pos": "left",
-            "format-calendar-weekdays": "<span color='#f0dfaf'><b>{}</b></span>",
-            "format-calendar-weeks": "<span color='#8cd0d3'><small>w{:%W}</small></span>",
+            "format": "{:L%Y-%m-%d %H:%M}",
+            "locale": "fr_FR.UTF-8",
+            "tooltip-format": "<big>{:L%A %e %B %Y}</big>\n\n<span font='Iosevka Fixed'>{calendar}</span>",
+            "calendar": {
+                "mode": "month",
+                "mode-mon-col": 3,
+                "weeks-pos": "left",
+                "format": {
+                    "months":   "      <span color='#dfaf8f'><b>{}</b></span>",
+                    "today":    "<span color='#cc9393'><b>{}</b></span>",
+                    "weekdays": "<span color='#f0dfaf'>{}</span>",
+                    "weeks":    "<span color='#8cd0d3'>w{:L%W}</span>",
+                },
+            },
+            "actions": {
+                "on-click": "mode",
+                "on-click-right": "shift_reset",
+                "on-scroll-up": "shift_down",
+                "on-scroll-down": "shift_up",
+            },
         },
         "tray": {
             "icon-size": 24,
@@ -159,12 +173,26 @@
         },
         "clock": {
             "interval": 10,
-            "format": "{:%Y-%m-%d %H:%M}",
-            "tooltip-format": "<big>{:%A %e %B %Y}</big>\n\n<tt>{calendar}</tt>",
-            "today-format": "<span color='#cc9393'><b>{}</b></span>",
-            "calendar-weeks-pos": "left",
-            "format-calendar-weekdays": "<span color='#f0dfaf'><b>{}</b></span>",
-            "format-calendar-weeks": "<span color='#8cd0d3'><small>w{:%W}</small></span>",
+            "format": "{:L%Y-%m-%d %H:%M}",
+            "locale": "fr_FR.UTF-8",
+            "tooltip-format": "<big>{:L%A %e %B %Y}</big>\n\n<span font='Iosevka Fixed'>{calendar}</span>",
+            "calendar": {
+                "mode": "month",
+                "mode-mon-col": 3,
+                "weeks-pos": "left",
+                "format": {
+                    "months":   "      <span color='#dfaf8f'><b>{}</b></span>",
+                    "today":    "<span color='#cc9393'><b>{}</b></span>",
+                    "weekdays": "<span color='#f0dfaf'>{}</span>",
+                    "weeks":    "<span color='#8cd0d3'>w{:L%W}</span>",
+                },
+            },
+            "actions": {
+                "on-click": "mode",
+                "on-click-right": "shift_reset",
+                "on-scroll-up": "shift_down",
+                "on-scroll-down": "shift_up",
+            },
         },
     }
 ]
