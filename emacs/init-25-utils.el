@@ -94,12 +94,9 @@
 (defhydra hydra-yank-pop ()
   "yank"
   ("C-y" yank nil)
-  ("M-y" yank-pop nil)
   ("y" (yank-pop 1) "next")
-  ("Y" (yank-pop -1) "prev")
-  ("l" browse-kill-ring "list"))
+  ("Y" (yank-pop -1) "prev"))
 (bind-key "C-y" 'hydra-yank-pop/yank)
-(bind-key "M-y" 'hydra-yank-pop/yank-pop)
 
 ;; Viking-mode
 (use-package viking-mode
