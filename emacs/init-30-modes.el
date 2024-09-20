@@ -205,13 +205,6 @@
 (use-package sly-quicklisp
   :ensure t)
 
-(use-package geiser
-  :ensure t)
-(use-package geiser-chicken
-  :ensure t
-  :custom
-  (geiser-chicken-binary "chicken-csi"))
-
 (use-package just-mode
   :ensure t)
 

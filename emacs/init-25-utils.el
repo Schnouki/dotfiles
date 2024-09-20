@@ -85,11 +85,6 @@
   nil)
 (bind-key "M-W" 'schnouki/kill-ring-save-trimmed)
 
-;; Browse kill ring
-(use-package browse-kill-ring
-  :ensure t
-  :commands browse-kill-ring)
-
 ;; Better yank
 (defhydra hydra-yank-pop ()
   "yank"
