@@ -8,7 +8,7 @@
   :hook (after-init . vertico-mode)
 
   :custom
-  (vertico-cycle t)  ;; Enable cycling for `vertico-next/previous'
+  (vertico-cycle nil)  ;; Enable cycling for `vertico-next/previous'
 
   ;; Support opening new minibuffers from inside existing minibuffers.
   (enable-recursive-minibuffers t)
@@ -120,7 +120,8 @@
          ;; Defaults, in global-map
          :map global-map
          ([remap Info-search] . consult-info)
-         ("C-s" . consult-line)                    ;; orig. isearch-forward -- similar to swiper
+         ("M-y" . consult-yank-pop)                ;; orig. yank-pop
+         ;; ("C-s" . consult-line)                    ;; orig. isearch-forward -- similar to swiper
          ;; Custom M-# bindings for fast register access
          ("M-#" . consult-register-load)
          ("M-'" . consult-register-store)          ;; orig. abbrev-prefix-mark (unrelated)
