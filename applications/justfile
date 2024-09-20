@@ -1,4 +1,4 @@
-default: bruno knossos obsidian steam steam-native vivaldi-stable vivaldi-stable-alt steam-games update-cache
+default: bruno knossos obsidian steam steam-native vivaldi-stable vivaldi-stable-alt steam-games todoist twist update-cache
 
 [private]
 prepare FILE TARGET="":
@@ -21,6 +21,10 @@ electron_wayland FILE:
     just add_runner "{{FILE}}" "${HOME}/bin/electron-wayland"
 
 [private]
+electron_wayland_appimage FILE:
+    sed -i 's!\(Exec=.*\.AppImage\) \(--no-sandbox.*\)!\1 --ozone-platform-hint=auto \2!g' "{{FILE}}"
+
+[private]
 electron_scaling FILE:
     just add_args "{{FILE}}" --force-device-scale-factor=1.25
 
@@ -40,7 +44,10 @@ steam-native: (prepare "steam-native")
     -which prime-run &>/dev/null && just add_runner steam-native prime-run || rm steam-native.desktop
 
 todoist:
-    sed -i 's!\(Exec=.*\.AppImage\) \(--no-sandbox.*\)!\1 --ozone-platform-hint=auto \2!g' appimagekit_*-Todoist.desktop
+    just electron_wayland_appimage appimagekit_*-Todoist.desktop
+
+twist:
+    just electron_wayland_appimage appimagekit_*-Twist.desktop
 
 vivaldi-stable: (prepare "vivaldi-stable")
     sed -i "s!/usr/bin/vivaldi-stable!${HOME}/bin/vivaldi-stable!g" vivaldi-stable.desktop
