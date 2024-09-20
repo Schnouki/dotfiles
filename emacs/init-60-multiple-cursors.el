@@ -27,7 +27,7 @@
  [_p_]   Next     [_n_]   Next     [_l_] Edit lines  [_0_] Insert numbers
  [_P_]   Skip     [_N_]   Skip     [_a_] Mark all    [_A_] Insert letters
  [_M-p_] Unmark   [_M-n_] Unmark   [_s_] Search      [_q_] Quit
- [_|_] Align with input CHAR       [Click] Cursor at point"
+ [_|_] Align with input CHAR^^     [Click] Cursor at point"
   ("l" mc/edit-lines :exit t)
   ("a" mc/mark-all-like-this :exit t)
   ("n" mc/mark-next-like-this)
@@ -47,5 +47,23 @@
   ("q" nil))
 
 (bind-key "C-*" 'hydra-mc/body)
+
+(defun schnouki/whitelist-hydra-mc-functions ()
+  (unless mc--list-file-loaded
+    (mc/load-lists))
+  (dolist (head hydra-mc/heads)
+    (let* ((func (cadr head))
+           (is-exit (plist-get (cdddr head) :exit))
+           (hydra-func (intern (concat "hydra-mc/"
+                                       (symbol-name func)
+                                       (if is-exit "-and-exit" "")))))
+      (when (member func mc--default-cmds-to-run-for-all)
+        (add-to-list 'mc/cmds-to-run-for-all hydra-func))
+      (when (member func mc--default-cmds-to-run-once)
+        (add-to-list 'mc/cmds-to-run-once hydra-func))))
+  (mc/save-lists))
+
+(with-eval-after-load 'multiple-cursors
+  (schnouki/whitelist-hydra-mc-functions))
 
 ;;; init-60-multiple-cursors.el ends here
