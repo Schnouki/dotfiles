@@ -226,18 +226,18 @@
   :init
   (defun schnouki/maybe-enable-smerge ()
     (save-excursion
-      (goto-char (point-min))
-      (when (re-search-forward "^<<<<<<< " nil t)
-        (smerge-mode 1))))
+      (save-match-data
+        (goto-char (point-min))
+        (when (re-search-forward "^<<<<<<< " nil t)
+          (smerge-mode 1)))))
   (add-hook 'find-file-hook 'schnouki/maybe-enable-smerge)
   (add-hook 'after-revert-hook 'schnouki/maybe-enable-smerge)
 
   :config
   (defhydra hydra-smerge (:hint nil
-                                :pre (smerge-mode 1)
-                                :post (smerge-auto-leave))
+                                :pre (smerge-mode 1))
     "
-^Move^       ^Keep^               ^Diff^                 ^Other^
+^^Move       ^^Keep               ^^Diff                 ^^Other
 ^^-----------^^-------------------^^---------------------^^-------
 _n_ext       _b_ase               _<_: upper/base        _C_ombine
 _p_rev       _u_pper (mine)       _=_: upper/lower       _r_esolve
