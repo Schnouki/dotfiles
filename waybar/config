@@ -10,15 +10,16 @@
             "idle_inhibitor",
             "sway/mode",
         ],
-        // "modules-center": ["wlr/taskbar"],
+        "modules-center": [
+            "clock",
+            "custom/weather",
+            "custom/mullvad",
+        ],
         "modules-right": [
             "custom/bars",
-            "custom/mullvad",
             "temperature",
             "pulseaudio",
             "battery",
-            "clock",
-            "custom/weather",
             "tray",
         ],
 
@@ -32,22 +33,35 @@
         },
 
         // Center modules
-        "wlr/taskbar": {
-            "format": "{icon} {title}",
-            "icon-size": 12,
-            "icon-theme": "Numix-Circle",
-            "tooltip-format": "{title}\n{app_id}",
-            "on-click": "minimize-raise",
-            "on-click-middle": "close",
-            "on-click-right": "minimize",
+        "clock": {
+            "interval": 10,
+            "format": "{:L%H:%M}",
+            "locale": "fr_FR.UTF-8",
+            "tooltip-format": "<big>{:L%A %e %B %Y}</big>\n\n<span font='Iosevka Fixed'>{calendar}</span>",
+            "calendar": {
+                "mode": "month",
+                "mode-mon-col": 3,
+                "weeks-pos": "left",
+                "format": {
+                    "months":   "      <span color='#dfaf8f'><b>{}</b></span>",
+                    "today":    "<span color='#cc9393'><b>{}</b></span>",
+                    "weekdays": "<span color='#f0dfaf'>{}</span>",
+                    "weeks":    "<span color='#8cd0d3'>w{:L%W}</span>",
+                },
+            },
+            "actions": {
+                "on-click": "mode",
+                "on-click-right": "shift_reset",
+                "on-scroll-up": "shift_down",
+                "on-scroll-down": "shift_up",
+            },
         },
-
-        // Right modules
-        "custom/bars": {
-            "exec": "$HOME/.config/waybar/bars/bars",
+        "custom/weather": {
+            "format": "{}°",
+            "tooltip": true,
+            "interval": 3600,
+            "exec": "wttrbar --lang fr --location Vandoeuvre-lès-Nancy --hide-conditions",
             "return-type": "json",
-            "restart-interval": 1,
-            "format": "{}",
         },
         "custom/mullvad": {
             "exec": "$HOME/.config/waybar/mullvad-status.py",
@@ -61,6 +75,14 @@
                 "disconnecting": "",
             },
             "on-click": "$HOME/.config/waybar/mullvad-status.py toggle",
+        },
+
+        // Right modules
+        "custom/bars": {
+            "exec": "$HOME/.config/waybar/bars/bars",
+            "return-type": "json",
+            "restart-interval": 1,
+            "format": "{}",
         },
         "pulseaudio": {
             "format": "{icon} {volume}%",
@@ -97,9 +119,35 @@
             "format-time": "{H}h{m}",
             "tooltip-format": " {time} — {power:.1f} W",
         },
+        "tray": {
+            "icon-size": 24,
+            "spacing": 0,
+        },
+    },
+
+    // External screen(s)
+    {
+        "output": "!eDP-1",
+        "position": "top",
+        //"height": 30,
+
+        "modules-left": [
+            "sway/workspaces",
+            "sway/mode",
+        ],
+        "modules-center": [
+            "clock",
+        ],
+        "modules-right": [
+            "pulseaudio",
+        ],
+
+        // Left modules (Sway)
+
+        // Center modules
         "clock": {
             "interval": 10,
-            "format": "{:L%Y-%m-%d %H:%M}",
+            "format": "{:L%H:%M}",
             "locale": "fr_FR.UTF-8",
             "tooltip-format": "<big>{:L%A %e %B %Y}</big>\n\n<span font='Iosevka Fixed'>{calendar}</span>",
             "calendar": {
@@ -119,47 +167,6 @@
                 "on-scroll-up": "shift_down",
                 "on-scroll-down": "shift_up",
             },
-        },
-        "custom/weather": {
-            "format": "{}°",
-            "tooltip": true,
-            "interval": 3600,
-            "exec": "wttrbar --lang fr --location Vandoeuvre-lès-Nancy --hide-conditions",
-            "return-type": "json",
-        },
-        "tray": {
-            "icon-size": 24,
-            "spacing": 0,
-        },
-    },
-
-    // External screen(s)
-    {
-        "output": "!eDP-1",
-        "position": "top",
-        //"height": 30,
-
-        "modules-left": [
-            "sway/workspaces",
-            "sway/mode",
-        ],
-        // "modules-center": ["wlr/taskbar"],
-        "modules-right": [
-            "pulseaudio",
-            "clock",
-        ],
-
-        // Left modules (Sway)
-
-        // Center modules
-        "wlr/taskbar": {
-            "format": "{icon} {title}",
-            "icon-size": 12,
-            "icon-theme": "Numix-Circle",
-            "tooltip-format": "{title}\n{app_id}",
-            "on-click": "minimize-raise",
-            "on-click-middle": "close",
-            "on-click-right": "minimize",
         },
 
         // Right modules
@@ -178,29 +185,6 @@
             },
             "scroll-step": 5,
             "on-click": "pavucontrol"
-        },
-        "clock": {
-            "interval": 10,
-            "format": "{:L%Y-%m-%d %H:%M}",
-            "locale": "fr_FR.UTF-8",
-            "tooltip-format": "<big>{:L%A %e %B %Y}</big>\n\n<span font='Iosevka Fixed'>{calendar}</span>",
-            "calendar": {
-                "mode": "month",
-                "mode-mon-col": 3,
-                "weeks-pos": "left",
-                "format": {
-                    "months":   "      <span color='#dfaf8f'><b>{}</b></span>",
-                    "today":    "<span color='#cc9393'><b>{}</b></span>",
-                    "weekdays": "<span color='#f0dfaf'>{}</span>",
-                    "weeks":    "<span color='#8cd0d3'>w{:L%W}</span>",
-                },
-            },
-            "actions": {
-                "on-click": "mode",
-                "on-click-right": "shift_reset",
-                "on-scroll-up": "shift_down",
-                "on-scroll-down": "shift_up",
-            },
         },
     }
 ]
