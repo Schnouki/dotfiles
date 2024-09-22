@@ -5,10 +5,15 @@ import json
 import subprocess as subp
 import sys
 
+VALID_STATUSES = {"connected", "connecting", "disconnected", "disconnecting"}
+
 
 def parse_line(line: str) -> tuple[str, str]:
     status = line.split()[0].rstrip(".")
-    return status, status.lower()
+    status_l = status.lower()
+    if status_l not in VALID_STATUSES:
+        return "", ""
+    return status, status_l
 
 
 async def mullvad_listen():
@@ -19,6 +24,8 @@ async def mullvad_listen():
     async for line in proc.stdout:
         line = line.strip().decode()
         status, alt = parse_line(line)
+        if not status:
+            continue
 
         output = {"text": status, "alt": alt, "tooltip": f"Mullvad: {line}"}
         print(json.dumps(output), flush=True)
