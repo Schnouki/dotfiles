@@ -336,7 +336,7 @@ bindsym $mod+r mode "resize"
 # Screenshot:
 #
 mode "screenshot" {
-    set $grimshot /home/schnouki/.config/sway/grimshot
+    set $grimshot /home/schnouki/.config/sway/screenshot
     bindsym a exec $grimshot active; mode "default"
     bindsym o exec $grimshot output; mode "default"
     bindsym p exec $grimshot area; mode "default"
@@ -396,6 +396,7 @@ client.urgent           $zb-red-4   $zb-red-6   $zb-red+1   $zb-red-3
 for_window [shell="xwayland"] title_format "%title <small>[XWayland]</small>"
 # for_window [app_id=".*"] title_format "%title <small>[%app_id]</small>"
 
+for_window [app_id="com.gabm.satty"] floating enable
 for_window [app_id="galculator"] floating enable
 for_window [app_id="pavucontrol"] floating enable
 

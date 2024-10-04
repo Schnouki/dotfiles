@@ -1,0 +1,3 @@
+grimshot:
+    curl -sL https://raw.githubusercontent.com/OctopusET/sway-contrib/refs/heads/master/grimshot > ./grimshot
+    chmod +x grimshot

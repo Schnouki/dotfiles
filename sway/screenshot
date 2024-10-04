@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+~/.config/sway/grimshot --notify save "$@" - \
+    | exec satty -f - -o ~/Dropbox/Public/Screenshots/$(date +"%F-%H_%M_%S").png
