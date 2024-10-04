@@ -192,4 +192,5 @@
 // Local Variables:
 // mode: js
 // apheleia-mode: nil
+// apheleia-inhibit: t
 // End:
