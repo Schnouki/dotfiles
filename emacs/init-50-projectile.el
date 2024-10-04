@@ -4,10 +4,18 @@
 
 (use-package projectile
   :ensure t
+  :bind (:map projectile-mode-map
+              ("s-!" . projectile-command-map)
+              ("s-/" . projectile-command-map)
+              :map projectile-command-map
+              ("\\" . schnouki/projectile-magit)
+              ("<" . schnouki/projectile-magit)
+              :map schnouki-prefix-map
+              ("b" . projectile-ibuffer))
+  :custom
+  (projectile-enable-caching nil)
+  (projectile-sort-order 'recently-active)
   :config
-  (setq projectile-enable-caching nil
-        projectile-sort-order 'recently-active)
-
   ;; Mode line
   (defun schnouki/projectile-mode-line ()
     (if (file-remote-p default-directory)
@@ -18,12 +26,6 @@
   ;; Ignore suffixes
   (seq-each (lambda (suf) (add-to-list 'projectile-globally-ignored-file-suffixes suf))
             '(".pyc" ".o" ".so" "~" "#" ".min.js"))
-
-  ;; Keybindings
-  (bind-key "s-!" 'projectile-command-map projectile-mode-map)
-  (bind-key "s-/" 'projectile-command-map projectile-mode-map)
-  (bind-key "s s" 'deadgrep 'projectile-command-map)
-  (bind-key "b" 'projectile-ibuffer schnouki-prefix-map)
 
   ;; Set virtualenv packages as Projectile projects -- based on
   ;; https://github.com/bbatsov/projectile/issues/364#issuecomment-61296248 and
@@ -59,8 +61,6 @@
            :action (lambda (project)
                      (magit-status project)))
         (user-error "There are no known projects"))))
-  (bind-key "\\" 'schnouki/projectile-magit projectile-command-map)
-  (bind-key "<" 'schnouki/projectile-magit projectile-command-map)
 
   (projectile-mode 1))
 
@@ -83,7 +83,9 @@
   :bind (:map deadgrep-mode-map
               ("C-x C-q" . deadgrep-edit-mode)
               :map deadgrep-edit-mode-map
-              ("C-c C-c" . deadgrep-mode))
+              ("C-c C-c" . deadgrep-mode)
+              :map projectile-command-map
+              ("s s" . deadgrep))
   :config
   (defun schnouki/deadgrep--guess-type ()
     (let* ((deadgrep-types (deadgrep--type-list))
