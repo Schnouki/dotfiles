@@ -254,6 +254,10 @@ _t_ype definition"
   :config
   (global-treesit-auto-mode 1))
 
+(with-eval-after-load 'treesit
+  (add-to-list 'treesit-extra-load-path
+               (locate-user-emacs-file "tree-sitter-module/dist")))
+
 ;; Display the current function name in the mode line
 (which-function-mode 1)
 

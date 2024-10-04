@@ -21,6 +21,7 @@
 (setq gc-cons-threshold most-positive-fixnum)
 
 ;; Paths
+(setq user-emacs-directory "~/.config/emacs")
 (add-to-list 'load-path "~/.config/emacs/lisp")
 
 ;; Custom file

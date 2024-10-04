@@ -17,7 +17,6 @@ persist/
 request/
 url/
 transient/
-tree-sitter/
 var/
 
 .dap-breakpoints
