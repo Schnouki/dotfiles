@@ -237,11 +237,11 @@ _t_ype definition"
   :delight
   :hook (prog-mode . company-mode-on)
   :custom
-  (company-tooltip-limit 30)
-  (company-tooltip-align-annotations t)
-  (company-minimum-prefix-length 3)
   (company-idle-delay 0.5)
-  (company-show-quick-access t))
+  (company-minimum-prefix-length 3)
+  (company-show-quick-access t)
+  (company-tooltip-align-annotations t)
+  (company-tooltip-limit 30))
 
 
 ;; treesit-auto -- automatically use tree-sitter whenever possible
