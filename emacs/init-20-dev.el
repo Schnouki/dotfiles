@@ -146,12 +146,14 @@ _r_eferences        _f_ormat       _R_ename var   start s_e_rver
 de_c_laration       format _b_uf   _a_ctions      [_C-r_] reconnect
 _d_efinition        ^^             ^^             [_C-s_] shutdown
 _i_mplementation
-_t_ype definition"
+_t_ype definition
+_s_ymbol"
     ("r" xref-find-references)
     ("c" eglot-find-declaration)
     ("d" xref-find-definitions)
     ("i" eglot-find-implementation)
     ("t" eglot-find-typeDefinition)
+    ("s" consult-eglot-symbols)
 
     ("f" eglot-format)
     ("b" eglot-format-buffer)

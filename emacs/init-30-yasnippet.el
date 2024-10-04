@@ -18,4 +18,11 @@
 (use-package yasnippet-snippets
   :ensure t)
 
+(use-package consult-yasnippet
+  :ensure t
+  :bind (:map yas-minor-mode-map
+              ("C-c & C-v" . consult-yasnippet-visit-snippet-file)
+              ("C-c & C-s" . consult-yasnippet)
+              ("C-c & RET" . consult-yasnippet)))
+
 ;;; init-30-yasnippet.el ends here

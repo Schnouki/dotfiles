@@ -143,4 +143,8 @@
   (advice-add #'register-preview :override #'consult-register-window)
   )
 
+;; Eglot integration
+(use-package consult-eglot
+  :ensure t)
+
 ;;; init-22-completion.el ends here

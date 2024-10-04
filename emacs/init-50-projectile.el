@@ -73,6 +73,22 @@
       (ibuffer-do-sort-by-alphabetic)))
   (add-hook 'ibuffer-hook #'schnouki/enable-ibuffer-projectile))
 
+
+(use-package consult-projectile
+  :ensure t
+  :bind (:map projectile-command-map
+              ("B" . consult-projectile)
+              ("4 b" . consult-projectile-switch-to-buffer-other-window)
+              ("4 f" . consult-projectile-find-file-other-window)
+              ("5 b" . consult-projectile-switch-to-buffer-other-frame)
+              ("5 f" . consult-projectile-find-file-other-frame)
+              ("b" . consult-projectile-switch-to-buffer)
+              ("d" . consult-projectile-find-dir)
+              ("f" . consult-projectile-find-file)
+              ("e" . consult-projectile-recentf)
+              ("p" . consult-projectile-switch-project)))
+
+
 (use-package ripgrep
   :ensure t
   :commands ripgrep-regexp)
