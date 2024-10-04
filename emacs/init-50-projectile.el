@@ -114,8 +114,4 @@
     args)
   (advice-add 'deadgrep--start :filter-args #'schnouki/deadgrep--avoid-small-searches))
 
-(use-package defproject
-  :ensure t
-  :commands defproject)
-
 ;;; init-50-projectile.el ends here
