@@ -70,10 +70,6 @@
   :ensure t
   :mode "\\.adoc?\\'")
 
-(use-package jinja2-mode
-  :ensure t
-  :mode "\\.j2\\'")
-
 (use-package sass-mode
   :ensure t
   :mode "\\.sass\\'")
@@ -84,12 +80,6 @@
   :init
   (setq scss-compile-at-save nil))
 
-(use-package less-css-mode
-  :ensure t
-  :mode "\\.less\\'"
-  :init
-  (setq less-css-compile-at-save nil))
-
 (use-package web-mode
   :ensure t
   ;; (kill-new (format "\"%s\"" (s-replace "\\" "\\\\" (rx "." (or "tmpl" "hbs" "html" "liquid" "mako") eos))))
@@ -99,10 +89,6 @@
                                  ("go" . "\\.tmpl\\'")
                                  ("mako" . "\\.mako\\'"))))
 
-(use-package cmake-mode
-  :mode (("/CMakeLists\\.txt\\'" . cmake-mode)
-         ("\\.cmake\\'" . cmake-mode)))
-
 (use-package pkgbuild-mode
   :ensure t
   :mode "/PKGBUILD\\'")
@@ -111,42 +97,13 @@
   :ensure t
   :mode "/Dockerfile\\'")
 
-(use-package graphviz-dot-mode
-  :ensure t
-  :mode "\\.dot\\'")
-
-(use-package po-mode
-  :mode "\\.pot?\\'")
-(use-package po-compat
-  :commands po-find-file-coding-system
-  :init
-  (modify-coding-system-alist 'file "\\.po\\'\\|\\.po\\." 'po-find-file-coding-system))
-
 (use-package systemd
   :ensure t
   :mode ("\\.automount\\'\\|\\.busname\\'\\|\\.mount\\'\\|\\.service\\'\\|\\.slice\\'\\|\\.socket\\'\\|\\.target\\'\\|\\.timer\\'\\|\\.link\\'\\|\\.netdev\\'\\|\\.network\\'\\|\\.override\\.conf.*\\'" . systemd-mode))
 
-(use-package plantuml-mode
-  :ensure t
-  :mode "\\.plu\\'"
-  :custom
-  (plantuml-jar-path "/usr/share/java/plantuml/plantuml.jar")
-  (plantuml-default-exec-mode 'jar))
-
-(use-package flycheck-plantuml
-  :ensure t
-  :commands (flycheck-plantuml-setup)
-  :init
-  (with-eval-after-load 'flycheck
-    (flycheck-plantuml-setup)))
-
 (use-package toml-mode
   :ensure t
   :mode "\\.toml\\'")
-
-(use-package elixir-mode
-  :ensure t
-  :mode "\\.exs?\\'")
 
 (use-package caddyfile-mode
   :load-path "~/dev/caddyfile-mode"
@@ -173,15 +130,6 @@
   :init
   (add-hook 'fish-mode-hook (lambda ()
                               (add-hook 'before-save-hook 'fish_indent-before-save))))
-
-(use-package nim-mode
-  :ensure t
-  :hook (nim-mode . nimsuggest-mode)
-  :custom
-  (nimsuggest-path "~/.local/share/nimble/bin/nimsuggest"))
-
-(use-package scad-mode
-  :ensure t)
 
 (use-package jq-mode
   :ensure t)
@@ -267,11 +215,7 @@ _p_rev       _u_pper (mine)       _=_: upper/lower       _r_esolve
   (schnouki/custom-reset-variable 'apheleia-mode-alist)
   ;; Python: use "ruff format" instead of black
   (setf (alist-get 'python-mode apheleia-mode-alist) '(ruff))
-  (setf (alist-get 'python-ts-mode apheleia-mode-alist) '(ruff))
-  ;; Nimpretty
-  (setf (alist-get 'nimpretty apheleia-formatters)
-        '("~/.local/share/nimble/bin/nimpretty" inplace))
-  (setf (alist-get 'nim-mode apheleia-mode-alist) '(nimpretty)))
+  (setf (alist-get 'python-ts-mode apheleia-mode-alist) '(ruff)))
 
 ;; Show info about the block at its end
 (use-package scopeline
