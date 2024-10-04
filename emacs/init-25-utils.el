@@ -7,6 +7,7 @@
   :ensure t
   :delight
   :custom
+  (which-key-dont-use-unicode nil)
   (which-key-show-docstrings t)
   (which-key-max-description-length nil)
   :config

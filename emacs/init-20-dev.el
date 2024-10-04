@@ -298,8 +298,8 @@ _s_ymbol"
 (use-package expand-region
   :ensure t
   :demand t
-  :bind (("C-:" . er/expand-region)
-         ("C-," . er/contract-region)))
+  :bind (("C-=" . er/expand-region)
+         ("C-+" . er/contract-region)))
 
 (use-package smart-forward
   :ensure t

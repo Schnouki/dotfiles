@@ -143,8 +143,45 @@
   (advice-add #'register-preview :override #'consult-register-window)
   )
 
+;; Emacs Mini-Buffer Actions Rooted in Keymaps
+(use-package embark
+  :ensure t
+  :bind (("C-." . embark-act)
+         ("C-:" . embark-act)
+         :map schnouki-prefix-map
+         ("." . embark-dwim)
+         (":" . embark-dwim)
+         :map help-map
+         ("B" . embark-bindings))
+  :custom
+  (embark-verbose-indicator-display-action '(display-buffer-in-side-window
+                                             (side . bottom)
+                                             (window-height . fit-window-to-buffer)))
+  :config
+  ;; Hide the mode line of the Embark live/completions buffers
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none)))))
+
+(use-package embark-consult
+  :ensure t
+  :hook (embark-collect-mode . consult-preview-at-point-mode))
+
 ;; Eglot integration
 (use-package consult-eglot
   :ensure t)
+
+(use-package consult-eglot-embark
+  :ensure t
+  :config
+  (consult-eglot-embark-mode 1))
+
+;; Magit and smerge-mode integration
+(use-package embark-vc
+  :ensure t
+  :config
+  (bind-keys :map embark-vc-conflict-map
+             ("RET" . smerge-keep-current)))
 
 ;;; init-22-completion.el ends here
