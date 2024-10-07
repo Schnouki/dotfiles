@@ -1,196 +1,33 @@
 [
-    // Laptop screen
-    {
-        "output": "eDP-1",
-        "position": "top",
-        //"height": 30,
+  // Laptop screen
+  {
+    "output": "eDP-1",
+    "position": "top",
+    //"height": 30,
 
-        "modules-left": [
-            "sway/workspaces",
-            "idle_inhibitor",
-            "sway/mode",
-        ],
-        "modules-center": [
-            "clock",
-            "custom/weather",
-            "custom/mullvad",
-        ],
-        "modules-right": [
-            "custom/bars",
-            "temperature",
-            "pulseaudio",
-            "battery",
-            "tray",
-        ],
+    "include": "~/.config/waybar/modules.json",
 
-        // Left modules (Sway)
-        "idle_inhibitor": {
-            "format": "{icon}",
-            "format-icons": {
-                "activated": "",
-                "deactivated": "",
-            }
-        },
+    "modules-left": ["sway/workspaces", "idle_inhibitor", "sway/mode"],
+    "modules-center": ["clock", "custom/weather", "custom/mullvad"],
+    "modules-right": [
+      "custom/bars",
+      "temperature",
+      "pulseaudio",
+      "battery",
+      "tray"
+    ]
+  },
 
-        // Center modules
-        "clock": {
-            "interval": 10,
-            "format": "{:L%H:%M}",
-            "locale": "fr_FR.UTF-8",
-            "tooltip-format": "<big>{:L%A %e %B %Y}</big>\n\n<span font='Iosevka Fixed'>{calendar}</span>",
-            "calendar": {
-                "mode": "month",
-                "mode-mon-col": 3,
-                "weeks-pos": "left",
-                "format": {
-                    "months":   "      <span color='#dfaf8f'><b>{}</b></span>",
-                    "today":    "<span color='#cc9393'><b>{}</b></span>",
-                    "weekdays": "<span color='#f0dfaf'>{}</span>",
-                    "weeks":    "<span color='#8cd0d3'>w{:L%W}</span>",
-                },
-            },
-            "actions": {
-                "on-click": "mode",
-                "on-click-right": "shift_reset",
-                "on-scroll-up": "shift_down",
-                "on-scroll-down": "shift_up",
-            },
-        },
-        "custom/weather": {
-            "format": "{}°",
-            "tooltip": true,
-            "interval": 3600,
-            "exec": "wttrbar --lang fr --location Vandoeuvre-lès-Nancy --hide-conditions",
-            "return-type": "json",
-        },
-        "custom/mullvad": {
-            "exec": "$HOME/.config/waybar/mullvad-status.py",
-            "return-type": "json",
-            "restart-interval": 1,
-            "format": "{icon}",
-            "format-icons": {
-                "connected": "",
-                "connecting": "",
-                "disconnected": "",
-                "disconnecting": "",
-            },
-            "on-click": "$HOME/.config/waybar/mullvad-status.py toggle",
-        },
+  // External screen(s)
+  {
+    "output": "!eDP-1",
+    "position": "top",
+    //"height": 30,
 
-        // Right modules
-        "custom/bars": {
-            "exec": "$HOME/.config/waybar/bars/bars",
-            "return-type": "json",
-            "restart-interval": 1,
-            "format": "{}",
-        },
-        "pulseaudio": {
-            "format": "{icon} {volume}%",
-            "format-bluetooth": "{icon} {volume}%",
-            "format-muted": "",
-            "format-icons": {
-                "headphone": "",
-                "hands-free": "",
-                "headset": "",
-                "phone": "",
-                "portable": "",
-                "car": "",
-                "default": ["", ""]
-            },
-            "ignored-sinks": ["Easy Effects Sink"],
-            "scroll-step": 5,
-            "on-click": "pavucontrol"
-        },
-        "temperature": {
-            "hwmon-path-abs": "/sys/devices/platform/coretemp.0/hwmon",
-            "input-filename": "temp1_input",
-            "critical-threshold": 90,
-            "format": "{icon} {temperatureC}°C",
-            "format-icons": ["", "", "", "", ""],
-        },
-        "battery": {
-            "design-capacity": false,
-            "states": {
-                "warning": 30,
-                "critical": 15,
-            },
-            "format": "{icon} {capacity}%",
-            "format-icons": ["", "", "", "", ""],
-            "format-time": "{H}h{m}",
-            "tooltip-format": " {time} — {power:.1f} W",
-        },
-        "tray": {
-            "icon-size": 24,
-            "spacing": 0,
-        },
-    },
+    "include": "~/.config/waybar/modules.json",
 
-    // External screen(s)
-    {
-        "output": "!eDP-1",
-        "position": "top",
-        //"height": 30,
-
-        "modules-left": [
-            "sway/workspaces",
-            "sway/mode",
-        ],
-        "modules-center": [
-            "clock",
-        ],
-        "modules-right": [
-            "pulseaudio",
-        ],
-
-        // Left modules (Sway)
-
-        // Center modules
-        "clock": {
-            "interval": 10,
-            "format": "{:L%H:%M}",
-            "locale": "fr_FR.UTF-8",
-            "tooltip-format": "<big>{:L%A %e %B %Y}</big>\n\n<span font='Iosevka Fixed'>{calendar}</span>",
-            "calendar": {
-                "mode": "month",
-                "mode-mon-col": 3,
-                "weeks-pos": "left",
-                "format": {
-                    "months":   "      <span color='#dfaf8f'><b>{}</b></span>",
-                    "today":    "<span color='#cc9393'><b>{}</b></span>",
-                    "weekdays": "<span color='#f0dfaf'>{}</span>",
-                    "weeks":    "<span color='#8cd0d3'>w{:L%W}</span>",
-                },
-            },
-            "actions": {
-                "on-click": "mode",
-                "on-click-right": "shift_reset",
-                "on-scroll-up": "shift_down",
-                "on-scroll-down": "shift_up",
-            },
-        },
-
-        // Right modules
-        "pulseaudio": {
-            "format": "{icon} {volume}%",
-            "format-bluetooth": "{icon} {volume}%",
-            "format-muted": "",
-            "format-icons": {
-                "headphone": "",
-                "hands-free": "",
-                "headset": "",
-                "phone": "",
-                "portable": "",
-                "car": "",
-                "default": ["", ""]
-            },
-            "scroll-step": 5,
-            "on-click": "pavucontrol"
-        },
-    }
+    "modules-left": ["sway/workspaces", "sway/mode"],
+    "modules-center": ["clock"],
+    "modules-right": ["pulseaudio"]
+  }
 ]
-
-// Local Variables:
-// mode: js
-// apheleia-mode: nil
-// apheleia-inhibit: t
-// End:
