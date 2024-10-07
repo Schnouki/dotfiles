@@ -20,7 +20,7 @@
 
     "include": "~/.config/waybar/modules.json",
 
-    "modules-left": ["sway/workspaces", "sway/mode"],
+    "modules-left": ["sway/workspaces", "keyboard-state", "sway/mode"],
     "modules-center": ["clock"],
     "modules-right": ["temperature", "pulseaudio", "custom/bars"]
   }
