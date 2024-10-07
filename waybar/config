@@ -9,13 +9,7 @@
 
     "modules-left": ["sway/workspaces", "idle_inhibitor", "sway/mode"],
     "modules-center": ["clock", "custom/weather", "custom/mullvad"],
-    "modules-right": [
-      "custom/bars",
-      "temperature",
-      "pulseaudio",
-      "battery",
-      "tray"
-    ]
+    "modules-right": ["pulseaudio", "battery", "tray"]
   },
 
   // External screen(s)
@@ -28,6 +22,6 @@
 
     "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["clock"],
-    "modules-right": ["pulseaudio"]
+    "modules-right": ["temperature", "pulseaudio", "custom/bars"]
   }
 ]
