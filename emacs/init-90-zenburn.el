@@ -45,6 +45,9 @@
      `(hl-line ((t :background ,zenburn-bg-05)))
      `(schnouki/notmuch-hl-line ((t :background ,zenburn-bg-05)))
 
+;;;; Company
+     `(company-preview ((t (:background ,zenburn-green+2 :foreground ,zenburn-bg-1))))
+
 ;;;; Vertico
      `(vertico-current ((t :underline nil)))
      )
