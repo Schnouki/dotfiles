@@ -17,9 +17,10 @@
                         :endpoint "/api/v1/chat/completions"
                         :stream t
                         :key #'gptel-api-key
-                        :models '("anthropic/claude-3.5-sonnet"
-                                  "openai/chatgpt-4o-latest"
-                                  "meta-llama/llama-3.1-70b-instruct"))
+                        :models '("anthropic/claude-3.5-sonnet:beta"
+                                  "openai/gpt-4o"
+                                  "meta-llama/llama-3.1-70b-instruct"
+                                  "qwen/qwen-2.5-72b-instruct"))
         gptel-model "anthropic/claude-3.5-sonnet")
   :custom
   (gptel-default-mode 'org-mode)
