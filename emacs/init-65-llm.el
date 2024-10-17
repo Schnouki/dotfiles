@@ -2,7 +2,41 @@
 ;;; Commentary:
 ;;; Code:
 
-;; GPTel with Kagi FastGPT
+;; Generic LLM capabilities
+(use-package llm
+  :ensure t
+  :custom
+  (llm-warn-on-nonfree nil)
+  :config
+  (require 'llm-openai)
+
+  (cl-defun schnouki/make-llm-openrouter (chat-model &key default-chat-max-tokens)
+    (let ((api-key (auth-info-password (car (auth-source-search :host "openrouter.ai"
+                                                                :user "apikey")))))
+      (make-llm-openai-compatible :chat-model chat-model
+                                  :default-chat-max-tokens default-chat-max-tokens
+                                  :url "https://openrouter.ai/api/v1/"
+                                  :key api-key)))
+  (setq schnouki/llm-claude-provider (schnouki/make-llm-openrouter "anthropic/claude-3.5-sonnet:beta")
+        schnouki/llm-gpt-provider (schnouki/make-llm-openrouter "openai/gpt-4o")
+        schnouki/llm-llama-provider (schnouki/make-llm-openrouter "meta-llama/llama-3.1-70b-instruct")))
+
+
+;; Magit commit with the help of LLMs
+(use-package magit-gptcommit
+  :ensure t
+  :demand t
+  :after magit
+  :bind (:map git-commit-mode-map
+              ("C-c C-g" . magit-gptcommit-commit-accept))
+  :custom
+  (magit-gptcommit-llm-provider schnouki/llm-claude-provider)
+  :config
+  ;; Add gptcommit transient commands to `magit-commit'
+  (magit-gptcommit-status-buffer-setup))
+
+
+;; GPTel with Kagi FastGPT and OpenRouter.ai models
 (use-package gptel
   :ensure t
   :commands (gptel-request gptel-make-kagi)
