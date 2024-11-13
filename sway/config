@@ -416,7 +416,7 @@ for_window [app_id="ulauncher"] {
 include /etc/sway/config.d/*
 
 # Systemd integration -- https://github.com/swaywm/sway/wiki/Systemd-integration
-exec "systemctl --user import-environment {,WAYLAND_}DISPLAY SWAYSOCK; systemctl --user start sway-session.target"
+exec "systemctl --user start sway-session.target"
 
 # Emacs: refresh environment after each reload
 exec_always "emacsclient -ue '(schnouki/refresh-env)'"
