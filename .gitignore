@@ -49,6 +49,7 @@ __pycache__/
 gtk-3.0/bookmarks
 !gtk-4.0
 !kanshi
+!keyboard
 !mako
 !mimeo
 !mozilla
@@ -70,5 +71,6 @@ gtk-3.0/bookmarks
 !waybar
 !wireplumber
 !wleave
+!xkb
 !youtube-dl
 !zathura

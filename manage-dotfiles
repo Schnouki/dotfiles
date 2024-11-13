@@ -61,6 +61,7 @@ FILE_SYMLINKS = {
 DIR_SYMLINKS = {
     "applications": ".local/share/applications",
     "git/config": ".gitconfig",
+    "xkb": ".xkb",
 }
 
 EXECUTABLE_FILES = {

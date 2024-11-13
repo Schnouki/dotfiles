@@ -55,9 +55,9 @@ set $keychron_kb_k4 1452:591:Keychron_K4_Keychron_K4
 set $keychron_kb_k2 1452:591:Keytron_Keychron_K2
 set $keychron_kb_k10 13364:673:Keychron_Keychron_K10_Pro
 
-input * {
-    xkb_layout fr,us
-    xkb_variant oss,qwerty-fr
+input type:keyboard {
+    xkb_layout fr,custom
+    xkb_variant oss,lafayette
     repeat_delay 450
     repeat_rate 45
 }
@@ -67,13 +67,13 @@ input type:touchpad {
     middle_emulation disabled
 }
 input $keychron_kb_k4 {
-    xkb_layout us
-    xkb_variant qwerty-fr
+    xkb_layout custom
+    xkb_variant lafayette
     xkb_numlock enabled
 }
 input $keychron_kb_k2 {
-    xkb_layout us
-    xkb_variant qwerty-fr
+    xkb_layout custom
+    xkb_variant lafayette
 }
 input $keychron_kb_k10 {
     xkb_layout fr
