@@ -26,3 +26,6 @@ background-color=#151505
 text-color=#dcdccc
 border-size=0
 border-radius=10
+
+[app-name="Dropbox" body~=".*\"lock.json\".*"]
+invisible=1
