@@ -128,6 +128,8 @@
     (when (< (length (car args)) 2)
       (error "Search term too short: %s" (car args)))
     args)
-  (advice-add 'deadgrep--start :filter-args #'schnouki/deadgrep--avoid-small-searches))
+  (advice-add 'deadgrep--start :filter-args #'schnouki/deadgrep--avoid-small-searches)
+
+  (setq-default deadgrep--skip-if-hidden t))
 
 ;;; init-50-projectile.el ends here
