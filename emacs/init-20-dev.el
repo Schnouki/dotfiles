@@ -167,10 +167,12 @@ _s_ymbol"
   (bind-key "e" 'hydra-eglot/body schnouki-prefix-map)
 
   :config
-  (defvar-local schnouki/eglot-invisible-overlays nil
+  (setq schnouki/eglot-hide-inlay-hints-on-active-line nil)
+
+  (defvar-local schnouki/eglot--invisible-overlays nil
     "List of eglot inlay hints overlays that are currently invisible.")
 
-  (defun schnouki/hide-eglot-inlay-hints-on-active-line ()
+  (defun schnouki/eglot--hide-inlay-hints-on-active-line ()
     "Hide eglot inlay hints on the active line."
     (when eglot-inlay-hints-mode
       ;; Define a helper function, to quickly toggle the `invisible' property of
@@ -181,22 +183,23 @@ _s_ymbol"
                       (overlay-put ov prop
                                    (propertize s 'invisible inv))))))
         ;; Turn all overlays visible again
-        (dolist (ov schnouki/eglot-invisible-overlays)
+        (dolist (ov schnouki/eglot--invisible-overlays)
           (ov-set-invisible ov nil))
         ;; Update the list of overlays that should be invisible
-        (setq schnouki/eglot-invisible-overlays
+        (setq schnouki/eglot--invisible-overlays
               (cl-remove-if-not (lambda (ov)
                                   (overlay-get ov 'eglot--inlay-hint))
                                 (overlays-in (pos-bol) (pos-eol))))
         ;; ...and make them invisible.
-        (dolist (ov schnouki/eglot-invisible-overlays)
+        (dolist (ov schnouki/eglot--invisible-overlays)
           (ov-set-invisible ov t)))))
 
-  (defun schnouki/enable-hide-eglot-inlay-hints-on-active-line ()
-    (setq schnouki/eglot-invisible-overlays nil)
-    (add-hook 'post-command-hook #'schnouki/hide-eglot-inlay-hints-on-active-line nil t))
+  (defun schnouki/eglot-enable-inlay-hints-tweaks ()
+    (when schnouki/eglot-hide-inlay-hints-on-active-line
+      (setq schnouki/eglot--invisible-overlays nil)
+      (add-hook 'post-command-hook #'schnouki/eglot--hide-inlay-hints-on-active-line nil t)))
 
-  :hook (eglot-inlay-hints-mode . schnouki/enable-hide-eglot-inlay-hints-on-active-line))
+  :hook (eglot-inlay-hints-mode . schnouki/eglot-enable-inlay-hints-tweaks))
 
 
 (use-package flycheck-eglot
@@ -259,6 +262,24 @@ _s_ymbol"
 (with-eval-after-load 'treesit
   (add-to-list 'treesit-extra-load-path
                (locate-user-emacs-file "tree-sitter-module/dist")))
+
+
+;; Display symbols in a side window
+(use-package symbols-outline
+  :ensure t
+  :bind (:map schnouki-prefix-map
+              ("i" . symbols-outline-show)
+              ("C-i" . schnouki/kill-symbols-outline-buffer))
+  :custom
+  (symbols-outline-fetch-fn #'symbols-outline-lsp-fetch)
+  (symbols-outline-window-position 'left)
+  (symbols-outline-window-width 35)
+  :config
+  (defun schnouki/kill-symbols-outline-buffer ()
+    (interactive)
+    (when-let ((buf (get-buffer symbols-outline-buffer-name)))
+      (kill-buffer buf)))
+  (symbols-outline-follow-mode 1))
 
 ;; Display the current function name in the mode line
 (which-function-mode 1)
