@@ -285,7 +285,7 @@ def create_dir_symlinks():
             print(f"Creating symlink: ~/{dst}")
             dst_p.symlink_to(src_p, target_is_directory=True)
         elif dst_p.is_symlink():
-            actual_target = dst_p.readlink()
+            actual_target = dst_p.resolve()
             if actual_target != src_p:
                 print(
                     f"~/{dst} points to a wrong target :( ({actual_target}; should be {src})"
@@ -319,7 +319,7 @@ def create_file_symlinks():
             print(f"Creating symlink: ~/{dst}")
             dst_p.symlink_to(src_p)
         elif dst_p.is_symlink():
-            actual_target = dst_p.readlink()
+            actual_target = dst_p.resolve()
             if actual_target != src_p:
                 print(
                     f"~/{dst} points to a wrong target :( ({actual_target}; should be {src})"
