@@ -23,14 +23,18 @@ function fish_right_prompt
 
     # Git
     if git_is_repo
-        set -l git_prompt $vcs_color"git:"$commit_color(git_branch_name)
-        if git_is_dirty
-            set git_prompt $git_prompt$git_unstaged
+        if is_remote_fs
+            set prompt $vcs_color"git"$sep$prompt
+        else
+            set -l git_prompt $vcs_color"git:"$commit_color(git_branch_name)
+            if git_is_dirty
+                set git_prompt $git_prompt$git_unstaged
+            end
+            if git_is_staged
+                set git_prompt $git_prompt$git_staged
+            end
+            set prompt $git_prompt$sep$prompt
         end
-        if git_is_staged
-            set git_prompt $git_prompt$git_staged
-        end
-        set prompt $git_prompt$sep$prompt
     end
 
     # Command status
