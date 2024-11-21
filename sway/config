@@ -54,6 +54,7 @@ set $laptop_kb 1:1:AT_Translated_Set_2_keyboard
 set $keychron_kb_k4 1452:591:Keychron_K4_Keychron_K4
 set $keychron_kb_k2 1452:591:Keytron_Keychron_K2
 set $keychron_kb_k10 13364:673:Keychron_Keychron_K10_Pro
+set $voyager_kb 12951:6519:ZSA_Technology_Labs_Voyager
 
 input type:keyboard {
     xkb_layout fr,custom
@@ -83,6 +84,11 @@ input $keychron_kb_k10 {
 input $laptop_kb {
     xkb_layout fr
     xkb_variant oss
+}
+input $voyager_kb {
+    xkb_layout custom
+    xkb_variant lafayette
+    xkb_options fkeys:basic_13-24
 }
 
 
@@ -353,7 +359,7 @@ bindsym $mod+p mode "screenshot"
 # Theme:
 #
 font pango:Iosevka Aile 12
-seat * xcursor_theme posy-black
+seat * xcursor_theme Simp1e-Zenburn
 #hide_edge_borders smart
 #gaps outer 0px
 #gaps inner 12px
@@ -399,6 +405,7 @@ for_window [shell="xwayland"] title_format "%title <small>[XWayland]</small>"
 
 for_window [app_id="com.gabm.satty"] floating enable
 for_window [app_id="galculator"] floating enable
+for_window [app_id="keymapp"] floating enable
 for_window [app_id="pavucontrol"] floating enable
 
 for_window [app_id="firefox" title="Incrustation vidéo"] {
