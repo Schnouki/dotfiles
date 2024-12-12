@@ -35,8 +35,6 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-[includeIf "gitdir:~/doist/"]
-	path = ~/.config/git/doist.inc
 [init]
 	templatedir = ~/.config/git/templates
 	defaultBranch = main
@@ -70,3 +68,7 @@
 	name = Thomas Jost
 	email = schnouki@schnouki.net
 	signingkey = 3E0B0C49C0478597
+
+# Keep this at the end so it can override previous settings
+[includeIf "gitdir:~/doist/"]
+	path = ~/.config/git/doist.inc
