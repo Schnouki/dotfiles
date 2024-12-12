@@ -13,7 +13,7 @@
 
   "clock": {
     "interval": 10,
-    "format": "{:L%H:%M}",
+    "format": "{:L%a %e %b – %H:%M}",
     "locale": "fr_FR.UTF-8",
     "tooltip-format": "<big>{:L%A %e %B %Y}</big>\n\n<span font='Iosevka Fixed'>{calendar}</span>",
     "calendar": {
