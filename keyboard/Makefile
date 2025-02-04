@@ -1,3 +1,4 @@
+all: lafayette.xkb_symbols lafayette-ergo.svg ergol-ergo.svg
 all: lafayette.xkb_symbols lafayette-ergo.svg
 
 %.xkb_symbols: %.toml
@@ -11,3 +12,6 @@ all: lafayette.xkb_symbols lafayette-ergo.svg
 
 lafayette.toml:
 	wget https://raw.githubusercontent.com/fabi1cazenave/qwerty-lafayette/refs/heads/main/layouts/lafayette.toml
+
+ergol.toml:
+	wget https://raw.githubusercontent.com/Nuclear-Squid/ergol/refs/heads/main/keymaps/fr/ergol.toml
