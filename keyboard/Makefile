@@ -1,10 +1,13 @@
-all: lafayette.xkb_symbols lafayette.svg
+all: lafayette.xkb_symbols lafayette-ergo.svg
 
-lafayette.xkb_symbols: lafayette.toml
+%.xkb_symbols: %.toml
 	kalamine build --out $@ $<
 
-lafayette.svg: lafayette.toml
+%.svg: %.toml
 	kalamine build --out $@ $<
+
+%-ergo.svg: %.svg
+	sed 's/\(<svg .*\) class="[^"]*"/\1 class="ol50 ergo mixed"/' $< > $@
 
 lafayette.toml:
 	wget https://raw.githubusercontent.com/fabi1cazenave/qwerty-lafayette/refs/heads/main/layouts/lafayette.toml
