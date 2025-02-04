@@ -1,7 +1,7 @@
 # Paths
 set -x fish_user_paths
-fish_add_path ~/bin
 fish_add_path ~/.local/bin
+fish_add_path ~/bin
 
 set -Ux XDG_DATA_HOME $HOME/.local/share
 set -Ux XDG_STATE_HOME $HOME/.local/state
@@ -15,18 +15,18 @@ set -gx BROWSER firefox
 # Program-specifig options
 
 # Gerbil
-fish_add_path /opt/gerbil/bin
+fish_add_path -a /opt/gerbil/bin
 
 # Go
 set -gx GOPATH $HOME/.go
-fish_add_path $GOPATH/bin
+fish_add_path -a $GOPATH/bin
 
 # Guix
-fish_add_path ~/.config/guix/current/bin
+fish_add_path -a ~/.config/guix/current/bin
 
 # Lua & Luarocks
 set -l _lua 5.4
-fish_add_path ~/.luarocks/bin
+fish_add_path -a ~/.luarocks/bin
 set -gx LUA_PATH (string join ";" \
     /usr/share/lua/$_lua/\?.lua \
     /usr/share/lua/$_lua/\?/init.lua \
@@ -51,4 +51,4 @@ set -gx PYTHONSTARTUP $HOME/.config/python_startup.py
 set -gx RIPGREP_CONFIG_PATH $HOME/.config/ripgreprc
 
 # Roswell
-fish_add_path ~/.roswell/bin
+fish_add_path -a ~/.roswell/bin

@@ -19,7 +19,7 @@ set -Ux GUILE_HISTORY "$XDG_STATE_HOME"/guile_history
 # Janet
 set -Ux JANET_TREE "$XDG_DATA_HOME"/jpm_tree
 #set -Ux JANET_PATH "$XDG_DATA_HOME"/jpm_tree/lib
-fish_add_path $JANET_TREE/bin
+fish_add_path -a $JANET_TREE/bin
 
 # Less
 set -Ux LESSHISTFILE "$XDG_DATA_HOME"/less_history
@@ -36,7 +36,7 @@ set -Ux MYSQL_HISTFILE "$XDG_DATA_HOME"/mysql_history
 
 # Nimble
 set -Ux NIMBLE_DIR "$XDG_DATA_HOME"/nimble
-fish_add_path $NIMBLE_DIR/bin
+fish_add_path -a $NIMBLE_DIR/bin
 
 # NodeJS
 set -Ux NODE_REPL_HISTORY "$XDG_DATA_HOME"/node_repl_history
