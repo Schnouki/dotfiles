@@ -42,6 +42,7 @@ ENCRYPTED_FILES = {
 ENCRYPTED_TARBALLS = {
     "Age": ("age.tar.gpg", ".config/age/*"),
     "Calibre": ("calibre.tar.gpg", ".config/calibre/*"),
+    "llmcli": ("llmcli.tar.gpg", ".config/llmcli/*"),
     "Pgweb": ("pgweb.tar.gpg", ".pgweb/**/**"),
     "Systemd mounts": ("systemd-mounts.tar.gpg", ".config/systemd/user/*.mount"),
     "Ulauncher": (
