@@ -64,7 +64,8 @@ input type:keyboard {
 }
 input type:touchpad {
     dwt enabled
-    click_method clickfinger
+    click_method button_areas
+    tap enabled
     middle_emulation disabled
 }
 input $keychron_kb_k4 {
