@@ -23,3 +23,5 @@
 *.sbt merge=mergiraf
 *.ts merge=mergiraf
 *.py merge=mergiraf
+
+poetry.lock merge=poetry-lock

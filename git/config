@@ -54,6 +54,9 @@
 [merge "mergiraf"]
 	name = mergiraf
 	driver = mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P
+[merge "poetry-lock"]
+	name = "Run poetry lock --no-update"
+	driver = poetry lock --no-update && cp %P %A
 [pager]
 	difftool = true
 [pull]
