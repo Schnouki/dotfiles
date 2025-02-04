@@ -58,11 +58,6 @@
 (use-package git-modes
   :ensure t)
 
-;; Forge
-(use-package forge
-  :ensure t
-  :after magit)
-
 ;; Use SSH agent
 (setenv "SSH_AUTH_SOCK"
         (format "/run/user/%d/gnupg/S.gpg-agent.ssh" (user-uid)))

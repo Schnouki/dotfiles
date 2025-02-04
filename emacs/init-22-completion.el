@@ -177,11 +177,4 @@
   :config
   (consult-eglot-embark-mode 1))
 
-;; Magit and smerge-mode integration
-(use-package embark-vc
-  :ensure t
-  :config
-  (bind-keys :map embark-vc-conflict-map
-             ("RET" . smerge-keep-current)))
-
 ;;; init-22-completion.el ends here
