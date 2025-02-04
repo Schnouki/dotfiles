@@ -56,6 +56,13 @@
      `(forge-pullreq-rejected ((t :foreground "#c8abdd")))
 ;;;; go-guru
      `(go-guru-hl-identifier-face ((t :background ,zenburn-bg-1)))
+;;;; notmuch
+     `(notmuch-search-date                 ((t :foreground ,zenburn-yellow)))
+     `(notmuch-search-count                ((t :foreground ,zenburn-cyan)))
+     `(notmuch-search-subject              ((t :foreground ,zenburn-fg)))
+     `(notmuch-search-matching-authors     ((t :foreground "#ffeece"))) ;; zenburn-yellow+1
+     `(notmuch-search-non-matching-authors ((t :foreground "#b09f6f"))) ;; zenburn-yellow-4
+     `(notmuch-tag-face                    ((t :foreground ,zenburn-green+2 :slant italic)))
 ;;;; parinfer
      `(parinfer-rust-dim-parens ((t :foreground ,zenburn-fg-05)))
 ;;;; scopeline
