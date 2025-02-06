@@ -1,0 +1,181 @@
+#!/usr/bin/env -S uv run --quiet --no-project --script
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#     "i3ipc",
+#     "psutil",
+#     "pulsectl-asyncio",
+# ]
+# ///
+
+import argparse
+import asyncio
+
+from i3ipc.aio import Connection
+import psutil
+import pulsectl_asyncio
+from pulsectl_asyncio.pulsectl_async import PulseSinkInfo, PulseSinkInputInfo
+
+
+async def find_sink(
+    pulse: pulsectl_asyncio.PulseAsync, partial_name: str
+) -> PulseSinkInfo:
+    sinks = await pulse.sink_list()
+    matches = [s for s in sinks if partial_name in s.name]
+    if not matches:
+        raise ValueError(f"No sink found matching '{partial_name}'")
+    if len(matches) > 1:
+        raise ValueError(
+            f"Multiple sinks found matching '{partial_name}': {[s.name for s in matches]}"
+        )
+    return matches[0]
+
+
+async def get_volume(sink: PulseSinkInfo) -> int:
+    if sink.mute:
+        return 0
+    return round(sink.volume.value_flat * 100)
+
+
+async def set_volume(
+    pulse: pulsectl_asyncio.PulseAsync, sink: PulseSinkInfo, delta: int
+) -> None:
+    # First unmute if needed
+    if sink.mute:
+        await pulse.mute(sink, False)
+
+    # Convert percentage to float and apply delta
+    new_vol = sink.volume.value_flat + (delta / 100)
+    # Clamp between 0 and 1
+    new_vol = max(0.0, min(1.0, new_vol))
+    await pulse.volume_set_all_chans(sink, new_vol)
+
+
+async def toggle_mute(pulse: pulsectl_asyncio.PulseAsync, sink: PulseSinkInfo) -> None:
+    await pulse.mute(sink, not sink.mute)
+
+
+async def get_focused_pid() -> int | None:
+    """Get the PID of the currently focused window in sway."""
+    i3 = await Connection().connect()
+    tree = await i3.get_tree()
+    focused = tree.find_focused()
+    return focused.pid if focused else None
+
+
+
+def get_process_family_pids(pid: int) -> set[int]:
+    """Get all PIDs in process hierarchy that share the same executable."""
+    try:
+        proc = psutil.Process(pid)
+        proc_pids = {pid}
+        with proc.oneshot():
+            exe = proc.exe()
+            for parent in proc.parents():
+                with parent.oneshot():
+                    if parent.exe() == exe:
+                        proc_pids.add(parent.pid)
+        return proc_pids
+    except (psutil.NoSuchProcess, psutil.AccessDenied):
+        return set()
+
+
+async def find_sink_inputs_by_pid(
+    pulse: pulsectl_asyncio.PulseAsync, pid: int
+) -> list[PulseSinkInputInfo]:
+    """Find all sink inputs by PID or one of its parents with same executable."""
+    # Get all PIDs in process hierarchy
+    proc_pids = get_process_family_pids(pid)
+    if not proc_pids:
+        return []
+
+    # Find sink inputs
+    matching_inputs = []
+    sink_inputs = await pulse.sink_input_list()
+    for sink_input in sink_inputs:
+        if sink_input_pid := sink_input.proplist.get("application.process.id"):
+            # Get all PIDs in sink input process hierarchy
+            sink_input_pids = get_process_family_pids(int(sink_input_pid))
+            # Check if there's an overlap between the two process hierarchies
+            if proc_pids & sink_input_pids:
+                matching_inputs.append(sink_input)
+    return matching_inputs
+
+
+async def handle_volume_command(
+    pulse: pulsectl_asyncio.PulseAsync, sink_name: str, command: str, delta: int | None
+) -> None:
+    """Handle volume-related commands (get/up/down/mute)."""
+    sink = await find_sink(pulse, sink_name)
+
+    if command == "get":
+        pass
+    elif command == "mute":
+        await toggle_mute(pulse, sink)
+    elif command in ("up", "down"):
+        if delta is None:
+            raise ValueError("delta required for up/down commands")
+        delta = delta if command == "up" else -delta
+        await set_volume(pulse, sink, delta)
+
+    # Always display current volume
+    vol = await get_volume(sink)
+    print(vol)
+
+
+async def handle_move_between_command(
+    pulse: pulsectl_asyncio.PulseAsync, sink1_name: str, sink2_name: str
+) -> None:
+    """Handle the move-between command."""
+    # Get the PID of the focused window
+    pid = await get_focused_pid()
+    if pid is None:
+        return
+
+    # Find all matching sink inputs
+    sink_inputs = await find_sink_inputs_by_pid(pulse, pid)
+    if not sink_inputs:
+        return
+
+    # Get both sinks
+    sink1 = await find_sink(pulse, sink1_name)
+    sink2 = await find_sink(pulse, sink2_name)
+
+    # Move each sink input to the appropriate sink
+    for sink_input in sink_inputs:
+        target_sink = sink2.index if sink_input.sink == sink1.index else sink1.index
+        await pulse.sink_input_move(sink_input.index, target_sink)
+
+
+async def main():
+    parser = argparse.ArgumentParser(description="Control audio volume and routing")
+    subparsers = parser.add_subparsers(dest="command", required=True)
+
+    # Volume control commands
+    volume = subparsers.add_parser("volume", help="Control volume")
+    volume.add_argument("sink", help="Audio sink name")
+    volume.add_argument("action", choices=["up", "down", "mute", "get"])
+    volume.add_argument("delta", type=int, nargs="?", help="Volume change in percent")
+
+    # Move between command
+    move = subparsers.add_parser(
+        "move-between", help="Move focused window audio between sinks"
+    )
+    move.add_argument("sink1", help="First sink name")
+    move.add_argument("sink2", help="Second sink name")
+
+    args = parser.parse_args()
+
+    async with pulsectl_asyncio.PulseAsync("volctl") as pulse:
+        if args.command == "volume":
+            await handle_volume_command(pulse, args.sink, args.action, args.delta)
+        elif args.command == "move-between":
+            await handle_move_between_command(pulse, args.sink1, args.sink2)
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
+
+# Local Variables:
+# mode: python-ts
+# End:

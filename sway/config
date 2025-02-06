@@ -10,6 +10,7 @@ set $term /home/schnouki/.config/sway/run.sh foot
 set $editor /home/schnouki/bin/eclient -n -c
 set $menu fuzzel
 set $fman /home/schnouki/.config/sway/run.sh thunar
+set $volctl /home/schnouki/.config/sway/volctl
 set $emoji rofimoji --selector="wofi" --action clipboard copy
 set $wallpaper_config /home/schnouki/.config/swww/choose-folder
 
@@ -307,9 +308,24 @@ bindsym $mod+r mode "resize"
 #
 # Media shortcuts:
 #
-    bindsym XF86AudioRaiseVolume exec pamixer --unmute --increase 5 && pamixer --get-volume > $wobsock
-    bindsym XF86AudioLowerVolume exec pamixer --unmute --decrease 5 && pamixer --get-volume > $wobsock
-    bindsym XF86AudioMute exec pamixer --toggle-mute && ( pamixer --get-mute && echo 0 > $wobsock ) || pamixer --get-volume > $wobsock
+    bindsym XF86AudioRaiseVolume exec $volctl volume analog-stereo up   5 > $wobsock
+    bindsym XF86AudioLowerVolume exec $volctl volume analog-stereo down 5 > $wobsock
+    bindsym XF86AudioMute        exec $volctl volume analog-stereo mute   > $wobsock
+    bindsym Ctrl+XF86AudioRaiseVolume exec $volctl volume hdmi-stereo up   5 > $wobsock
+    bindsym Ctrl+XF86AudioLowerVolume exec $volctl volume hdmi-stereo down 5 > $wobsock
+    bindsym Ctrl+XF86AudioMute        exec $volctl volume hdmi-stereo mute   > $wobsock
+
+    mode "volume" {
+        bindsym d exec $volctl volume hdmi-stereo down 5 > $wobsock
+        bindsym f exec $volctl volume hdmi-stereo up   5 > $wobsock
+        bindsym s exec $volctl volume hdmi-stereo mute   > $wobsock
+        bindsym e exec $volctl move-between easyeffects hdmi-stereo
+
+        bindsym r mode "default"
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+    }
+    bindsym $mod+Shift+r mode "volume"
 
     bindsym XF86AudioStop exec /home/schnouki/bin/mpris2-control stop
     bindsym XF86AudioPlay exec /home/schnouki/bin/mpris2-control playpause
