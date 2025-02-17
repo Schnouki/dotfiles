@@ -5,7 +5,7 @@ exec ros -Q -- $0 "$@"
 |#
 (progn ;;init forms
   (ros:ensure-asdf)
-  #+quicklisp(ql:quickload '(com.inuoe.jzon dexador lquery uiop xmls) :silent t))
+  #+quicklisp(ql:quickload '(cl-ppcre com.inuoe.jzon dexador lquery uiop xmls) :silent t))
 
 (defpackage :ros.script.update-bookmarks.3925291010
   (:use :cl)
@@ -75,6 +75,26 @@ exec ros -Q -- $0 "$@"
            :name name
            :url (format nil "https://stream.nightride.fm:8443/~a/~a.m3u8" id id)))))
 
+(defun get-radiofrance-stations (slug)
+  (let* ((html (dex:get (format nil "https://www.radiofrance.fr/~a" slug)))
+         (wrh1 (subseq html (+ (search "webradioHighlights:" html)
+                               19)))
+         (wrh2 (subseq wrh1 0 (1+ (search "]" wrh1))))
+         (wrh3 (cl-ppcre:regex-replace-all "\\b(\\w+):" wrh2 "\"\\1\":")))
+    (loop for highlight across (jzon:parse wrh3)
+          for live = (jzon:parse
+                      (dex:get (format nil "https://www.radiofrance.fr/~a/api/live?webradio=~a"
+                                       slug
+                                       (gethash "slug" highlight))))
+          for sources = (gethash "sources"
+                                 (gethash "media"
+                                          (gethash "now" live)))
+          collect
+          (make-station
+           :name (gethash "name" highlight)
+           :url (gethash "url" (find-if (lambda (s) (string= (gethash "format" s) "mp3"))
+                                        sources))))))
+
 
 (defun main (&rest argv)
   (declare (ignorable argv))
@@ -82,7 +102,9 @@ exec ros -Q -- $0 "$@"
                                   :stations (get-root-stations))
                      ,@(get-somafm-groups)
                      ,(make-group :group "Nightride FM"
-                                  :stations (get-nightridefm-stations)))))
+                                  :stations (get-nightridefm-stations))
+                     ,(make-group :group "FIP"
+                                  :stations (get-radiofrance-stations "fip")))))
     (with-open-file (stream (uiop:merge-pathnames* "radiotray-ng/bookmarks.json"
                                                    (uiop:xdg-config-home))
                             :direction :output

@@ -234,5 +234,58 @@
         "url": "https://stream.nightride.fm:8443/ebsm/ebsm.m3u8"
       }
     ]
+  },
+  {
+    "group": "FIP",
+    "stations": [
+      {
+        "name": "FIP",
+        "url": "https://icecast.radiofrance.fr/fip-midfi.mp3?id=radiofrance"
+      },
+      {
+        "name": "Sacré français !",
+        "url": "https://icecast.radiofrance.fr/fipsacrefrancais-midfi.mp3?id=radiofrance"
+      },
+      {
+        "name": "Rock",
+        "url": "https://icecast.radiofrance.fr/fiprock-midfi.mp3?id=radiofrance"
+      },
+      {
+        "name": "Jazz",
+        "url": "https://icecast.radiofrance.fr/fipjazz-midfi.mp3?id=radiofrance"
+      },
+      {
+        "name": "Groove",
+        "url": "https://icecast.radiofrance.fr/fipgroove-midfi.mp3?id=radiofrance"
+      },
+      {
+        "name": "Reggae",
+        "url": "https://icecast.radiofrance.fr/fipreggae-midfi.mp3?id=radiofrance"
+      },
+      {
+        "name": "Pop",
+        "url": "https://icecast.radiofrance.fr/fippop-midfi.mp3?id=radiofrance"
+      },
+      {
+        "name": "Electro",
+        "url": "https://icecast.radiofrance.fr/fipelectro-midfi.mp3?id=radiofrance"
+      },
+      {
+        "name": "Monde",
+        "url": "https://icecast.radiofrance.fr/fipworld-midfi.mp3?id=radiofrance"
+      },
+      {
+        "name": "Nouveautés",
+        "url": "https://icecast.radiofrance.fr/fipnouveautes-midfi.mp3?id=radiofrance"
+      },
+      {
+        "name": "Metal",
+        "url": "https://icecast.radiofrance.fr/fipmetal-midfi.mp3?id=radiofrance"
+      },
+      {
+        "name": "Hip-Hop",
+        "url": "https://icecast.radiofrance.fr/fiphiphop-midfi.mp3?id=radiofrance"
+      }
+    ]
   }
 ]
