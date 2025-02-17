@@ -15,68 +15,74 @@ exec ros -Q -- $0 "$@"
 (defstruct (station (:constructor make-station))
   name
   url
-  order)
+  (listeners 0))
+
+(defun station-lessp (s1 s2)
+  (string-lessp (station-name s1) (station-name s2)))
 
 (defmethod jzon:coerced-fields ((station station))
   (list (list "name" (station-name station))
         (list "url" (station-url station))))
 
+(defparameter *somafm-top-station-listeners-threshold* 250)
+
 (defstruct (group (:constructor make-group))
   group
   stations)
 
-(defun list-root-stations ()
+(defun get-root-stations ()
   (list (make-station :name "Nectarine"
-                      :url "https://scenestream.io/necta128.ogg"
-                      :order 0)
+                      :url "https://scenestream.io/necta128.ogg")
         (make-station :name "SLAY Radio"
-                      :url "https://www.slayradio.org/tune_in.php/128kbps/slayradio.128.m3u"
-                      :order 0)
+                      :url "https://www.slayradio.org/tune_in.php/128kbps/slayradio.128.m3u")
         (make-station :name "Fréquence 3"
-                      :url "https://frequence3.net-radio.fr/frequence3-128.mp3"
-                      :order 0)))
+                      :url "https://frequence3.net-radio.fr/frequence3-128.mp3")))
 
-(defun list-somafm-stations ()
-  (let ((channels (xmls:parse (dex:get "https://somafm.com/channels.xml"))))
-    (sort
-     (mapcar
-      (lambda (channel)
-        (make-station
-         :name (xmls:xmlrep-string-child (xmls:xmlrep-find-child-tag "title" channel))
-         :url (xmls:xmlrep-string-child
-               (find-if (lambda (fastpls)
-                          (string= (xmls:xmlrep-attrib-value "format" fastpls)
-                                   "mp3"))
-                        (xmls:xmlrep-find-child-tags "fastpls" channel)))
-         :order (xmls:xmlrep-integer-child (xmls:xmlrep-find-child-tag "listeners" channel))))
+(defun get-somafm-groups ()
+  (let* ((channels (xmls:parse (dex:get "https://somafm.com/channels.xml")))
+         (stations (mapcar
+                    (lambda (channel)
+                      (make-station
+                       :name (xmls:xmlrep-string-child (xmls:xmlrep-find-child-tag "title" channel))
+                       :url (xmls:xmlrep-string-child
+                             (find-if (lambda (fastpls)
+                                        (string= (xmls:xmlrep-attrib-value "format" fastpls)
+                                                 "mp3"))
+                                      (xmls:xmlrep-find-child-tags "fastpls" channel)))
+                       :listeners (xmls:xmlrep-integer-child (xmls:xmlrep-find-child-tag "listeners" channel))))
 
-      (xmls:xmlrep-find-child-tags "channel" channels))
-     (lambda (s1 s2)
-       (> (station-order s1) (station-order s2))))))
+                    (xmls:xmlrep-find-child-tags "channel" channels)))
+         (top-stations (sort (remove-if
+                              (lambda (s) (< (station-listeners s) *somafm-top-station-listeners-threshold*))
+                              stations)
+                             #'station-lessp))
+         (other-stations (sort (remove-if-not
+                                (lambda (s) (< (station-listeners s) *somafm-top-station-listeners-threshold*))
+                                stations)
+                               #'station-lessp)))
+    (list (make-group :group "SomaFM TOP" :stations top-stations)
+          (make-group :group "SomaFM" :stations other-stations))))
 
-(defun list-nightridefm-stations ()
+(defun get-nightridefm-stations ()
   (let* ((dom (lquery:$ (initialize (dex:get "https://nightride.fm/stations"))))
          (stations (lquery:$ dom
                              "a[data-type=stream]"
                              (combine (attr :data-station)
                                       ($1 "h3" (text))))))
     (loop for (id name) across stations
-          for order from 1
           collect
           (make-station
            :name name
-           :url (format nil "https://stream.nightride.fm:8443/~a/~a.m3u8" id id)
-           :order order))))
+           :url (format nil "https://stream.nightride.fm:8443/~a/~a.m3u8" id id)))))
 
 
 (defun main (&rest argv)
   (declare (ignorable argv))
-  (let ((bookmarks (list (make-group :group "root"
-                                     :stations (list-root-stations))
-                         (make-group :group "SomaFM"
-                                     :stations (list-somafm-stations))
-                         (make-group :group "Nightride FM"
-                                     :stations (list-nightridefm-stations)))))
+  (let ((bookmarks `(,(make-group :group "root"
+                                  :stations (get-root-stations))
+                     ,@(get-somafm-groups)
+                     ,(make-group :group "Nightride FM"
+                                  :stations (get-nightridefm-stations)))))
     (with-open-file (stream (uiop:merge-pathnames* "radiotray-ng/bookmarks.json"
                                                    (uiop:xdg-config-home))
                             :direction :output
