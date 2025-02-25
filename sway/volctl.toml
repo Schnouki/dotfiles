@@ -1,0 +1,3 @@
+[sinks]
+volume = ["analog-stereo", "hdmi-stereo"]
+output = ["easyeffects", "hdmi-stereo"]

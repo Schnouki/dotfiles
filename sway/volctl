@@ -5,11 +5,15 @@
 #     "i3ipc",
 #     "psutil",
 #     "pulsectl-asyncio",
+#     "tomli",
 # ]
 # ///
 
 import argparse
 import asyncio
+from pathlib import Path
+import tomli
+from typing import Sequence
 
 from i3ipc.aio import Connection
 import psutil
@@ -17,18 +21,63 @@ import pulsectl_asyncio
 from pulsectl_asyncio.pulsectl_async import PulseSinkInfo, PulseSinkInputInfo
 
 
-async def find_sink(
-    pulse: pulsectl_asyncio.PulseAsync, partial_name: str
-) -> PulseSinkInfo:
+def load_config() -> tuple[list[str], list[str]]:
+    """Load sink configuration from TOML file."""
+    config_path = Path("~/.config/sway/volctl.toml").expanduser()
+    if not config_path.exists():
+        return [], []
+
+    with open(config_path, "rb") as f:
+        config = tomli.load(f)
+
+    return (
+        config.get("sinks", {}).get("volume", []),
+        config.get("sinks", {}).get("output", []),
+    )
+
+
+async def get_matching_sinks(
+    pulse: pulsectl_asyncio.PulseAsync, patterns: Sequence[str]
+) -> list[PulseSinkInfo]:
+    """Get all sinks matching the given name patterns."""
+    if not patterns:
+        return []
+
     sinks = await pulse.sink_list()
-    matches = [s for s in sinks if partial_name in s.name]
-    if not matches:
-        raise ValueError(f"No sink found matching '{partial_name}'")
-    if len(matches) > 1:
-        raise ValueError(
-            f"Multiple sinks found matching '{partial_name}': {[s.name for s in matches]}"
-        )
-    return matches[0]
+    matching = []
+
+    # Get default sink name
+    server_info = await pulse.server_info()
+    default_name = server_info.default_sink_name
+
+    # First add default sink if it matches any pattern
+    for sink in sinks:
+        if sink.name == default_name and any(p in sink.name for p in patterns):
+            matching.append(sink)
+            break
+
+    # Then add other matching sinks, sorted by name
+    other_sinks = [
+        s
+        for s in sinks
+        if s.name != default_name and any(p in s.name for p in patterns)
+    ]
+    matching.extend(sorted(other_sinks, key=lambda s: s.name))
+
+    return matching
+
+
+async def get_sink_by_index(
+    pulse: pulsectl_asyncio.PulseAsync, patterns: Sequence[str], index: int
+) -> PulseSinkInfo:
+    """Get a sink by its index in the matching sinks list."""
+    sinks = await get_matching_sinks(pulse, patterns)
+    if not sinks:
+        raise ValueError(f"No sinks found matching patterns: {patterns}")
+    try:
+        return sinks[index]
+    except IndexError:
+        raise ValueError(f"Sink index {index} out of range (0-{len(sinks) - 1})")
 
 
 async def get_volume(sink: PulseSinkInfo) -> int:
@@ -61,7 +110,6 @@ async def get_focused_pid() -> int | None:
     tree = await i3.get_tree()
     focused = tree.find_focused()
     return focused.pid if focused else None
-
 
 
 def get_process_family_pids(pid: int) -> set[int]:
@@ -103,10 +151,14 @@ async def find_sink_inputs_by_pid(
 
 
 async def handle_volume_command(
-    pulse: pulsectl_asyncio.PulseAsync, sink_name: str, command: str, delta: int | None
+    pulse: pulsectl_asyncio.PulseAsync,
+    volume_sinks: Sequence[str],
+    index: int,
+    command: str,
+    delta: int | None,
 ) -> None:
     """Handle volume-related commands (get/up/down/mute)."""
-    sink = await find_sink(pulse, sink_name)
+    sink = await get_sink_by_index(pulse, volume_sinks, index)
 
     if command == "get":
         pass
@@ -124,7 +176,10 @@ async def handle_volume_command(
 
 
 async def handle_move_between_command(
-    pulse: pulsectl_asyncio.PulseAsync, sink1_name: str, sink2_name: str
+    pulse: pulsectl_asyncio.PulseAsync,
+    output_sinks: Sequence[str],
+    index1: int,
+    index2: int,
 ) -> None:
     """Handle the move-between command."""
     # Get the PID of the focused window
@@ -138,8 +193,8 @@ async def handle_move_between_command(
         return
 
     # Get both sinks
-    sink1 = await find_sink(pulse, sink1_name)
-    sink2 = await find_sink(pulse, sink2_name)
+    sink1 = await get_sink_by_index(pulse, output_sinks, index1)
+    sink2 = await get_sink_by_index(pulse, output_sinks, index2)
 
     # Move each sink input to the appropriate sink
     for sink_input in sink_inputs:
@@ -153,7 +208,7 @@ async def main():
 
     # Volume control commands
     volume = subparsers.add_parser("volume", help="Control volume")
-    volume.add_argument("sink", help="Audio sink name")
+    volume.add_argument("index", type=int, help="Sink index (0-based)")
     volume.add_argument("action", choices=["up", "down", "mute", "get"])
     volume.add_argument("delta", type=int, nargs="?", help="Volume change in percent")
 
@@ -161,16 +216,23 @@ async def main():
     move = subparsers.add_parser(
         "move-between", help="Move focused window audio between sinks"
     )
-    move.add_argument("sink1", help="First sink name")
-    move.add_argument("sink2", help="Second sink name")
+    move.add_argument("index1", type=int, help="First sink index (0-based)")
+    move.add_argument("index2", type=int, help="Second sink index (0-based)")
 
     args = parser.parse_args()
 
+    # Load sink configuration
+    volume_sinks, output_sinks = load_config()
+
     async with pulsectl_asyncio.PulseAsync("volctl") as pulse:
         if args.command == "volume":
-            await handle_volume_command(pulse, args.sink, args.action, args.delta)
+            await handle_volume_command(
+                pulse, volume_sinks, args.index, args.action, args.delta
+            )
         elif args.command == "move-between":
-            await handle_move_between_command(pulse, args.sink1, args.sink2)
+            await handle_move_between_command(
+                pulse, output_sinks, args.index1, args.index2
+            )
 
 
 if __name__ == "__main__":
