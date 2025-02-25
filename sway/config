@@ -58,7 +58,7 @@ set $keychron_kb_k10 13364:673:Keychron_Keychron_K10_Pro
 set $voyager_kb 12951:6519:ZSA_Technology_Labs_Voyager
 
 input type:keyboard {
-    xkb_layout fr(oss),fr(lafayette)
+    xkb_layout fr(oss),fr(lafayette),fr(ergol)
     xkb_options grp:rwin_toggle
     repeat_delay 450
     repeat_rate 45
@@ -84,7 +84,7 @@ input $laptop_kb {
     xkb_layout fr(oss)
 }
 input $voyager_kb {
-    xkb_layout fr(lafayette)
+    xkb_layout fr(lafayette),fr(ergol)
     xkb_options fkeys:basic_13-24,grp:rwin_toggle
 }
 
