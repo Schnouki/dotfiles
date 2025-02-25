@@ -8,7 +8,7 @@
     "include": "~/.config/waybar/modules.json",
 
     "modules-left": ["sway/workspaces", "idle_inhibitor", "sway/mode"],
-    "modules-center": ["clock", "custom/weather", "custom/mullvad"],
+    "modules-center": ["clock", "custom/weather", "custom/mullvad", "custom/pomm"],
     "modules-right": ["pulseaudio", "battery", "tray"]
   },
 

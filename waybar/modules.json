@@ -56,6 +56,13 @@
     "on-click": "$HOME/.config/waybar/mullvad-status.py toggle"
   },
 
+  "custom/pomm": {
+    "exec": "$HOME/.config/waybar/pomm-status.py",
+    "return-type": "json",
+    "restart-interval": 1,
+    "format": "{}"
+  },
+
   "custom/weather": {
     "format": "{}°",
     "tooltip": true,

@@ -12,6 +12,8 @@
 @define-color zb_fg     #dcdccc;
 
 @define-color zb_bg_m1  #2b2b2b;
+@define-color zb_bg_m08 #303030;
+@define-color zb_bg_m05 #383838;
 @define-color zb_bg     #3f3f3f;
 @define-color zb_bg_p1  #4f4f4f;
 
@@ -20,6 +22,7 @@
 @define-color zb_red_p1 #dca3a3;
 
 @define-color zb_green_m4 #3f5f3f;
+@define-color zb_green    #7f9f7f;
 
 @define-color zb_blue_m5 #366060;
 @define-color zb_blue_m2 #6ca0a3;
@@ -29,6 +32,8 @@
 @define-color zb_yellow_m4 #b09f6f;
 @define-color zb_yellow    #f0dfaf;
 @define-color zb_yellow_p1 #ffefbf;
+
+@define-color zb_orange  #dfaf8f;
 
 window#waybar {
     background: @zb_bg_m1;
@@ -122,4 +127,13 @@ button:hover {
 }
 #tray > .needs-attention {
     background: @zb_red_m4;
+}
+
+#custom-pomm.work {
+    background: @zb_bg_m05;
+    color: @zb_orange;
+}
+#custom-pomm.break {
+    background: @zb_bg_m05;
+    color: @zb_green;
 }
