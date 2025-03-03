@@ -37,6 +37,7 @@ ENCRYPTED_FILES = {
     ".config/notmuch/default/config": "notmuch/default/config.gpg",
     ".config/spotify-player/app.toml.in": "spotify-player/app.toml.in.gpg",
     ".config/swww/choose-folder": "swww/choose-folder.gpg",
+    ".config/Yubico/u2f_keys": "Yubico_u2f_keys.gpg",
 }
 
 ENCRYPTED_TARBALLS = {
