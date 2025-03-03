@@ -321,11 +321,11 @@ bindsym $mod+r mode "resize"
         bindsym s exec $volctl volume 1 mute   > $wobsock
         bindsym e exec $volctl move-between 0 1
 
-        bindsym c mode "default"
+        bindsym v mode "default"
         bindsym Return mode "default"
         bindsym Escape mode "default"
     }
-    bindsym $mod+Ctrl+c mode "volume"
+    bindsym $mod+Ctrl+v mode "volume"
 
     bindsym XF86AudioStop exec /home/schnouki/bin/mpris2-control stop
     bindsym XF86AudioPlay exec /home/schnouki/bin/mpris2-control playpause
