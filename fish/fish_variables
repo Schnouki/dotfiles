@@ -62,7 +62,7 @@ SETUVAR __fish_classic_git_prompt_initialized:\x1d
 SETUVAR __fish_init_2_39_8:\x1d
 SETUVAR __fish_init_2_3_0:\x1d
 SETUVAR __fish_init_3_x:\x1d
-SETUVAR __fish_initialized:3400
+SETUVAR __fish_initialized:3800
 SETUVAR _fisher_ccyip_2F_push_2D_line_2E_fish_files:\x7e/\x2econfig/fish/functions/pop_line\x2efish\x1e\x7e/\x2econfig/fish/functions/push_line\x2efish\x1e\x7e/\x2econfig/fish/conf\x2ed/push\x2dline_key_bindings\x2efish
 SETUVAR _fisher_franciscolourenco_2F_done_files:\x7e/\x2econfig/fish/conf\x2ed/done\x2efish
 SETUVAR _fisher_gazorby_2F_fish_2D_exa_files:\x7e/\x2econfig/fish/functions/exa_git\x2efish\x1e\x7e/\x2econfig/fish/conf\x2ed/fish\x2dexa\x2efish
@@ -88,7 +88,7 @@ SETUVAR fish_color_operator:00a6b2
 SETUVAR fish_color_param:81a2be
 SETUVAR fish_color_quote:b5bd68
 SETUVAR fish_color_redirection:8abeb7
-SETUVAR fish_color_search_match:bryellow\x1e\x2d\x2dbackground\x3dbrblack
+SETUVAR fish_color_search_match:white\x1e\x2d\x2dbackground\x3dbrblack
 SETUVAR fish_color_selection:white\x1e\x2d\x2dbold\x1e\x2d\x2dbackground\x3dbrblack
 SETUVAR fish_color_status:red
 SETUVAR fish_color_user:brgreen
