@@ -31,6 +31,33 @@
               ("C-c C-g" . magit-gptcommit-commit-accept))
   :custom
   (magit-gptcommit-llm-provider schnouki/llm-claude-provider)
+  (magit-gptcommit-prompt "You are generating a commit message for code changes. Analyze these diffs:
+
+```
+%s
+```
+
+Respond ONLY with the commit message following these rules:
+
+SUBJECT LINE:
+- Use imperative mood (\"Add\", not \"Added\")
+- Max 50 characters
+- Capitalize first word
+- No period at end
+- Complete this: \"If applied, this commit will...\"
+
+DESCRIPTION (only if needed):
+- Separate from subject with blank line
+- Wrap at 72 characters
+- Explain WHY, not HOW
+- Use Markdown if helpful
+- Skip if subject is self-explanatory
+
+Output format:
+[subject line]
+
+[optional description]")
+  (magit-gptcommit-max-token 100000)
   :config
   ;; Add gptcommit transient commands to `magit-commit'
   (magit-gptcommit-status-buffer-setup))
