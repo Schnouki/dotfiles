@@ -27,4 +27,17 @@
                  '((python-mode python-ts-mode)
                    "basedpyright-langserver" "--stdio"))))
 
+(use-package indent-bars
+  :ensure t
+  :hook ((python-mode yaml-mode) . indent-bars-mode)
+  :custom
+  (indent-bars-color '(shadow :face-bg nil :blend 0.325))
+  (indent-bars-color-by-depth '(:regexp "outline-\\([0-9]+\\)" :blend 0.8))
+  (indent-bars-highlight-current-depth '(:blend 0.65))
+  (indent-bars-pattern ".")
+  (indent-bars-treesit-support t)
+  (indent-bars-width-frac 0.1))
+
+;; (indent-bars-reset-styles)
+
 ;;; init-40-python.el ends here
