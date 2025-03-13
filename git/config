@@ -73,7 +73,7 @@
 [user]
 	name = Thomas Jost
 	email = schnouki@schnouki.net
-	signingkey = 3E0B0C49C0478597
+	signingkey = 243EEDB0A86B7802111CF2D87A402FAB3334A8C0
 
 # Keep this at the end so it can override previous settings
 [includeIf "gitdir:~/doist/"]
