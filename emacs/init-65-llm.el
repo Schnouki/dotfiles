@@ -17,7 +17,7 @@
                                   :default-chat-max-tokens default-chat-max-tokens
                                   :url "https://openrouter.ai/api/v1/"
                                   :key api-key)))
-  (setq schnouki/llm-claude-provider (schnouki/make-llm-openrouter "anthropic/claude-3.5-sonnet:beta")
+  (setq schnouki/llm-claude-provider (schnouki/make-llm-openrouter "anthropic/claude-3.7-sonnet:beta")
         schnouki/llm-gpt-provider (schnouki/make-llm-openrouter "openai/gpt-4o")
         schnouki/llm-llama-provider (schnouki/make-llm-openrouter "meta-llama/llama-3.1-70b-instruct")))
 
@@ -41,7 +41,8 @@
   :ensure t
   :commands (gptel-request gptel-make-kagi)
   :bind (:map schnouki-prefix-map
-              ("l RET" . gptel)
+              ("l RET" . gptel-menu)
+              ("l n" . gptel)
               ("l s" . gptel-send))
   :config
   (require 'gptel-curl)
@@ -51,11 +52,11 @@
                         :endpoint "/api/v1/chat/completions"
                         :stream t
                         :key #'gptel-api-key
-                        :models '("anthropic/claude-3.5-sonnet:beta"
-                                  "openai/gpt-4o"
-                                  "meta-llama/llama-3.1-70b-instruct"
-                                  "qwen/qwen-2.5-72b-instruct"))
-        gptel-model "anthropic/claude-3.5-sonnet")
+                        :models '(anthropic/claude-3.7-sonnet:beta
+                                  openai/gpt-4o
+                                  meta-llama/llama-3.1-70b-instruct
+                                  qwen/qwen-2.5-72b-instruct))
+        gptel-model 'anthropic/claude-3.7-sonnet:beta)
   :custom
   (gptel-default-mode 'org-mode)
   (gptel-log-level 'nil))
@@ -73,7 +74,7 @@
                      (string-remove-suffix "-ts"))
       (read-string "Programming language: "))))
   (gptel-request prompt
-    :system (format "You are large language model and a careful %s programmer. \
+                 :system (format "You are large language model and a careful %s programmer. \
 Provide code and only code as an output, without any additional text, prompt \
 or note. Use docstrings, but keep them short. Use comment for non-obvious \
 parts of the code. Do not wrap output in a markdown code block." lang)))
