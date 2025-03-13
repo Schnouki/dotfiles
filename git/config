@@ -13,16 +13,24 @@
 [branch]
         autoSetupMerge = true
         autoSetupRebase = remote
+	sort = -committerdate
 [color]
 	ui = true
+[column]
+	ui = auto
 [commit]
 	gpgSign = true
+	verbose = true
+[core]
+	pager = bat -p
 [credential]
 	helper = /usr/share/git/credential/netrc/git-credential-netrc -f ~/.netrc
 [diff]
 	algorithm = histogram
+	colorMoved = plain
 	compactionHeuristic = true
 	noprefix = true
+	renames = true
 	tool = difftastic
 [difftool]
 	prompt = false
@@ -30,6 +38,10 @@
 	cmd = difft "$MERGED" "$LOCAL" "abcdef1" "100644" "$REMOTE" "abcdef2" "100644"
 [difftool "difftastic-inline"]
 	cmd = difft --display=inline "$MERGED" "$LOCAL" "abcdef1" "100644" "$REMOTE" "abcdef2" "100644"
+[fetch]
+	all = true
+	prune = true
+	pruneTags = true
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
@@ -65,11 +77,18 @@
         autoSetupRemote = true
 	default = simple
 [rebase]
-	autosquash = true
+	autoSquash = true
+	autoStash = true
+	updateRefs = true
+[rerere]
+	enabled = true
+	autoupdate = true
 [sendemail]
 	annotate = true
 	envelopeSender = auto
 	sendmailCmd = msmtpq -a schnouki.net
+[tag]
+	sort = version:refname
 [user]
 	name = Thomas Jost
 	email = schnouki@schnouki.net
