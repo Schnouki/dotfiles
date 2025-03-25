@@ -6,10 +6,7 @@
   :ensure t
   :pin gnu
   :mode ("\\.org\\'" . org-mode)
-  :bind (:map schnouki-prefix-map
-              ("o l" . org-store-link)
-              ("o a" . org-agenda)
-              :map org-mode-map
+  :bind (:map org-mode-map
               ("C-c C-x i" . org-id-get-create)
               ("C-c y" . schnouki/org-yank-link))
   :custom

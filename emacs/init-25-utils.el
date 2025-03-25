@@ -642,4 +642,30 @@ If third argument START is non-nil, convert words after that index in STRING."
   :config
   (age-file-enable))
 
+;; Opinionated keyboard-driven user interfaces for various built-in Emacs modes
+(use-package casual
+  :ensure t
+  :bind (:map schnouki-prefix-map
+              ("o" . schnouki/casual-dispatch)
+              :map isearch-mode-map
+              ("C-o" . casual-isearch-tmenu))
+  :custom
+  (casual-lib-use-unicode nil)
+  (transient-align-variable-pitch t)
+  :config
+  (defun schnouki/casual-dispatch ()
+    (interactive)
+    (case major-mode
+      (#'calc-mode (casual-calc-tmenu))
+      (#'calendar-mode (casual-calendar-tmenu))
+      (#'dired-mode (casual-dired-tmenu))
+      (#'ibuffer-mode (casual-ibuffer-tmenu))
+      (#'image-mode (require 'casual-image)
+                    (casual-image-tmenu))
+      (#'info-mode (casual-info-tmenu))
+      (#'makefile-mode (casual-make-tmenu))
+      (#'org-agenda-mode (casual-agenda-tmenu))
+      (t (casual-editkit-main-tmenu)))))
+
+
 ;;; init-25-utils.el ends here
