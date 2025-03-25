@@ -34,6 +34,10 @@
 
 (setq show-trailing-whitespace t)
 
+;; Line numbers
+(add-hook 'prog-mode-hook #'display-line-numbers-mode)
+(set-face-attribute 'line-number nil :height 0.8)
+
 ;; Markdown
 (use-package markdown-mode
   :ensure t
