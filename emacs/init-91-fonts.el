@@ -8,7 +8,7 @@
   (let* ((mono-family "Iosevka")
          (mono-serif-family "Iosevka Slab")
          (var-family "Iosevka Aile")
-         (font-size 12)
+         (font-size 11.5)
          (mono-font (format "%s-%d" mono-family font-size)))
 
     (custom-set-faces `(default ((t (:family ,mono-family))))
