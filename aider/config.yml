@@ -1,5 +1,6 @@
 env-file: /home/schnouki/.config/aider/env
 model-settings-file: /home/schnouki/.config/aider/model-settings.yml
+read: CONVENTIONS.md
 
 dark-mode: true
 gitignore: false

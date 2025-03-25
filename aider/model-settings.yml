@@ -10,7 +10,7 @@
     max_tokens: 64000
     thinking:
       type: enabled
-      budget_tokens: 32000 # Adjust this number
+      budget_tokens: 16000 # Adjust this number
   cache_control: true
   editor_model_name: openrouter/anthropic/claude-3.7-sonnet
   editor_edit_format: editor-diff
