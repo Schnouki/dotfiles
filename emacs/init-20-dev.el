@@ -137,6 +137,8 @@
 ;; Completion with LSP
 (use-package eglot
   :ensure t
+  :bind (:map schnouki-prefix-map
+              ("e" . hydra-eglot/body))
   :custom
   (eglot-autoshutdown t)
   (eglot-stay-out-of '(flymake))
@@ -168,7 +170,6 @@ _s_ymbol"
     ("e" eglot)
     ("C-r" eglot-reconnect)
     ("C-s" eglot-shutdown))
-  (bind-key "e" 'hydra-eglot/body schnouki-prefix-map)
 
   :config
   (setq schnouki/eglot-hide-inlay-hints-on-active-line nil)

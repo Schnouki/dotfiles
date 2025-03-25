@@ -198,7 +198,7 @@ _p_rev       _u_pper (mine)       _=_: upper/lower       _r_esolve
     ("=" smerge-diff-upper-lower)
     (">" smerge-diff-base-lower)
     ("R" smerge-refine)
-    ("E" smerge-ediff)
+    ("E" smerge-ediff :exit t)
     ("C" smerge-combine-with-next)
     ("r" smerge-resolve)
     ("k" smerge-kill-current)

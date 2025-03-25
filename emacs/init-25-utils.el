@@ -370,8 +370,12 @@ A buffer is considered killable if it is not modified and either visits a file, 
 (use-package avy
   :ensure t
   :bind (("C-;" . avy-goto-char-timer)
-         ("C-M-;" . avy-goto-word-or-subword-1)
-         ("C-x C-;" . avy-pop-mark))
+         ("C-," . avy-goto-char-timer)
+         ("C-x C-;" . avy-pop-mark)
+         ("C-x C-," . avy-pop-mark)
+         :map schnouki-prefix-map
+         (";" . hydra-avy/body)
+         ("," . hydra-avy/body))
   :custom
   (avy-background t)
   :config
@@ -395,8 +399,7 @@ A buffer is considered killable if it is not modified and either visits a file, 
     ("k" avy-kill-whole-line)
     ("K" avy-kill-region)
     ("y" avy-copy-line)
-    ("Y" avy-copy-region))
-  (bind-key ";" 'hydra-avy/body schnouki-prefix-map))
+    ("Y" avy-copy-region)))
 
 
 ;; Visual feedback on some operations

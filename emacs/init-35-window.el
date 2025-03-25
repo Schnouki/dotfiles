@@ -13,7 +13,7 @@
 
 ;; Move window splitter
 (require 'hydra-examples)
-(defhydra hydra-move-splitter (global-map "C-£")
+(defhydra hydra-move-splitter (global-map "C-&")
   "Move window splitter"
   ("<up>"    hydra-move-splitter-up "up")
   ("<down>"  hydra-move-splitter-down "down")
