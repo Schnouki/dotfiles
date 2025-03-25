@@ -37,7 +37,11 @@
           (end-of-buffer)
           (recenter -1 t)))))
 
-  (advice-add #'magit-process-filter :after #'schnouki/magit-process--maybe-tail-buffer))
+  (advice-add #'magit-process-filter :after #'schnouki/magit-process--maybe-tail-buffer)
+
+  ;; Enable git-absorb integration
+  (transient-replace-suffix #'magit-commit #'magit-commit-autofixup
+    '("x" "Absorb changes" magit-commit-absorb)))
 
 (use-package magit-todos
   :ensure t
