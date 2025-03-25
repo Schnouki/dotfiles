@@ -23,6 +23,7 @@
   (magit-process-popup-time 2)
   (vc-follow-symlinks t)
   (epg-pinentry-mode nil)
+  (magit-process-finish-apply-ansi-colors t)
   :config
 
   (setq schnouki/magit-process-buffer-tail t)
