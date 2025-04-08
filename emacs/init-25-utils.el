@@ -392,6 +392,13 @@ A buffer is considered killable if it is not modified and either visits a file, 
   (avy-background t)
   :config
   (avy-setup-default)
+  ;; Show nice documentation before avy-read
+  (defface aw-key-face
+    '((t :inherit font-lock-builtin-face))
+    "Face used by `avy-show-dispatch-help'.")
+  (defun schnouki/avy-show-dispatch-help (&rest r)
+    (avy-show-dispatch-help))
+  (advice-add #'avy-read :before #'schnouki/avy-show-dispatch-help)
   :init
   (defhydra hydra-avy (:exit t :hint nil)
     "
