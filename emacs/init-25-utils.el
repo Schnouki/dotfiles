@@ -94,6 +94,18 @@
   ("Y" (yank-pop -1) "prev"))
 (bind-key "C-y" 'hydra-yank-pop/yank)
 
+;; Better window navigation
+(defhydra hydra-other-window ()
+  "other window"
+  ("C-x o" other-window nil)
+  ("o" (other-window 1) "next")
+  ("O" (other-window -1) "prev")
+  ("C-<up>" windmove-up "up")
+  ("C-<down>" windmove-down "down")
+  ("C-<left>" windmove-left "left")
+  ("C-<right>" windmove-right "right"))
+(bind-key "o" 'hydra-other-window/other-window ctl-x-map)
+
 ;; Viking-mode
 (use-package viking-mode
   :ensure t
