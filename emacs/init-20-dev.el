@@ -219,7 +219,9 @@ _s_ymbol"
   :load-path "~/.config/emacs/eglot-booster"
   :after eglot
   :config
-  (eglot-booster-mode))
+  (eglot-booster-mode)
+  :custom
+  (eglot-booster-io-only t))
 
 
 ;; eglot-ltex -- language server for text using LanguageTool
