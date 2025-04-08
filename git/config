@@ -20,7 +20,6 @@
 	ui = auto
 [commit]
 	gpgSign = true
-	verbose = true
 [core]
 	pager = bat -p
 [credential]
