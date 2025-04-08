@@ -22,8 +22,9 @@ alias ecnw="eclient -nw"
 
 alias zbarscreen="zbarimg (maim -s | psub)"
 
-# youtube-dl with specific config file
-alias ytmusicdl="youtube-dl --config-location ~/.config/youtube-dl/music"
+# yt-dlp with specific config file
+alias ytdlp-music="yt-dlp --config-location ~/.config/yt-dlp/music"
+alias ytdlp-ytmusic="yt-dlp --config-location ~/.config/yt-dlp/ytmusic"
 
 # Wine 32-bit
 alias wine32="WINEPREFIX=$XDG_DATA_HOME/wine32 WINEARCH=win32 wine"
