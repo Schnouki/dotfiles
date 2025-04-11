@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-exec age --decrypt -i <(age-plugin-yubikey -i) "$1"

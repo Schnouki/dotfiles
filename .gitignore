@@ -9,7 +9,6 @@ __pycache__/
 !*.gpg
 
 # Dotfiles
-!agecat
 !applications/justfile
 !applications/make_steam_desktop_files.py
 !bat
