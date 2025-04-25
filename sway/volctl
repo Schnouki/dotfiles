@@ -150,6 +150,32 @@ async def find_sink_inputs_by_pid(
     return matching_inputs
 
 
+async def handle_sinks_command(
+    pulse: pulsectl_asyncio.PulseAsync, output_sinks_patterns: Sequence[str]
+) -> None:
+    """List all available sinks, highlighting those matching output patterns."""
+    all_sinks = await pulse.sink_list()
+    output_sinks_matched = await get_matching_sinks(pulse, output_sinks_patterns)
+
+    # Create a map from sink index (PulseAudio) to (positional index, pattern)
+    output_sinks_map = {}
+    for i, sink in enumerate(output_sinks_matched):
+        # Find the pattern that caused this sink to match
+        # Assumes patterns are reasonably distinct or takes the first match
+        pattern = next((p for p in output_sinks_patterns if p in sink.name), None)
+        if pattern:  # Should always find one based on get_matching_sinks logic
+            output_sinks_map[sink.index] = (i, pattern)
+
+    for sink in sorted(all_sinks, key=lambda s: s.index):
+        match_info = output_sinks_map.get(sink.index)
+
+        if match_info:
+            positional_index, pattern = match_info
+            print(f"{positional_index} {sink.name}: {sink.description} [{pattern}]")
+        else:
+            print(f"- {sink.name}: {sink.description}")
+
+
 async def handle_volume_command(
     pulse: pulsectl_asyncio.PulseAsync,
     volume_sinks: Sequence[str],
@@ -219,6 +245,9 @@ async def main():
     move.add_argument("index1", type=int, help="First sink index (0-based)")
     move.add_argument("index2", type=int, help="Second sink index (0-based)")
 
+    # Sinks list command
+    subparsers.add_parser("sinks", help="List available sinks and their mapping")
+
     args = parser.parse_args()
 
     # Load sink configuration
@@ -233,6 +262,9 @@ async def main():
             await handle_move_between_command(
                 pulse, output_sinks, args.index1, args.index2
             )
+        elif args.command == "sinks":
+            # Pass only output_sinks patterns to the handler
+            await handle_sinks_command(pulse, output_sinks)
 
 
 if __name__ == "__main__":
