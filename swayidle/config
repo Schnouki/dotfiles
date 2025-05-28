@@ -1,4 +1,11 @@
+# After 4m30s, warn that the screen will lock soon; on activity,
 timeout 270 'notify-call -R swayidle -u critical -t 30000 -i lock -- "LOCKING in 30s"' resume 'notify-call -R swayidle -t 1 -i lock -- "Resuming."'
+
+# Lock after 5 minutes. Use the "idle" reason to give a 5-second grace period.
 timeout 300 '~/.config/swayidle/lock.sh idle'
+
+# Turn screen off after 6 minutes; on activity, turn it back on.
 timeout 360 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'
+
+# Before sleep, lock too, but with the "sleep" option to disable the grace period.
 before-sleep '~/.config/swayidle/lock.sh sleep'
