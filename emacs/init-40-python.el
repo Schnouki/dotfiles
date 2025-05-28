@@ -29,7 +29,7 @@
 
 (use-package indent-bars
   :ensure t
-  :hook ((python-mode yaml-mode) . indent-bars-mode)
+  :hook ((python-mode python-ts-mode yaml-mode) . indent-bars-mode)
   :custom
   (indent-bars-color '(shadow :face-bg nil :blend 0.325))
   (indent-bars-color-by-depth '(:regexp "outline-\\([0-9]+\\)" :blend 0.8))
