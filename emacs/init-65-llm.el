@@ -103,17 +103,12 @@ parts of the code. Do not wrap output in a markdown code block." lang)))
 
 (bind-key "l c" #'schnouki/gptel-write-code schnouki-prefix-map)
 
-;; Aidermacs
-(use-package aidermacs
+;; Aider integration
+(use-package aider
   :ensure t
   :bind (:map schnouki-prefix-map
-              ("l a" . aidermacs-transient-menu))
-
-  :config
-  (aidermacs-setup-minor-mode)
+              ("l a" . aider-transient-menu))
   :custom
-  (aidermacs-backend 'vterm)
-  (aidermacs-default-model "openrouter/anthropic/claude-3.7-sonnet:beta")
-  (aidermacs-extra-args '("--no-check-update")))
+  (aider-args '("--no-auto-accept-architect" "--no-check-update")))
 
 ;;; init-65-llm.el ends here
