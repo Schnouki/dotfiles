@@ -9,6 +9,8 @@ alias free='free -m'
 alias grep='grep --color=auto'
 alias egrep='grep -E --color=auto'
 
+alias ip="ip --color=auto"
+
 alias ssu="sudo -i"
 
 alias sctl="systemctl"
