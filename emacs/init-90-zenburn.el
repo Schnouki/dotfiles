@@ -45,7 +45,7 @@
      `(hl-line ((t :background ,zenburn-bg-05)))
      `(schnouki/notmuch-hl-line ((t :background ,zenburn-bg-05)))
 ;;;; company
-     `(company-preview ((t :inherit company-tooltip-selection :background nil)))
+     `(company-preview ((t :inherit company-tooltip-selection :background unspecified)))
      ;; :foreground ,zenburn-green+2 :background ,zenburn-bg-1)))
 ;;;; diff, magit-diff
      `(diff-context ((t :foreground "#bcbcac"))) ;; zenburn-fg-2
