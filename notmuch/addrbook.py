@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+from collections.abc import Iterable
 import email.header
 import email.parser
 import email.utils
@@ -10,7 +11,7 @@ import sys
 import typing
 
 from bs4 import BeautifulSoup
-import notmuch
+import notmuch2
 
 _DBPATH = "~/.config/notmuch/addrbook.db"
 
@@ -29,20 +30,19 @@ class AddrBook(object):
                 self._db = pickle.load(data)
 
     # @profile
-    def index(self, msgs: notmuch.Messages) -> None:
+    def index(self, msgs: Iterable[notmuch2.Message]) -> None:
         """Index messages in the address book"""
         tot_msg = 0
         tot_addr = 0
         try:
             parser = email.parser.Parser()
             for msg in msgs:
-                msg_fn = msg.get_filename()
                 try:
-                    with open(msg_fn, "r") as data:
-                        mail = parser.parse(data, True)
+                    with msg.path.open() as fp:
+                        mail = parser.parse(fp, True)
                 except UnicodeDecodeError:
-                    with open(msg_fn, "r", encoding="latin9") as data:
-                        mail = parser.parse(data, True)
+                    with msg.path.open(encoding="latin9") as fp:
+                        mail = parser.parse(fp, True)
                 addrs = []
                 for hdr in ("from", "to", "cc", "bcc"):
                     addrs += mail.get_all(hdr, [])
@@ -50,8 +50,7 @@ class AddrBook(object):
                 tot_addr += self._add(addrs)
                 tot_msg += 1
                 if (tot_msg % 20) == 0:
-                    logging.debug("Messages: %d; addresses: %d",
-                                  tot_msg, tot_addr)
+                    logging.debug("Messages: %d; addresses: %d", tot_msg, tot_addr)
         finally:
             # At the end, save the DB
             self._merge_db()
@@ -164,8 +163,7 @@ class AddrBook(object):
 
 
 def _main():
-    logging.basicConfig(level=logging.INFO,
-                        format="%(levelname)s: %(message)s")
+    logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
     # If called without any argument, this is supposed to be a first run: index everything
     if len(sys.argv) == 1:
@@ -177,9 +175,8 @@ def _main():
             sys.exit(1)
 
         book = AddrBook(True)
-        nmdb = notmuch.Database(mode=notmuch.Database.MODE.READ_ONLY)
-        query = notmuch.Query(nmdb, "tag:sent or tag:replied")
-        book.index(query.search_messages())
+        nmdb = notmuch2.Database(mode=notmuch2.Database.MODE.READ_ONLY)
+        book.index(nmdb.messages("tag:sent or tag:replied"))
 
     # If called with arguments, search for that.
     else:
