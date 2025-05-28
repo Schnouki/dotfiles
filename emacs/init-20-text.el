@@ -92,14 +92,6 @@ as the new width."
       (schnouki/visual-text-mode -1)
     (schnouki/visual-text-mode 1)))
 
-(setq schnouki/no-visual-text-modes'(toml-mode yaml-mode))
-
-(defun schnouki/maybe-turn-on-visual-text-mode ()
-  (unless (apply #'derived-mode-p schnouki/no-visual-text-modes)
-    (schnouki/visual-text-mode 1)))
-
-(add-hook 'text-mode-hook #'schnouki/maybe-turn-on-visual-text-mode)
-
 (defun schnouki/set-wider-fill-column ()
   "Set a wider `fill-column' in some text modes."
   (setq-local fill-column 120))
