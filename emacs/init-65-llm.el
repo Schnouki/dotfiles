@@ -17,9 +17,9 @@
                                   :default-chat-max-tokens default-chat-max-tokens
                                   :url "https://openrouter.ai/api/v1/"
                                   :key api-key)))
-  (setq schnouki/llm-claude-provider (schnouki/make-llm-openrouter "anthropic/claude-3.7-sonnet:beta")
-        schnouki/llm-gpt-provider (schnouki/make-llm-openrouter "openai/gpt-4o")
-        schnouki/llm-llama-provider (schnouki/make-llm-openrouter "meta-llama/llama-3.1-70b-instruct")))
+  (setq schnouki/llm-claude-provider (schnouki/make-llm-openrouter "anthropic/claude-sonnet-4")
+        schnouki/llm-gpt-provider (schnouki/make-llm-openrouter "openai/gpt-4.1")
+        schnouki/llm-gemini-provider (schnouki/make-llm-openrouter "google/gemini-2.5-pro-preview")))
 
 
 ;; Magit commit with the help of LLMs
@@ -79,11 +79,10 @@ Output format:
                         :endpoint "/api/v1/chat/completions"
                         :stream t
                         :key #'gptel-api-key
-                        :models '(anthropic/claude-3.7-sonnet:beta
-                                  openai/gpt-4o
-                                  meta-llama/llama-3.1-70b-instruct
-                                  qwen/qwen-2.5-72b-instruct))
-        gptel-model 'anthropic/claude-3.7-sonnet:beta)
+                        :models '(anthropic/claude-sonnet-4
+                                  openai/gpt-4.1
+                                  google/gemini-2.5-pro-preview))
+        gptel-model 'anthropic/claude-sonnet-4)
   :custom
   (gptel-default-mode 'org-mode)
   (gptel-log-level 'nil))
