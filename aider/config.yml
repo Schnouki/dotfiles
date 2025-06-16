@@ -5,3 +5,10 @@ read: CONVENTIONS.md
 dark-mode: true
 gitignore: false
 auto-commits: false
+cache-prompts: true
+watch-files: true
+
+model: openrouter/anthropic/claude-opus-4
+
+lint-cmd:
+  - "python: ruff check --fix && ruff format"
