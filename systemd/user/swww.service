@@ -8,7 +8,7 @@ Type=exec
 ExecStart=/usr/bin/swww-daemon
 ExecStartPost=%h/.config/swww/random-swww
 ExecReload=%h/.config/swww/random-swww
-Restart=on-failure
+Restart=always
 
 [Install]
 WantedBy=sway-session.target
