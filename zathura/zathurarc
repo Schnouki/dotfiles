@@ -15,3 +15,5 @@ set scroll-page-aware true
 set adjust-open best-fit
 set vertical-center true
 set zoom-step 5
+
+set database sqlite
