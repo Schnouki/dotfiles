@@ -55,7 +55,13 @@ def process_acf(app_dir: Path, steam_dir: Path, acf_file: Path):
     if NAME_BLOCKLIST_RE.search(name):
         return
     slug_name = slugify.slugify(name, separator="_")
-    icon_path = steam_dir / "appcache" / "librarycache" / f"{appid}_icon.jpg"
+    icon_dir = steam_dir / "appcache" / "librarycache" / appid
+    for pth in icon_dir.glob("*.jpg"):
+        if len(pth.stem) == 40 and pth.stat().st_size <= 5000:
+            icon_path = pth
+            break
+    else:
+        icon_path = steam_dir / "appcache" / "librarycache" / appid / "logo.png"
     png_icon_path = app_dir / "steam_icons" / f"{slug_name}.png"
     if not png_icon_path.is_file():
         png_icon_path.parent.mkdir(parents=True, exist_ok=True)
