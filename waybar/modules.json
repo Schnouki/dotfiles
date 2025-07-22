@@ -6,7 +6,7 @@
       "critical": 15
     },
     "format": "{icon} {capacity}%",
-    "format-icons": ["", "", "", "", ""],
+    "format-icons": [" ", " ", " ", " ", " "],
     "format-time": "{H}h{m}",
     "tooltip-format": " {time} — {power:.1f} W"
   },
@@ -48,10 +48,10 @@
     "restart-interval": 1,
     "format": "{icon}",
     "format-icons": {
-      "connected": "",
-      "connecting": "",
+      "connected": " ",
+      "connecting": " ",
       "disconnected": "",
-      "disconnecting": ""
+      "disconnecting": " "
     },
     "on-click": "$HOME/.config/waybar/mullvad-status.py toggle"
   },
@@ -97,13 +97,13 @@
     "format-bluetooth": "{icon} {volume}%",
     "format-muted": "",
     "format-icons": {
-      "headphone": "",
+      "headphone": " ",
       "hands-free": "",
       "headset": "",
-      "phone": "",
-      "portable": "",
-      "car": "",
-      "default": ["", ""]
+      "phone": " ",
+      "portable": " ",
+      "car": " ",
+      "default": [" ", " "]
     },
     "ignored-sinks": ["Easy Effects Sink"],
     "scroll-step": 5,
