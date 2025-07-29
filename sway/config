@@ -11,7 +11,8 @@ set $editor /home/schnouki/bin/eclient -n -c
 set $menu fuzzel
 set $fman /home/schnouki/.config/sway/run.sh thunar
 set $volctl /home/schnouki/.config/sway/volctl
-set $emoji rofimoji --selector="wofi" --action clipboard copy
+set $emoji     rofimoji --selector="wofi" --action type
+set $emoji_alt rofimoji --selector="wofi" --action clipboard
 set $wallpaper_config /home/schnouki/.config/swww/choose-folder
 
 set $wobsock $XDG_RUNTIME_DIR/wob.sock
@@ -133,6 +134,7 @@ workspace_auto_back_and_forth yes
 
     # Emoji typer
     bindsym $mod+period exec $emoji
+    bindsym $mod+Shift+period exec $emoji_alt
 
     # Lock screen
     bindsym $mod+Ctrl+Escape exec wleave --show-keybinds --close-on-lost-focus --delay-command-ms 0
