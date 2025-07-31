@@ -36,6 +36,7 @@ ENCRYPTED_FILES = {
     ".config/notmuch/autotag.py": "notmuch/autotag.py.gpg",
     ".config/notmuch/default/config": "notmuch/default/config.gpg",
     ".config/spotify-player/app.toml.in": "spotify-player/app.toml.in.gpg",
+    ".config/switch-claude/accounts.json": "switch-claude/accounts.json.gpg",
     ".config/swww/choose-folder": "swww/choose-folder.gpg",
     ".config/Yubico/u2f_keys": "Yubico_u2f_keys.gpg",
 }

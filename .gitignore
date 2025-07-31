@@ -63,6 +63,7 @@ gtk-3.0/bookmarks
 !sway
 !swayidle
 !swaylock
+!switch-claude
 !swww
 !systemd
 !timewarrior
