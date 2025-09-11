@@ -1,4 +1,4 @@
-default: bruno knossos obsidian steam steam-native vivaldi-stable vivaldi-stable-alt steam-games todoist twist update-cache
+default: bruno knossos obsidian steam steam-native vivaldi-stable vivaldi-stable-alt steam-games update-cache
 
 [private]
 prepare FILE TARGET="":
@@ -42,12 +42,6 @@ steam: (prepare "steam")
 
 steam-native: (prepare "steam-native")
     -which prime-run &>/dev/null && just add_runner steam-native prime-run || rm steam-native.desktop
-
-todoist:
-    just electron_wayland_appimage appimagekit_*-Todoist.desktop
-
-twist:
-    just electron_wayland_appimage appimagekit_*-Twist.desktop
 
 vivaldi-stable: (prepare "vivaldi-stable")
     sed -i "s!/usr/bin/vivaldi-stable!${HOME}/bin/vivaldi-stable!g" vivaldi-stable.desktop
