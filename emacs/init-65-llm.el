@@ -111,4 +111,17 @@ parts of the code. Do not wrap output in a markdown code block." lang)))
   :custom
   (aider-args '("--no-auto-accept-architect" "--no-check-update")))
 
+;; GitHub Copilot
+(use-package copilot
+  :ensure t
+  :delight
+  :hook (prog-mode . copilot-mode)
+  :bind (:map copilot-completion-map
+              ("C-<tab>" . copilot-accept-completion)
+              ("C-TAB" . copilot-accept-completion)
+              ("C-<right>" . copilot-accept-completion-by-word)
+              ("C-<end>" . copilot-accept-completion-by-line)
+              ("C-<down>" . copilot-previous-completion)
+              ("C-<up>" . copilot-next-completion)))
+
 ;;; init-65-llm.el ends here

@@ -255,6 +255,11 @@ _s_ymbol"
   (company-tooltip-align-annotations t)
   (company-tooltip-limit 30))
 
+;; Company frontend with icons
+(use-package company-box
+  :ensure t
+  :delight
+  :hook (company-mode . company-box-mode))
 
 ;; treesit-auto -- automatically use tree-sitter whenever possible
 ;; https://github.com/renzmann/treesit-auto
