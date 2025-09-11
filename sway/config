@@ -137,7 +137,7 @@ workspace_auto_back_and_forth yes
     bindsym $mod+Shift+period exec $emoji_alt
 
     # Lock screen
-    bindsym $mod+Ctrl+Escape exec wleave --show-keybinds --close-on-lost-focus --delay-command-ms 0
+    bindsym $mod+Ctrl+Escape exec wleave
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.

@@ -1,0 +1,43 @@
+{
+    "show-keybinds": true,
+    "close-on-lost-focus": true,
+    "delay-command-ms": 0,
+    "buttons": [
+        {
+            "label": "lock",
+            "icon": "/usr/share/wleave/icons/lock.svg",
+            "action": "~/.config/swayidle/lock.sh",
+            "text": "Verrouillage",
+            "keybind": "l"
+        },
+        {
+            "label": "suspend",
+            "icon": "/usr/share/wleave/icons/suspend.svg",
+            "action": "systemctl suspend",
+            "text": "Mise en veille",
+            "keybind": "v"
+        },
+        {
+            "label": "hibernate",
+            "icon": "/usr/share/wleave/icons/hibernate.svg",
+            "action": "systemctl hibernate",
+            "text": "Hibernation",
+            "keybind": "h"
+        },
+        {
+            "label": "reboot",
+            "icon": "/usr/share/wleave/icons/reboot.svg",
+            "action": "systemctl reboot",
+            "text": "Redémarrage",
+            "keybind": "r"
+        },
+        {
+            "label": "shutdown",
+            "icon": "/usr/share/wleave/icons/shutdown.svg",
+            "action": "systemctl poweroff",
+            "text": "Extinction",
+            "keybind": "e"
+        }
+    ],
+    "no-version-info": true
+}
