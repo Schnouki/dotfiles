@@ -59,6 +59,9 @@
 ;; Move point to top/bottom of buffer before signalling a scrolling error
 (setq scroll-error-top-bottom t)
 
+;; Avoid excessive warnings
+(setq warning-minimum-log-level :error)
+
 ;; Display file name in the window title bar
 (setq frame-title-format '(buffer-file-name "%b [%f]" "%b"))
 
