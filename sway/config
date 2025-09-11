@@ -342,8 +342,8 @@ bindsym $mod+r mode "resize"
 #
 # Brightness control:
 #
-    bindsym XF86MonBrightnessUp exec light -A 5 && light -G | cut -d'.' -f1 > $wobsock
-    bindsym XF86MonBrightnessDown exec light -U 5 && light -G | cut -d'.' -f1 > $wobsock
+    bindsym XF86MonBrightnessUp exec brightnessctl -c backlight -m set 5%+ | cut -d',' -f4 | sed 's/\%//' > $wobsock
+    bindsym XF86MonBrightnessDown exec brightnessctl -c backlight -m set 5%- | cut -d',' -f4 | sed 's/\%//' > $wobsock
 
 #
 # Quick shortcuts:
