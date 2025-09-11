@@ -1,0 +1,7 @@
+[default]
+duration = "5m"
+mode = "cover" #"fit"
+sorting = "random"
+queue-size = 1000
+path = "/home/schnouki/.local/state/wpaperd/source"
+recursive = false

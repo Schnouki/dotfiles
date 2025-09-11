@@ -1,0 +1,12 @@
+[Unit]
+Description=Modern wallpaper daemon for Wayland
+Documentation=man:wpaperd(1)
+BindsTo=sway-session.target
+After=sway-session.target
+
+[Service]
+ExecStart=/usr/bin/wpaperd
+Restart=always
+
+[Install]
+WantedBy=sway-session.target

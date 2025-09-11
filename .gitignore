@@ -64,13 +64,13 @@ gtk-3.0/bookmarks
 !swayidle
 !swaylock
 !switch-claude
-!swww
 !systemd
 !timewarrior
 !tmux
 !waybar
 !wireplumber
 !wleave
+!wpaperd
 !xkb
 !yt-dlp
 !zathura

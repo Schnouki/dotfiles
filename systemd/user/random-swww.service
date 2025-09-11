@@ -1,8 +1,0 @@
-[Unit]
-Description=Randomize wallpaper displayed by swww
-Requisite=swww.service
-After=swww.service
-
-[Service]
-Type=oneshot
-ExecStart=%h/.config/swww/random-swww
