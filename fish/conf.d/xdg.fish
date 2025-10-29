@@ -1,9 +1,5 @@
 # Changes suggested by xdg-ninja
 
-# AWS
-set -Ux AWS_SHARED_CREDENTIALS_FILE "$XDG_CONFIG_HOME"/aws/credentials
-set -Ux AWS_CONFIG_FILE "$XDG_CONFIG_HOME"/aws/config
-
 # Cargo
 set -Ux CARGO_HOME "$XDG_DATA_HOME"/cargo
 

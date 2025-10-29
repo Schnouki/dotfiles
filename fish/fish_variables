@@ -1,7 +1,5 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
-SETUVAR --export AWS_CONFIG_FILE:/home/schnouki/\x2econfig/aws/config
-SETUVAR --export AWS_SHARED_CREDENTIALS_FILE:/home/schnouki/\x2econfig/aws/credentials
 SETUVAR --export CARGO_HOME:/home/schnouki/\x2elocal/share/cargo
 SETUVAR --export CLUTTER_BACKEND:wayland
 SETUVAR --export --path CUDA_CACHE_PATH:/home/schnouki/\x2ecache/nv

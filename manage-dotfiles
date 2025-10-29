@@ -15,6 +15,7 @@ from pathlib import Path
 
 ENCRYPTED_FILES = {
     ".atlas/auth": "atlas-auth.gpg",
+    ".aws/config": "aws-config.gpg",
     ".gitspindle": "gitspindle.gpg",
     ".gnupg/gpg.conf": "gpg.conf.gpg",
     ".gnupg/gpg-agent.conf": "gpg-agent.conf.gpg",
