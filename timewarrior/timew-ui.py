@@ -17,6 +17,13 @@ RESP_START = 44
 PREVIOUS_COLUMNS = 2
 PREVIOUS_ROWS = 5
 
+# UI Layout Constants
+UI_BTN_SPACING = 6
+UI_GRID_PADDING = 12
+UI_FRAME_PADDING = 12
+UI_SECTION_SPACING = 12
+UI_DIALOG_PADDING = 12
+
 
 @dataclass(frozen=True)
 class TWStatus:
@@ -36,7 +43,7 @@ def get_tags() -> list[str]:
     tags_path = Path.home() / ".local" / "share" / "timewarrior" / "data" / "tags.data"
     with tags_path.open() as fd:
         tags_data = json.load(fd)
-    return list(tags_data.keys())
+    return sorted(list(tags_data.keys()))
 
 
 def get_prev_tags() -> list[frozenset[str]]:
@@ -106,7 +113,8 @@ def main():
     dlg.set_resizable(False)
 
     content = dlg.get_content_area()
-    box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
+    box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=UI_SECTION_SPACING)
+    box.set_border_width(UI_DIALOG_PADDING)
     content.add(box)
 
     dlg.add_button("Start", RESP_START)
@@ -119,6 +127,9 @@ def main():
     prev_frm = Gtk.Frame(label="Previous entries")
     box.pack_start(prev_frm, True, True, 0)
     prev_grid = Gtk.Grid(column_homogeneous=True)
+    prev_grid.set_row_spacing(UI_BTN_SPACING)
+    prev_grid.set_column_spacing(UI_BTN_SPACING)
+    prev_grid.set_border_width(UI_GRID_PADDING)
     prev_frm.add(prev_grid)
 
     for i, btn_tags in enumerate(prev_tags):
@@ -129,7 +140,12 @@ def main():
 
     next_frm = Gtk.Frame(label="Tags for next entry")
     box.pack_start(next_frm, True, True, 0)
-    next_frm.add(tree_view)
+
+    tv_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+    tv_box.set_border_width(UI_FRAME_PADDING)
+    tv_box.pack_start(tree_view, True, True, 0)
+    next_frm.add(tv_box)
+
     tree_view.grab_focus()
 
     if st.tags:
