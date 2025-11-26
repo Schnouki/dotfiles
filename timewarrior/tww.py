@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import ctypes
-from datetime import datetime
+from datetime import datetime, UTC
 import enum
 import json
 import select
@@ -10,7 +10,7 @@ import os
 
 import psutil
 
-TIMEOUT = 30_000
+TIMEOUT_MS = 30_000
 BLOCK_SIZE = 1024
 
 
@@ -18,6 +18,7 @@ class INotify:
     libc = ctypes.CDLL("libc.so.6")
 
     class WatchFlag(enum.IntFlag):
+        MODIFY = 0x00000002
         CLOSE_WRITE = 0x00000008
 
     # C functions
@@ -31,7 +32,8 @@ class INotify:
 
     # Python wrapper
     def __init__(self):
-        self.fd = self._init1(os.O_NONBLOCK)
+        IN_NONBLOCK = 0o00004000
+        self.fd = self._init1(IN_NONBLOCK)
 
     def add_watch(self, path: str, mask: WatchFlag) -> int:
         wd = self._add_watch(self.fd, path.encode(), mask)
@@ -47,7 +49,7 @@ class Watcher:
         self.ino = INotify()
         self.poll = select.poll()
         self.poll.register(self.ino.fd, select.POLLIN)
-        self.wd = self.ino.add_watch(self.path, INotify.WatchFlag.CLOSE_WRITE)
+        self.wd = self.ino.add_watch(self.path, INotify.WatchFlag.MODIFY)
 
     def flush_ino(self):
         try:
@@ -58,7 +60,9 @@ class Watcher:
             pass
 
     def update(self):
-        procs = [proc for proc in psutil.process_iter(["name"]) if proc.name() == "timew"]
+        procs = [
+            proc for proc in psutil.process_iter(["name"]) if proc.name() == "timew"
+        ]
         if procs:
             psutil.wait_procs(procs, timeout=1)
 
@@ -76,23 +80,23 @@ class Watcher:
         if "end" in interval:
             text = "inactive"
         else:
-            start = datetime.strptime(interval["start"], "%Y%m%dT%H%M%SZ")
-            duration = (datetime.utcnow() - start).total_seconds()
+            start = datetime.fromisoformat(interval["start"])
+            duration = (datetime.now(UTC) - start).total_seconds()
             mm = int(duration) // 60
             hh, mm = divmod(mm, 60)
             text = f"{hh}:{mm:02d}"
             if tags:
-                text += f" [{', '.join(tags)}]"
+                text += f" <small>[{', '.join(tags)}]</small>"
 
         print(json.dumps({"text": text}), flush=True)
 
     def run(self):
         self.update()
         while True:
-            ev = self.poll.poll(TIMEOUT)
+            ev = self.poll.poll(TIMEOUT_MS)
             self.update()
 
 
 if __name__ == "__main__":
-    w = Watcher("~/.timewarrior/data")
+    w = Watcher("~/.local/share/timewarrior/data")
     w.run()

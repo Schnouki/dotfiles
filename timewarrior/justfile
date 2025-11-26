@@ -1,7 +1,7 @@
 default: install-all
 
 install NAME:
-    @mkdir -p ~/.timewarrior/extensions
-    ln -sf {{justfile_directory()}}/ext/{{NAME}}.* ~/.timewarrior/extensions/{{NAME}}
+    @mkdir -p ~/.config/timewarrior/extensions
+    ln -sf {{justfile_directory()}}/ext/{{NAME}}.* ~/.config/timewarrior/extensions/{{NAME}}
 
 install-all: (install "pct_tags") (install "third_time")

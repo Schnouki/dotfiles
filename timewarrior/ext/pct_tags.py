@@ -1,8 +1,10 @@
 #!/usr/bin/python3
 
+from __future__ import annotations
+
 from collections import defaultdict
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import datetime, UTC
 import json
 import sys
 from typing import Any, Optional, Sequence
@@ -15,9 +17,13 @@ class Interval:
     tags: set[str]
 
     @classmethod
-    def from_dict(cls, data: dict[str, Any]) -> "Interval":
-        start = parse_date(data["start"])
-        end = parse_date(data["end"]) if data.get("end") else datetime.now()
+    def from_dict(cls, data: dict[str, Any]) -> Interval:
+        start = datetime.fromisoformat(data["start"])
+        end = (
+            datetime.fromisoformat(data["end"])
+            if data.get("end")
+            else datetime.now(UTC)
+        )
         tags = set(data["tags"])
         return cls(start, end, tags)
 
@@ -34,7 +40,7 @@ class TwData:
     intervals: list[Interval]
 
     @classmethod
-    def from_file(cls, fd) -> "TwData":
+    def from_file(cls, fd) -> TwData:
         cfg = {}
         while line := next(fd).strip():
             key, value = line.split(":", 1)
@@ -43,15 +49,6 @@ class TwData:
         raw_data = json.load(fd)
         intervals = [Interval.from_dict(entry) for entry in raw_data]
         return cls(cfg, intervals)
-
-
-def parse_date(s: str) -> datetime:
-    return (
-        datetime.strptime(s, "%Y%m%dT%H%M%SZ")
-        .replace(tzinfo=timezone.utc)
-        .astimezone(tz=None)
-        .replace(tzinfo=None)
-    )
 
 
 def format_time(sec: int) -> str:
@@ -183,12 +180,12 @@ def main() -> None:
 
     # Metadata
     if data.config.get("temp.report.start"):
-        start_date = parse_date(data.config["temp.report.start"])
+        start_date = datetime.fromisoformat(data.config["temp.report.start"])
     else:
         start_date = min(interval.start for interval in data.intervals)
 
     if data.config.get("temp.report.end"):
-        end_date = parse_date(data.config["temp.report.end"])
+        end_date = datetime.fromisoformat(data.config["temp.report.end"])
     else:
         end_date = max(interval.end for interval in data.intervals)
 

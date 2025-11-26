@@ -33,7 +33,7 @@ class TWStatus:
 
 
 def get_tags() -> list[str]:
-    tags_path = Path.home() / ".timewarrior" / "data" / "tags.data"
+    tags_path = Path.home() / ".local" / "share" / "timewarrior" / "data" / "tags.data"
     with tags_path.open() as fd:
         tags_data = json.load(fd)
     return list(tags_data.keys())

@@ -56,11 +56,12 @@
     "on-click": "$HOME/.config/waybar/mullvad-status.py toggle"
   },
 
-  "custom/pomm": {
-    "exec": "$HOME/.config/waybar/pomm-status.py",
+  "custom/timewarrior": {
+    "exec": "$HOME/.config/timewarrior/tww.py",
     "return-type": "json",
     "restart-interval": 1,
-    "format": "{}"
+    "format": " {}",
+    "on-click": "$HOME/.config/timewarrior/timew-ui.py"
   },
 
   "custom/weather": {
