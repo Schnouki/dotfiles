@@ -38,3 +38,5 @@ alias winetricks32="WINEPREFIX=$XDG_DATA_HOME/wine32 WINEARCH=win32 winetricks"
 abbr --add --position anywhere --set-cursor -- --bhelp "--help % | bat -plhelp"
 
 alias llm_tldr="llmcli -q \"What's the tl;dr version of this?\" -f"
+
+alias hx="helix"
