@@ -13,7 +13,7 @@ set $fman /home/schnouki/.config/sway/run.sh thunar
 set $volctl /home/schnouki/.config/sway/volctl
 set $emoji     rofimoji --selector="wofi" --action type
 set $emoji_alt rofimoji --selector="wofi" --action clipboard
-set $wallpaper_config /home/schnouki/.config/swww/choose-folder
+set $wallpaper_config /home/schnouki/.config/wpaperd/choose-folder
 
 set $wobsock $XDG_RUNTIME_DIR/wob.sock
 
