@@ -42,7 +42,15 @@
 
   ;; Enable git-absorb integration
   (transient-replace-suffix #'magit-commit #'magit-commit-autofixup
-    '("x" "Absorb changes" magit-commit-absorb)))
+    '("x" "Absorb changes" magit-commit-absorb))
+
+  ;; Add a method to detach HEAD on the current commit
+  (defun schnouki/magit-branch-detach ()
+    "Detach HEAD at the current commit."
+    (interactive)
+    (magit-run-git-async "checkout" "--detach"))
+  (transient-append-suffix #'magit-branch #'magit-branch-unshelve
+    '("D" "Detach HEAD" schnouki/magit-branch-detach)))
 
 (use-package magit-todos
   :ensure t
