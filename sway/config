@@ -374,12 +374,9 @@ bindsym $mod+p mode "screenshot"
 #
 font pango:Iosevka Aile 12
 seat * xcursor_theme Simp1e-Zenburn
-#hide_edge_borders smart
-#gaps outer 0px
-#gaps inner 12px
-smart_borders no_gaps
-smart_gaps inverse_outer
-
+gaps inner 8
+gaps outer -8
+hide_edge_borders both
 
 # Zenburn colors
 # See also: https://thomashunter.name/i3-configurator/
