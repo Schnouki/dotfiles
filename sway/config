@@ -430,6 +430,10 @@ for_window [app_id="ulauncher"] {
     border none
 }
 
+for_window [app_id="zen"] {
+    border none
+}
+
 # Run basic stuff
 include /etc/sway/config.d/*
 
