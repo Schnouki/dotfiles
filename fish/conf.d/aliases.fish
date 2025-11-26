@@ -23,6 +23,7 @@ alias ecn="eclient -n"
 alias ecnw="eclient -nw"
 
 alias zbarscreen="zbarimg (maim -s | psub)"
+alias termbin="nc termbin.com 9999"
 
 # yt-dlp with specific config file
 alias ytdlp-music="yt-dlp --config-location ~/.config/yt-dlp/music"
