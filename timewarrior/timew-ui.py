@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from dataclasses import dataclass
+from datetime import datetime, timedelta
 import json
 from pathlib import Path
 import subprocess as subp
@@ -117,6 +118,15 @@ def main():
     box.set_border_width(UI_DIALOG_PADDING)
     content.add(box)
 
+    shift_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=UI_BTN_SPACING)
+    shift_box.set_halign(Gtk.Align.CENTER)
+    box.pack_start(shift_box, False, False, 0)
+    shift_label = Gtk.Label(label="Time shift (minutes ago):")
+    shift_box.pack_start(shift_label, False, False, 0)
+    shift_adj = Gtk.Adjustment(value=0, lower=0, upper=120, step_increment=1, page_increment=5)
+    shift_spin = Gtk.SpinButton(adjustment=shift_adj, climb_rate=1, digits=0)
+    shift_box.pack_start(shift_spin, False, False, 0)
+
     dlg.add_button("Start", RESP_START)
     if not st.stopped:
         dlg.add_button("Edit", RESP_EDIT)
@@ -155,10 +165,13 @@ def main():
     dlg.show_all()
     resp = dlg.run()
 
+    shift_minutes = int(shift_spin.get_value())
+    action_time = (datetime.now() - timedelta(minutes=shift_minutes)).isoformat(timespec="seconds")
+
     if resp == RESP_START:
         model, paths = sel.get_selected_rows()
         tags = [model.get_value(model.get_iter(path), 0) for path in paths]
-        subp.run(["timew", "start"] + tags, check=True)
+        subp.run(["timew", "start", action_time] + tags, check=True)
 
     elif resp == RESP_EDIT:
         model, paths = sel.get_selected_rows()
@@ -172,7 +185,7 @@ def main():
             subp.run(["timew", "untag", "@1"] + old_tags)
 
     elif resp == RESP_STOP:
-        subp.run(["timew", "stop"])
+        subp.run(["timew", "stop", action_time])
 
 
 if __name__ == "__main__":
