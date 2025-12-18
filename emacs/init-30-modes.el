@@ -143,8 +143,8 @@
   ;; install it with "ros install sly"
   (load (expand-file-name "~/.roswell/helper.el"))
   (setq sly-lisp-implementations
-        '((ros-sbcl ("ros" "run") :coding-system utf-8-unix)
-          (qlot ("qlot" "exec" "ros" "run") :coding-system utf-8-unix)))
+        '((qlot ("qlot" "exec" "ros" "run") :coding-system utf-8-unix)
+          (ros-sbcl ("ros" "run") :coding-system utf-8-unix)))
   (sly-setup))
 (use-package sly-asdf
   :ensure t)
