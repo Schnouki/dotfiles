@@ -26,7 +26,6 @@ ENCRYPTED_FILES = {
     ".transifexrc": "transifexrc.gpg",
     ".config/aider/env": "aider/env.gpg",
     ".config/git/doist.inc": "git/doist.inc.gpg",
-    ".config/exist-git-hook.conf": "exist-git-hook.conf.gpg",
     ".config/isyncrc": "isyncrc.gpg",
     ".config/pws.yaml": "pws.yaml.gpg",
     ".config/emacs/init-99-private.el": "emacs/init-99-private.el.gpg",
