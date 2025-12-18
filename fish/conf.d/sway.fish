@@ -17,3 +17,6 @@ set -Ux CLUTTER_BACKEND wayland
 
 # Firefox & Thunderbird
 set -Ux MOZ_ENABLE_WAYLAND 1
+
+# Java
+set -Ux _JAVA_AWT_WM_NONREPARENTING 1
