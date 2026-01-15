@@ -9,9 +9,9 @@
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 	show-commit-message = show -s --format=%B
 	upp = !git fetch --prune && git checkout $(git rev-parse --abbrev-ref origin/HEAD | sed -s 's!^origin/!!') && git pull
-	upp2 = !git fetch --prune && git checkout -B $(git rev-parse --abbrev-ref origin/HEAD | sed -s 's!^origin/!!')2 $(git rev-parse --abbrev-ref origin/HEAD | sed -s 's!^origin/!!')
-	upp3 = !git fetch --prune && git checkout -B $(git rev-parse --abbrev-ref origin/HEAD | sed -s 's!^origin/!!')3 $(git rev-parse --abbrev-ref origin/HEAD | sed -s 's!^origin/!!')
-	upp4 = !git fetch --prune && git checkout -B $(git rev-parse --abbrev-ref origin/HEAD | sed -s 's!^origin/!!')4 $(git rev-parse --abbrev-ref origin/HEAD | sed -s 's!^origin/!!')
+	upp2 = !git fetch --prune && git checkout -B $(git rev-parse --abbrev-ref origin/HEAD | sed -s 's!^origin/!!')2 $(git rev-parse --abbrev-ref origin/HEAD)
+	upp3 = !git fetch --prune && git checkout -B $(git rev-parse --abbrev-ref origin/HEAD | sed -s 's!^origin/!!')3 $(git rev-parse --abbrev-ref origin/HEAD)
+	upp4 = !git fetch --prune && git checkout -B $(git rev-parse --abbrev-ref origin/HEAD | sed -s 's!^origin/!!')4 $(git rev-parse --abbrev-ref origin/HEAD)
 	wdiff = diff --color-words
 [branch]
         autoSetupMerge = true
