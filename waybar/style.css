@@ -128,12 +128,3 @@ button:hover {
 #tray > .needs-attention {
     background: @zb_red_m4;
 }
-
-#custom-pomm.work {
-    background: @zb_bg_m05;
-    color: @zb_orange;
-}
-#custom-pomm.break {
-    background: @zb_bg_m05;
-    color: @zb_green;
-}
