@@ -7,6 +7,7 @@ After=sway-session.target
 [Service]
 ExecStart=/usr/bin/wpaperd
 Restart=always
+CPUWeight=idle
 
 [Install]
 WantedBy=sway-session.target
