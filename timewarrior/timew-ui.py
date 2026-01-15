@@ -8,12 +8,8 @@ import subprocess as subp
 
 import gi
 
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
-
-RESP_STOP = 42
-RESP_EDIT = 43
-RESP_START = 44
+gi.require_version("Gtk", "4.0")
+from gi.repository import Gtk, Gdk
 
 PREVIOUS_COLUMNS = 2
 PREVIOUS_ROWS = 5
@@ -65,127 +61,207 @@ def get_prev_tags() -> list[frozenset[str]]:
     return tag_sets
 
 
-def main():
-    all_tags = get_tags()
-    st = TWStatus.get()
-    prev_tags = get_prev_tags()
+class TimewApp(Gtk.Application):
+    def __init__(self):
+        super().__init__(application_id="org.schnouki.timew-ui")
+        self.all_tags = []
+        self.status = None
+        self.prev_tags = []
+        self.tag_rows = {}
+        self.result_tags = []
+        self.result_action = None
 
-    # Tags view management
-    tags_store = Gtk.ListStore(str)
-    tags_iters = {}
-    for tw_tag in all_tags:
-        tag_iter = tags_store.append([tw_tag])
-        tags_iters[tw_tag] = tag_iter
-    tags_store.append([""])
+    def do_activate(self):
+        self.all_tags = get_tags()
+        self.status = TWStatus.get()
+        self.prev_tags = get_prev_tags()
 
-    tree_view = Gtk.TreeView(model=tags_store, headers_visible=False, reorderable=False)
-    sel = tree_view.get_selection()
-    sel.set_mode(Gtk.SelectionMode.MULTIPLE)
+        win = Gtk.ApplicationWindow(application=self, title="Timewarrior")
+        win.set_resizable(False)
 
-    cell = Gtk.CellRendererText(editable=True)
+        key_controller = Gtk.EventControllerKey()
+        key_controller.connect("key-pressed", self.on_key_pressed)
+        win.add_controller(key_controller)
 
-    def on_edit(cr, path, new_text):
-        tree_iter = tags_store.get_iter_from_string(path)
-        prev_text = tags_store.get_value(tree_iter, 0)
-        if prev_text == new_text:
-            return
+        header = Gtk.HeaderBar()
+        win.set_titlebar(header)
 
-        tags_store.set_value(tree_iter, 0, new_text)
-        if prev_text == "":
-            tags_store.append([""])
+        cancel_btn = Gtk.Button(label="Cancel")
+        cancel_btn.connect("clicked", lambda b: self.quit())
+        header.pack_start(cancel_btn)
 
-    cell.connect("edited", on_edit)
+        start_btn = Gtk.Button(label="Start")
+        start_btn.add_css_class("suggested-action")
+        start_btn.connect("clicked", self.on_start)
+        header.pack_end(start_btn)
 
-    col = Gtk.TreeViewColumn("Tag", cell, text=0)
-    tree_view.append_column(col)
+        if not self.status.stopped:
+            stop_btn = Gtk.Button(label="Stop")
+            stop_btn.add_css_class("destructive-action")
+            stop_btn.connect("clicked", self.on_stop)
+            header.pack_end(stop_btn)
 
-    # Helper: select a list of tags
-    def select_tags(tags: list[str]):
-        sel.unselect_all()
-        for tw_tag in tags:
-            tag_iter = tags_iters[tw_tag]
-            sel.select_iter(tag_iter)
+            edit_btn = Gtk.Button(label="Edit")
+            edit_btn.connect("clicked", self.on_edit)
+            header.pack_end(edit_btn)
 
-    def on_select_tags_btn(btn, tags: list[str]):
-        select_tags(tags)
+        main_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=UI_SECTION_SPACING)
+        main_box.set_margin_top(UI_DIALOG_PADDING)
+        main_box.set_margin_bottom(UI_DIALOG_PADDING)
+        main_box.set_margin_start(UI_DIALOG_PADDING)
+        main_box.set_margin_end(UI_DIALOG_PADDING)
+        win.set_child(main_box)
 
-    # Build the dialog
-    dlg = Gtk.Dialog(title="Timewarrior", modal=True, use_header_bar=True)
-    dlg.set_resizable(False)
+        # Time shift
+        shift_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=UI_BTN_SPACING)
+        shift_box.set_halign(Gtk.Align.CENTER)
+        main_box.append(shift_box)
 
-    content = dlg.get_content_area()
-    box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=UI_SECTION_SPACING)
-    box.set_border_width(UI_DIALOG_PADDING)
-    content.add(box)
+        shift_label = Gtk.Label(label="Time shift (minutes ago):")
+        shift_box.append(shift_label)
 
-    shift_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=UI_BTN_SPACING)
-    shift_box.set_halign(Gtk.Align.CENTER)
-    box.pack_start(shift_box, False, False, 0)
-    shift_label = Gtk.Label(label="Time shift (minutes ago):")
-    shift_box.pack_start(shift_label, False, False, 0)
-    shift_adj = Gtk.Adjustment(value=0, lower=0, upper=120, step_increment=1, page_increment=5)
-    shift_spin = Gtk.SpinButton(adjustment=shift_adj, climb_rate=1, digits=0)
-    shift_box.pack_start(shift_spin, False, False, 0)
+        self.shift_spin = Gtk.SpinButton()
+        self.shift_spin.set_range(0, 120)
+        self.shift_spin.set_increments(1, 5)
+        self.shift_spin.set_value(0)
+        shift_box.append(self.shift_spin)
 
-    dlg.add_button("Start", RESP_START)
-    if not st.stopped:
-        dlg.add_button("Edit", RESP_EDIT)
-        dlg.add_button("Stop", RESP_STOP)
-    dlg.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
-    dlg.set_default_response(RESP_START)
+        # Previous entries frame
+        prev_frame = Gtk.Frame(label="Previous entries")
+        main_box.append(prev_frame)
 
-    prev_frm = Gtk.Frame(label="Previous entries")
-    box.pack_start(prev_frm, True, True, 0)
-    prev_grid = Gtk.Grid(column_homogeneous=True)
-    prev_grid.set_row_spacing(UI_BTN_SPACING)
-    prev_grid.set_column_spacing(UI_BTN_SPACING)
-    prev_grid.set_border_width(UI_GRID_PADDING)
-    prev_frm.add(prev_grid)
+        prev_grid = Gtk.Grid()
+        prev_grid.set_column_homogeneous(True)
+        prev_grid.set_row_spacing(UI_BTN_SPACING)
+        prev_grid.set_column_spacing(UI_BTN_SPACING)
+        prev_grid.set_margin_top(UI_GRID_PADDING)
+        prev_grid.set_margin_bottom(UI_GRID_PADDING)
+        prev_grid.set_margin_start(UI_GRID_PADDING)
+        prev_grid.set_margin_end(UI_GRID_PADDING)
+        prev_frame.set_child(prev_grid)
 
-    for i, btn_tags in enumerate(prev_tags):
-        btn = Gtk.Button(label=", ".join(sorted(btn_tags)))
-        btn.connect("clicked", on_select_tags_btn, btn_tags)
-        top, left = divmod(i, PREVIOUS_COLUMNS)
-        prev_grid.attach(btn, left, top, 1, 1)
+        for i, btn_tags in enumerate(self.prev_tags):
+            btn = Gtk.Button(label=", ".join(sorted(btn_tags)))
+            btn.connect("clicked", self.on_select_tags_btn, btn_tags)
+            top, left = divmod(i, PREVIOUS_COLUMNS)
+            prev_grid.attach(btn, left, top, 1, 1)
 
-    next_frm = Gtk.Frame(label="Tags for next entry")
-    box.pack_start(next_frm, True, True, 0)
+        # Tags frame with ListBox
+        next_frame = Gtk.Frame(label="Tags for next entry")
+        main_box.append(next_frame)
 
-    tv_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-    tv_box.set_border_width(UI_FRAME_PADDING)
-    tv_box.pack_start(tree_view, True, True, 0)
-    next_frm.add(tv_box)
+        frame_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        frame_box.set_margin_top(UI_FRAME_PADDING)
+        frame_box.set_margin_bottom(UI_FRAME_PADDING)
+        frame_box.set_margin_start(UI_FRAME_PADDING)
+        frame_box.set_margin_end(UI_FRAME_PADDING)
+        next_frame.set_child(frame_box)
 
-    tree_view.grab_focus()
+        scrolled = Gtk.ScrolledWindow()
+        scrolled.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
+        scrolled.set_propagate_natural_height(True)
+        frame_box.append(scrolled)
 
-    if st.tags:
-        select_tags(st.tags)
+        self.list_box = Gtk.ListBox()
+        self.list_box.set_selection_mode(Gtk.SelectionMode.MULTIPLE)
+        scrolled.set_child(self.list_box)
 
-    # Run!
-    dlg.show_all()
-    resp = dlg.run()
+        for tag in self.all_tags:
+            row = self.create_tag_row(tag)
+            self.list_box.append(row)
+            self.tag_rows[tag] = row
 
-    shift_minutes = int(shift_spin.get_value())
-    action_time = (datetime.now() - timedelta(minutes=shift_minutes)).isoformat(timespec="seconds")
+        # Add empty row for new tags
+        self.new_tag_row = self.create_tag_row("", editable=True)
+        self.list_box.append(self.new_tag_row)
 
-    if resp == RESP_START:
-        model, paths = sel.get_selected_rows()
-        tags = [model.get_value(model.get_iter(path), 0) for path in paths]
+        # Select current tags
+        if self.status.tags:
+            self.select_tags(self.status.tags)
+
+        win.present()
+
+    def create_tag_row(self, tag: str, editable: bool = False) -> Gtk.ListBoxRow:
+        row = Gtk.ListBoxRow()
+        if editable:
+            entry = Gtk.Entry()
+            entry.set_text(tag)
+            entry.set_placeholder_text("Add new tag...")
+            entry.connect("activate", self.on_new_tag_activate)
+            row.set_child(entry)
+        else:
+            label = Gtk.Label(label=tag)
+            label.set_halign(Gtk.Align.START)
+            row.set_child(label)
+        return row
+
+    def on_key_pressed(self, controller, keyval, keycode, state):
+        if keyval == Gdk.KEY_Escape:
+            self.quit()
+            return True
+        return False
+
+    def on_new_tag_activate(self, entry):
+        new_tag = entry.get_text().strip()
+        if new_tag and new_tag not in self.tag_rows:
+            row = self.create_tag_row(new_tag)
+            self.list_box.insert(row, len(self.tag_rows))
+            self.tag_rows[new_tag] = row
+            self.all_tags.append(new_tag)
+            entry.set_text("")
+            self.list_box.select_row(row)
+
+    def select_tags(self, tags: list[str]):
+        self.list_box.unselect_all()
+        for tag in tags:
+            if tag in self.tag_rows:
+                self.list_box.select_row(self.tag_rows[tag])
+
+    def on_select_tags_btn(self, btn, tags):
+        self.select_tags(tags)
+
+    def get_selected_tags(self) -> list[str]:
+        tags = []
+        for row in self.list_box.get_selected_rows():
+            child = row.get_child()
+            if isinstance(child, Gtk.Label):
+                tags.append(child.get_text())
+            elif isinstance(child, Gtk.Entry):
+                text = child.get_text().strip()
+                if text:
+                    tags.append(text)
+        return tags
+
+    def get_action_time(self) -> str:
+        shift_minutes = int(self.shift_spin.get_value())
+        return (datetime.now() - timedelta(minutes=shift_minutes)).isoformat(timespec="seconds")
+
+    def on_start(self, btn):
+        tags = self.get_selected_tags()
+        action_time = self.get_action_time()
         subp.run(["timew", "start", action_time] + tags, check=True)
+        self.quit()
 
-    elif resp == RESP_EDIT:
-        model, paths = sel.get_selected_rows()
-        all_new_tags = [model.get_value(model.get_iter(path), 0) for path in paths]
-        new_tags = [tag for tag in all_new_tags if tag not in st.tags]
-        old_tags = [tag for tag in st.tags if tag not in all_new_tags]
+    def on_edit(self, btn):
+        all_new_tags = self.get_selected_tags()
+        new_tags = [tag for tag in all_new_tags if tag not in self.status.tags]
+        old_tags = [tag for tag in self.status.tags if tag not in all_new_tags]
 
         if new_tags:
             subp.run(["timew", "tag", "@1"] + new_tags)
         if old_tags:
             subp.run(["timew", "untag", "@1"] + old_tags)
+        self.quit()
 
-    elif resp == RESP_STOP:
+    def on_stop(self, btn):
+        action_time = self.get_action_time()
         subp.run(["timew", "stop", action_time])
+        self.quit()
+
+
+def main():
+    app = TimewApp()
+    app.run(None)
 
 
 if __name__ == "__main__":
