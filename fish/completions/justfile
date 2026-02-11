@@ -1,0 +1,17 @@
+default: gog mymydlink prod-console switch-claude
+
+[private]
+click APP:
+    env _{{ shoutysnakecase(APP) }}_COMPLETE=fish_source {{ APP }} > {{ APP }}.fish
+
+gog:
+    gog completion fish > gog.fish
+
+mymydlink:
+    just click mymydlink
+
+prod-console:
+    just click prod-console
+
+switch-claude:
+    just click switch-claude
