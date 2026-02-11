@@ -1,4 +1,4 @@
-default: bruno knossos obsidian steam steam-native vivaldi-stable vivaldi-stable-alt steam-games update-cache
+default: bruno knossos steam steam-native vivaldi-stable vivaldi-stable-alt steam-games update-cache
 
 [private]
 prepare FILE TARGET="":
@@ -33,9 +33,6 @@ bruno: (prepare "bruno")
 
 knossos: (prepare "knossos")
     -which prime-run &>/dev/null && just add_runner knossos prime-run || rm knossos.desktop
-
-obsidian: (prepare "obsidian")
-    just electron_wayland obsidian
 
 steam: (prepare "steam")
     -which prime-run &>/dev/null && just add_runner steam prime-run || rm steam.desktop
