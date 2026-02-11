@@ -47,11 +47,6 @@ ENCRYPTED_TARBALLS = {
     "llmcli": ("llmcli.tar.gpg", ".config/llmcli/*"),
     "Pgweb": ("pgweb.tar.gpg", ".pgweb/**/**"),
     "Systemd mounts": ("systemd-mounts.tar.gpg", ".config/systemd/user/*.mount"),
-    "Ulauncher": (
-        "ulauncher.tar.gpg",
-        ".config/ulauncher/*",
-        ".config/ulauncher/*/*",
-    ),
     "Weechat": ("weechat.tar.gpg", ".config/weechat/*.conf"),
 }
 
