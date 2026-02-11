@@ -2,6 +2,7 @@
     "show-keybinds": true,
     "close-on-lost-focus": true,
     "delay-command-ms": 0,
+    "buttons-per-row": "3",
     "buttons": [
         {
             "label": "lock",

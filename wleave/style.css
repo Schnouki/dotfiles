@@ -24,30 +24,57 @@ button:hover {
     outline-style: none;
 }
 
+/* Lock - Blue */
 #lock {
-    background-image: url("/usr/share/wleave/icons/lock.svg");
+    background-color: #366060;
+}
+#lock:focus, #lock:active {
+    background-color: #4C7073;
+}
+#lock:hover {
+    background-color: #5C888B;
 }
 
-#logout {
-    background-image: url("/usr/share/wleave/icons/logout.svg");
-}
-
+/* Suspend - Yellow/Gold */
 #suspend {
-    background-image: url("/usr/share/wleave/icons/suspend.svg");
+    background-color: #4a4a32;
+}
+#suspend:focus, #suspend:active {
+    background-color: #5a5a42;
+}
+#suspend:hover {
+    background-color: #6a6a52;
 }
 
+/* Hibernate - Green */
 #hibernate {
-    background-image: url("/usr/share/wleave/icons/hibernate.svg");
+    background-color: #2F4F2F;
+}
+#hibernate:focus, #hibernate:active {
+    background-color: #3F5F3F;
+}
+#hibernate:hover {
+    background-color: #4F6F4F;
 }
 
-#shutdown {
-    background-image: url("/usr/share/wleave/icons/shutdown.svg");
-}
-
+/* Reboot - Magenta (darkened zenburn-magenta #DC8CC3) */
 #reboot {
-    background-image: url("/usr/share/wleave/icons/reboot.svg");
+    background-color: #4a3346;
+}
+#reboot:focus, #reboot:active {
+    background-color: #5a4356;
+}
+#reboot:hover {
+    background-color: #6a5366;
 }
 
-#lock-off {
-    background-image: url("lock-off.svg");
+/* Shutdown - Red */
+#shutdown {
+    background-color: #6C3333;
+}
+#shutdown:focus, #shutdown:active {
+    background-color: #7C4343;
+}
+#shutdown:hover {
+    background-color: #8C5353;
 }
