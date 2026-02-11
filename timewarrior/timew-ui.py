@@ -166,6 +166,11 @@ class TimewApp(Gtk.Application):
         self.list_box.set_selection_mode(Gtk.SelectionMode.MULTIPLE)
         scrolled.set_child(self.list_box)
 
+        click_controller = Gtk.GestureClick()
+        click_controller.set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
+        click_controller.connect("released", self.on_list_box_clicked)
+        self.list_box.add_controller(click_controller)
+
         for tag in self.all_tags:
             row = self.create_tag_row(tag)
             self.list_box.append(row)
@@ -219,6 +224,16 @@ class TimewApp(Gtk.Application):
 
     def on_select_tags_btn(self, btn, tags):
         self.select_tags(tags)
+
+    def on_list_box_clicked(self, gesture, n_press, x, y):
+        row = self.list_box.get_row_at_y(y)
+        if row is None or row == self.new_tag_row:
+            return
+        if row.is_selected():
+            self.list_box.unselect_row(row)
+        else:
+            self.list_box.select_row(row)
+        gesture.set_state(Gtk.EventSequenceState.CLAIMED)
 
     def get_selected_tags(self) -> list[str]:
         tags = []
