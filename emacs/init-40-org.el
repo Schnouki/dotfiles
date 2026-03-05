@@ -5,41 +5,21 @@
 (use-package org
   :ensure t
   :pin gnu
-  :mode ("\\.org\\'" . org-mode)
   :bind (:map org-mode-map
               ("C-c C-x i" . org-id-get-create)
               ("C-c y" . schnouki/org-yank-link))
+  :hook (org-mode . visual-line-mode)
   :custom
-  (org-adapt-indentation nil)
-  (org-checkbox-hierarchical-statistics nil)
-  (org-cycle-separator-lines 3)
-  (org-directory "~/Dropbox/Notes/")
-  (diary-file "~/Dropbox/Notes/diary")
+  (calendar-date-style 'european)
+  (calendar-week-start-day 1)
+  (diary-file "~/notes/Daily")
+  (org-agenda-include-diary t)
+  (org-directory "~/notes")
   (org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id)
   (org-startup-with-inline-images t)
   (org-support-shift-select t)
-  (calendar-date-style 'european)
-  (calendar-week-start-day 1)
-
-  :init
-  (defun schnouki/org-mode-hook ()
-    (electric-indent-local-mode -1))
-  ;;(add-hook 'org-mode-hook #'schnouki/org-mode-hook)
-  ;;(remove-hook 'org-mode-hook #'schnouki/org-mode-hook)
 
   :config
-  ;; Babel
-  (add-to-list 'org-babel-load-languages '(ditaa . t))
-  (setq org-ditaa-jar-path "/usr/share/java/ditaa/ditaa-0.11.jar")
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((ditaa . t)
-     (dot . t)
-     (emacs-lisp . t)
-     (gnuplot . t)
-     (python . t)))
-  ;;(sh . t)))
-
   (defun schnouki/org-yank-link (&optional description)
     "Yank a link."
     (interactive "P")
@@ -50,23 +30,45 @@
                   (t "ref"))))
       (org-insert-link nil location desc))))
 
-(use-package ox-md
-  :after org)
-(use-package ox-gfm
-  :ensure t
-  :after org)
-
-(use-package org-contrib
-  :ensure t
-  :after org)
-
 (use-package company-org-block
   :ensure t
-  :after (org company)
-  :custom
-  (company-org-block-edit-style 'auto)
-  :hook (org-mode . (lambda ()
-                      (add-to-list (make-local-variable 'company-backends)
-                                   'company-org-block))))
+  :hook ((org-mode . (lambda ()
+                       (add-to-list (make-local-variable 'company-backends)
+                                    'company-org-block)
+                       (company-mode +1)))))
 
+(use-package org-roam
+  :ensure t
+  :after org
+  :bind (:map schnouki-prefix-map
+              ("r RET" . org-roam-buffer-toggle)
+              ("r i" . org-roam-node-insert)
+              ("r r a" . org-roam-ref-add)
+              ("r r d" . org-roam-ref-remove)
+              ("r r f" . org-roam-ref-find))
+  :custom
+  (org-roam-directory "~/notes")
+  :config
+  (org-roam-db-autosync-mode 1))
+
+;; Consult & Embark integrations
+(use-package consult-org-roam
+  :ensure t
+  :after consult
+  :demand t
+  :bind (:map schnouki-prefix-map
+              ("r B" . consult-org-roam-backlinks-recursive)
+              ("r b" . consult-org-roam-backlinks)
+              ("r f" . consult-org-roam-file-find)
+              ("r l" . consult-org-roam-forward-links)
+              ("r s" . consult-org-roam-search))
+  :custom
+  (consult-org-roam-grep-func #'consult-ripgrep)
+  :config
+  (consult-org-roam-mode 1))
+
+(use-package embark-org-roam
+  :ensure t
+  :after (embark org-roam)
+  :demand t)
 ;;; init-40-org.el ends here
