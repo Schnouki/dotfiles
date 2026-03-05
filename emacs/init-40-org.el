@@ -51,6 +51,22 @@
   :config
   (org-roam-db-autosync-mode 1))
 
+(use-package journal-notes
+  :load-path "~/.config/emacs"
+  :after org
+  :bind (:map schnouki-prefix-map
+              ("r j RET" . journal-notes-goto-today)
+              ("r j d" . journal-notes-goto-date)
+              ("r j t" . journal-notes-goto-tomorrow)
+              ("r j y" . journal-notes-goto-yesterday)
+              ("r j w" . journal-notes-goto-this-week)
+              ("r j i" . journal-notes-insert-daily-link))
+  :custom
+  (journal-notes-daily-directory "Daily")
+  (journal-notes-weekly-directory "Doist/Snippets")
+  (journal-notes-daily-template "~/notes/Modèles/Daily.org")
+  (journal-notes-weekly-template "~/notes/Modèles/Doist snippets.org"))
+
 ;; Consult & Embark integrations
 (use-package consult-org-roam
   :ensure t
