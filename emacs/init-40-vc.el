@@ -58,6 +58,14 @@
   :config
   (magit-todos-mode 1))
 
+(use-package magit-pre-commit
+  :ensure t
+  :after magit)
+
+(use-package magit-gh
+  :ensure t
+  :after magit)
+
 (use-package git-link
   :ensure t
   :bind (:map schnouki-magit-prefix-map
