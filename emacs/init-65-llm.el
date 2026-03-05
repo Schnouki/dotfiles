@@ -6,8 +6,10 @@
 (use-package copilot
   :ensure t
   :delight
-  :hook (prog-mode . copilot-mode)
-  :bind (:map copilot-completion-map
+  :hook (post-command . copilot-clear-overlay)
+  :bind (:map schnouki-prefix-map
+              ("c" . copilot-complete)
+              :map copilot-completion-map
               ("C-<tab>" . copilot-accept-completion)
               ("C-TAB" . copilot-accept-completion)
               ("C-<right>" . copilot-accept-completion-by-word)
