@@ -668,9 +668,11 @@ If third argument START is non-nil, convert words after that index in STRING."
 (use-package casual
   :ensure t
   :bind (:map schnouki-prefix-map
-              ("o" . schnouki/casual-dispatch)
+              ("!" . schnouki/casual-dispatch)
+              ("/" . schnouki/casual-dispatch)
               :map isearch-mode-map
-              ("C-o" . casual-isearch-tmenu))
+              ("C-!" . casual-isearch-tmenu)
+              ("C-/" . casual-isearch-tmenu))
   :custom
   (casual-lib-use-unicode nil)
   (transient-align-variable-pitch t)
