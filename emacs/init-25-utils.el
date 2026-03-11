@@ -445,7 +445,10 @@ A buffer is considered killable if it is not modified and either visits a file, 
   :custom
   (sudoku-download t)
   (sudoku-level 'medium)
-  (sudoku-style 'unicode))
+  (sudoku-style 'unicode)
+  :custom-face
+  (sudoku-value-face ((t (:inherit sudoku-orig-value-face))))
+  (sudoku-autovalue-face ((t (:inherit sudoku-orig-value-face)))))
 
 (use-package crossword
   :ensure t
