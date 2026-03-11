@@ -189,7 +189,7 @@
 (defun schnouki/org-import-commonmark-to-org ()
   "Convert CommonMark from the clipboard to Org and insert at point."
   (interactive)
-  (when-let ((text (current-kill 0 t)))
+  (when-let* ((text (current-kill 0 t)))
     (let ((org-text
            (with-temp-buffer
              (insert text)

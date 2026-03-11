@@ -183,7 +183,7 @@ _s_ymbol"
       ;; the `before-string' and `after-string' properties of an overlay.
       (cl-flet ((ov-set-invisible (ov inv)
                   (dolist (prop '(before-string after-string))
-                    (when-let ((s (overlay-get ov prop)))
+                    (when-let* ((s (overlay-get ov prop)))
                       (overlay-put ov prop
                                    (propertize s 'invisible inv))))))
         ;; Turn all overlays visible again

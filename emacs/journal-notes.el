@@ -143,16 +143,16 @@ If FILE is not specified, use the current buffer's file-path."
 (defun journal-notes-insert-daily-link (&optional arg)
   "Insert a link to a daily note."
   (interactive "P")
-  (when-let ((node
-              (if arg
-                  (org-roam-node-from-title-or-alias
-                   (format-time-string journal-notes-daily-title-format
-                                       (org-read-date nil t)))
-                (org-roam-node-read (format-time-string journal-notes-daily-title-format)
-                                    (lambda (node)
-                                      (journal-notes--daily-note-p
-                                       (org-roam-node-file node)))
-                                    nil t "Date: "))))
+  (when-let* ((node
+               (if arg
+                   (org-roam-node-from-title-or-alias
+                    (format-time-string journal-notes-daily-title-format
+                                        (org-read-date nil t)))
+                 (org-roam-node-read (format-time-string journal-notes-daily-title-format)
+                                     (lambda (node)
+                                       (journal-notes--daily-note-p
+                                        (org-roam-node-file node)))
+                                     nil t "Date: "))))
     (let ((id (org-roam-node-id node))
           (description (org-roam-node-title node)))
       (insert (org-link-make-string
