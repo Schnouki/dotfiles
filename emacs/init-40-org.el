@@ -93,11 +93,13 @@
   :load-path "~/.config/emacs"
   :after org
   :bind (:map schnouki-prefix-map
-              ("r j RET" . journal-notes-goto-today)
+              ("r j j" . journal-notes-goto-today)
               ("r j d" . journal-notes-goto-date)
               ("r j t" . journal-notes-goto-tomorrow)
               ("r j y" . journal-notes-goto-yesterday)
               ("r j w" . journal-notes-goto-this-week)
+              ("r j RET" . journal-notes-goto-date)
+              ("r j W" . journal-notes-goto-week)
               ("r j i" . journal-notes-insert-daily-link))
   :custom
   (journal-notes-daily-directory "Daily")

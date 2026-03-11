@@ -85,6 +85,12 @@
 (defun journal-notes--goto-weekly (delta)
   (journal-notes--goto-date 'weekly (time-add (* 86400 7 delta) (current-time))))
 
+(defun journal-notes-goto-date ()
+  "Go to a daily note for a specific date."
+  (interactive)
+  (let ((date (org-read-date nil t)))
+    (journal-notes--goto-date 'daily date)))
+
 (defun journal-notes-goto-today ()
   "Go to today's daily note."
   (interactive)
@@ -99,6 +105,12 @@
   "Go to yesterday's daily note."
   (interactive)
   (journal-notes--goto-daily -1))
+
+(defun journal-notes-goto-week ()
+  "Go to a weekly note for a specific date."
+  (interactive)
+  (let ((date (org-read-date nil t)))
+    (journal-notes--goto-date 'weekly date)))
 
 (defun journal-notes-goto-this-week ()
   "Go to this week's weekly note."
@@ -128,17 +140,27 @@ If FILE is not specified, use the current buffer's file-path."
        (org-roam-file-p path)
        (org-roam-descendant-of-p path daily-directory)))))
 
-(defun journal-notes-insert-daily-link ()
-  "Insert a link to a daily node."
-  (interactive)
-  (when-let ((node (org-roam-node-read (format-time-string journal-notes-daily-title-format)
-                                       (lambda (node)
-                                         (journal-notes--daily-note-p
-                                          (org-roam-node-file node)))
-                                       nil t "Date: ")))
-    (insert (org-link-make-string
-             (concat "id:" (org-roam-node-id node))
-             (org-roam-node-title node)))))
+(defun journal-notes-insert-daily-link (&optional arg)
+  "Insert a link to a daily note."
+  (interactive "P")
+  (when-let ((node
+              (if arg
+                  (org-roam-node-from-title-or-alias
+                   (format-time-string journal-notes-daily-title-format
+                                       (org-read-date nil t)))
+                (org-roam-node-read (format-time-string journal-notes-daily-title-format)
+                                    (lambda (node)
+                                      (journal-notes--daily-note-p
+                                       (org-roam-node-file node)))
+                                    nil t "Date: "))))
+    (let ((id (org-roam-node-id node))
+          (description (org-roam-node-title node)))
+      (insert (org-link-make-string
+               (concat "id:" id)
+               description))
+      (run-hook-with-args 'org-roam-post-node-insert-hook
+                          id
+                          description))))
 
 (provide 'journal-notes)
 
