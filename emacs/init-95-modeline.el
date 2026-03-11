@@ -5,12 +5,12 @@
 ;; Smart mode line
 (use-package smart-mode-line
   :ensure t
+  :demand t
   :custom
   (mode-line-compact 'long)
   (sml/theme 'respectful)
   (sml/show-client t)
-  (rm-blacklist '(" ,"           ; subword
-                  " Abbrev"))
+  (rm-blacklist '(" Abbrev"))
   (sml/replacer-regexp-list
    '(("^/ssh:.*:"    ":SSH:")
      ("^/sudo:.*:"   ":SU:")
@@ -38,5 +38,8 @@
                   (cdr cell))))
 
   (sml/setup))
+
+;; Manually disable the lighter for some modes
+(delight 'subword-mode nil 'subword)
 
 ;;; init-95-modeline.el ends here
