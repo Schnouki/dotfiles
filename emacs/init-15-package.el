@@ -12,6 +12,10 @@
 (setq package-enable-at-startup nil)
 (package-initialize nil)
 
+;; Review all packages before install/update
+(setq package-review-policy t
+      package-review-diff-command '("git" "diff" "--no-index" "--color=never" "--diff-filter=d"))
+
 ;; Install use-packages, which will install everything else as needed
 (unless (package-installed-p 'use-package)
   (message "Installing use-package…")
