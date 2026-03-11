@@ -120,4 +120,12 @@
      (?x "to docx and open." org-pandoc-export-to-docx-and-open)
      (?X "to docx." org-pandoc-export-to-docx))))
 
+;; Import, too!
+(use-package org-pandoc-import
+  :load-path "~/.config/emacs/org-pandoc-import"
+  :after org
+  :bind (:map schnouki-prefix-map
+              ("o i p" . org-pandoc-import-as-org)
+              ("o i P" . org-pandoc-import-to-org)))
+
 ;;; init-40-org.el ends here

@@ -10,3 +10,6 @@
 [submodule "emacs/eglot-ltex"]
 	path = emacs/eglot-ltex
 	url = https://github.com/emacs-languagetool/eglot-ltex
+[submodule "emacs/org-pandoc-import"]
+	path = emacs/org-pandoc-import
+	url = https://github.com/tecosaur/org-pandoc-import
