@@ -57,6 +57,8 @@
               ("r r d" . org-roam-ref-remove)
               ("r r f" . org-roam-ref-find))
   :custom
+  (auto-save-visited-interval 15)
+  (auto-save-visited-predicate #'org-roam-buffer-p)
   (org-roam-directory "~/notes")
   (org-roam-capture-templates '(("g" "generic" plain "%?"
                                  :if-new (file+head "${title}.org" "#+title: ${title}\n")
@@ -87,7 +89,10 @@
                                  :unnarrowed t)
                                 ))
   :config
-  (org-roam-db-autosync-mode 1))
+  (org-roam-db-autosync-mode 1)
+
+  ;; Auto-save notes
+  (auto-save-visited-mode 1))
 
 (use-package journal-notes
   :load-path "~/.config/emacs"
