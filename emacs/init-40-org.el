@@ -120,6 +120,18 @@
      (?x "to docx and open." org-pandoc-export-to-docx-and-open)
      (?X "to docx." org-pandoc-export-to-docx))))
 
+(defun schnouki/org-to-clipboard ()
+  "Export region to HTML, and copy it to the clipboard."
+  (interactive)
+  (save-window-excursion
+    (let* ((org-text (if (use-region-p)
+                         (buffer-substring-no-properties (region-beginning) (region-end))
+                       (buffer-substring-no-properties (point-min) (point-max))))
+           (html (org-export-string-as org-text 'html t '(:with-toc nil))))
+      (call-process-region html nil "wl-copy" nil 0 nil
+                           "-n" "-t" "text/html"))))
+(bind-key "o e c" #'schnouki/org-to-clipboard schnouki-prefix-map)
+
 ;; Import, too!
 (use-package org-pandoc-import
   :load-path "~/.config/emacs/org-pandoc-import"
@@ -127,5 +139,26 @@
   :bind (:map schnouki-prefix-map
               ("o i p" . org-pandoc-import-as-org)
               ("o i P" . org-pandoc-import-to-org)))
+
+(defun schnouki/org-import-commonmark-to-org ()
+  "Convert CommonMark from the clipboard to Org and insert at point."
+  (interactive)
+  (when-let ((text (current-kill 0 t)))
+    (let ((org-text
+           (with-temp-buffer
+             (insert text)
+             (let ((exit-code
+                    (call-process-region (point-min) (point-max)
+                                         org-pandoc-import-executable
+                                         t t nil
+                                         "--wrap=none"
+                                         "-f" "commonmark"
+                                         "-t" "org")))
+               (unless (zerop exit-code)
+                 (user-error "Pandoc failed (exit code %d): %s"
+                             exit-code (buffer-string)))
+               (buffer-string)))))
+      (insert org-text))))
+(bind-key "o i c" #'schnouki/org-import-commonmark-to-org schnouki-prefix-map)
 
 ;;; init-40-org.el ends here
