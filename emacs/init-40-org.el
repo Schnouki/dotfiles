@@ -7,7 +7,11 @@
   :pin gnu
   :bind (:map org-mode-map
               ("C-c C-x i" . org-id-get-create)
-              ("C-c y" . schnouki/org-yank-link))
+              ("C-c y" . schnouki/org-yank-link)
+              :map schnouki-prefix-map
+              ("o a" . org-agenda)
+              ("o c" . org-capture)
+              ("o l" . org-store-link))
   :hook (org-mode . visual-line-mode)
   :custom
   (calendar-date-style 'european)
@@ -16,6 +20,7 @@
   (org-agenda-include-diary t)
   (org-directory "~/notes")
   (org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id)
+  (org-return-follows-link t)
   (org-startup-with-inline-images t)
   (org-support-shift-select t)
 
@@ -28,7 +33,12 @@
                   (current-prefix-arg (completing-read (format "Description for %s: " location) nil))
                   (description description)
                   (t "ref"))))
-      (org-insert-link nil location desc))))
+      (org-insert-link nil location desc)))
+
+  (with-eval-after-load 'zenburn-theme
+    (zenburn-with-color-variables
+      (setq org-todo-keyword-faces `(("WIP" . ,zenburn-orange)
+                                     ("READY" . ,zenburn-blue))))))
 
 (use-package company-org-block
   :ensure t
@@ -48,6 +58,34 @@
               ("r r f" . org-roam-ref-find))
   :custom
   (org-roam-directory "~/notes")
+  (org-roam-capture-templates '(("g" "generic" plain "%?"
+                                 :if-new (file+head "${title}.org" "#+title: ${title}\n")
+                                 :unnarrowed t)
+                                ("d" "doist" plain "%?"
+                                 :if-new (file+head "Doist/${title}.org" "#+title: ${title}\n")
+                                 :unnarrowed t)
+                                ("p" "person" plain (file "~/notes/Modèles/Personne.org")
+                                 :if-new (file+head "People/${title}.org" "#+title: ${title}\n")
+                                 :unnarrowed t)
+                                ("a" "article" plain (file "~/notes/Modèles/Article.org")
+                                 :if-new (file+head "Articles/${title}.org" ":PROPERTIES:\n:ROAM_REFS: ${article}\b:END:\n#+title: ${title}\n")
+                                 :unnarrowed t)
+                                ("v" "video" plain (file "~/notes/Modèles/Vidéo.org")
+                                 :if-new (file+head "Vidéos/${title}.org" ":PROPERTIES:\n:ROAM_REFS: ${video}\b:END:\n#+title: ${title}\n")
+                                 :unnarrowed t)
+                                ("l" "livre" plain (file "~/notes/Modèles/Livre.org")
+                                 :if-new (file+head "Livres/${title}.org" "#+title: ${title}\n")
+                                 :unnarrowed t)
+                                ("t" "tech" plain (file "~/notes/Modèles/Tech.org")
+                                 :if-new (file+head "Tech/${title}.org" "#+title: ${title}\n")
+                                 :unnarrowed t)
+                                ("c" "cours" plain (file "~/notes/Modèles/Cours.org")
+                                 :if-new (file+head "Cours/${title}.org" ":PROPERTIES:\n:ROAM_REFS: ${video}\b:END:\n#+title: ${title}\n")
+                                 :unnarrowed t)
+                                ("r" "recette" plain (file "~/notes/Modèles/Recette.org")
+                                 :if-new (file+head "${title}.org" ":PROPERTIES:\n:ROAM_REFS: ${source}\b:END:\n#+title: ${title}\n")
+                                 :unnarrowed t)
+                                ))
   :config
   (org-roam-db-autosync-mode 1))
 
@@ -72,6 +110,7 @@
   :ensure t
   :after consult
   :demand t
+  :delight
   :bind (:map schnouki-prefix-map
               ("r B" . consult-org-roam-backlinks-recursive)
               ("r b" . consult-org-roam-backlinks)
