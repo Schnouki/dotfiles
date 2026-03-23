@@ -21,15 +21,6 @@
   :mode "\\.js\\'"
   :interpreter "node")
 
-(use-package js-doc
-  :ensure t
-  :bind (:map js2-mode-map
-              ;;("C-c C-@" . js-doc-describe-tag)
-              ("C-c i"   . js-doc-insert-function-doc)
-              ("@"       . js-doc-insert-tag))
-  :custom
-  (js2-ignored-warnings '("msg.missing.semi")))
-
 (use-package coffee-mode
   :ensure t
   :mode "\\.coffee\'"
@@ -65,10 +56,6 @@
          ("\\.markdown\\'" . markdown-mode))
   :init
   (setq markdown-command "~/.config/emacs/markdown"))
-
-(use-package adoc-mode
-  :ensure t
-  :mode "\\.adoc?\\'")
 
 (use-package sass-mode
   :ensure t
@@ -110,12 +97,6 @@
   :mode (("Caddyfile\\'" . caddyfile-mode)
          ("caddy\\.conf\\'" . caddyfile-mode)))
 (use-package loop :ensure t)
-
-(use-package d-mode
-  :ensure t)
-(use-package dfmt
-  :ensure t
-  :hook (d-mode . dfmt-setup-keys))
 
 (use-package rust-mode
   :ensure t
@@ -245,7 +226,5 @@ _p_rev       _u_pper (mine)       _=_: upper/lower       _r_esolve
         (scopeline-mode +1))))
   :hook (scopeline-mode . schnouki/enable-hide-scopeline-on-active-line)
   :hook (smerge-mode . schnouki/disable-scopeline-in-smerge-mode))
-
-
 
 ;;; init-30-modes.el ends here

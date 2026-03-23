@@ -445,21 +445,13 @@ A buffer is considered killable if it is not modified and either visits a file, 
   :custom
   (sudoku-download t)
   (sudoku-level 'medium)
-  (sudoku-style 'unicode)
-  :custom-face
-  (sudoku-value-face ((t (:inherit sudoku-orig-value-face))))
-  (sudoku-autovalue-face ((t (:inherit sudoku-orig-value-face)))))
+  (sudoku-style 'unicode))
 
 (use-package crossword
   :ensure t
   :commands crossword
   :custom
   (crossword-save-path "~/.cache/crosswords/"))
-
-;; ix.io integration
-(use-package ix
-  :ensure t
-  :commands (ix ix-browse ix-delete))
 
 ;; http://www.emacswiki.org/emacs/CamelCase
 (defun un-camelcase-string (s &optional sep start)
@@ -497,15 +489,6 @@ If third argument START is non-nil, convert words after that index in STRING."
 (use-package shrink-whitespace
   :ensure t
   :bind ("M-SPC" . shrink-whitespace))
-
-;; Display Emojis
-(use-package emojify
-  :ensure t
-  :defer t
-  :hook (after-init . global-emojify-mode)
-  :custom
-  (emojify-emoji-styles '(unicode))
-  (emojify-point-entered-behaviour 'uncover))
 
 ;; Colorize strings that represent colors
 (use-package rainbow-mode

@@ -74,10 +74,10 @@
 ;;;; smerge-mode
      `(smerge-refined-changed ((t :background ,zenburn-bg+2)))
 ;;;; sudoku
-     `(sudoku-value-face          ((t :foreground ,zenburn-blue)))
-     `(sudoku-value-pencil-1-face ((t :foreground ,zenburn-fg-1)))
-     `(sudoku-value-pencil-2-face ((t :foreground ,zenburn-fg+1)))
-     `(sudoku-autovalue-face      ((t :foreground ,zenburn-magenta)))
+     `(sudoku-value-face          ((t :foreground ,zenburn-blue :height 2.0)))
+     `(sudoku-value-pencil-1-face ((t :foreground ,zenburn-fg-1 :height 2.0)))
+     `(sudoku-value-pencil-2-face ((t :foreground ,zenburn-fg+1 :height 2.0)))
+     `(sudoku-autovalue-face      ((t :foreground ,zenburn-magenta :height 2.0)))
 ;;;; vertico
      `(vertico-current ((t :underline nil)))
 ;;;; volatile-highlights

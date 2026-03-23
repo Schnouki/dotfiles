@@ -10,19 +10,11 @@
   :ensure t
   :defer t
   :commands (guess-language guess-language-buffer)
-  ;;:delight
+  :delight
   :hook text-mode
   :custom
   (guess-language-languages '(en fr))
   (guess-language-min-paragraph-length 40))
-
-;; From https://stackoverflow.com/a/2478549/113325
-(defun unfill-paragraph ()
-  "Unfill paragraph at or after point."
-  (interactive)
-  (let ((fill-column (point-max)))
-    (fill-paragraph nil)))
-(bind-key "M-Q" 'unfill-paragraph)
 
 (defun unfill-region ()
   "Unfill each of the paragraphs in the region."
@@ -33,7 +25,6 @@
 ;; Visual line + visual fill column modes
 (use-package visual-fill-column
   :ensure t)
-
 
 (defun schnouki/set-visual-fill-column-width (width)
   "Set the Visual Fill Column to `WIDTH' in the current buffer.
@@ -56,7 +47,6 @@ as the new width."
 (define-minor-mode schnouki/visual-text-mode
   "Display text using both Visual Line and Visual Fill Column modes."
   :init-value nil
-  :lighter " VT"
   :keymap nil
   (if schnouki/visual-text-mode
       (schnouki/visual-text-mode--enable)
@@ -102,5 +92,7 @@ as the new width."
            ("v t" . schnouki/toggle-visual-text-mode)
            ("v c" . schnouki/toggle-visual-fill-column-center-text)
            ("v w" . schnouki/set-visual-fill-column-width))
+
+(delight 'visual-line-mode nil 'simple)
 
 ;;; init-20-text.el ends here

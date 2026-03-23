@@ -26,7 +26,7 @@
   (magit-process-finish-apply-ansi-colors 'filter) ;; risky: if things break, change to t
   :config
 
-  (setq schnouki/magit-process-buffer-tail t)
+  (defvar schnouki/magit-process-buffer-tail t)
   (defun schnouki/toggle-magit-process-buffer-tail ()
     (interactive)
     (setq schnouki/magit-process-buffer-tail (not schnouki/magit-process-buffer-tail)))
@@ -35,7 +35,7 @@
     (let ((window (get-buffer-window (process-buffer proc))))
       (when window
         (with-selected-window window
-          (end-of-buffer)
+          (goto-char (point-max))
           (recenter -1 t)))))
 
   (advice-add #'magit-process-filter :after #'schnouki/magit-process--maybe-tail-buffer)

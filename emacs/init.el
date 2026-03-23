@@ -50,6 +50,5 @@
   (schnouki/sd-notify "STATUS=Ready\nREADY=1"))
 
 (schnouki/init-emacs)
-;(package-initialize)
 
 ;;; init.el ends here
