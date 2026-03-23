@@ -1,4 +1,4 @@
-;;; 65-llm --- Interaction with Large Language Models
+;;; 65-llm --- Interaction with Large Language Models  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 

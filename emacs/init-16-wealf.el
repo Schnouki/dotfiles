@@ -1,4 +1,4 @@
-;;; 16-wealf --- with-eval-after-load-feature
+;;; 16-wealf --- with-eval-after-load-feature  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;
 ;; An alternative to with-eval-after-load with fine compilation

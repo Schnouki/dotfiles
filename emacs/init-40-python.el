@@ -1,4 +1,4 @@
-;;; 40-python --- Python-specific stuff
+;;; 40-python --- Python-specific stuff  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 

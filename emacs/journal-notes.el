@@ -1,4 +1,4 @@
-;;; journal-notes --- Custom journaling helpers for org-roam
+;;; journal-notes --- Custom journaling helpers for org-roam  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;;
 ;;; This module provides a custom journaling setup for org-roam, with separate

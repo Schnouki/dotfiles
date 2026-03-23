@@ -1,4 +1,4 @@
-;;; 90-zenburn --- Zenburn color theme
+;;; 90-zenburn --- Zenburn color theme  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; For nice gradients: https://vis4.net/blog/posts/avoid-equidistant-hsv-colors/
 ;;; Code:

@@ -1,4 +1,4 @@
-;;; 40-blog --- blogging configuration
+;;; 40-blog --- blogging configuration  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 

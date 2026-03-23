@@ -1,4 +1,4 @@
-;;; 50-productivity --- Productivity stuff
+;;; 50-productivity --- Productivity stuff  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 

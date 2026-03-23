@@ -1,4 +1,4 @@
-;;; 35-window --- Deal with Emacs windows
+;;; 35-window --- Deal with Emacs windows  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 

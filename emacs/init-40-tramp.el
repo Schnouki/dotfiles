@@ -1,4 +1,4 @@
-;;; 40-tramp --- TRAMP settings
+;;; 40-tramp --- TRAMP settings  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 

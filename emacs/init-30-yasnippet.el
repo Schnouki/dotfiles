@@ -1,4 +1,4 @@
-;;; 30-yasnippet --- yasnippet
+;;; 30-yasnippet --- yasnippet  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 

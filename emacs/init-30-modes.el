@@ -1,4 +1,4 @@
-;;; 30-modes --- Major modes
+;;; 30-modes --- Major modes  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 

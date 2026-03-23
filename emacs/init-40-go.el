@@ -1,4 +1,4 @@
-;;; 40-go --- Go-specific stuff
+;;; 40-go --- Go-specific stuff  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 

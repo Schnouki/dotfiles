@@ -1,4 +1,4 @@
-;;; 20-text --- text writing
+;;; 20-text --- text writing  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 

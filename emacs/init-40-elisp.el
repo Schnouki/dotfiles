@@ -1,4 +1,4 @@
-;;; 40-elisp --- Elisp-specific stuff
+;;; 40-elisp --- Elisp-specific stuff  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 

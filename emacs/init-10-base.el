@@ -1,4 +1,4 @@
-;;; 10-base --- Basic settings
+;;; 10-base --- Basic settings  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 

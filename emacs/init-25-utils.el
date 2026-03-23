@@ -1,4 +1,4 @@
-;;; 25-utils --- Small useful functions and key bindings
+;;; 25-utils --- Small useful functions and key bindings  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 

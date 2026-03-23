@@ -1,4 +1,4 @@
-;;; 50-mail --- mail client
+;;; 50-mail --- mail client  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 

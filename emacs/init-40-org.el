@@ -1,4 +1,4 @@
-;;; 40-org --- org-mode
+;;; 40-org --- org-mode  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 

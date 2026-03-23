@@ -1,4 +1,4 @@
-;;; 60-multiple-cursors --- multiple cursors
+;;; 60-multiple-cursors --- multiple cursors  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 

@@ -1,4 +1,4 @@
-;;; 40-vc --- version control
+;;; 40-vc --- version control  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 

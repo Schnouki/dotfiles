@@ -1,4 +1,4 @@
-;;; 22-completion --- Completion
+;;; 22-completion --- Completion  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 

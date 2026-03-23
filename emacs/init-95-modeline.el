@@ -1,4 +1,4 @@
-;;; 95-modeline --- modeline configuration
+;;; 95-modeline --- modeline configuration  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 

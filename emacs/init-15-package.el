@@ -1,4 +1,4 @@
-;;; 15-package --- Emacs official package manager
+;;; 15-package --- Emacs official package manager  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 

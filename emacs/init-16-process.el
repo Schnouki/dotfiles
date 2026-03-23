@@ -1,4 +1,4 @@
-;;; 16-process --- Best process handling!
+;;; 16-process --- Best process handling!  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 

@@ -1,4 +1,4 @@
-;;; 18-bind --- Everything needed to bind keys
+;;; 18-bind --- Everything needed to bind keys  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 

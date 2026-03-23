@@ -1,4 +1,4 @@
-;;; init.el -- Emacs configuration
+;;; init.el -- Emacs configuration  -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;; This file is loaded from ~/.emacs. It must load all init-XX-blabla.el files

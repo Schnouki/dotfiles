@@ -1,4 +1,4 @@
-;;; 50-projectile --- Projectile config
+;;; 50-projectile --- Projectile config  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 

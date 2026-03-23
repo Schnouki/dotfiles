@@ -1,4 +1,4 @@
-;;; 91-fonts --- Fonts!
+;;; 91-fonts --- Fonts!  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 
