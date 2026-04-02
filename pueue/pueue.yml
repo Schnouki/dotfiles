@@ -12,7 +12,7 @@ client:
 daemon:
   pause_group_on_failure: false
   pause_all_on_failure: false
-  callback: '/home/schnouki/.config/pueue/notify.sh "{{id}}" "{{command}}" "{{path}}" "{{result}}" "{{exit_code}}" "{{group}}" "{{output}}" "{{start}}" "{{end}}"'
+  callback: '/home/schnouki/.config/pueue/notify.py "{{id}}" "{{command}}" "{{path}}" "{{result}}" "{{exit_code}}" "{{group}}" "{{output}}" "{{start}}" "{{end}}"'
   callback_log_lines: 10
 shared:
   pueue_directory: null
