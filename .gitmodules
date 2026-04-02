@@ -7,9 +7,9 @@
 [submodule "emacs/eglot-booster"]
 	path = emacs/eglot-booster
 	url = https://github.com/jdtsmith/eglot-booster.git
-[submodule "emacs/eglot-ltex"]
-	path = emacs/eglot-ltex
-	url = https://github.com/emacs-languagetool/eglot-ltex
 [submodule "emacs/org-pandoc-import"]
 	path = emacs/org-pandoc-import
 	url = https://github.com/tecosaur/org-pandoc-import
+[submodule "emacs/eglot-ltex-plus"]
+	path = emacs/eglot-ltex-plus
+	url = https://github.com/emacs-languagetool/eglot-ltex-plus

@@ -217,22 +217,22 @@ _s_ymbol"
 
 
 ;; eglot-ltex -- language server for text using LanguageTool
-(use-package eglot-ltex
-  :load-path "~/.config/emacs/eglot-ltex"
+(use-package eglot-ltex-plus
+  :load-path "~/.config/emacs/eglot-ltex-plus"
   :after eglot
   :custom
-  (eglot-ltex-server-path "/usr/share/ltex-ls")
+  (eglot-ltex-plus-server-path "/usr/bin/ltex-ls-plus")
   :config
   (let ((auth-info (car (auth-source-search :host "api.languagetoolplus.com"))))
     (setq eglot-workspace-configuration
           (plist-put eglot-workspace-configuration
-                     :ltex-ls `(:language "auto"
-                                          :disabledRules ["ELLIPSIS" "EN_QUOTES"]
-                                          :additionalRules (:enablePickyRules t
-                                                                              :motherTongue "fr-FR")
-                                          :languageToolHttpServerUri "https://api.languagetoolplus.com/"
-                                          :languageToolOrg (:username ,(plist-get auth-info :user)
-                                                                      :apiKey ,(auth-info-password auth-info)))))))
+                     :ltex-ls-plus `(:language "auto"
+                                               :disabledRules ["ELLIPSIS" "EN_QUOTES"]
+                                               :additionalRules (:enablePickyRules t
+                                                                                   :motherTongue "fr-FR")
+                                               :languageToolHttpServerUri "https://api.languagetoolplus.com/"
+                                               :languageToolOrg (:username ,(plist-get auth-info :user)
+                                                                           :apiKey ,(auth-info-password auth-info)))))))
 
 
 ;; Company -- complete anything
