@@ -24,7 +24,6 @@ ENCRYPTED_FILES = {
     ".ssh/authorized_keys": "ssh-authorized-keys.gpg",
     ".ssh/config": "ssh-config.gpg",
     ".transifexrc": "transifexrc.gpg",
-    ".config/aider/env": "aider/env.gpg",
     ".config/git/doist.inc": "git/doist.inc.gpg",
     ".config/isyncrc": "isyncrc.gpg",
     ".config/pws.yaml": "pws.yaml.gpg",
@@ -51,7 +50,6 @@ ENCRYPTED_TARBALLS = {
 }
 
 FILE_SYMLINKS = {
-    "aider/config.yml": ".aider.conf.yml",
     "kanshi/config.@@HOSTNAME@@": ".config/kanshi/config",
     "notmuch/default/config": ".notmuch-config",
 }
