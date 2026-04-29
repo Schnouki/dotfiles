@@ -55,6 +55,7 @@ gtk-3.0/bookmarks
 !mpDris2
 !notmuch
 !pipewire
+!pnpm
 !presets
 !pueue
 !radiotray-ng
@@ -69,6 +70,7 @@ gtk-3.0/bookmarks
 !systemd
 !timewarrior
 !tmux
+!uv
 !waybar
 !wireplumber
 !wleave

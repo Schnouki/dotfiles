@@ -1,0 +1,7 @@
+minimumReleaseAge: 10080 # minutes -> 7 days
+minimumReleaseAgeExclude:
+  - @sourcegraph/amp
+
+# Local Variables:
+# mode: yaml
+# End:
