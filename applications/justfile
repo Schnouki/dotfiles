@@ -1,4 +1,4 @@
-default: bruno knossos steam steam-native vivaldi-stable vivaldi-stable-alt steam-games update-cache
+default: bruno claude-desktop knossos steam steam-native vivaldi-stable vivaldi-stable-alt steam-games update-cache
 
 [private]
 prepare FILE TARGET="":
@@ -7,6 +7,10 @@ prepare FILE TARGET="":
 [private]
 add_args FILE +ARGS:
     -sed -i 's/^\(Exec=.*\)/\1 {{ARGS}}/g' "{{FILE}}.desktop"
+
+[private]
+add_env FILE +ARGS:
+    -sed -i 's/^Exec=\(.*\)/Exec=env {{ARGS}} \1/g' "{{FILE}}.desktop"
 
 [private]
 add_runner FILE +RUNNER:
@@ -30,6 +34,9 @@ electron_scaling FILE:
 
 bruno: (prepare "bruno")
     just electron_wayland bruno
+
+claude-desktop: (prepare "claude-desktop")
+    just add_env claude-desktop CLAUDE_USE_WAYLAND=1
 
 knossos: (prepare "knossos")
     -which prime-run &>/dev/null && just add_runner knossos prime-run || rm knossos.desktop
