@@ -6,7 +6,7 @@ set -Ux XDG_CURRENT_DESKTOP sway
 set -Ux GTK2_RC_FILES "$HOME/.config/gtkrc-2.0:$HOME/.config/gtkrc-(hostnamectl hostname):/etc/gtk-2.0/gtkrc"
 
 # Qt
-set -Ux QT_QPA_PLATFORM wayland
+set -Ux QT_QPA_PLATFORM "wayland;xcb"
 set -Ux QT_STYLE_OVERRIDE gtk
 
 # Clutter
