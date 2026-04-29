@@ -10,6 +10,7 @@
               :map projectile-command-map
               ("\\" . schnouki/projectile-magit)
               ("<" . schnouki/projectile-magit)
+              ("K" . schnouki/projectile-kill-other-buffers)
               :map schnouki-prefix-map
               ("b" . projectile-ibuffer))
   :custom
@@ -61,6 +62,13 @@
            :action (lambda (project)
                      (magit-status project)))
         (user-error "There are no known projects"))))
+
+  (defun schnouki/projectile-kill-other-buffers ()
+    "Kill all buffers in the project except the current one."
+    (interactive)
+    (let* ((cur-buf (current-buffer))
+           (projectile-kill-buffers-filter (lambda (buf) (not (eq buf cur-buf)))))
+      (projectile-kill-buffers)))
 
   (projectile-mode 1))
 
