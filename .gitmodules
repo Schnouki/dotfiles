@@ -13,3 +13,6 @@
 [submodule "emacs/eglot-ltex-plus"]
 	path = emacs/eglot-ltex-plus
 	url = https://github.com/emacs-languagetool/eglot-ltex-plus
+[submodule "yt-dlp/plugins/custom"]
+	path = yt-dlp/plugins/custom
+	url = git@git.sr.ht:~schnouki/custom-yt-dlp-plugins
