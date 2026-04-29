@@ -1,5 +1,6 @@
 {
 	"auths": {
+		"code.schnouki.net": {},
 		"docker.pkg.github.com": {},
 		"ghcr.io": {},
 		"https://index.docker.io/v1/": {},
