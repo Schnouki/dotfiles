@@ -24,20 +24,15 @@
   (sml/extra-filler -1)
 
   :config
-  ;; Move which-func indicator to just after the file name
-  ;; https://github.com/Bruce-Connor/smart-mode-line/issues/77#issuecomment-39708760
-  (let ((which-func-entry '(which-function-mode
-                            (which-func-mode
-                             ("" which-func-format " "))))
-        cell)
-    (setq mode-line-format (remove which-func-entry mode-line-format))
-    (setq mode-line-misc-info (remove which-func-entry mode-line-misc-info))
-    (setq cell (last mode-line-format 8))
-    (setcdr cell
-            (cons which-func-entry
-                  (cdr cell))))
+  (sml/setup)
 
-  (sml/setup))
+  ;; Move which-func indicator to just after the file name
+  (when-let* ((which-func-entry (assoc 'which-function-mode mode-line-misc-info)))
+    (setq mode-line-format (remove which-func-entry mode-line-format)
+          mode-line-misc-info (remove which-func-entry mode-line-misc-info))
+    (let ((pos (cl-position 'sml/pos-id-separator mode-line-format)))
+      (push which-func-entry (cdr (nthcdr pos mode-line-format))))
+    (setq-default mode-line-format mode-line-format)))
 
 ;; Manually disable the lighter for some modes
 (delight 'subword-mode nil 'subword)
