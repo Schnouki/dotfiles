@@ -56,7 +56,9 @@
   (with-eval-after-load 'zenburn-theme
     (zenburn-with-color-variables
       (setq org-todo-keyword-faces `(("WIP" . ,zenburn-orange)
-                                     ("READY" . ,zenburn-blue))))))
+                                     ("READY" . ,zenburn-blue)))))
+
+  (delight 'org-capture-mode))
 
 (use-package company-org-block
   :ensure t
