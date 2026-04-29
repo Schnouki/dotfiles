@@ -112,7 +112,16 @@
   (org-roam-db-autosync-mode 1)
 
   ;; Auto-save notes
-  (auto-save-visited-mode 1))
+  (auto-save-visited-mode 1)
+
+  ;; Schedule a git sync after saving a note.
+  ;; Using add-hook instead of :hook to avoid loading org-roam on every file save.
+  (defun schnouki/sync-notes-schedule ()
+    "Schedule a notes sync when saving a file in the notes repo."
+    (when (and buffer-file-name
+               (string-prefix-p (expand-file-name org-roam-directory) buffer-file-name))
+      (start-process "sync-notes" nil (expand-file-name "sync-notes" org-roam-directory) "schedule")))
+  (add-hook 'after-save-hook #'schnouki/sync-notes-schedule))
 
 (use-package journal-notes
   :load-path "~/.config/emacs"
