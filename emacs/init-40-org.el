@@ -125,7 +125,9 @@
               ("r j w" . journal-notes-goto-this-week)
               ("r j RET" . journal-notes-goto-date)
               ("r j W" . journal-notes-goto-week)
-              ("r j i" . journal-notes-insert-daily-link))
+              ("r j i" . journal-notes-insert-daily-link)
+              ("r j n" . journal-notes-goto-next)
+              ("r j p" . journal-notes-goto-previous))
   :custom
   (journal-notes-daily-directory "Daily")
   (journal-notes-weekly-directory "Doist/Snippets")

@@ -39,7 +39,7 @@
   "Title format for daily notes, passed to `format-time-string'."
   :type 'string
   :group 'journal-notes)
-(defcustom journal-notes-weekly-title-format "%Y - week %V"
+(defcustom journal-notes-weekly-title-format "%Y-w%V"
   "Title format for weekly notes, passed to `format-time-string'."
   :type 'string
   :group 'journal-notes)
@@ -54,19 +54,19 @@
                              (format-time-string journal-notes-daily-filename-format date)))
     (weekly (file-name-concat (expand-file-name journal-notes-weekly-directory org-roam-directory)
                               (format-time-string journal-notes-weekly-filename-format date)))
-    (t (error "Invalid type"))))
+    (t (user-error "Invalid type"))))
 
 (defun journal-notes--get-title (type date)
   (cl-case type
     (daily (format-time-string journal-notes-daily-title-format date))
     (weekly (format-time-string journal-notes-weekly-title-format date))
-    (t (error "Invalid type"))))
+    (t (user-error "Invalid type"))))
 
 (defun journal-notes--get-template (type)
   (cl-case type
     (daily (org-file-contents journal-notes-daily-template))
     (weekly (org-file-contents journal-notes-weekly-template))
-    (t (error "Invalid type"))))
+    (t (user-error "Invalid type"))))
 
 (defun journal-notes--goto-date (type date)
   (let* ((filename (journal-notes--get-filename type date))
@@ -134,11 +134,22 @@ If FILE is not specified, use the current buffer's file-path."
                      (or file
                          (buffer-file-name (buffer-base-buffer)))))
               (daily-directory (expand-file-name journal-notes-daily-directory org-roam-directory)))
-    (setq path (expand-file-name path))
     (save-match-data
       (and
        (org-roam-file-p path)
        (org-roam-descendant-of-p path daily-directory)))))
+
+(defun journal-notes--weekly-note-p (&optional file)
+  "Return t if FILE is an Org-roam journal-note weekly note, nil otherwise.
+If FILE is not specified, use the current buffer's file-path."
+  (when-let* ((path (expand-file-name
+                     (or file
+                         (buffer-file-name (buffer-base-buffer)))))
+              (weekly-directory (expand-file-name journal-notes-weekly-directory org-roam-directory)))
+    (save-match-data
+      (and
+       (org-roam-file-p path)
+       (org-roam-descendant-of-p path weekly-directory)))))
 
 (defun journal-notes-insert-daily-link (&optional arg)
   "Insert a link to a daily note."
@@ -161,6 +172,66 @@ If FILE is not specified, use the current buffer's file-path."
       (run-hook-with-args 'org-roam-post-node-insert-hook
                           id
                           description))))
+
+(defun journal-notes--find-next-note (&optional n)
+  "Find the next daily or weekly note.
+
+With numeric argument N, find the note N days/weeks in the future (or in
+the past if N is negative)."
+  (interactive "p")
+  (setq n (or n 1))
+  (when (= n 0)
+    (user-error "Use with non-zero value"))
+  (let* ((note-path (expand-file-name (buffer-file-name (buffer-base-buffer))))
+         (note-type (cond ((journal-notes--daily-note-p) 'daily)
+                          ((journal-notes--weekly-note-p) 'weekly)
+                          (t (user-error "Invalid type"))))
+         (note-p (if (eql note-type 'daily) #'journal-notes--daily-note-p
+                   #'journal-notes--weekly-note-p))
+         (notes-directory (if (eql note-type 'daily)
+                              (expand-file-name journal-notes-daily-directory org-roam-directory)
+                            (expand-file-name journal-notes-weekly-directory org-roam-directory)))
+         (regexp (rx-to-string `(seq (literal ".") (or ,@org-roam-file-extensions) eos)))
+         (all-notes (seq-remove (lambda (file)
+                                  (let ((name (file-name-nondirectory file)))
+                                    (or (auto-save-file-name-p name)
+                                        (backup-file-name-p name)
+                                        (string-match "^\\." name))))
+                                (directory-files-recursively notes-directory regexp)))
+         (position (cl-position note-path all-notes :test #'string=)))
+    (unless position
+      (user-error "Can't find current note file. Have you saved it yet?"))
+    (when (< n 0)
+      (setq all-notes (nreverse all-notes)
+            position (- (length all-notes) position 1)
+            n (- n)))
+    (cl-do ((next-notes (nthcdr (1+ position) all-notes)
+                        (cdr next-notes))
+            (i 0))
+        ((null next-notes))
+      (when (funcall note-p (car next-notes))
+        (cl-incf i)
+        (when (= i n)
+          (cl-return (car next-notes)))))))
+
+(defun journal-notes-goto-next (&optional n)
+  "Go to the next existing note.
+
+With numeric argument, find the note N days/weeks in the future (or in
+the past), and go to that one instead."
+  (interactive "p")
+  (let ((filename (journal-notes--find-next-note n)))
+    (if filename
+        (find-file-existing filename)
+      (user-error "No next note found."))))
+
+(defun journal-notes-goto-previous ()
+  "Go to the previous existing note."
+  (interactive)
+  (let ((filename (journal-notes--find-next-note -1)))
+    (if filename
+        (find-file-existing filename)
+      (user-error "No previous note found."))))
 
 (provide 'journal-notes)
 
