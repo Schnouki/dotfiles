@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+# --no-check-certificates
+exec dnsrun yt-dlp --no-mtime --cookies "$HOME/.config/yt-dlp/cookies.txt" "$@"
