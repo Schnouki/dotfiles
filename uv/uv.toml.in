@@ -1,0 +1,3 @@
+exclude-newer = "7 days"
+
+@@INCLUDE:uv-private.toml@@

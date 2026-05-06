@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import os
+import re
 import socket
 import stat
 import subprocess as subp
@@ -35,6 +36,7 @@ ENCRYPTED_FILES = {
     ".config/notmuch/autotag.py": "notmuch/autotag.py.gpg",
     ".config/notmuch/default/config": "notmuch/default/config.gpg",
     ".config/spotify-player/app.toml.in": "spotify-player/app.toml.in.gpg",
+    ".config/uv/uv-private.toml": "uv/uv-private.toml.gpg",
     ".config/wpaperd/choose-folder": "wpaperd/choose-folder.gpg",
     ".config/Yubico/u2f_keys": "Yubico_u2f_keys.gpg",
 }
@@ -66,6 +68,7 @@ EXECUTABLE_FILES = {
 
 TEMPLATED_FILES = {
     ".config/spotify-player/app.toml",
+    ".config/uv/uv.toml",
 }
 
 HOME = Path.home()
@@ -125,10 +128,18 @@ def render_template(src_fp: Path, dst_fp: Path) -> None:
         "@@HOSTNAME@@": hostname,
         "@@HOSTNAME_TITLE@@": hostname.title(),
     }
+    re_include = re.compile(r"@@INCLUDE:([^@]+)@@")
+
+    def _include(matchobj):
+        incl_fn = matchobj.group(1)
+        incl_fp = src_fp.parent / incl_fn
+        return incl_fp.read_text()
 
     text = src_fp.read_text()
     for needle, value in replacements.items():
         text = text.replace(needle, value)
+    text = re_include.sub(_include, text)
+
     dst_fp.write_text(text)
 
 
