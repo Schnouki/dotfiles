@@ -143,6 +143,13 @@
   (journal-notes-daily-template "~/notes/Modèles/Daily.org")
   (journal-notes-weekly-template "~/notes/Modèles/Doist snippets.org"))
 
+;; Highlight unlinked references
+(use-package org-roam-latte
+  :ensure t
+  :after org-roam
+  :hook ((org-mode . org-roam-latte-mode))
+  :delight)
+
 ;; Consult & Embark integrations
 (use-package consult-org-roam
   :ensure t
