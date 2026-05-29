@@ -107,4 +107,19 @@
   :after (embark org-roam)
   :demand t)
 
+;; Post-migration: replace bad links with good ones
+(defun schnouki/org-roam-migrate-note ()
+  (interactive)
+  (let* ((bad-id (org-id-get))
+         (bad-note (org-roam-node-from-id bad-id))
+         (repl-note (org-roam-node-read nil nil nil nil "Replacment note: "))
+         (repl-id (org-roam-node-id repl-note))
+         (backlink-files (mapcar (lambda (bl)
+                                   (org-roam-node-file
+                                    (org-roam-backlink-source-node bl)))
+                                 (org-roam-backlinks-get bad-note :unique t))))
+    (shell-command (format "sed -i 's/id:%s/id:%s/g' %s" bad-id repl-id
+                           (mapconcat #'identity (mapcar #'shell-quote-argument backlink-files) " ")))
+    (delete-file (org-roam-node-file bad-note))))
+
 ;;; init-45-org-roam.el ends here
