@@ -67,4 +67,15 @@
                                     'company-org-block)
                        (company-mode +1)))))
 
+(use-package org-tree-slide
+  :ensure t
+  :after org
+  :bind (:map org-mode-map
+              ("<f5>" . org-tree-slide-mode)
+              ("s-<f5>" . org-tree-slide-skip-done-toggle)
+              :map org-tree-slide-mode-map
+              ("<f6>" . org-tree-slide-move-previous-tree)
+              ("<f7>" . org-tree-slide-move-next-tree)
+              ("<f8>" . org-tree-slide-content)))
+
 ;;; init-40-org.el ends here
