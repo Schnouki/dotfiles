@@ -1,4 +1,4 @@
-;;; 40-org-github --- GitHub links in org-mode  -*- lexical-binding: t; -*-
+;;; 41-org-github --- GitHub links in org-mode  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -20,27 +20,28 @@
     (format "%s/%s#%s" user repo obj)))
 (defun schnouki/org-gh-follow (type path)
   (browse-url (schnouki/org-gh-build-url type path)))
-(defun schnouki/org-gh-export (type path description format)
+(defun schnouki/org-gh-export (type path description backend)
   (let ((url (schnouki/org-gh-build-url type path))
         (desc (or description
                   (schnouki/org-gh-format-url path))))
-    (pcase format
+    (pcase backend
       (`html (format "<a target=\"_blank\" href=\"%s\">%s</a>" url desc))
       (`latex (format "\\href{%s}{%s}" url desc))
       (`texinfo (format "@uref{%s,%s}" url desc))
       (`ascii (format "%s (%s)" desc url))
       (`md (format "[%s](%s)" (s-replace "#" "\\#" desc) url))
+      (`pandoc (org-link-make-string url desc))
       (_ url))))
 
 (defun schnouki/org-ghi-follow (path)
   (schnouki/org-gh-follow "issues" path))
-(defun schnouki/org-ghi-export (path description format)
-  (schnouki/org-gh-export "issues" path description format))
+(defun schnouki/org-ghi-export (path description backend)
+  (schnouki/org-gh-export "issues" path description backend))
 
 (defun schnouki/org-ghpr-follow (path)
   (schnouki/org-gh-follow "pull" path))
-(defun schnouki/org-ghpr-export (path description format)
-  (schnouki/org-gh-export "pull" path description format))
+(defun schnouki/org-ghpr-export (path description backend)
+  (schnouki/org-gh-export "pull" path description backend))
 
 (with-eval-after-load 'org
   (org-link-set-parameters "ghi"
