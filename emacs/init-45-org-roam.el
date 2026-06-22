@@ -82,7 +82,7 @@
 (use-package org-roam-latte
   :ensure t
   :after org-roam
-  :hook ((org-mode . org-roam-latte-mode))
+  :hook org-mode
   :delight)
 
 ;; Consult & Embark integrations

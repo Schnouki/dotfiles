@@ -7,7 +7,12 @@
   :ensure t
   :custom
   (zenburn-override-colors-alist '(("zenburn-bg+4" . "#7F7F7F")
-                                   ("zenburn-bg+5" . "#8F8F8F")))
+                                   ("zenburn-bg+5" . "#8F8F8F")
+                                   ("zenburn-purple-2" . "#8C6FAE")
+                                   ("zenburn-purple-1" . "#9C7FBE")
+                                   ("zenburn-purple"   . "#AC8FCE")
+                                   ("zenburn-purple+1" . "#BC9FDE")
+                                   ("zenburn-purple+2" . "#CCAFEE")))
   :config
   (load-theme 'zenburn t)
 
@@ -49,12 +54,6 @@
      ;; :foreground ,zenburn-green+2 :background ,zenburn-bg-1)))
 ;;;; diff, magit-diff
      `(diff-context ((t :foreground "#bcbcac"))) ;; zenburn-fg-2
-;;;; forge
-     `(forge-dimmed           ((t :foreground ,zenburn-fg-1)))
-     `(forge-topic-slug-saved ((t :foreground ,zenburn-orange)))
-     `(forge-pullreq-open     ((t :foreground ,zenburn-green)))
-     `(forge-pullreq-merged   ((t :foreground "#c8abdd")))
-     `(forge-pullreq-rejected ((t :foreground "#c8abdd")))
 ;;;; go-guru
      `(go-guru-hl-identifier-face ((t :background ,zenburn-bg-1)))
 ;;;; notmuch
@@ -64,6 +63,8 @@
      `(notmuch-search-matching-authors     ((t :foreground "#ffeece"))) ;; zenburn-yellow+1
      `(notmuch-search-non-matching-authors ((t :foreground "#b09f6f"))) ;; zenburn-yellow-4
      `(notmuch-tag-face                    ((t :foreground ,zenburn-green+2 :slant italic)))
+;;;; org-roam-latte
+     `(org-roam-latte-keyword-face ((t :underline (:style dots :color ,zenburn-purple))))
 ;;;; parinfer
      `(parinfer-rust-dim-parens ((t :foreground ,zenburn-fg-05)))
 ;;;; scopeline

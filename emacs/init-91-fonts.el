@@ -36,5 +36,4 @@
 (add-hook 'after-init-hook #'schnouki/setup-fonts)
 (add-hook 'enable-theme-functions #'schnouki/setup-fonts)
 
-
 ;;; init-91-fonts.el ends here
