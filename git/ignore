@@ -4,9 +4,14 @@
 .dir-locals.el
 .dir-locals-2.el
 .mypy_cache
+.mypy_worker.*
 .python-version
 .workon
 .venv
 
+/.amp
 **/.claude/settings.local.json
 CLAUDE.local.md
+
+/.worktrees
+/.wtp.yml
