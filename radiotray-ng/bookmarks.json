@@ -45,7 +45,15 @@
       },
       {
         "name": "Space Station Soma",
-        "url": "https://somafm.com/spacestation.pls"
+        "url": "https://somafm.com/spacestation320.pls"
+      },
+      {
+        "name": "Synphaera Radio",
+        "url": "https://somafm.com/synphaera256.pls"
+      },
+      {
+        "name": "Underground 80s",
+        "url": "https://somafm.com/u80s256.pls"
       }
     ]
   },
@@ -93,6 +101,10 @@
         "url": "https://somafm.com/doomed256.pls"
       },
       {
+        "name": "Drone Zone 2",
+        "url": "https://somafm.com/dz2.pls"
+      },
+      {
         "name": "Dub Step Beyond",
         "url": "https://somafm.com/dubstep256.pls"
       },
@@ -103,6 +115,10 @@
       {
         "name": "Folk Forward",
         "url": "https://somafm.com/folkfwd.pls"
+      },
+      {
+        "name": "Groove Salad 2",
+        "url": "https://somafm.com/groovesalad2256.pls"
       },
       {
         "name": "Heavyweight Reggae",
@@ -169,10 +185,6 @@
         "url": "https://somafm.com/suburbsofgoa.pls"
       },
       {
-        "name": "Synphaera Radio",
-        "url": "https://somafm.com/synphaera256.pls"
-      },
-      {
         "name": "The Dark Zone",
         "url": "https://somafm.com/darkzone256.pls"
       },
@@ -191,10 +203,6 @@
       {
         "name": "Tiki Time",
         "url": "https://somafm.com/tikitime256.pls"
-      },
-      {
-        "name": "Underground 80s",
-        "url": "https://somafm.com/u80s256.pls"
       },
       {
         "name": "Vaporwaves",
@@ -232,59 +240,6 @@
       {
         "name": "EBSM",
         "url": "https://stream.nightride.fm:8443/ebsm/ebsm.m3u8"
-      }
-    ]
-  },
-  {
-    "group": "FIP",
-    "stations": [
-      {
-        "name": "FIP",
-        "url": "https://icecast.radiofrance.fr/fip-midfi.mp3?id=radiofrance"
-      },
-      {
-        "name": "Sacré français !",
-        "url": "https://icecast.radiofrance.fr/fipsacrefrancais-midfi.mp3?id=radiofrance"
-      },
-      {
-        "name": "Rock",
-        "url": "https://icecast.radiofrance.fr/fiprock-midfi.mp3?id=radiofrance"
-      },
-      {
-        "name": "Jazz",
-        "url": "https://icecast.radiofrance.fr/fipjazz-midfi.mp3?id=radiofrance"
-      },
-      {
-        "name": "Groove",
-        "url": "https://icecast.radiofrance.fr/fipgroove-midfi.mp3?id=radiofrance"
-      },
-      {
-        "name": "Reggae",
-        "url": "https://icecast.radiofrance.fr/fipreggae-midfi.mp3?id=radiofrance"
-      },
-      {
-        "name": "Pop",
-        "url": "https://icecast.radiofrance.fr/fippop-midfi.mp3?id=radiofrance"
-      },
-      {
-        "name": "Electro",
-        "url": "https://icecast.radiofrance.fr/fipelectro-midfi.mp3?id=radiofrance"
-      },
-      {
-        "name": "Monde",
-        "url": "https://icecast.radiofrance.fr/fipworld-midfi.mp3?id=radiofrance"
-      },
-      {
-        "name": "Nouveautés",
-        "url": "https://icecast.radiofrance.fr/fipnouveautes-midfi.mp3?id=radiofrance"
-      },
-      {
-        "name": "Metal",
-        "url": "https://icecast.radiofrance.fr/fipmetal-midfi.mp3?id=radiofrance"
-      },
-      {
-        "name": "Hip-Hop",
-        "url": "https://icecast.radiofrance.fr/fiphiphop-midfi.mp3?id=radiofrance"
       }
     ]
   }
