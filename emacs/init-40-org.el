@@ -78,4 +78,14 @@
               ("<f7>" . org-tree-slide-move-next-tree)
               ("<f8>" . org-tree-slide-content)))
 
+(use-package org-appear
+  :ensure t
+  :after org
+  :hook org-mode
+  :custom
+  (org-appear-trigger 'on-change)
+  (org-appear-autolinks t)
+  (org-appear-autoemphasis t)
+  (org-hide-emphasis-markers t))
+
 ;;; init-40-org.el ends here
