@@ -1,9 +1,10 @@
-"""Experimental Python preset using Zuban, ruff and codebook"""
+"""Experimental Python preset using Ty, Pyrefly, ruff and codebook"""
 
 
 def servers():
     return [
-        ["zuban", "server"],
+        ["ty", "server"],
+        ["pyrefly", "lsp"],
         ["ruff", "server"],
         ["codebook-lsp", "serve"],
     ]

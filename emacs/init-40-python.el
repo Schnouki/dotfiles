@@ -20,12 +20,12 @@
   :mode "\\.p\\(?:yx\\|x[di]\\)\\'")
 
 
-;; Configure basedpyright in eglot, based on pyright
+;; Configure rassumfrassum in eglot, to multiplex LSP servers
 (with-eval-after-load-feature 'eglot
-  (when (executable-find "basedpyright-langserver")
+  (when (executable-find "rass")
     (add-to-list 'eglot-server-programs
                  '((python-mode python-ts-mode)
-                   "basedpyright-langserver" "--stdio"))))
+                   "rass" "python-experimental"))))
 
 (use-package indent-bars
   :ensure t
