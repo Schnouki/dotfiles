@@ -56,6 +56,13 @@
     "on-click": "$HOME/.config/waybar/mullvad-status.py toggle"
   },
 
+  "custom/sep_left": {
+    "format": ""
+  },
+  "custom/sep_right": {
+    "format": ""
+  },
+
   "custom/timewarrior": {
     "exec": "$HOME/.config/timewarrior/tww.py",
     "return-type": "json",

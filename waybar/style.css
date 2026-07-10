@@ -11,6 +11,8 @@
 @define-color zb_fg_m05 #989890;
 @define-color zb_fg     #dcdccc;
 
+@define-color zb_bg_m2  #000000;
+@define-color zb_bg_m18 #202020;
 @define-color zb_bg_m1  #2b2b2b;
 @define-color zb_bg_m08 #303030;
 @define-color zb_bg_m05 #383838;
@@ -42,6 +44,26 @@ window#waybar {
     transition-duration: 0.5s;
 }
 
+.modules-left {
+    background: @zb_bg;
+}
+#custom-sep_left {
+    background: @zb_bg_m1;
+    color: @zb_bg;
+    padding-left: 0;
+    margin-left: 2pt;
+}
+
+.modules-right {
+    background: @zb_bg_m18;
+}
+#custom-sep_right {
+    background: @zb_bg_m1;
+    color: @zb_bg_m18;
+    padding-right: 0;
+    margin-right: 2pt;
+}
+
 tooltip {
     background: @zb_bg_m1;
     border: 1px solid @zb_fg_m05;
@@ -53,11 +75,6 @@ tooltip label {
 widget > * {
     padding: 0 6pt;
 }
-/*
-.modules-right widget + widget {
-    border-left: 1px solid @zb_fg_m1;
-}
-*/
 
 button {
     border: none;
@@ -81,6 +98,12 @@ button:hover {
     color: @zb_fg;
     border: 1px solid @zb_bg_p1;
 }
+#workspaces button:first-child {
+    border-left-color: transparent;
+}
+#workspaces button:last-child {
+    border-right-color: transparent;
+}
 #workspaces button:hover {
     color: @zb_blue_p2;
     background: transparent;
@@ -92,7 +115,7 @@ button:hover {
     border-color: @zb_blue_m2;
 }
 #workspaces button.visible:not(.focused) {
-    background: @zb_bg;
+    background: @zb_bg_p1;
     color: @zb_fg;
     border-color: @zb_fg_m05;
 }

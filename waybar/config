@@ -7,9 +7,9 @@
 
     "include": "~/.config/waybar/modules.json",
 
-    "modules-left": ["sway/workspaces", "idle_inhibitor", "sway/mode"],
+    "modules-left": ["sway/workspaces", "idle_inhibitor", "sway/mode", "custom/sep_left"],
     "modules-center": ["custom/weather", "clock", "custom/mullvad", "custom/timewarrior"],
-    "modules-right": ["pulseaudio", "battery", "tray"]
+    "modules-right": ["custom/sep_right", "pulseaudio", "battery", "tray"]
   },
 
   // External screen(s)
@@ -20,8 +20,8 @@
 
     "include": "~/.config/waybar/modules.json",
 
-    "modules-left": ["sway/workspaces", "sway/mode"],
+    "modules-left": ["sway/workspaces", "sway/mode", "custom/sep_left"],
     "modules-center": ["clock"],
-    "modules-right": ["temperature", "pulseaudio", "custom/bars"]
+    "modules-right": ["custom/sep_right", "temperature", "pulseaudio", "custom/bars"]
   }
 ]
