@@ -31,6 +31,7 @@ __pycache__/
 !ripgreprc
 
 # Folders
+!awww
 !bpython
 !composer
 !docker
@@ -72,7 +73,6 @@ gtk-3.0/bookmarks
 !waybar
 !wireplumber
 !wleave
-!wpaperd
 !xkb
 !yt-dlp
 !zathura

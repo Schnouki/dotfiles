@@ -1,0 +1,36 @@
+#!/usr/bin/env python
+
+import json
+import random
+import subprocess as subp
+from pathlib import Path
+
+TRANSITION = "fade"
+TRANSITION_DURATION = "2"
+
+img_folder_txt = Path("~/.config/awww/images").expanduser().read_text().strip()
+img_folder = Path(img_folder_txt).expanduser()
+
+query_cp = subp.run(
+    ["awww", "query", "--json"], check=True, capture_output=True, text=True
+)
+outputs = [output["name"] for output in json.loads(query_cp.stdout)[""]]
+
+imgs = [img for img in img_folder.iterdir() if img.is_file()]
+random.shuffle(imgs)
+
+for out, img in zip(outputs, imgs):
+    subp.run(
+        [
+            "awww",
+            "img",
+            "--transition-type",
+            TRANSITION,
+            "--transition-duration",
+            TRANSITION_DURATION,
+            "--outputs",
+            out,
+            img,
+        ],
+        check=True,
+    )

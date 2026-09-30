@@ -25,6 +25,7 @@ ENCRYPTED_FILES = {
     ".ssh/authorized_keys": "ssh-authorized-keys.gpg",
     ".ssh/config": "ssh-config.gpg",
     ".transifexrc": "transifexrc.gpg",
+    ".config/awww/choose-folder": "awww/choose-folder.gpg",
     ".config/git/doist.inc": "git/doist.inc.gpg",
     ".config/isyncrc": "isyncrc.gpg",
     ".config/pws.yaml": "pws.yaml.gpg",
@@ -37,7 +38,6 @@ ENCRYPTED_FILES = {
     ".config/notmuch/default/config": "notmuch/default/config.gpg",
     ".config/spotify-player/app.toml.in": "spotify-player/app.toml.in.gpg",
     ".config/uv/uv-private.toml": "uv/uv-private.toml.gpg",
-    ".config/wpaperd/choose-folder": "wpaperd/choose-folder.gpg",
     ".config/Yubico/u2f_keys": "Yubico_u2f_keys.gpg",
 }
 

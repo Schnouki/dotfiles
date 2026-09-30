@@ -1,0 +1,8 @@
+[Unit]
+Description=Randomize wallpaper displayed by awww
+Requisite=awww.service
+After=awww.service
+
+[Service]
+Type=oneshot
+ExecStart=%h/.config/awww/random-awww
