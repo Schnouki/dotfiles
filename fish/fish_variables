@@ -70,3 +70,4 @@ SETUVAR _fisher_patrickf1_2F_fzf_2E_fish_files:\x7e/\x2econfig/fish/functions/_f
 SETUVAR _fisher_plugins:franciscolourenco/done\x1ejorgebucaran/autopair\x2efish\x1edamani42/fish\x2dgit\x2dutil\x1eikelutra/fish\x2dpwd\x2dinfo\x1epatrickf1/fzf\x2efish\x1egazorby/fish\x2dexa\x1eccyip/push\x2dline\x2efish
 SETUVAR _fisher_upgraded_to_4_4:\x1d
 SETUVAR fish_greeting:
+SETUVAR --export fish_user_paths:/home/schnouki/bin\x1e/home/schnouki/\x2elocal/bin\x1e/home/schnouki/\x2ego/bin\x1e/home/schnouki/\x2eroswell/bin\x1e/home/schnouki/\x2elocal/share/pnpm\x1e/home/schnouki/\x2elocal/share/pnpm/bin\x1e/home/schnouki/\x2elocal/share/nimble/bin

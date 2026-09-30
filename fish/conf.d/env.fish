@@ -52,3 +52,10 @@ set -gx RIPGREP_CONFIG_PATH $HOME/.config/ripgreprc
 
 # Roswell
 fish_add_path -a ~/.roswell/bin
+
+# Android
+set -gx ANDROID_HOME /opt/android-sdk
+set -gx ANDROID_SDK_ROOT /opt/android-sdk
+fish_add_path -a $ANDROID_HOME/emulator
+fish_add_path -a $ANDROID_HOME/cmdline-tools/latest/bin
+fish_add_path -a $ANDROID_HOME/platform-tools
