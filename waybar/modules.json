@@ -71,6 +71,14 @@
     "on-click": "$HOME/.config/timewarrior/timew-ui.py"
   },
 
+  "custom/voxtype": {
+    "exec": "voxtype status --follow --format json --icon-theme nerd-font",
+    "return-type": "json",
+    "format": "{}",
+    "tooltip": true,
+    "on-click": "systemctl --user restart voxtype"
+  },
+
   "custom/weather": {
     "format": "{}°",
     "tooltip": true,

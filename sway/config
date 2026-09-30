@@ -338,6 +338,11 @@ bindsym $mod+r mode "resize"
     bindsym $mod+Shift+F12 exec /home/schnouki/bin/mpris2-control volume_plus > $wobsock
     bindsym $mod+Shift+F11 exec /home/schnouki/bin/mpris2-control volume_minus > $wobsock
 
+    bindsym           Pause exec voxtype record start
+    bindsym --release Pause exec voxtype record stop
+    bindsym           XF86AudioMedia exec voxtype record start
+    bindsym --release XF86AudioMedia exec voxtype record stop
+
 #
 # Brightness control:
 #
@@ -435,6 +440,7 @@ for_window [app_id="zen"] {
 
 # Run basic stuff
 include /etc/sway/config.d/*
+include ~/.config/sway/conf.d/*.conf
 
 # Systemd integration -- https://github.com/swaywm/sway/wiki/Systemd-integration
 exec "systemctl --user start sway-session.target"

@@ -21,6 +21,7 @@
 
 @define-color zb_red_m6 #6c3333;
 @define-color zb_red_m4 #8c5353;
+@define-color zb_red    #cc9393;
 @define-color zb_red_p1 #dca3a3;
 
 @define-color zb_green_m4 #3f5f3f;
@@ -28,6 +29,7 @@
 
 @define-color zb_blue_m5 #366060;
 @define-color zb_blue_m2 #6ca0a3;
+@define-color zb_blue    #8cd0d3;
 @define-color zb_blue_p2 #ace0e3;
 
 @define-color zb_yellow_m6 #907f4f;
@@ -151,3 +153,24 @@ button:hover {
 #tray > .needs-attention {
     background: @zb_red_m4;
 }
+
+#custom-voxtype {
+    padding: 0 6pt;
+}
+#custom-voxtype.recording {
+    color: @zb_red;
+    animation: pulse 1s ease-in-out infinite;
+}
+#custom-voxtype.transcribing {
+    color: @zb_yellow;
+}
+#custom-voxtype.idle {
+    color: @zb_green;
+}
+#custom-voxtype.stopped {
+    color: @zb_blue;
+}
+/*@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}*/
