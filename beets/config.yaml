@@ -1,7 +1,7 @@
-directory: ~/annex/music
-library: ~/annex/music/.library
+directory: ~/.annex/music
+library: ~/.annex/music/.library
 plugins:
-  # - bandcamp
+  - bandcamp
   - bpd
   - edit
   - fetchart
@@ -12,7 +12,7 @@ plugins:
   - permissions
   - play
   - replaygain
-  - web
+  # - web
 
 ui:
   color: yes
@@ -21,11 +21,11 @@ replace:
   '[\\/]': _
   '^\.': _
   '[\x00-\x1f]': _
-  '[<>"\?\*\|]': ''
-  '\s*:\s+': ' - '
-  '\.$': ''
-  '\s+$': ''
-  '^\s+': ''
+  '[<>"\?\*\|]': ""
+  '\s*:\s+': " - "
+  '\.$': ""
+  '\s+$': ""
+  '^\s+': ""
 
 bpd:
   host: 127.0.0.1
