@@ -259,6 +259,10 @@ def update_encrypted_tarballs(force: bool, verbose: bool):
             for p in src_ps:
                 print(f"  {p.relative_to(HOME)}")
 
+        if not src_ps:
+            print(f"Tarball {name} ({dst_p}) is empty, consider removing it")
+            return
+
         # Inspired by https://github.com/maxmcd/reptar
         tar_cmd = [
             "tar",
