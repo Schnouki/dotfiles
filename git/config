@@ -90,7 +90,10 @@
 	envelopeSender = auto
 	sendmailCmd = msmtpq -a schnouki.net
 [tag]
+	gpgSign = true
 	sort = version:refname
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
 [user]
 	name = Thomas Jost
 	email = schnouki@schnouki.net
