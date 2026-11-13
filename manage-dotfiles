@@ -446,16 +446,17 @@ def encrypt(force: bool, verbose: bool):
 @cli.command("list", help="list update files")
 def list_():
     dir_names = {p.name for p in CONFIG.glob(".last_update_*")}
-    known_names = {
+    known_file_names = {
         get_last_update_filename(dst): src for src, dst in ENCRYPTED_FILES.items()
     }
-    known_names.update(
-        {
-            get_last_update_filename(data[0]): f"{name} tarball"
-            for name, data in ENCRYPTED_TARBALLS.items()
-        }
-    )
-    known_names_set = set(known_names.keys())
+    known_file_names_set = set(known_file_names.keys())
+    known_tarball_names = {
+        get_last_update_filename(data[0]): f"{name} tarball"
+        for name, data in ENCRYPTED_TARBALLS.items()
+    }
+    known_tarball_names_set = set(known_tarball_names.keys())
+
+    known_names_set = known_file_names_set | known_tarball_names_set
 
     present_names = dir_names & known_names_set
     missing_names = known_names_set - dir_names
@@ -463,13 +464,21 @@ def list_():
 
     if present_names:
         print("PRESENT UPDATE FILES:")
-        for name in present_names:
-            print(f"{known_names[name]}: {name}")
+        print("  * files:")
+        for name in sorted(present_names & known_file_names_set):
+            print(f"    {known_file_names[name]}: {name}")
+        print("  * tarballs:")
+        for name in sorted(present_names & known_tarball_names_set):
+            print(f"    {known_tarball_names[name]}: {name}")
         print()
     if missing_names:
         print("MISSING UPDATE FILES:")
-        for name in missing_names:
-            print(f"{known_names[name]}: {name}")
+        print("  * files:")
+        for name in sorted(missing_names & known_file_names_set):
+            print(f"    {known_file_names[name]}: {name}")
+        print("  * tarballs:")
+        for name in sorted(missing_names & known_tarball_names_set):
+            print(f"    {known_tarball_names[name]}: {name}")
         print()
     if unknown_names:
         print("UNKNOWN UPDATE FILES:")
