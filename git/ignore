@@ -15,3 +15,5 @@ CLAUDE.local.md
 
 /.worktrees
 /.wtp.yml
+
+**/.claude/.cc-writes/
