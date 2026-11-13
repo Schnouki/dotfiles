@@ -40,3 +40,5 @@ abbr --add --position anywhere --set-cursor -- --bhelp "--help % | bat -plhelp"
 alias llm_tldr="llmcli -q \"What's the tl;dr version of this?\" -f"
 
 alias hx="helix"
+
+alias tau="pi -e ~/dev/tau/packages/tau-coding-agent"
