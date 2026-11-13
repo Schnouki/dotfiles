@@ -49,20 +49,24 @@ window#waybar {
 .modules-left {
     background: @zb_bg;
 }
+.modules-left widget:last-child > * {
+    padding: 0;
+}
 #custom-sep_left {
     background: @zb_bg_m1;
     color: @zb_bg;
-    padding-left: 0;
     margin-left: 2pt;
 }
 
 .modules-right {
     background: @zb_bg_m18;
 }
+.modules-right widget:first-child > * {
+    padding: 0;
+}
 #custom-sep_right {
     background: @zb_bg_m1;
     color: @zb_bg_m18;
-    padding-right: 0;
     margin-right: 2pt;
 }
 
