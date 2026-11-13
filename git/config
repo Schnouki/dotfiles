@@ -28,7 +28,7 @@
 [core]
 	pager = bat -p
 [credential]
-	helper = /usr/share/git/credential/netrc/git-credential-netrc -f ~/.netrc
+	helper = /usr/share/git/credential/netrc/git-credential-netrc.perl -f ~/.netrc
 [diff]
 	algorithm = histogram
 	colorMoved = plain
