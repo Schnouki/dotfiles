@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import argparse
 import hashlib
 import os
 import re
@@ -13,6 +12,7 @@ import sys
 import tempfile
 from pathlib import Path
 
+import click
 
 ENCRYPTED_FILES = {
     ".atlas/auth": "atlas-auth.gpg",
@@ -413,9 +413,16 @@ def update_executable_files():
     return True
 
 
-def cmd_install(args):
+@click.group(help="Dotfiles pre-commit hook")
+def cli():
+    pass
+
+
+@cli.command(help="install pre-commit hook")
+@click.option("-f", "--force", is_flag=True, help="Allow overwriting existing files")
+def install(force: bool):
     hook_path = Path(".git/hooks/pre-commit")
-    if hook_path.exists() and not args.force:
+    if hook_path.exists() and not force:
         print("A pre-commit hook is already installed!")
         sys.exit(1)
 
@@ -428,12 +435,16 @@ exec "{script_path}" encrypt "$@"
     hook_path.write_text(script_content)
 
 
-def cmd_encrypt(args):
-    update_encrypted_files(args.force, args.verbose)
-    update_encrypted_tarballs(args.force, args.verbose)
+@cli.command(help="update encrypted files")
+@click.option("-f", "--force", is_flag=True, help="Force update")
+@click.option("-v", "--verbose", is_flag=True, help="Verbose mode")
+def encrypt(force: bool, verbose: bool):
+    update_encrypted_files(force, verbose)
+    update_encrypted_tarballs(force, verbose)
 
 
-def cmd_list(args):
+@cli.command("list", help="list update files")
+def list_():
     dir_names = {p.name for p in CONFIG.glob(".last_update_*")}
     known_names = {
         get_last_update_filename(dst): src for src, dst in ENCRYPTED_FILES.items()
@@ -466,7 +477,8 @@ def cmd_list(args):
             print(name)
 
 
-def cmd_setup(args):
+@cli.command(help="setup symlinks and decrypt encrypted files")
+def setup():
     r1 = create_dir_symlinks()
     r2 = create_file_symlinks()
     r3 = decrypt_files()
@@ -479,36 +491,4 @@ def cmd_setup(args):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser("Dotfiles pre-commit hook")
-    sp = parser.add_subparsers()
-
-    parser_install = sp.add_parser("install", help="install pre-commit hook")
-    parser_install.add_argument(
-        "-f", "--force", action="store_true", help="Allow overwriting existing files"
-    )
-    parser_install.set_defaults(func=cmd_install)
-
-    parser_list = sp.add_parser("list", help="list update files")
-    parser_list.set_defaults(func=cmd_list)
-
-    parser_encrypt = sp.add_parser("encrypt", help="update encrypted files")
-    parser_encrypt.add_argument(
-        "-f", "--force", action="store_true", help="Force update"
-    )
-    parser_encrypt.add_argument(
-        "-v", "--verbose", action="store_true", help="Verbose mode"
-    )
-    parser_encrypt.set_defaults(func=cmd_encrypt)
-
-    parser_setup = sp.add_parser(
-        "setup", help="setup symlinks and decrypt encrypted files"
-    )
-    parser_setup.set_defaults(func=cmd_setup)
-
-    args = parser.parse_args()
-
-    if "func" in args:
-        args.func(args)
-    else:
-        parser.print_help()
-        sys.exit(1)
+    cli()
