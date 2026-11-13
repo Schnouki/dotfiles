@@ -157,6 +157,7 @@
   (embark-verbose-indicator-display-action '(display-buffer-in-side-window
                                              (side . bottom)
                                              (window-height . fit-window-to-buffer)))
+  (embark-cycle-key "C-.")
   :config
   ;; Hide the mode line of the Embark live/completions buffers
   (add-to-list 'display-buffer-alist
