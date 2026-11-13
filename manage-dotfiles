@@ -486,6 +486,19 @@ def list_():
             print(name)
 
 
+@cli.command("cleanup", help="remove unknown update files")
+def cleanup():
+    unknown_names = (
+        {p.name for p in CONFIG.glob(".last_update_*")}
+        - {get_last_update_filename(dst) for dst in ENCRYPTED_FILES.values()}
+        - {get_last_update_filename(data[0]) for data in ENCRYPTED_TARBALLS.values()}
+    )
+    for name in unknown_names:
+        uf_p = CONFIG / name
+        uf_p.unlink()
+    print(f"{len(unknown_names)} files removed.")
+
+
 @cli.command(help="setup symlinks and decrypt encrypted files")
 def setup():
     r1 = create_dir_symlinks()
