@@ -42,6 +42,12 @@
     "format": "{}"
   },
 
+  "custom/jabra": {
+    "exec": "jabridge battery 2>/dev/null | awk -F': ' '$NF ~ /^[0-9]+%/ { p = $NF+0; c = $NF ~ /\\(/ } $NF ~ /^[0-9]+%/ && (c || p < 30) { print p \"%\"; print $0; print (c ? \"charging\" : p <= 10 ? \"critical\" : p <= 20 ? \"warning\" : \"\") }'",
+    "interval": 30,
+    "format": "  {}"
+  },
+
   "custom/mullvad": {
     "exec": "$HOME/.config/waybar/mullvad-status.py",
     "return-type": "json",

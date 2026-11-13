@@ -9,7 +9,7 @@
 
     "modules-left": ["sway/workspaces", "idle_inhibitor", "sway/mode", "custom/sep_left"],
     "modules-center": ["custom/weather", "clock", "custom/mullvad", "custom/timewarrior", "custom/voxtype"],
-    "modules-right": ["custom/sep_right", "pulseaudio", "battery", "tray"]
+    "modules-right": ["custom/sep_right", "pulseaudio", "custom/jabra", "battery", "tray"]
   },
 
   // External screen(s)

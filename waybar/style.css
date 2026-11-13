@@ -144,6 +144,17 @@ button:hover {
     background: @zb_red_m4;
 }
 
+#custom-jabra.charging {
+    background-color: @zb_green_m4;
+}
+#custom-jabra.warning {
+    background-color: @zb_yellow_m4;
+    color: @zb_bg_m1;
+}
+#custom-jabra.critical {
+    background: @zb_red_m4;
+}
+
 #tray {
     padding-right: 0;
 }
