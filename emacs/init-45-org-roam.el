@@ -7,6 +7,7 @@
   :after org
   :bind (:map schnouki-prefix-map
               ("r RET" . org-roam-buffer-toggle)
+              ("r c" . org-roam-capture)
               ("r i" . org-roam-node-insert)
               ("r r a" . org-roam-ref-add)
               ("r r d" . org-roam-ref-remove)
@@ -23,6 +24,9 @@
                                  :unnarrowed t)
                                 ("p" "person" plain (file "~/notes/Modèles/Personne.org")
                                  :if-new (file+head "People/${title}.org" "#+title: ${title}\n")
+                                 :unnarrowed t)
+                                ("e" "place" plain "%?"
+                                 :if-new (file+head "Places/${title}.org" "#+title: ${title}\n")
                                  :unnarrowed t)
                                 ("a" "article" plain (file "~/notes/Modèles/Article.org")
                                  :if-new (file+head "Articles/${title}.org" ":PROPERTIES:\n:ROAM_REFS: ${article}\b:END:\n#+title: ${title}\n")
@@ -106,6 +110,18 @@
   :ensure t
   :after (embark org-roam)
   :demand t)
+
+;; Query org-roam nodes
+(use-package org-roam-ql
+  :ensure t
+  :after org-roam
+  :config
+  ;; From https://github.com/krisbalintona/org-roam-folgezettel/
+  (org-roam-ql-defpred 'subdir
+    "A predicate for the directory of a node.
+Returns non-nil when a node is within (at any level) the subdirectory."
+    (lambda (node) (expand-file-name (org-roam-node-file node)))
+    (lambda (path subdir) (string-prefix-p (expand-file-name subdir org-roam-directory) path))))
 
 ;; Post-migration: replace bad links with good ones
 (defun schnouki/org-roam-migrate-note ()
