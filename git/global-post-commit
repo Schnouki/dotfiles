@@ -1,4 +1,8 @@
 #!/bin/sh
 
+# Silence pueue output when running under a coding agent (Claude Code, Codex, pi, Amp)
+out=/dev/stdout
+[ -n "$CLAUDECODE$CODEX_THREAD_ID$PI_CODING_AGENT$AMP_THREAD_ID" ] && out=/dev/null
+
 # Log commit in sqlite
-GITLOG_COMMIT_TIME=$(date -Iseconds) pueue add --group git "~/bin/log-git-commit.ros"
+GITLOG_COMMIT_TIME=$(date -Iseconds) pueue add --group git "~/bin/log-git-commit.ros" >"$out"
