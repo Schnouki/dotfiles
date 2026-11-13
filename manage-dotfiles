@@ -41,6 +41,7 @@ ENCRYPTED_FILES = {
     ".config/uv/uv-private.toml": "uv/uv-private.toml.gpg",
     ".config/Yubico/u2f_keys": "Yubico_u2f_keys.gpg",
 }
+FILE_NAMES = {v: k for k, v in ENCRYPTED_FILES.items()}
 
 ENCRYPTED_TARBALLS = {
     "Age": ("age.tar.gpg", ".config/age/*"),
@@ -49,6 +50,7 @@ ENCRYPTED_TARBALLS = {
     "Systemd mounts": ("systemd-mounts.tar.gpg", ".config/systemd/user/*.mount"),
     "Weechat": ("weechat.tar.gpg", ".config/weechat/*.conf"),
 }
+TARBALL_NAMES = {data[0] for data in ENCRYPTED_TARBALLS.values()}
 
 FILE_SYMLINKS = {
     "kanshi/config.@@HOSTNAME@@": ".config/kanshi/config",
@@ -342,6 +344,14 @@ def create_file_symlinks():
     return success
 
 
+def decrypt_one_file(dst_p: Path, src_p: Path, uf_p: Path) -> None:
+    dst_p.unlink(missing_ok=True)
+    decrypt_data(src_p, dst_p)
+    perms = get_wanted_permissions(dst_p)
+    dst_p.lchmod(perms)
+    uf_p.touch()
+
+
 def decrypt_files():
     for dst, src in ENCRYPTED_FILES.items():
         src_p = CONFIG / src
@@ -354,13 +364,17 @@ def decrypt_files():
             or src_p.stat().st_mtime > uf_p.stat().st_mtime
         ):
             print(f"Decrypting ~/{dst}")
-            dst_p.unlink(missing_ok=True)
-            decrypt_data(src_p, dst_p)
-            perms = get_wanted_permissions(dst_p)
-            dst_p.lchmod(perms)
-            uf_p.touch()
+            decrypt_one_file(dst_p, src_p, uf_p)
 
     return True
+
+
+def decrypt_one_tarball(src_p: Path, uf_p: Path) -> None:
+    tar_data = decrypt_data(src_p)
+    tar_hh = md5(tar_data)
+
+    subp.run(["tar", "x", "-m", "-C", HOME], check=True, input=tar_data)
+    uf_p.write_text(tar_hh)
 
 
 def decrypt_tarballs():
@@ -370,11 +384,7 @@ def decrypt_tarballs():
 
         if not uf_p.exists() or src_p.stat().st_mtime > uf_p.stat().st_mtime:
             print(f"Decrypting {name} tarball")
-            tar_data = decrypt_data(src_p)
-            tar_hh = md5(tar_data)
-
-            subp.run(["tar", "x", "-m", "-C", HOME], check=True, input=tar_data)
-            uf_p.write_text(tar_hh)
+            decrypt_one_tarball(src_p, uf_p)
 
     return True
 
@@ -441,6 +451,25 @@ exec "{script_path}" encrypt "$@"
 def encrypt(force: bool, verbose: bool):
     update_encrypted_files(force, verbose)
     update_encrypted_tarballs(force, verbose)
+
+
+@cli.command(help="decrypt one file")
+@click.argument(
+    "src", type=click.Path(exists=True, path_type=Path), help="file to decrypt"
+)
+def decrypt_one(src: Path):
+    name = str(src.absolute().relative_to(CONFIG))
+    uf_p = CONFIG / get_last_update_filename(name)
+    if name in FILE_NAMES:
+        dst_p = HOME / FILE_NAMES[name]
+        decrypt_one_file(dst_p, src, uf_p)
+    elif name in TARBALL_NAMES:
+        decrypt_one_tarball(src, uf_p)
+    else:
+        print("Invalid source file")
+        sys.exit(1)
+
+    print("Done.")
 
 
 @cli.command("list", help="list update files")
