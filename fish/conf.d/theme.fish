@@ -1,1 +1,1 @@
-fish_config theme choose tomorrow
+fish_config theme choose tomorrow --color-theme=dark
