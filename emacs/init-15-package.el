@@ -28,6 +28,36 @@
 (use-package delight
   :ensure t)
 
+;; Make sure packaqge-selected-packages is up-to-date
+(defun schnouki/use-package-ensure-selected-advice (name &rest rest)
+  (when (and
+         (not (package--user-selected-p name))
+         (package-installed-p name))
+    (package--save-selected-packages
+     (cons name package-selected-packages))))
+(advice-add #'use-package-handler/:ensure :after #'schnouki/use-package-ensure-selected-advice)
+
+;; Selected packages that don't use use-package
+(defun schnouki/check-useless-packages ()
+  (let* ((used-packages (mapcar #'intern (split-string (shell-command-to-string "rg -I '^\\s*\\(use-package\\s+' ~/.config/emacs | awk '{print $2}' | sort -u"))))
+         (missing (cl-set-difference used-packages
+                                     package-selected-packages))
+         (extra (cl-set-difference package-selected-packages
+                                   used-packages)))
+    (message "Missing packages: %s\nUnneeded packages: %s"
+             (mapconcat #'symbol-name missing ", ")
+             (mapconcat #'symbol-name extra ", "))))
+;; (schnouki/check-useless-packages)
+
+;; Update selected package to only include packages that are actually installed...
+(defun schnouki/update-selected-packages ()
+  (let* ((new-selected (cl-remove-if-not #'package-installed-p package-selected-packages))
+         (removed (cl-set-difference package-selected-packages new-selected)))
+    (package--save-selected-packages new-selected)
+    (message "Removed from selected packages: %s"
+             (mapconcat #'symbol-name removed ", "))))
+;; (schnouki/update-selected-packages)
+
 ;; Notify that Emacs is loading…
 (use-package alert
   :ensure t
