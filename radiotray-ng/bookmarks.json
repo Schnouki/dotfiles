@@ -40,16 +40,20 @@
         "url": "https://somafm.com/indiepop.pls"
       },
       {
+        "name": "Left Coast 70s",
+        "url": "https://somafm.com/seventies320.pls"
+      },
+      {
         "name": "Lush",
         "url": "https://somafm.com/lush.pls"
       },
       {
-        "name": "Space Station Soma",
-        "url": "https://somafm.com/spacestation320.pls"
+        "name": "Secret Agent",
+        "url": "https://somafm.com/secretagent.pls"
       },
       {
-        "name": "Synphaera Radio",
-        "url": "https://somafm.com/synphaera256.pls"
+        "name": "Space Station Soma",
+        "url": "https://somafm.com/spacestation320.pls"
       },
       {
         "name": "Underground 80s",
@@ -81,6 +85,14 @@
         "url": "https://somafm.com/chillits256.pls"
       },
       {
+        "name": "Christmas Lounge",
+        "url": "https://somafm.com/christmas256.pls"
+      },
+      {
+        "name": "Christmas Rocks!",
+        "url": "https://somafm.com/xmasrocks.pls"
+      },
+      {
         "name": "cliqhop idm",
         "url": "https://somafm.com/cliqhop256.pls"
       },
@@ -91,6 +103,10 @@
       {
         "name": "DEF CON Radio",
         "url": "https://somafm.com/defcon256.pls"
+      },
+      {
+        "name": "Department Store Christmas",
+        "url": "https://somafm.com/deptstore256.pls"
       },
       {
         "name": "Digitalis",
@@ -129,8 +145,8 @@
         "url": "https://somafm.com/illstreet.pls"
       },
       {
-        "name": "Left Coast 70s",
-        "url": "https://somafm.com/seventies320.pls"
+        "name": "Jolly Ol' Soul",
+        "url": "https://somafm.com/jollysoul.pls"
       },
       {
         "name": "Metal Detector",
@@ -147,10 +163,6 @@
       {
         "name": "PopTron",
         "url": "https://somafm.com/poptron.pls"
-      },
-      {
-        "name": "Secret Agent",
-        "url": "https://somafm.com/secretagent.pls"
       },
       {
         "name": "Seven Inch Soul",
@@ -185,6 +197,10 @@
         "url": "https://somafm.com/suburbsofgoa.pls"
       },
       {
+        "name": "Synphaera Radio",
+        "url": "https://somafm.com/synphaera256.pls"
+      },
+      {
         "name": "The Dark Zone",
         "url": "https://somafm.com/darkzone256.pls"
       },
@@ -207,6 +223,10 @@
       {
         "name": "Vaporwaves",
         "url": "https://somafm.com/vaporwaves.pls"
+      },
+      {
+        "name": "Xmas in Frisko",
+        "url": "https://somafm.com/xmasinfrisko.pls"
       }
     ]
   },
@@ -215,31 +235,31 @@
     "stations": [
       {
         "name": "NIGHTRIDE FM",
-        "url": "https://stream.nightride.fm:8443/nightride/nightride.m3u8"
+        "url": "https://stream.nightride.fm/nightride.mp3"
       },
       {
         "name": "CHILLSYNTH FM",
-        "url": "https://stream.nightride.fm:8443/chillsynth/chillsynth.m3u8"
+        "url": "https://stream.nightride.fm/chillsynth.mp3"
       },
       {
         "name": "DATAWAVE FM",
-        "url": "https://stream.nightride.fm:8443/datawave/datawave.m3u8"
+        "url": "https://stream.nightride.fm/datawave.mp3"
       },
       {
         "name": "SPACESYNTH FM",
-        "url": "https://stream.nightride.fm:8443/spacesynth/spacesynth.m3u8"
+        "url": "https://stream.nightride.fm/spacesynth.mp3"
       },
       {
         "name": "DARKSYNTH",
-        "url": "https://stream.nightride.fm:8443/darksynth/darksynth.m3u8"
+        "url": "https://stream.nightride.fm/darksynth.mp3"
       },
       {
         "name": "HORRORSYNTH",
-        "url": "https://stream.nightride.fm:8443/horrorsynth/horrorsynth.m3u8"
+        "url": "https://stream.nightride.fm/horrorsynth.mp3"
       },
       {
         "name": "EBSM",
-        "url": "https://stream.nightride.fm:8443/ebsm/ebsm.m3u8"
+        "url": "https://stream.nightride.fm/ebsm.mp3"
       }
     ]
   }

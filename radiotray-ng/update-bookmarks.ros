@@ -73,7 +73,7 @@ exec ros -Q -- $0 "$@"
           collect
           (make-station
            :name name
-           :url (format nil "https://stream.nightride.fm:8443/~a/~a.m3u8" id id)))))
+           :url (format nil "https://stream.nightride.fm/~a.mp3" id)))))
 
 (defun main (&rest argv)
   (declare (ignorable argv))
