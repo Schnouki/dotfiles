@@ -62,8 +62,8 @@ DIR_SYMLINKS = {
 }
 
 EXECUTABLE_FILES = {
+    ".config/awww/choose-folder",
     ".config/notmuch/autotag.py",
-    ".config/swww/choose-folder",
 }
 
 TEMPLATED_FILES = {
